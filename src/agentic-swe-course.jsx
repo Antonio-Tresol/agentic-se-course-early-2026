@@ -91,7 +91,7 @@ const weeks = [
       { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", verb: "Read", note: "Anthropic · Nov 2025 · start here" },
       { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", verb: "Read", note: "OpenAI · Feb 2026" },
       { text: "Agentic Software Engineering: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", verb: "Read", note: "Hassan et al. · Sep 2025 · focus on SASE framework" },
-      { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", verb: "Read", note: "VSDD · Mar 2026" },
+      { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", verb: "Read", note: "Doll · Mar 2026" },
       { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Anthropic" },
     ],
     activity: {
@@ -157,14 +157,14 @@ const resources = {
     { text: "Conductor: Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", note: "Google · Dec 2025" },
     { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", note: "OpenAI · Feb 2026" },
     { text: "Agentic SE: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", note: "Hassan et al. · Sep 2025" },
-    { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", note: "VSDD · Mar 2026" },
+    { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", note: "Doll · Mar 2026" },
   ],
   agents: [
-    { text: "Codex by OpenAI", url: "https://openai.com/codex/" },
-    { text: "GitHub Copilot CLI", url: "https://github.com/features/copilot/cli" },
-    { text: "OpenCode", url: "https://opencode.ai/" },
-    { text: "nanobot", url: "https://github.com/HKUDS/nanobot" },
-    { text: "OpenClaw", url: "https://docs.openclaw.ai/start/getting-started" },
+    { text: "Codex by OpenAI", url: "https://openai.com/codex/", note: "OpenAI" },
+    { text: "GitHub Copilot CLI", url: "https://github.com/features/copilot/cli", note: "GitHub" },
+    { text: "OpenCode", url: "https://opencode.ai/", note: "Anomaly Innovations" },
+    { text: "nanobot", url: "https://github.com/HKUDS/nanobot", note: "HKUDS" },
+    { text: "OpenClaw", url: "https://docs.openclaw.ai/start/getting-started", note: "Peter Steinberger" },
   ],
 };
 
