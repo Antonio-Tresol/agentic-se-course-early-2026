@@ -17,8 +17,8 @@ const weeks = [
     title: "One Coding Agent",
     intro: "This week is about getting your hands dirty. You install a coding agent, work through structured exercises, and learn the established best practices for steering it effectively.",
     prework: [
-      { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", verb: "Complete", note: "includes exercises" },
-      { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", verb: "Read" },
+      { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", verb: "Complete", note: "Anthropic · Mar 2026 · includes exercises" },
+      { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", verb: "Read", note: "Anthropic" },
     ],
     activity: null,
     session: "We share what we tried during the course exercises and discuss what worked and what did not. Then we break into pairs for the nanobot exercise.",
@@ -39,10 +39,10 @@ const weeks = [
     title: "Adapting A Coding Agent",
     intro: "A generic agent is useful. An agent that knows your team's PR checklist, can query your database, and applies your coding standards automatically is transformative. This week you learn skills (how to encode knowledge), MCP (how to connect tools), and the deeper principles of context engineering.",
     prework: [
-      { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", verb: "Complete", note: "includes exercises and reflections" },
-      { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", verb: "Complete" },
-      { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", verb: "Read" },
-      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read" },
+      { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", verb: "Complete", note: "Anthropic · Mar 2026 · includes exercises and reflections" },
+      { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", verb: "Complete", note: "Anthropic · Mar 2026" },
+      { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", verb: "Read", note: "Anthropic" },
+      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read", note: "Anthropic · May 2025" },
     ],
     activity: null,
     session: "We discuss questions from the courses and the context engineering article. Then we do a skill-building sprint.",
@@ -92,7 +92,7 @@ const weeks = [
       { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", verb: "Read", note: "OpenAI · Feb 2026" },
       { text: "Agentic Software Engineering: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", verb: "Read", note: "Hassan et al. · Sep 2025 · focus on SASE framework" },
       { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", verb: "Read", note: "VSDD · Mar 2026" },
-      { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Claude Code documentation" },
+      { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Anthropic" },
     ],
     activity: {
       title: "Harness Design Document",
@@ -138,16 +138,16 @@ const weeks = [
 
 const resources = {
   courses: [
-    { text: "AI Fluency: Framework & Foundations", url: "https://anthropic.skilljar.com/ai-fluency-framework-foundations", note: "optional prerequisite" },
-    { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action" },
-    { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills" },
-    { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol" },
+    { text: "AI Fluency: Framework & Foundations", url: "https://anthropic.skilljar.com/ai-fluency-framework-foundations", note: "Anthropic · optional prerequisite" },
+    { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", note: "Anthropic · Mar 2026" },
+    { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", note: "Anthropic · Mar 2026" },
+    { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", note: "Anthropic · Mar 2026" },
   ],
   docs: [
-    { text: "Claude Code Product Page", url: "https://claude.com/product/claude-code" },
-    { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works" },
-    { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices" },
-    { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams" },
+    { text: "Claude Code Product Page", url: "https://claude.com/product/claude-code", note: "Anthropic" },
+    { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", note: "Anthropic" },
+    { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", note: "Anthropic" },
+    { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", note: "Anthropic" },
   ],
   articles: [
     { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", note: "Anthropic · May 2025" },
