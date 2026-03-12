@@ -21,7 +21,17 @@ const weeks = [
       { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", verb: "Read" },
     ],
     activity: null,
-    session: "We share what we tried during the course exercises and discuss what worked and what did not. Then we do a hands-on exercise on a shared codebase: nanobot, an ultra-lightweight AI agent written in Python (~4,000 lines of core code). In pairs, each person picks a small task and uses Claude Code to solve it. You have never seen this codebase before, and that is the point: notice what context the agent needs and does not have.",
+    session: "We share what we tried during the course exercises and discuss what worked and what did not. Then we break into pairs for the nanobot exercise.",
+    liveActivity: {
+      title: "Hands-On with nanobot",
+      description: "We work on a shared codebase: nanobot, an ultra-lightweight AI agent written in Python (~4,000 lines of core code). In pairs, each person picks a small task and uses Claude Code to solve it. You have never seen this codebase before, and that is the point: notice what context the agent needs and does not have.",
+      repo: { url: "https://github.com/HKUDS/nanobot", label: "github.com/HKUDS/nanobot" },
+      steps: [
+        "Clone the repo and explore it with Claude Code.",
+        "Pick a small task: a bug, a missing feature, a refactor.",
+        "Use Claude Code to solve it. Pay attention to what context the agent asks for and what it misses.",
+      ],
+    },
   },
   {
     id: 2,
@@ -35,7 +45,17 @@ const weeks = [
       { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read" },
     ],
     activity: null,
-    session: "We discuss questions from the courses and the context engineering article. Then we do a skill-building sprint: pick either the nanobot codebase from Week 1 or something from your own workflow, and write a SKILL.md for it. Swap with a partner and test whether it triggers correctly.",
+    session: "We discuss questions from the courses and the context engineering article. Then we do a skill-building sprint.",
+    liveActivity: {
+      title: "Skill-Building Sprint",
+      description: "Pick either the nanobot codebase from Week 1 or something from your own workflow, and write a SKILL.md for it. Swap with a partner and test whether it triggers correctly.",
+      repo: { url: "https://github.com/HKUDS/nanobot", label: "github.com/HKUDS/nanobot" },
+      steps: [
+        "Choose a codebase: nanobot or your own project.",
+        "Write a SKILL.md that encodes a repeating pattern or workflow.",
+        "Swap with a partner and test whether the skill triggers correctly.",
+      ],
+    },
   },
   {
     id: 3,
@@ -265,7 +285,7 @@ function WeekCard({ week, isOpen, onToggle }) {
               background: palette.surface, border: `1px solid ${palette.border}`, borderRadius: "8px",
               padding: "24px 26px", marginBottom: "26px", maxWidth: "660px",
             }}>
-              <Label color={palette.accent}>Activity</Label>
+              <Label color={palette.accent}>Pre-work Activity</Label>
               <h5 style={{ fontFamily: "var(--display)", fontSize: "17px", fontWeight: 400, color: palette.text, marginBottom: "8px" }}>
                 {week.activity.title}
               </h5>
@@ -325,12 +345,58 @@ function WeekCard({ week, isOpen, onToggle }) {
             </p>
           )}
 
-          <div>
+          <div style={{ marginBottom: week.liveActivity ? "26px" : "0" }}>
             <Label>Live Session</Label>
             <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.72, color: palette.body, maxWidth: "620px" }}>
               {week.session}
             </p>
           </div>
+
+          {week.liveActivity && (
+            <div style={{
+              background: palette.surface, border: `1px solid ${palette.border}`, borderRadius: "8px",
+              padding: "24px 26px", maxWidth: "660px",
+            }}>
+              <Label color={palette.accent}>Live Session Activity</Label>
+              <h5 style={{ fontFamily: "var(--display)", fontSize: "17px", fontWeight: 400, color: palette.text, marginBottom: "8px" }}>
+                {week.liveActivity.title}
+              </h5>
+              <p style={{ fontFamily: "var(--body)", fontSize: "14px", lineHeight: 1.72, color: palette.body, marginBottom: "14px" }}>
+                {week.liveActivity.description}
+              </p>
+              {week.liveActivity.repo && (
+                <a href={week.liveActivity.repo.url} target="_blank" rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "6px",
+                    fontFamily: "var(--mono)", fontSize: "12px", color: palette.accent,
+                    textDecoration: "none", marginBottom: "14px",
+                  }}>
+                  {week.liveActivity.repo.label} <Arrow size={10} color={palette.accent} />
+                </a>
+              )}
+              {week.liveActivity.detail && (
+                <p style={{ fontFamily: "var(--body)", fontSize: "14px", lineHeight: 1.72, color: palette.body, marginBottom: "14px" }}>
+                  {week.liveActivity.detail}
+                </p>
+              )}
+              <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+                {week.liveActivity.steps.map((step, i) => (
+                  <div key={i} style={{ display: "flex", gap: "10px", fontFamily: "var(--body)", fontSize: "14px", lineHeight: 1.6, color: palette.body }}>
+                    <span style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.accentLight, minWidth: "16px", paddingTop: "2px" }}>{i + 1}</span>
+                    {step}
+                  </div>
+                ))}
+              </div>
+              {week.liveActivity.deliverable && (
+                <p style={{
+                  fontFamily: "var(--mono)", fontSize: "11.5px", color: palette.muted, marginTop: "16px",
+                  padding: "10px 14px", background: palette.bg, borderRadius: "4px", lineHeight: 1.6,
+                }}>
+                  Deliverable: {week.liveActivity.deliverable}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
