@@ -43,12 +43,11 @@
   toggleBtn.className = 'toc-toggle';
   toggleBtn.id = 'tocToggle';
   toggleBtn.type = 'button';
-  toggleBtn.setAttribute('aria-label', 'Toggle slide contents');
+  toggleBtn.setAttribute('aria-label', 'Open slide contents');
   toggleBtn.innerHTML =
-    '<svg width="14" height="11" viewBox="0 0 14 11" fill="none" aria-hidden="true">' +
-    '<path d="M0.75 1.5h12.5M0.75 5.5h12.5M0.75 9.5h12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
-    '</svg>' +
-    '<span>Contents</span>';
+    '<svg width="7" height="11" viewBox="0 0 7 11" fill="none" aria-hidden="true">' +
+    '<path d="M1.25 1.25l4 4.25-4 4.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
   document.body.appendChild(toggleBtn);
 
   const overlay = document.createElement('div');

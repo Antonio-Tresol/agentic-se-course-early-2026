@@ -373,31 +373,39 @@ a:hover { border-bottom-color: var(--text); }
 }
 
 /* ----- Table of Contents drawer ----- */
+/* Edge tab: a thin vertical strip along the left edge with an arrow.
+   Neutral gradient and gray arrow so it works on both light and dark slides. */
 .toc-toggle {
   position: fixed;
-  top: 22px;
-  left: 22px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 14px;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 8px 16px 8px 12px;
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.10), rgba(128, 128, 128, 0));
+  border: none;
+  border-radius: 0;
+  padding: 0;
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
+  justify-content: center;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-  font-weight: 500;
+  transition: background 0.2s ease, width 0.2s ease;
 }
-.toc-toggle:hover { border-color: var(--text); }
-.toc-toggle svg { display: block; opacity: 0.85; }
+.toc-toggle:hover {
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.22), rgba(128, 128, 128, 0.04));
+  width: 22px;
+}
+.toc-toggle svg {
+  display: block;
+  color: rgba(128, 128, 128, 0.95);
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toc-toggle:hover svg {
+  opacity: 1;
+  transform: translateX(3px);
+}
 
 .toc-overlay {
   position: fixed;
