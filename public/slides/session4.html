@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Session 4 &middot; Towards Agent-First SE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./slides.css" />
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ================== SLIDE 1: Title ================== -->
+<div class="slide slide-dark active" id="s0">
+  <div class="slide-inner">
+    <div class="slide-label">Week 4 &middot; Session 4 &middot; 20-Minute Review</div>
+    <h1>Towards Agent-First SE</h1>
+    <p class="subtitle" style="color: #D4D4D4;">When teams of agents become the primary code producers, the engineering work shifts from writing code to building the system around the code. The industry calls this <em>harness engineering</em>. This session is the shape of that work, drawn from the seven readings.</p>
+    <div class="items" style="margin-top: 32px;">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text"><strong>The shift.</strong> Code is free. The bottleneck moves up the stack. Read the frontier labs honestly.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text"><strong>Pillars.</strong> Six things the sources converge on, with the source quotes attached.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text"><strong>Approaches and open debates.</strong> Different shapes that put the pillars to work, and where the sources actually disagree.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 2: The Shift ================== -->
+<div class="slide" id="s1">
+  <div class="slide-inner">
+    <div class="slide-label">Part 1 &middot; The Shift</div>
+    <h2>Code Is Free. The Bottleneck Moves.</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Ryan Lopopolo, OpenAI, AI Engineer London 2026.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"Implementation is no longer the scarce resource of what it means to do the job of software engineering. Code is free. Hiring the hands on the keyboards as part of our teams is only constrained by GPU capacity and token budgets. Each engineer today in this room has access to five, fifty, or five thousand engineers worth of capacity, twenty-four seven."</p>
+      <cite>Ryan Lopopolo &middot; AI Engineer London 2026</cite>
+    </div>
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <div class="col-label">What was scarce</div>
+        <div class="items" style="margin-top: 8px;">
+          <div class="item"><span class="item-text">Engineer hours at the keyboard</span></div>
+          <div class="item"><span class="item-text">Implementation throughput</span></div>
+          <div class="item"><span class="item-text">Time to write tests, lints, docs</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">What is scarce now</div>
+        <div class="items" style="margin-top: 8px;">
+          <div class="item"><span class="item-text">Human time</span></div>
+          <div class="item"><span class="item-text">Human and model attention</span></div>
+          <div class="item"><span class="item-text">The model context window</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 3: Reading the labs honestly ================== -->
+<div class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="slide-label">Part 1 &middot; The Shift</div>
+    <h2>Reading the Frontier Labs Honestly</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Anthropic, OpenAI, and Google are publishing a lot here. Hold two things at once.</p>
+    <div class="two-col">
+      <div class="card card-accent">
+        <div class="col-label" style="margin-bottom: 8px;">Discount the headline</div>
+        <p>Frontier labs have strong commercial incentives to say AI can automate coding right now. The framing is calibrated to investors, customers, and the model narrative. Take any blanket claim with a grain of salt.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="col-label" style="margin-bottom: 8px;">Take the practical seriously</div>
+        <p>The arms race between labs makes it expensive to lie to themselves about their own codebases. What they describe operating internally is probably real, even if its public presentation is glossier than the lived experience.</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Crucially, the OpenAI piece is honest about the conditions: <em>"There was no pre-existing human-written code to anchor the system. From the beginning, the repository was shaped by the agent."</em> They explicitly disclaim generalisation. What they actually argue for, once you strip the framing, is mundane: tests, types, lints, reviews, clean documentation, sound architecture, security. Reasonable. Actionable. Not magic.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 4: Pillars divider ================== -->
+<div class="slide" id="s3">
+  <div class="slide-inner">
+    <div class="slide-label">Part 2</div>
+    <h1>Six Pillars</h1>
+    <p class="subtitle">Things multiple sources converge on, with the actual passages attached. None is novel as an engineering practice. What is novel is treating them as the centre of the work, not its periphery.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 5: Pillar 1 - Harness IS the work ================== -->
+<div class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 01</div>
+    <h2>The Harness IS the Engineering Work</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">The model is roughly constant in any given week. The codebase, the tools, the docs, the test infrastructure, the way work is described and decomposed: that is what you control. That is where leverage lives.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"Building software still demands discipline, but the discipline shows up more in the scaffolding rather than the code. The tooling, abstractions, and feedback loops that keep the codebase coherent are increasingly important."</p>
+      <cite>OpenAI &middot; Harness Engineering &middot; Feb 2026</cite>
+    </div>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Lopopolo pushes this further in the talk: <em>"Loadbearing infrastructure for our AI future: you can just prompt things."</em> AGENTS.md is a prompt. Lint error messages with remediation are prompts. Review agents that comment on PRs are prompts. The repo is a giant standing prompt the agent re-reads every run.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 6: Pillar 2 - Persistent state ================== -->
+<div class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 02</div>
+    <h2>Persistent State, Not Chat</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">A long-running agent treated as a chat session forgets, drifts, and contradicts itself. The same agent treated as a worker that reads and writes durable artefacts is a different animal.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"Each new session begins with no memory of what came before."</p>
+      <cite>Anthropic &middot; Effective Harnesses for Long-Running Agents &middot; Nov 2025</cite>
+    </div>
+    <div class="two-col" style="margin-top: 22px;">
+      <div>
+        <div class="col-label">Anthropic harnesses</div>
+        <p style="font-size: 14px; line-height: 1.55; color: var(--body);">claude-progress.txt, JSON feature lists, init.sh as the standard startup. Each session re-reads the artefacts.</p>
+      </div>
+      <div>
+        <div class="col-label">OpenAI harness</div>
+        <p style="font-size: 14px; line-height: 1.55; color: var(--body);">A structured docs/ tree as the system of record. Plans treated as first-class artefacts, versioned alongside the code they describe.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 7: Pillar 3 - Legibility ================== -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 03</div>
+    <h2>Legibility for Agents</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">What is invisible to an agent is invisible to the system. Make the implicit explicit.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"From the agent's point of view, anything it can't access in-context while running effectively doesn't exist. That Slack discussion that aligned the team on an architectural pattern? If it isn't discoverable to the agent, it's illegible in the same way it would be unknown to a new hire joining three months later."</p>
+      <cite>OpenAI &middot; Harness Engineering &middot; Feb 2026</cite>
+    </div>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Lopopolo in the talk: <em>"Code in the file system is also text which means it's effectively prompts you're giving to your coding agent."</em> Practical consequences: AGENTS.md as a roughly hundred-line table of contents, structured docs/ folders, one canonical way to write async helpers, one programming language, one way of writing CI scripts. Same shapes everywhere reduce the attention the model has to spend understanding any one place.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 8: Pillar 4 - Mechanical signal ================== -->
+<div class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 04</div>
+    <h2>Mechanical Signal Everywhere</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Agents produce output faster than humans can carefully read it. The harness has to provide signal a machine can check.</p>
+    <div class="quote" style="margin-top: 18px;">
+      <p>"By enforcing invariants, not micromanaging implementations, we let agents ship fast without undermining the foundation. In a human-first workflow these rules might feel pedantic. With agents, they become multipliers: once encoded, they apply everywhere at once."</p>
+      <cite>OpenAI &middot; Harness Engineering &middot; Feb 2026</cite>
+    </div>
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <h3>Custom lints with remediation</h3>
+        <p>Error messages written to inject remediation instructions back into the agent's context. Lints become prompts.</p>
+      </div>
+      <div class="card">
+        <h3>Tests <em>about the source</em></h3>
+        <p>Not just behavioural tests. Lopopolo: a test that asserts files are no longer than 350 lines, structural tests on dependency edges between layers.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 9: Pillar 5 - Sandboxes + observability ================== -->
+<div class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 05</div>
+    <h2>Sandboxes and Observable Execution</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Isolated execution per unit of work, with the agent able to inspect logs, metrics, and traces directly.</p>
+    <div class="grid-2" style="margin-top: 22px;">
+      <div class="card">
+        <h3>Per-worktree app</h3>
+        <p>OpenAI: every change runs against a fully isolated app instance, with an ephemeral observability stack (logs, metrics, traces) torn down with the worktree. Codex queries logs with LogQL and metrics with PromQL.</p>
+      </div>
+      <div class="card">
+        <h3>Per-issue workspace</h3>
+        <p>Symphony's three safety invariants are explicit: the coding agent runs only inside its workspace, the workspace is contained inside a sanitised root, and the workspace key uses only safe characters.</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 15px; color: var(--muted); font-family: var(--mono);">Same shape across the sources: an isolated, replayable, observable place for the agent to act and a stable boundary against everything else.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 10: Pillar 6 - Multi-agent structure ================== -->
+<div class="slide" id="s9">
+  <div class="slide-inner">
+    <div class="slide-label">Pillar 06</div>
+    <h2>Multi-Agent Coordination Needs Structure</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">A single agent on a task does not need orchestration. A team of agents on a shared codebase does. The sources agree on this and disagree on the shape, which is the next section.</p>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item">
+        <span class="item-num">A</span>
+        <span class="item-text"><strong>Anthropic harnesses.</strong> Two agents, an initialiser and a coding agent.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">B</span>
+        <span class="item-text"><strong>OpenAI harness.</strong> A "Ralph Wiggum Loop": the agent reviews its own changes, then requests other agents to review, locally and in the cloud, until satisfied.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">C</span>
+        <span class="item-text"><strong>Symphony.</strong> Many parallel agents pulling work from a Linear board.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">D</span>
+        <span class="item-text"><strong>Anthropic Agent Teams.</strong> Three to five peer teammates with a shared task list and direct messaging.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 11: Approaches divider ================== -->
+<div class="slide" id="s10">
+  <div class="slide-inner">
+    <div class="slide-label">Part 3</div>
+    <h1>Approaches</h1>
+    <p class="subtitle">Six instantiations of the pillars. Same problem, different pressure points. Read them as a sample of what the field has tried, not as competing methodologies you have to pick from.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 12: Anthropic Effective Harnesses ================== -->
+<div class="slide" id="s11">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 01 &middot; Anthropic &middot; Nov 2025</div>
+    <h2>Effective Harnesses for Long-Running Agents</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">A two-agent pattern. An initialiser establishes a structured environment. A coding agent makes incremental progress and leaves clean artefacts.</p>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item"><span class="item-text">A JSON feature list with pass and fail status, so the system always knows what is done.</span></div>
+      <div class="item"><span class="item-text">claude-progress.txt as a session-by-session log, read at the start of every new session.</span></div>
+      <div class="item"><span class="item-text">init.sh standardising dev-server startup. Browser automation for end-to-end verification.</span></div>
+      <div class="item"><span class="item-text">"Clean state" defined as <em>"the kind of code that would be appropriate for merging to a main branch."</em></span></div>
+    </div>
+    <p style="margin-top: 22px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Tradeoffs they call out: single vs multi-agent unclear, browser automation cannot catch every bug, generalisation beyond web dev unknown.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 13: OpenAI Harness Engineering ================== -->
+<div class="slide" id="s12">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 02 &middot; OpenAI &middot; Feb 2026</div>
+    <h2>Harness Engineering: Codex in an Agent-First World</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Five months. One internal product. Roughly one million lines, fifteen hundred PRs, three to seven engineers. Zero manually-written code. Started from an empty git repository.</p>
+    <div class="grid-2" style="margin-top: 18px;">
+      <div class="card card-accent">
+        <h3>The codebase is the harness</h3>
+        <p>AGENTS.md as a hundred-line table of contents. A structured docs/ tree as the system of record. Plans as first-class artefacts. A "doc-gardening" agent opens fix-up PRs against stale documentation.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Application legibility</h3>
+        <p>App bootable per git worktree, so Codex drives one isolated instance per change. Chrome DevTools Protocol wired into the agent runtime. Local observability stack (Vector to Victoria Logs / Metrics / Traces) ephemeral per worktree.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Layered domain architecture</h3>
+        <p>Each business domain split into Types to Config to Repo to Service to Runtime to UI. Cross-cutting via a single Providers interface. Enforced mechanically with custom Codex-generated lints and structural tests.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Throughput changes the merge philosophy</h3>
+        <p>Minimal blocking gates. Short-lived PRs. Test flakes addressed with follow-up runs rather than blocking. Justified because corrections are cheap and waiting is expensive.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 14: Lopopolo talk operational gloss ================== -->
+<div class="slide" id="s13">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 02 (continued) &middot; The Talk</div>
+    <h2>The Operational Gloss</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Lopopolo's AI Engineer London talk presents the same nine months of work with sharper practical detail.</p>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item">
+        <span class="item-num">A</span>
+        <span class="item-text"><strong>Friday garbage-collection day.</strong> One day a week, every engineer takes the slop they observed in the last week and figures out how to categorically eliminate it. Comments get bucketed by persona (front-end architect, reliability, scalability). Each persona becomes a review agent that runs on every push.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">B</span>
+        <span class="item-text"><strong>Tests <em>about</em> the source code.</strong> A test that asserts no file is longer than three hundred and fifty lines. Structural tests on dependency edges between layers. Code shape becomes a load-bearing concern, not an aesthetic one.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">C</span>
+        <span class="item-text"><strong>Plan mode opinion.</strong> "I should be able to drop a ticket in and have it do the job anyway." If you do use plans, push them as separate PRs and human-review every line; an unread approved plan is a stack of bad instructions.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">D</span>
+        <span class="item-text"><strong>The closing principle.</strong> "Every time I have to type continue to the agent is a failure of the harness to provide enough context around what it means to continue to completion."</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 15: Symphony ================== -->
+<div class="slide" id="s14">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 03 &middot; OpenAI &middot; Apr 2026</div>
+    <h2>Symphony: Ticket Boards as the Control Plane</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Once the codebase was harness-ready, the next bottleneck appeared: humans context-switching across multiple Codex sessions.</p>
+    <div class="quote" style="margin-top: 18px;">
+      <p>"We had effectively built a team of extremely capable junior engineers, then assigned our human engineers to micromanaging them. That wasn't going to scale."</p>
+      <cite>OpenAI &middot; Symphony &middot; Apr 2026</cite>
+    </div>
+    <div class="items" style="margin-top: 22px;">
+      <div class="item">
+        <span class="item-num">A</span>
+        <span class="item-text"><strong>Linear as a state machine.</strong> Every open issue maps to a dedicated agent workspace. Symphony continuously watches the board and ensures every active task has an agent in the loop.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">B</span>
+        <span class="item-text"><strong>Workflow lives in WORKFLOW.md.</strong> The team's workflow is repo-versioned policy. Symphony itself is a SPEC.md, language-agnostic. The reference implementation is in Elixir.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">C</span>
+        <span class="item-text"><strong>Objectives, not transitions.</strong> They explicitly moved away from rigid state machines. <em>"Models can solve bigger problems than the box we try to fit them in."</em></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 16: Three more shapes ================== -->
+<div class="slide" id="s15">
+  <div class="slide-inner">
+    <div class="slide-label">Approaches 04 / 05 / 06</div>
+    <h2>Three More Shapes</h2>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item">
+        <span class="item-num">04</span>
+        <span class="item-text"><strong>SASE</strong> &middot; Hassan et al., Sep 2025. An academic decomposition. Four redefined SE pillars (Actors, Processes, Artefacts, Tools) plus a structured duality of <em>SE for Humans</em> and <em>SE for Agents</em>. Six engineering activities (BriefingEng, ALE, ATME, AGE, ATLE, ATIE). Useful for naming the parts when the practitioner literature gets confusing.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">05</span>
+        <span class="item-text"><strong>Verified Spec-Driven Development</strong> &middot; Doll, Mar 2026. Spec Supremacy: the spec is the highest authority below the human. Four-Dimensional Convergence: spec, tests, implementation, and formal proofs all survive an Adversary running with fresh context and zero tolerance.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">06</span>
+        <span class="item-text"><strong>Agent Teams</strong> &middot; Anthropic, experimental in Claude Code 2.1.32+. A team lead spawns three to five peer teammates with their own context windows. They share a task list and message each other directly via a mailbox. Hooks (TaskCreated, TaskCompleted, TeammateIdle) gate quality.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 17: Comparison table ================== -->
+<div class="slide" id="s16">
+  <div class="slide-inner">
+    <div class="slide-label">Approaches &middot; Side by Side</div>
+    <h2>Same Pillars, Different Pressure Points</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>Where it pushes hardest</th>
+          <th>Where it stays light</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Anthropic Harnesses</strong></td>
+          <td>Two-agent pattern, durable artefacts, clean state</td>
+          <td>Multi-agent coordination is left to the user</td>
+        </tr>
+        <tr>
+          <td><strong>OpenAI Harness</strong></td>
+          <td>Codebase preparation, mechanical lints, application legibility</td>
+          <td>Single agent at a time on a single task</td>
+        </tr>
+        <tr>
+          <td><strong>Symphony</strong></td>
+          <td>Ticket-board control plane for many parallel agents</td>
+          <td>Assumes the codebase is already harness-ready</td>
+        </tr>
+        <tr>
+          <td><strong>SASE</strong></td>
+          <td>Naming and decomposing the field</td>
+          <td>Describes; does not operate</td>
+        </tr>
+        <tr>
+          <td><strong>Verified Spec</strong></td>
+          <td>Spec as binding contract, formal verification on the pure core</td>
+          <td>Heavy ceremony; formal proofs realistic for ~5-10% of code</td>
+        </tr>
+        <tr>
+          <td><strong>Agent Teams</strong></td>
+          <td>Peer collaboration with direct messaging</td>
+          <td>Experimental, several stated limitations</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================== SLIDE 18: Open Debates ================== -->
+<div class="slide" id="s17">
+  <div class="slide-inner">
+    <div class="slide-label">Part 4</div>
+    <h1>Open Debates</h1>
+    <p class="subtitle">Four places the sources actually disagree, with the passages that put each side on the record.</p>
+    <div class="grid-2" style="margin-top: 28px;">
+      <div class="card card-accent">
+        <h3>Greenfield versus brownfield</h3>
+        <p>OpenAI is explicit: the work <em>"should not be assumed to generalize without similar investment, at least not yet."</em> Anthropic and SASE are aimed at hybrid teams in existing organisations. The asymmetry is real and acknowledged.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>State machines versus objectives</h3>
+        <p>Symphony explicitly moved away from rigid transitions because <em>"models can solve bigger problems than the box we try to fit them in."</em> Verified Spec-Driven Development relies on a rigid pipeline of phases. Reasonable people pick differently.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Specs versus exploration</h3>
+        <p>VSDD's Spec Supremacy says nothing exists without spec traceability. The OpenAI harness says: keep the codebase navigable so agents can explore. gitcnd, replying to the VSDD gist: <em>"The spec becomes airtight because you built it, not before you build it."</em></p>
+      </div>
+      <div class="card card-accent">
+        <h3>Merge gates and human review</h3>
+        <p>OpenAI removed most blocking gates and ships agent-to-agent reviews. SASE proposes structured Merge-Readiness Packs. VSDD adds Four-Dimensional Convergence including formal proofs. Same goal, very different cost structures.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 19: Discussion 1 ================== -->
+<div class="slide" id="s18">
+  <div class="slide-inner">
+    <div class="slide-label">Discussion 1 &middot; What This Material Did to You</div>
+    <h2>Reactions to the Readings</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">No right answers. We are checking in on what the week put in front of you.</p>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text">Where did the lab's incentive to oversell show through? Where did the practical core feel honest?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text">Does "code is free" ring true to you, or does it feel like a slogan that ignores brownfield reality? What is the strongest counter-example you have?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text">Lopopolo's claim that a single patch involves five hundred unspecified non-functional decisions. Does that match how you write code reviews? What would you call the persona-shaped review agent you would build first on your codebase?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">4</span>
+        <span class="item-text">Was anything genuinely new this week, or is most of this carefully practised engineering culture renamed for the agent era?</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 20: Discussion 2 ================== -->
+<div class="slide" id="s19">
+  <div class="slide-inner">
+    <div class="slide-label">Discussion 2 &middot; Your Codebase</div>
+    <h2>What Would the Harness Look Like Where You Work?</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Bring your harness design document. Use these as scaffolding.</p>
+    <div class="items" style="margin-top: 18px;">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text">Which pillar is strongest in your codebase? Which is weakest? What would the highest-leverage Friday-style fix be?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text">Where does tribal knowledge live in your team? What is the highest-value thing you could promote into the repo this week?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text">If a team of agents started picking tickets off your board tomorrow, what breaks first? Which of the open debates would you have to take a position on?</span>
+      </div>
+      <div class="item">
+        <span class="item-num">4</span>
+        <span class="item-text">Where does human review add real signal in your team, and where is it ritual? Be honest.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 21: Closer ================== -->
+<div class="slide slide-dark" id="s20">
+  <div class="slide-inner">
+    <div class="slide-label">Closing</div>
+    <h1>The Bottleneck Is the System</h1>
+    <p class="subtitle" style="color: #D4D4D4;">Coding agents are not magic. The argument the seven readings make, with different vocabulary, is that the engineering work moves up the stack: you stop optimising the writing of code and you start optimising the system that makes correct code easy to produce. That system is your harness. The capstone is a chance to build one.</p>
+    <div class="quote" style="margin-top: 28px; background: #1A1A1A; border-left-color: var(--orange);">
+      <p style="color: #E5E5E5;">"Every time I have to type continue to the agent is like a failure of the harness to provide enough context around what it means to continue to completion."</p>
+      <cite style="color: #A3A3A3;">Ryan Lopopolo &middot; AI Engineer London 2026</cite>
+    </div>
+    <p style="margin-top: 28px; font-family: var(--mono); font-size: 11px; color: #A3A3A3; letter-spacing: 0.06em;">Next: Week 5 capstone &middot; build a project, harness-first.</p>
+  </div>
+</div>
+
+<script src="./slides.js"></script>
+
+</body>
+</html>
