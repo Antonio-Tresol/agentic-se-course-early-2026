@@ -25,31 +25,27 @@
     slides[0].classList.add('active');
   }
 
-  // ----- Build bottom navigation -----
+  // ----- Build bottom navigation, including the Contents button -----
   const nav = document.createElement('div');
   nav.className = 'nav';
   nav.innerHTML = [
+    '<button class="nav-btn nav-btn-toc" id="tocToggle" type="button" aria-label="Open slide contents">' +
+      '<svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true">' +
+        '<path d="M0.5 1h10M0.5 4.5h10M0.5 8h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>' +
+      '</svg>' +
+      '<span>Contents</span>' +
+    '</button>',
     '<button class="nav-btn" id="prevBtn" type="button">&larr; Prev</button>',
     '<span class="nav-count" id="slideCount">1 / ' + total + '</span>',
     '<button class="nav-btn" id="nextBtn" type="button">Next &rarr;</button>',
   ].join('');
   document.body.appendChild(nav);
+  const toggleBtn = nav.querySelector('#tocToggle');
   const slideCount = nav.querySelector('#slideCount');
   nav.querySelector('#prevBtn').addEventListener('click', () => navigate(-1));
   nav.querySelector('#nextBtn').addEventListener('click', () => navigate(1));
 
   // ----- Build TOC drawer -----
-  const toggleBtn = document.createElement('button');
-  toggleBtn.className = 'toc-toggle';
-  toggleBtn.id = 'tocToggle';
-  toggleBtn.type = 'button';
-  toggleBtn.setAttribute('aria-label', 'Open slide contents');
-  toggleBtn.innerHTML =
-    '<svg width="7" height="11" viewBox="0 0 7 11" fill="none" aria-hidden="true">' +
-    '<path d="M1.25 1.25l4 4.25-4 4.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
-    '</svg>';
-  document.body.appendChild(toggleBtn);
-
   const overlay = document.createElement('div');
   overlay.className = 'toc-overlay';
   overlay.id = 'tocOverlay';
@@ -143,11 +139,13 @@
   function openTOC() {
     drawer.classList.add('open');
     overlay.classList.add('visible');
+    document.body.classList.add('toc-open');
     syncTOC();
   }
   function closeTOC() {
     drawer.classList.remove('open');
     overlay.classList.remove('visible');
+    document.body.classList.remove('toc-open');
   }
   function toggleTOC() {
     if (drawer.classList.contains('open')) closeTOC();
