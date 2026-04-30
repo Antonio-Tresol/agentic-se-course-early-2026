@@ -471,3 +471,18 @@ If we draft a deck from these notes, the topic-oriented frame still works (princ
 - The frontier-lab framing slide should be tied to OpenAI's explicit greenfield disclaimer plus the mundane core of what they actually advocate.
 
 I'll wait for go-ahead before drafting the deck from these notes.
+
+---
+
+# Appendix: Field Report slide (added 2026-04-30)
+
+A "From the Field" slide was added between the comparison table (s16) and the Open Debates slide. Source for every claim: `harness.md` in the repo root — a primary-source technical reference document the user wrote about their own codebase. Mapping of slide claims to source sections:
+
+- "Agents, not humans, are the primary developers" — `harness.md` §0 TL;DR, lines 12–13.
+- "Greenfield from day one" — implied by the user's prompt; consistent with the harness being its own codebase rather than a retrofit.
+- "Three enforcement layers (Claude Code hooks → git pre-commit → agent review loop)" — `harness.md` §2, lines 75–91.
+- "You cannot leave a session, commit, or merge without all three passing" — verbatim language from §2 line 77.
+- "~17 skills, 6 specialised subagents, 13 mechanical-check modules with 38+ rules, 6 harness validators with 35 rules, 34 core beliefs, Promotion Log" — `harness.md` §0 TL;DR bullet list lines 17–25, plus §1 ("34 beliefs") and §6 (mechanical-check totals). Footnote: §9 caveat 3 notes the live count fluctuates ("17 or 18" depending on listing source); "around 17" hedges this.
+- "Error messages are agent prompts; every Violation ships a `fix` string" — `harness.md` §6.1 (Violation dataclass with `fix` field), §6.3 (verbatim claim "error messages are agent prompts").
+- "GAN loop: Claude generates, mechanical checks discriminate, subagents discriminate, loop until clean" — `harness.md` §0 lines 26 and §11 glossary entry "GAN loop".
+- "Codex-style codebase-preparation phase is in place; exploring Symphony as the next layer" — user's prompt; consistent with §1 (the harness "borrowed from OpenAI's Harness Engineering playbook"). Symphony is the deck's Approach 03 (slide s14).

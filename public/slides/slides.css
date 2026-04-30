@@ -289,6 +289,279 @@ p, li {
   font-weight: 500;
 }
 
+/* ----- Stat tiles (big-number KPIs) ----- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 12px 12px;
+  text-align: left;
+}
+.stat-num {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-num .stat-prefix {
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-right: 2px;
+  vertical-align: 2px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.stat-tile-accent { border-left: 3px solid var(--orange); padding-left: 11px; }
+
+/* ----- Pipeline flow (boxes + arrows) ----- */
+.flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 18px;
+}
+.flow-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.flow-step-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 500;
+}
+.flow-step-title {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.flow-step-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.flow-step-body {
+  font-family: var(--serif);
+  font-size: 12.5px;
+  color: var(--body);
+  line-height: 1.45;
+  margin-top: 4px;
+}
+.flow-arrow {
+  align-self: center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 400;
+  user-select: none;
+}
+
+/* Compact loop strip — generator → discriminator → loop */
+.loop-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 6px;
+}
+.loop-strip-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.loop-strip-node {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 9px;
+}
+.loop-strip-arrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+.loop-strip-tail {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--body);
+  margin-left: 6px;
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Responsive collapses */
+@media (max-width: 1100px) {
+  .stat-row { grid-template-columns: repeat(3, 1fr); }
+  .flow { grid-template-columns: 1fr; }
+  .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+}
+
+/* ----- Layer stack (3 large boxes + arrows for top-level architectures) ----- */
+.layer-stack {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 28px;
+}
+.layer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 24px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.layer::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--orange);
+}
+.layer-num {
+  font-family: var(--display);
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--orange);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-top: -2px;
+}
+.layer-body { flex: 1; min-width: 0; }
+.layer-title {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.layer-when {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.layer-when code {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  background: var(--bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text);
+}
+.layer-tags {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.layer-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.layer-arrow {
+  align-self: center;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 22px;
+  user-select: none;
+}
+.layer-rule {
+  margin-top: 18px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -0.005em;
+}
+
+.kpi-ribbon {
+  margin-top: 22px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.kpi {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.kpi b {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-right: 5px;
+  letter-spacing: -0.02em;
+}
+.kpi-sep {
+  color: var(--border);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .layer-stack { grid-template-columns: 1fr; }
+  .layer-arrow { transform: rotate(90deg); padding: 4px 0; }
+}
+
 /* ----- Anchors ----- */
 a {
   color: var(--text);
