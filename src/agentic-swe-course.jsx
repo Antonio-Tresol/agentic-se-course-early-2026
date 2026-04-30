@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const weeks = [
   {
@@ -10,6 +10,7 @@ const weeks = [
     prework: [],
     activity: null,
     session: "Introductions, live demo, installation, and overview of the course arc.",
+    slidesPath: "session0.html",
   },
   {
     id: 1,
@@ -22,6 +23,7 @@ const weeks = [
     ],
     activity: null,
     session: "We share what we tried during the course exercises and discuss what worked and what did not. Then we break into pairs for the nanobot exercise.",
+    slidesPath: "session1.html",
     liveActivity: {
       title: "Hands-On with nanobot",
       description: "We work on a shared codebase: nanobot, an ultra-lightweight AI agent written in Python (~4,000 lines of core code). In pairs, each person picks a small task and uses Claude Code to solve it. You have never seen this codebase before, and that is the point: notice what context the agent needs and does not have.",
@@ -47,6 +49,7 @@ const weeks = [
     ],
     activity: null,
     session: "We discuss questions from the courses and the context engineering article. Then we do a skill-building sprint.",
+    slidesPath: "session2.html",
     liveActivity: {
       title: "Skill-Building Sprint",
       description: "Pick either the nanobot codebase from Week 1 or something from your own workflow, and write a SKILL.md for it. Swap with a partner and test whether it triggers correctly.",
@@ -61,28 +64,30 @@ const weeks = [
   {
     id: 3,
     label: "Week 3",
-    title: "Solving Hard Problems",
-    intro: "Agents struggle with large, real-world codebases. This week you learn the Research-Plan-Implement (RPI) workflow and the broader pattern of treating context as a managed, persistent artifact rather than an ephemeral chat.",
+    title: "Working in Complex Codebases",
+    intro: "Coding agents handle small tasks fluently but struggle inside large brownfield code. This week is not a single workflow taught as the answer. It is the shape of the space: a small set of principles the sources agree on, a handful of approaches that put those principles to work in different ways, and a few open debates the community has not settled. We read multiple voices (Dex Horthy's two talks, the QRSPI revision, Google's Conductor, Anthropic's context engineering guide) and treat them as different instantiations of the same underlying problem rather than competing methodologies. This is research and active practice, not a settled discipline.",
     prework: [
       { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", verb: "Watch", note: "Dex Horthy · AI Engineer · Dec 2025" },
-      { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", verb: "Watch", note: "Dex Horthy · AI Engineer · 2026 · watch after the previous talk" },
-      { text: "Conductor: Introducing Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", verb: "Read", note: "Google · Dec 2025" },
-      { text: "Advanced Context Engineering for Coding Agents", url: "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md", verb: "Browse", note: "HumanLayer · Dec 2025 · optional" },
+      { text: "Advanced Context Engineering for Coding Agents", url: "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md", verb: "Read", note: "HumanLayer · Dec 2025 · companion write-up" },
+      { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", verb: "Watch", note: "Dex Horthy · AI Engineer · 2026 · watch after the previous two" },
+      { text: "From RPI to QRSPI", url: "https://alexlavaee.me/blog/from-rpi-to-qrspi/", verb: "Read", note: "Alex Lavaee · 2026 · summary of the revised framework" },
+      { text: "Conductor: Introducing Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", verb: "Read", note: "Google · Dec 2025 · how another vendor is shipping the same idea" },
       { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Re-read", note: "Anthropic · May 2025 · with RPI in mind" },
     ],
     activity: {
-      title: "RPI on OpenCode",
-      description: "We all work on the same codebase for this exercise: OpenCode, an open source coding agent written in Go. Yes, you are using a coding agent to work on a coding agent's codebase.",
-      repo: { url: "https://github.com/opencode-ai/opencode", label: "github.com/opencode-ai/opencode" },
-      detail: "Clone the repo, explore it, and pick a non-trivial task: an open issue, a missing feature, a refactor that touches multiple packages, a bug. Then apply the RPI workflow deliberately:",
+      title: "Pick an Approach, Try It on a Hard Problem",
+      description: "Pick a non-trivial task in a real codebase you know: an open issue, a missing feature, a multi-package refactor, a tricky bug. Choose one of the approaches from the readings (RPI, CRISPY/QRSPI, Conductor's spec-and-plan loop, the abstract research-plan-implement frame, or your own variant grounded in the six invariants). Run it deliberately and keep a short log so we can compare across approaches in the live session.",
+      detail: "The point is not to follow any one author's recipe. The point is to feel where the principles bite and where they do not.",
       steps: [
-        "Research: Have Claude Code investigate the OpenCode codebase. Do not let it write code. Produce a research summary: how is the project structured? Where does the relevant logic live? What are the dependencies?",
-        "Plan: From the research, produce a detailed plan (specific files, specific changes, testing strategy). Review the plan yourself before proceeding.",
-        "Implement: Execute the plan. Compact context between phases.",
+        "Pick the codebase and the task. Write down why this task is non-trivial: where the relevant logic lives, what the dependencies are, what could go wrong.",
+        "Pick an approach. Note which of the six invariants you expect to lean on most (context as the only lever, context scarcity, compaction, sub-agents as context control, leverage upstream, mechanical enforcement).",
+        "Run it. Keep a brief log: what context you gave the agent, where you compacted, where you verified, where you intervened.",
+        "Reflect in one paragraph: did the chosen approach hold? Which invariants actually mattered? Which open debate did you bump into (read the plan or read the code, full pipeline vs. lighter touch, vertical slices vs. horizontal layers, how far the agent could verify itself)?",
       ],
-      deliverable: "Bring the research doc and the plan to the live session. Write one paragraph of reflection: did separating research from implementation change the outcome compared to how you would have done it in Week 1?",
+      deliverable: "Bring the task description, the approach you chose, the brief log, and the reflection paragraph to the live session.",
     },
-    session: "We review each other's research docs and plans in small groups and discuss what worked, what broke, and when the RPI discipline felt worth it vs. when you wanted to skip ahead.",
+    session: "We compare what people did across different approaches and codebases. Where did the invariants hold? Where did they not? Which of the open debates did your task force you to take a position on?",
+    slidesPath: "session3.html",
   },
   {
     id: 4,
@@ -92,6 +97,8 @@ const weeks = [
     prework: [
       { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", verb: "Read", note: "Anthropic · Nov 2025 · start here" },
       { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", verb: "Read", note: "OpenAI · Feb 2026" },
+      { text: "Symphony: An Open-Source Spec for Codex Orchestration", url: "https://openai.com/index/open-source-codex-orchestration-symphony/", verb: "Read", note: "OpenAI · Apr 2026 · sequel to the OpenAI harness piece; ticket boards as the agent control plane" },
+      { text: "Harness Engineering: Humans Steer, Agents Execute", url: "https://www.youtube.com/watch?v=am_oeAoUhew", verb: "Watch", note: "Ryan Lopopolo · AI Engineer London · 2026 · live synthesis after nine months of operating the harness" },
       { text: "Agentic Software Engineering: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", verb: "Read", note: "Hassan et al. · Sep 2025 · focus on SASE framework" },
       { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", verb: "Read", note: "Doll · Mar 2026" },
       { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Anthropic" },
@@ -109,6 +116,7 @@ const weeks = [
       deliverable: "A markdown document (roughly one page, more is fine). If you are doing the Week 5 capstone, this document becomes the blueprint for your project.",
     },
     session: "Each participant presents their harness design. We discuss what is most creative, what is most practical, and close with a course retrospective.",
+    slidesPath: "session4.html",
   },
   {
     id: 5,
@@ -135,6 +143,7 @@ const weeks = [
     successCriterion: "A fresh agent session, dropped into your repo with no prior context, can pick up a new feature and produce a result that is working, tested, validated, correct, coherent with the principles of the codebase, and merge-ready. No slop. Minimal human steering. As models get more capable and agent throughput continues to exceed what a single human can review, the quality of your harness determines the quality of the output. You are building the system that scales.",
     deliverableNote: "The repository itself, including the harness. The code matters, but the scaffolding matters more. Ask yourself: if someone else cloned this repo and ran a team of agents on it, would the output be good?",
     session: "Demo day. Each participant demos their project and walks through their harness: what did you set up, what worked, what would you change? Show both the running project and the engineering system behind it.",
+    slidesPath: undefined,
   },
 ];
 
@@ -156,20 +165,22 @@ const resources = {
   articles: [
     { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", note: "Anthropic · May 2025" },
     { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", note: "Anthropic · Nov 2025" },
-    { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", note: "HumanLayer · Dec 2025" },
-    { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", note: "HumanLayer · 2026" },
+    { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", note: "Dex Horthy · AI Engineer · Dec 2025" },
+    { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", note: "Dex Horthy · AI Engineer · 2026" },
     { text: "Advanced Context Engineering for Coding Agents", url: "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md", note: "HumanLayer · Dec 2025" },
+    { text: "From RPI to QRSPI", url: "https://alexlavaee.me/blog/from-rpi-to-qrspi/", note: "Alex Lavaee · 2026" },
     { text: "Conductor: Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", note: "Google · Dec 2025" },
     { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", note: "OpenAI · Feb 2026" },
-    { text: "Agentic SE: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", note: "Hassan et al. · Sep 2025" },
+    { text: "Symphony: An Open-Source Spec for Codex Orchestration", url: "https://openai.com/index/open-source-codex-orchestration-symphony/", note: "OpenAI · Apr 2026" },
+    { text: "Harness Engineering: Humans Steer, Agents Execute", url: "https://www.youtube.com/watch?v=am_oeAoUhew", note: "Ryan Lopopolo · AI Engineer London · 2026" },
+    { text: "Agentic Software Engineering: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", note: "Hassan et al. · Sep 2025" },
     { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", note: "Doll · Mar 2026" },
   ],
   agents: [
     { text: "Codex by OpenAI", url: "https://openai.com/codex/", note: "OpenAI" },
     { text: "GitHub Copilot CLI", url: "https://github.com/features/copilot/cli", note: "GitHub" },
     { text: "OpenCode", url: "https://opencode.ai/", note: "Anomaly Innovations" },
-    { text: "nanobot", url: "https://github.com/HKUDS/nanobot", note: "HKUDS" },
-    { text: "OpenClaw", url: "https://docs.openclaw.ai/start/getting-started", note: "Peter Steinberger" },
+    { text: "nanobot", url: "https://github.com/HKUDS/nanobot", note: "HKUDS · used in Weeks 1 and 2 live activities" },
   ],
 };
 
@@ -263,8 +274,8 @@ const furtherReading = [
 ];
 
 const palette = {
-  bg: "#FFFFFF",       // page background
-  surface: "#F7F7F7",  // card surfaces
+  bg: "#F4F4F4",       // page background — light gray (Far AI style)
+  surface: "#FFFFFF",  // card surfaces — white, elevated against the gray page
   border: "#E5E5E5",   // card borders and dividers
   text: "#0A0A0A",     // headings and primary text (also used for inline links + emphasized labels)
   body: "#262626",     // body paragraph text
@@ -272,6 +283,29 @@ const palette = {
   stepNumber: "#525252", // numbered-step index in activity lists
   orange: "#CC785C",   // Anthropic clay-orange, used only for link arrows
 };
+
+// ---------------------------------------------------------------------------
+// useHashRoute hook
+// ---------------------------------------------------------------------------
+function useHashRoute() {
+  const getView = () => {
+    const hash = window.location.hash;
+    if (hash.startsWith("#/sessions")) return "sessions";
+    if (hash.startsWith("#/further-reading")) return "further-reading";
+    return "curriculum";
+  };
+  const [view, setView] = useState(getView);
+  useEffect(() => {
+    const handler = () => setView(getView());
+    window.addEventListener("hashchange", handler);
+    return () => window.removeEventListener("hashchange", handler);
+  }, []);
+  return view;
+}
+
+// ---------------------------------------------------------------------------
+// Shared primitive components (kept exactly as before)
+// ---------------------------------------------------------------------------
 
 function Arrow({ size = 12, color = "currentColor" }) {
   return (
@@ -304,7 +338,7 @@ function InlineLink({ href, children, style }) {
   );
 }
 
-// Unified link row: [index.] [verb] name  meta  ↗
+// Unified link row: [index.] [verb] name  meta  arrow
 // Used for both week pre-work lists and the All Resources section.
 function LinkRow({ href, title, meta, index, verb, compact = false }) {
   return (
@@ -327,15 +361,15 @@ function LinkRow({ href, title, meta, index, verb, compact = false }) {
           {index}.
         </span>
       )}
-      <span style={{ color: palette.body, fontFamily: "var(--body)", fontSize: compact ? "14px" : "15px" }}>
+      <span style={{ color: palette.body, fontFamily: "var(--body)", fontSize: compact ? "14px" : "15px", flex: "1 1 auto", minWidth: 0 }}>
         {verb && <>{verb}{" "}</>}
         <em style={{ color: palette.text, fontStyle: "normal", fontWeight: 400 }}>{title}</em>
+        {meta && (
+          <span style={{ fontFamily: "var(--mono)", fontSize: "10.5px", color: palette.muted, marginLeft: "10px" }}>
+            {meta}
+          </span>
+        )}
       </span>
-      {meta && (
-        <span style={{ fontFamily: "var(--mono)", fontSize: "10.5px", color: palette.muted, whiteSpace: "nowrap" }}>
-          {meta}
-        </span>
-      )}
       <Arrow size={compact ? 10 : 12} color={palette.orange} />
     </a>
   );
@@ -350,78 +384,6 @@ function OptionalBadge() {
     }}>
       Optional
     </span>
-  );
-}
-
-function WeekCard({ week, isOpen, onToggle }) {
-  return (
-    <div style={{ borderTop: `1px solid ${palette.border}` }}>
-      <AccordionHeader
-        leftLabel={week.label}
-        title={week.title}
-        trailing={week.optional ? <OptionalBadge /> : null}
-        isOpen={isOpen}
-        onClick={onToggle}
-      />
-
-      {isOpen && (
-        <div style={{ paddingLeft: "76px", paddingBottom: "36px", paddingRight: "16px", animation: "fadeIn 0.25s ease" }}>
-          <p style={{ fontFamily: "var(--body)", fontSize: "15.5px", lineHeight: 1.72, color: palette.body, marginBottom: "24px", maxWidth: "620px" }}>
-            {week.intro}
-          </p>
-          {week.detail && (
-            <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.7, color: palette.muted, marginBottom: "24px", maxWidth: "620px" }}>
-              {week.detail}
-            </p>
-          )}
-
-          {week.prework.length > 0 && (
-            <div style={{ marginBottom: "26px" }}>
-              <Label>Pre-work</Label>
-              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                {week.prework.map((item, i) => (
-                  <LinkRow key={i} href={item.url} title={item.text} meta={item.note} index={i + 1} verb={item.verb} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {week.activity && (
-            <ActivityCard label="Pre-work Activity" activity={week.activity} style={{ marginBottom: "26px" }} />
-          )}
-
-          {week.successCriterion && (
-            <div style={{ borderLeft: `3px solid ${palette.text}`, paddingLeft: "20px", marginBottom: "26px", maxWidth: "620px" }}>
-              <Label color={palette.text}>The Success Criterion</Label>
-              <p style={{ fontFamily: "var(--body)", fontSize: "15px", lineHeight: 1.72, color: palette.body }}>
-                {week.successCriterion}
-              </p>
-            </div>
-          )}
-
-          {week.deliverableNote && (
-            <p style={{
-              fontFamily: "var(--mono)", fontSize: "11.5px", color: palette.muted, marginBottom: "26px",
-              padding: "10px 14px", background: palette.surface, borderRadius: "4px", lineHeight: 1.6, maxWidth: "620px",
-              border: `1px solid ${palette.border}`,
-            }}>
-              Deliverable: {week.deliverableNote}
-            </p>
-          )}
-
-          <div style={{ marginBottom: week.liveActivity ? "26px" : "0" }}>
-            <Label>Live Session</Label>
-            <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.72, color: palette.body, maxWidth: "620px" }}>
-              {week.session}
-            </p>
-          </div>
-
-          {week.liveActivity && (
-            <ActivityCard label="Live Session Activity" activity={week.liveActivity} />
-          )}
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -466,7 +428,7 @@ function Section({ style, children }) {
   );
 }
 
-// Top-level section heading used for Curriculum / All Resources / Further Reading.
+// Top-level section heading used for Curriculum / Sessions / Further Reading.
 function SectionHeading({ children }) {
   return (
     <h2 style={{
@@ -478,7 +440,7 @@ function SectionHeading({ children }) {
   );
 }
 
-// "Expand all" / "Collapse all" pair used on Curriculum and Further Reading sections.
+// "Expand all" / "Collapse all" pair used on Curriculum, Sessions, and Further Reading sections.
 function ToggleAll({ onExpand, onCollapse }) {
   const btnStyle = {
     background: "none", border: "none", cursor: "pointer",
@@ -627,101 +589,201 @@ function ResourceSection({ title, items }) {
   );
 }
 
-export default function AgenticSECourse() {
+// ---------------------------------------------------------------------------
+// TopNav
+// ---------------------------------------------------------------------------
+function TopNav({ view, scrolled }) {
+  return (
+    <div style={{
+      position: "sticky",
+      top: 0,
+      zIndex: 100,
+      background: palette.bg,
+      borderBottom: `1px solid ${palette.border}`,
+      boxShadow: scrolled ? "0 1px 12px rgba(0,0,0,0.04)" : "none",
+      transition: "box-shadow 0.2s ease",
+    }}>
+      <div style={{ maxWidth: "820px", margin: "0 auto", padding: "18px 28px", display: "flex", gap: "32px" }}>
+        <NavLink href="#/" active={view === "curriculum"}>Curriculum</NavLink>
+        <NavLink href="#/sessions" active={view === "sessions"}>Sessions</NavLink>
+        <NavLink href="#/further-reading" active={view === "further-reading"}>Further Reading</NavLink>
+      </div>
+    </div>
+  );
+}
+
+function NavLink({ href, active, children }) {
+  return (
+    <a
+      href={href}
+      className={active ? "nav-link nav-link--active" : "nav-link"}
+      style={{
+        fontFamily: "var(--mono)",
+        fontSize: "11px",
+        fontWeight: active ? 600 : 500,
+        textDecoration: "none",
+        letterSpacing: "0.12em",
+        textTransform: "uppercase",
+        color: active ? palette.text : palette.muted,
+        position: "relative",
+        paddingBottom: "6px",
+        transition: "color 0.15s ease",
+      }}
+    >
+      {children}
+      {active && (
+        <span style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: "-2px",
+          height: "2px",
+          background: palette.orange,
+        }} />
+      )}
+    </a>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// CurriculumWeekCard
+// ---------------------------------------------------------------------------
+function CurriculumWeekCard({ week, isOpen, onToggle }) {
+  return (
+    <div style={{ borderTop: `1px solid ${palette.border}` }}>
+      <AccordionHeader
+        leftLabel={week.label}
+        title={week.title}
+        trailing={week.optional ? <OptionalBadge /> : null}
+        isOpen={isOpen}
+        onClick={onToggle}
+      />
+
+      {isOpen && (
+        <div style={{ paddingLeft: "76px", paddingBottom: "36px", paddingRight: "16px", animation: "fadeIn 0.25s ease" }}>
+          <p style={{ fontFamily: "var(--body)", fontSize: "15.5px", lineHeight: 1.72, color: palette.body, marginBottom: "24px", maxWidth: "620px" }}>
+            {week.intro}
+          </p>
+          {week.detail && (
+            <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.7, color: palette.muted, marginBottom: "24px", maxWidth: "620px" }}>
+              {week.detail}
+            </p>
+          )}
+
+          {week.prework.length > 0 && (
+            <div style={{ marginBottom: "26px" }}>
+              <Label>Pre-work</Label>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                {week.prework.map((item, i) => (
+                  <LinkRow key={i} href={item.url} title={item.text} meta={item.note} index={i + 1} verb={item.verb} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// SessionWeekCard
+// ---------------------------------------------------------------------------
+function SessionWeekCard({ week, isOpen, onToggle }) {
+  return (
+    <div style={{ borderTop: `1px solid ${palette.border}` }}>
+      <AccordionHeader
+        leftLabel={week.label}
+        title={week.title}
+        trailing={week.optional ? <OptionalBadge /> : null}
+        isOpen={isOpen}
+        onClick={onToggle}
+      />
+
+      {isOpen && (
+        <div style={{ paddingLeft: "76px", paddingBottom: "36px", paddingRight: "16px", animation: "fadeIn 0.25s ease" }}>
+          <div style={{ marginBottom: (week.liveActivity || week.activity) ? "26px" : "20px" }}>
+            <Label>Live Session</Label>
+            <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.72, color: palette.body, maxWidth: "620px" }}>
+              {week.session}
+            </p>
+          </div>
+
+          {week.activity && (
+            <ActivityCard label="Pre-work Activity" activity={week.activity} style={{ marginBottom: "26px" }} />
+          )}
+
+          {week.liveActivity && (
+            <ActivityCard label="Live Session Activity" activity={week.liveActivity} style={{ marginBottom: "26px" }} />
+          )}
+
+          {week.successCriterion && (
+            <div style={{ borderLeft: `3px solid ${palette.text}`, paddingLeft: "20px", marginBottom: "26px", maxWidth: "620px" }}>
+              <Label color={palette.text}>The Success Criterion</Label>
+              <p style={{ fontFamily: "var(--body)", fontSize: "15px", lineHeight: 1.72, color: palette.body }}>
+                {week.successCriterion}
+              </p>
+            </div>
+          )}
+
+          {week.deliverableNote && (
+            <p style={{
+              fontFamily: "var(--mono)", fontSize: "11.5px", color: palette.muted, marginBottom: "26px",
+              padding: "10px 14px", background: palette.surface, borderRadius: "4px", lineHeight: 1.6, maxWidth: "620px",
+              border: `1px solid ${palette.border}`,
+            }}>
+              Deliverable: {week.deliverableNote}
+            </p>
+          )}
+
+          <div style={{ marginTop: "4px" }}>
+            {week.slidesPath ? (
+              <a
+                className="slides-btn"
+                href={`${import.meta.env.BASE_URL}slides/${week.slidesPath}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block",
+                  border: `1px solid ${palette.text}`,
+                  borderRadius: "8px",
+                  padding: "12px 18px",
+                  fontFamily: "var(--mono)",
+                  fontSize: "13px",
+                  textDecoration: "none",
+                  color: palette.text,
+                  background: "transparent",
+                  transition: "background 0.15s ease, color 0.15s ease",
+                }}
+              >
+                Open slides ↗
+              </a>
+            ) : (
+              <span style={{ fontFamily: "var(--mono)", fontSize: "12px", color: palette.muted }}>
+                Slides not yet prepared.
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// CurriculumView
+// ---------------------------------------------------------------------------
+function CurriculumView() {
   const [openWeeks, setOpenWeeks] = useState(new Set());
   const toggle = (id) => setOpenWeeks(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
   const expandAll = () => setOpenWeeks(new Set(weeks.map(w => w.id)));
   const collapseAll = () => setOpenWeeks(new Set());
 
-  const [openGroups, setOpenGroups] = useState(new Set());
-  const toggleGroup = (i) => setOpenGroups(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
-  const expandAllGroups = () => setOpenGroups(new Set(furtherReading.map((_, i) => i)));
-  const collapseAllGroups = () => setOpenGroups(new Set());
+  const [bibliographyOpen, setBibliographyOpen] = useState(false);
 
   return (
-    <div style={{ minHeight: "100vh", background: palette.bg, color: palette.text,
-      "--body": "'Source Serif 4', 'Source Serif Pro', Georgia, serif",
-      "--display": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      "--mono": "'JetBrains Mono', 'SF Mono', 'Fira Code', monospace",
-    }}>
-      <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-      <style>{`
-        @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        ::selection { background: #E5E5E5; color: #0A0A0A; }
-
-        /* Inline resource and prework links — underline on hover only */
-        .link-a em { transition: text-decoration 0.15s ease; }
-        .link-a svg { transition: transform 0.18s ease; }
-        .link-a:hover em {
-          text-decoration: underline;
-          text-underline-offset: 3px;
-          text-decoration-thickness: 1px;
-        }
-        .link-a:hover svg { transform: translate(2px, -2px); }
-
-        /* Plain anchor links — no underline by default, underline on hover */
-        .link-plain {
-          text-decoration: none;
-          transition: color 0.15s ease;
-        }
-        .link-plain svg { transition: transform 0.18s ease; }
-        .link-plain:hover {
-          text-decoration: underline !important;
-          text-underline-offset: 3px;
-          text-decoration-thickness: 1px;
-        }
-        .link-plain:hover svg { transform: translate(2px, -2px); }
-
-        /* Interactive content cards — Further Reading items and in-week activity cards */
-        .hover-card {
-          transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-        }
-        .hover-card svg { transition: transform 0.2s ease; }
-        .hover-card:hover {
-          border-color: #0A0A0A !important;
-          background: #F0F0F0 !important;
-          transform: translateY(-1px);
-        }
-        .hover-card:hover svg { transform: translate(2px, -2px); }
-
-        /* Accordion rows (week cards and Further Reading group headers) */
-        .accordion-btn { transition: background 0.15s ease; }
-        .accordion-btn:hover { background: #FAFAFA !important; }
-
-        /* Small text buttons (Expand all / Collapse all) */
-        .small-btn { transition: color 0.15s ease; }
-        .small-btn:hover { color: #0A0A0A !important; }
-      `}</style>
-
-      <header style={{ maxWidth: "820px", margin: "0 auto", padding: "72px 28px 0" }}>
-        <div style={{ fontFamily: "var(--mono)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: palette.muted, marginBottom: "22px", fontWeight: 500 }}>
-          Inverse Classroom · 5 Sessions + Capstone + Further Reading
-        </div>
-        <h1 style={{
-          fontFamily: "var(--display)", fontSize: "clamp(40px, 5.5vw, 56px)", fontWeight: 700,
-          lineHeight: 1.05, color: palette.text, marginBottom: "32px", letterSpacing: "-0.02em",
-        }}>
-          Agentic SE Course
-        </h1>
-        <p style={{ fontFamily: "var(--display)", fontSize: "22px", lineHeight: 1.5, fontWeight: 400, color: palette.text, maxWidth: "640px", marginBottom: "24px", letterSpacing: "-0.005em" }}>
-          Coding agents are already exceeding human throughput for many software engineering tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck is no longer writing code but ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.
-        </p>
-        <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
-          This course prepares you for that shift. You start by using a coding agent. Then you customise it. Then you learn disciplined workflows for complex codebases. And finally, you learn to design repositories built for agents: environments where teams of agents can do real work and do it right. The industry calls this <strong style={{ fontWeight: 600, color: palette.text }}>harness engineering</strong>. We know this is new ground. Rather than prescribe answers, we explore several perspectives on what agent-first engineering could look like.
-        </p>
-        <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
-          Each week you complete pre-work on your own (courses, readings, videos) and then we meet for one hour to discuss, ask questions, and work on something together.
-        </p>
-        <p style={{ fontFamily: "var(--mono)", fontSize: "12px", color: palette.text, lineHeight: 1.6, marginBottom: "12px" }}>
-          The Anthropic Skilljar courses used in Weeks 1 and 2 award certificates on completion.
-        </p>
-        <p style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.muted, lineHeight: 1.6 }}>
-          This curriculum was designed in March 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.
-        </p>
-      </header>
-
-      {/* Prerequisites */}
+    <>
+      {/* Prerequisites + Our Tool */}
       <Section style={{ padding: "52px 28px 0" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           <Card>
@@ -762,32 +824,81 @@ export default function AgenticSECourse() {
           <SectionHeading>Curriculum</SectionHeading>
           <ToggleAll onExpand={expandAll} onCollapse={collapseAll} />
         </div>
-        {weeks.map(w => <WeekCard key={w.id} week={w} isOpen={openWeeks.has(w.id)} onToggle={() => toggle(w.id)} />)}
+        {weeks.map(w => (
+          <CurriculumWeekCard key={w.id} week={w} isOpen={openWeeks.has(w.id)} onToggle={() => toggle(w.id)} />
+        ))}
         <div style={{ borderTop: `1px solid ${palette.border}` }} />
       </Section>
 
-      {/* Resources */}
-      <Section style={{ padding: "60px 28px 0" }}>
-        <div style={{ marginBottom: "28px" }}>
-          <SectionHeading>All Resources</SectionHeading>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px 52px" }}>
-          <ResourceSection title="Courses" items={resources.courses} />
-          <ResourceSection title="Documentation" items={resources.docs} />
-          <ResourceSection title="Articles & Talks" items={resources.articles} />
-          <ResourceSection title="Other Agents" items={resources.agents} />
-        </div>
+      {/* Bibliography (collapsed by default) */}
+      <Section style={{ padding: "56px 28px 72px" }}>
+        <button
+          className="biblio-toggle"
+          onClick={() => setBibliographyOpen(v => !v)}
+          style={{
+            width: "100%",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            padding: 0,
+            textAlign: "left",
+          }}
+        >
+          <SectionHeading>Bibliography</SectionHeading>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "16px" }}>
+            <span style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.muted, letterSpacing: "0.04em" }}>
+              {resources.courses.length + resources.docs.length + resources.articles.length + resources.agents.length} resources
+            </span>
+            <span style={{
+              fontFamily: "var(--display)", fontSize: "22px", color: palette.muted, fontWeight: 300,
+              transition: "transform 0.25s ease", transform: bibliographyOpen ? "rotate(45deg)" : "rotate(0deg)",
+              display: "inline-block", lineHeight: 1,
+            }}>+</span>
+          </div>
+        </button>
+        <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.72, color: palette.muted, marginTop: "10px", marginBottom: "0", maxWidth: "620px" }}>
+          Every reading, course, documentation page, and tool referenced across the curriculum, in one place.
+        </p>
+        {bibliographyOpen && (
+          <div style={{ paddingTop: "28px", paddingBottom: "8px", animation: "fadeIn 0.25s ease" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px 52px" }}>
+              <ResourceSection title="Courses" items={resources.courses} />
+              <ResourceSection title="Documentation" items={resources.docs} />
+              <ResourceSection title="Articles & Talks" items={resources.articles} />
+              <ResourceSection title="Other Agents" items={resources.agents} />
+            </div>
+          </div>
+        )}
+      </Section>
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// FurtherReadingView
+// ---------------------------------------------------------------------------
+function FurtherReadingView() {
+  const [openGroups, setOpenGroups] = useState(new Set());
+  const toggleGroup = (i) => setOpenGroups(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
+  const expandAllGroups = () => setOpenGroups(new Set(furtherReading.map((_, i) => i)));
+  const collapseAllGroups = () => setOpenGroups(new Set());
+
+  return (
+    <>
+      <Section style={{ padding: "52px 28px 0" }}>
+        <p style={{ fontFamily: "var(--body)", fontSize: "15.5px", lineHeight: 1.72, color: palette.body, maxWidth: "640px" }}>
+          Selected deployment reports, architecture pieces, evaluation methodology, and recent research on agent-first software engineering. None of this is required for the course. It is here for the participant who wants to go deeper. Annotations are descriptive, not endorsements. Read them critically.
+        </p>
       </Section>
 
-      {/* Further Reading */}
-      <Section style={{ padding: "52px 28px 72px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
+      <Section style={{ padding: "40px 28px 72px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
           <SectionHeading>Further Reading</SectionHeading>
           <ToggleAll onExpand={expandAllGroups} onCollapse={collapseAllGroups} />
         </div>
-        <p style={{ fontFamily: "var(--body)", fontSize: "14.5px", lineHeight: 1.72, color: palette.muted, marginBottom: "28px", maxWidth: "620px" }}>
-          Selected deployment reports, architecture pieces, evaluation methodology, and recent research on agent-first software engineering. Annotations are descriptive, not endorsements. Read them critically.
-        </p>
         {furtherReading.map((group, gi) => {
           const isOpen = openGroups.has(gi);
           return (
@@ -810,6 +921,176 @@ export default function AgenticSECourse() {
         })}
         <div style={{ borderTop: `1px solid ${palette.border}` }} />
       </Section>
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// SessionsView
+// ---------------------------------------------------------------------------
+function SessionsView() {
+  const [openWeeks, setOpenWeeks] = useState(new Set());
+  const toggle = (id) => setOpenWeeks(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const expandAll = () => setOpenWeeks(new Set(weeks.map(w => w.id)));
+  const collapseAll = () => setOpenWeeks(new Set());
+
+  return (
+    <>
+      <Section style={{ padding: "52px 28px 0" }}>
+        <p style={{ fontFamily: "var(--body)", fontSize: "15.5px", lineHeight: 1.72, color: palette.body, maxWidth: "640px" }}>
+          This is proposed supporting material and activities to run the course. For each week you have a live-session plan, the activity to run together, and the slide deck. See the Curriculum view for prerequisites and pre-work readings.
+        </p>
+      </Section>
+
+      <Section style={{ padding: "40px 28px 72px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
+          <SectionHeading>Sessions</SectionHeading>
+          <ToggleAll onExpand={expandAll} onCollapse={collapseAll} />
+        </div>
+        {weeks.map(w => (
+          <SessionWeekCard key={w.id} week={w} isOpen={openWeeks.has(w.id)} onToggle={() => toggle(w.id)} />
+        ))}
+        <div style={{ borderTop: `1px solid ${palette.border}` }} />
+      </Section>
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Root component
+// ---------------------------------------------------------------------------
+export default function AgenticSECourse() {
+  const view = useHashRoute();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  return (
+    <div style={{ minHeight: "100vh", background: palette.bg, color: palette.text,
+      "--body": "'Source Serif 4', 'Source Serif Pro', Georgia, serif",
+      "--display": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "--mono": "'JetBrains Mono', 'SF Mono', 'Fira Code', monospace",
+      "--text": palette.text,
+      "--muted": palette.muted,
+      "--bg": palette.bg,
+      "--border": palette.border,
+    }}>
+      <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      <style>{`
+        @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        ::selection { background: #E5E5E5; color: #0A0A0A; }
+
+        /* Inline resource and prework links -- underline on hover only */
+        .link-a em { transition: text-decoration 0.15s ease; }
+        .link-a svg { transition: transform 0.18s ease; }
+        .link-a:hover em {
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          text-decoration-thickness: 1px;
+        }
+        .link-a:hover svg { transform: translate(2px, -2px); }
+
+        /* Plain anchor links -- no underline by default, underline on hover */
+        .link-plain {
+          text-decoration: none;
+          transition: color 0.15s ease;
+        }
+        .link-plain svg { transition: transform 0.18s ease; }
+        .link-plain:hover {
+          text-decoration: underline !important;
+          text-underline-offset: 3px;
+          text-decoration-thickness: 1px;
+        }
+        .link-plain:hover svg { transform: translate(2px, -2px); }
+
+        /* Interactive content cards -- Further Reading items and in-week activity cards */
+        .hover-card {
+          transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+        .hover-card svg { transition: transform 0.2s ease; }
+        .hover-card:hover {
+          border-color: #0A0A0A !important;
+          background: #F0F0F0 !important;
+          transform: translateY(-1px);
+        }
+        .hover-card:hover svg { transform: translate(2px, -2px); }
+
+        /* Accordion rows (week cards and Further Reading group headers) */
+        .accordion-btn { transition: background 0.15s ease; }
+        .accordion-btn:hover { background: #FAFAFA !important; }
+
+        /* Small text buttons (Expand all / Collapse all) */
+        .small-btn { transition: color 0.15s ease; }
+        .small-btn:hover { color: #0A0A0A !important; }
+
+        /* TopNav links */
+        .nav-link {
+          color: #737373;
+          transition: color 0.15s ease;
+        }
+        .nav-link:hover {
+          color: #0A0A0A;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          text-decoration-thickness: 1px;
+        }
+        .nav-link--active {
+          color: #0A0A0A;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          text-decoration-thickness: 1px;
+        }
+        .nav-link--active:hover {
+          color: #0A0A0A;
+        }
+
+        /* Slides button */
+        .slides-btn {
+          color: #0A0A0A;
+        }
+        .slides-btn:hover {
+          background: #0A0A0A !important;
+          color: #FFFFFF !important;
+        }
+      `}</style>
+
+      {/* Header (shared across both views) */}
+      <header style={{ maxWidth: "820px", margin: "0 auto", padding: "72px 28px 0" }}>
+        <h1 style={{
+          fontFamily: "var(--display)", fontSize: "clamp(40px, 5.5vw, 56px)", fontWeight: 700,
+          lineHeight: 1.05, color: palette.text, marginBottom: "32px", letterSpacing: "-0.02em",
+        }}>
+          Agentic SE Course
+        </h1>
+        <p style={{ fontFamily: "var(--display)", fontSize: "22px", lineHeight: 1.5, fontWeight: 400, color: palette.text, maxWidth: "640px", marginBottom: "24px", letterSpacing: "-0.005em" }}>
+          Coding agents are already exceeding human throughput for many software engineering tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck is no longer writing code but ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.
+        </p>
+        <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
+          This course prepares you for that shift. You start by using a coding agent. Then you customise it. Then you learn disciplined workflows for complex codebases. And finally, you learn to design repositories built for agents: environments where teams of agents can do real work and do it right. The industry calls this <strong style={{ fontWeight: 600, color: palette.text }}>harness engineering</strong>. We know this is new ground. Rather than prescribe answers, we explore several perspectives on what agent-first engineering could look like.
+        </p>
+        <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
+          Each week you complete pre-work on your own (courses, readings, videos) and then we meet for one hour to discuss, ask questions, and work on something together.
+        </p>
+        <p style={{ fontFamily: "var(--mono)", fontSize: "12px", color: palette.text, lineHeight: 1.6, marginBottom: "12px" }}>
+          The Anthropic Skilljar courses used in Weeks 1 and 2 award certificates on completion.
+        </p>
+        <p style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.muted, lineHeight: 1.6 }}>
+          This curriculum was developed in March-April 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.
+        </p>
+      </header>
+
+      {/* Sticky TopNav */}
+      <TopNav view={view} scrolled={scrolled} />
+
+      {/* Active view with fade-in on route change */}
+      <main key={view} style={{ animation: "fadeIn 0.25s ease" }}>
+        {view === "sessions" ? <SessionsView /> : view === "further-reading" ? <FurtherReadingView /> : <CurriculumView />}
+      </main>
     </div>
   );
 }

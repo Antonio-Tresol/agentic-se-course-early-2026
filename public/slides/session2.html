@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Session 2 &middot; Skills, Subagents, MCP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./slides.css" />
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- SLIDE 1: Title -->
+<div class="slide slide-dark active" id="s0">
+  <div class="slide-inner">
+    <div class="slide-label">Week 2 &middot; Session 2 &middot; 10-Minute Review</div>
+    <h1>Skills, Subagents, MCP</h1>
+    <p class="subtitle" style="color: #D4D4D4;">A fast walk through the three extension layers you studied this week. Same order as the Skilljar courses.</p>
+    <div class="items" style="margin-top: 32px;">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text"><strong>Skills.</strong> On-demand knowledge and invocable workflows.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text"><strong>Subagents.</strong> Isolated workers with their own context.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text"><strong>MCP.</strong> Connect Claude to external services and data.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RECAP ========== -->
+
+<!-- SLIDE 2: How Claude Code Works recap -->
+<div class="slide" id="s1">
+  <div class="slide-inner">
+    <div class="slide-label">Recap from Session 1 &middot; code.claude.com/docs/en/how-claude-code-works</div>
+    <h2>How Claude Code Works</h2>
+    <svg viewBox="0 0 760 170" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 12px 0 16px;">
+      <defs>
+        <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#CC785C"/>
+        </marker>
+      </defs>
+      <!-- Node 1 -->
+      <rect x="40" y="30" width="180" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="40" y1="30" x2="40" y2="110" stroke="#CC785C" stroke-width="3"/>
+      <text x="58" y="56" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373">01</text>
+      <text x="58" y="78" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#0A0A0A">Gather context</text>
+      <text x="58" y="96" font-family="Source Serif 4, serif" font-size="11" fill="#262626">read, search, explore</text>
+      <!-- Arrow 1-2 -->
+      <line x1="228" y1="70" x2="278" y2="70" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrR)"/>
+      <!-- Node 2 -->
+      <rect x="282" y="30" width="180" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="282" y1="30" x2="282" y2="110" stroke="#CC785C" stroke-width="3"/>
+      <text x="300" y="56" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373">02</text>
+      <text x="300" y="78" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#0A0A0A">Take action</text>
+      <text x="300" y="96" font-family="Source Serif 4, serif" font-size="11" fill="#262626">edit, run, commit</text>
+      <!-- Arrow 2-3 -->
+      <line x1="470" y1="70" x2="520" y2="70" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrR)"/>
+      <!-- Node 3 -->
+      <rect x="524" y="30" width="180" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="524" y1="30" x2="524" y2="110" stroke="#CC785C" stroke-width="3"/>
+      <text x="542" y="56" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373">03</text>
+      <text x="542" y="78" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#0A0A0A">Verify results</text>
+      <text x="542" y="96" font-family="Source Serif 4, serif" font-size="11" fill="#262626">test, compare, iterate</text>
+      <!-- Return arc -->
+      <path d="M 614 110 Q 614 150 372 150 Q 130 150 130 110" stroke="#CC785C" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrR)"/>
+      <text x="372" y="168" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#737373" letter-spacing="0.1em">REPEAT UNTIL DONE</text>
+    </svg>
+    <div class="two-col" style="margin-top: 10px; gap: 20px;">
+      <div>
+        <div class="col-label">The harness</div>
+        <div class="items" style="margin-top: 6px; gap: 6px;">
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>Model</strong> reasons and plans. Switch with <code style="font-family: var(--mono); font-size: 11px;">/model</code>.</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>Tools</strong> let it act: files, search, bash, web.</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>Context window</strong> fills up. <code style="font-family: var(--mono); font-size: 11px;">/clear</code> and <code style="font-family: var(--mono); font-size: 11px;">/compact</code> to manage.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Today's question</div>
+        <div class="quote" style="margin-top: 6px;">
+          <p style="font-size: 14px;">The built-in tools cover most coding tasks. How do we extend what Claude <em>knows</em>, what it can <em>do in isolation</em>, and what it can <em>reach</em>?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SKILLS ========== -->
+
+<!-- SLIDE 3: Skills overview -->
+<div class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="slide-label">Skills</div>
+    <h2>Extend What Claude Knows</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">A SKILL.md file with instructions. Claude loads it when relevant, or you invoke it with <code style="font-family: var(--mono); font-size: 16px;">/name</code>.</p>
+    <div class="two-col">
+      <div>
+        <div class="col-label">Where skills live</div>
+        <div class="items" style="margin-top: 8px; gap: 8px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 12px;">~/.claude/skills/</code> personal, all projects</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 12px;">.claude/skills/</code> project, check into git</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Plugin skills use <code style="font-family: var(--mono); font-size: 12px;">plugin:name</code> namespace</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Two types of content</div>
+        <div class="items" style="margin-top: 8px; gap: 8px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><strong>Reference.</strong> Knowledge Claude applies: conventions, patterns, style guides.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><strong>Task.</strong> Step-by-step instructions: deploy, review, release.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Skills anatomy + key config -->
+<div class="slide" id="s3">
+  <div class="slide-inner">
+    <h2>SKILL.md Anatomy</h2>
+    <div class="two-col" style="gap: 20px;">
+      <div class="code-block" style="margin-top: 0; font-size: 13px; padding: 18px 22px;">
+        <span class="comment">---</span><br/>
+        <span class="key">name:</span> <span class="str">fix-issue</span><br/>
+        <span class="key">description:</span> <span class="str">Fix a GitHub issue</span><br/>
+        <span class="key">disable-model-invocation:</span> <span class="str">true</span><br/>
+        <span class="key">allowed-tools:</span> <span class="str">Bash(gh *)</span><br/>
+        <span class="comment">---</span><br/><br/>
+        <span class="comment"># instructions follow</span><br/>
+        Fix GitHub issue <span class="cmd">$ARGUMENTS</span>.<br/><br/>
+        1. Read the issue with gh<br/>
+        2. Understand requirements<br/>
+        3. Implement the fix<br/>
+        4. Write tests<br/>
+        5. Commit and push
+      </div>
+      <div>
+        <div class="col-label">Key frontmatter fields</div>
+        <table class="table" style="margin-top: 8px;">
+          <tbody>
+            <tr><td><code>name</code></td><td>Becomes the <code>/slash-command</code></td></tr>
+            <tr><td><code>description</code></td><td>How Claude decides when to load it</td></tr>
+            <tr><td><code>disable-model-invocation</code></td><td>Only <em>you</em> can trigger it</td></tr>
+            <tr><td><code>allowed-tools</code></td><td>Pre-approve tools while active</td></tr>
+            <tr><td><code>context: fork</code></td><td>Run in an isolated subagent</td></tr>
+            <tr><td><code>$ARGUMENTS</code></td><td>Replaced with what follows <code>/name</code></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 14px; font-size: 13px; color: var(--muted); font-family: var(--mono);">Descriptions load at start. Full body loads only when invoked.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SUBAGENTS ========== -->
+
+<!-- SLIDE 5: Subagents overview -->
+<div class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="slide-label">Subagents</div>
+    <h2>Isolated Workers, Own Context</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">A subagent does its work in a fresh context window and returns a summary. Your main conversation stays clean.</p>
+    <div class="grid-3">
+      <div class="card card-accent">
+        <h3>Explore</h3>
+        <p>Haiku. Read-only. Fast codebase search and analysis. Three thoroughness levels.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Plan</h3>
+        <p>Inherits model. Read-only. Gathers context for plan mode without nesting.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>General-purpose</h3>
+        <p>Inherits model. All tools. Complex multi-step tasks that need both reading and writing.</p>
+      </div>
+    </div>
+    <div class="quote">
+      <p>Use a subagent when a side task would flood your context with output you will not reference again.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Custom subagents -->
+<div class="slide" id="s5">
+  <div class="slide-inner">
+    <h2>Custom Subagents</h2>
+    <div class="two-col" style="gap: 20px;">
+      <div class="code-block" style="margin-top: 0; font-size: 13px; padding: 18px 22px;">
+        <span class="comment"># .claude/agents/security-reviewer.md</span><br/>
+        <span class="comment">---</span><br/>
+        <span class="key">name:</span> <span class="str">security-reviewer</span><br/>
+        <span class="key">description:</span> <span class="str">Reviews code for</span><br/>
+        &nbsp;&nbsp;<span class="str">security vulnerabilities</span><br/>
+        <span class="key">tools:</span> <span class="str">Read, Grep, Glob, Bash</span><br/>
+        <span class="key">model:</span> <span class="str">opus</span><br/>
+        <span class="key">skills:</span> <span class="str">security-checklist</span><br/>
+        <span class="comment">---</span><br/><br/>
+        You are a senior security<br/>
+        engineer. Review code for<br/>
+        injection, auth flaws,<br/>
+        secrets in code, insecure<br/>
+        data handling.
+      </div>
+      <div>
+        <div class="col-label">Key frontmatter</div>
+        <table class="table" style="margin-top: 8px;">
+          <tbody>
+            <tr><td><code>tools</code></td><td>Restrict which tools it can use</td></tr>
+            <tr><td><code>model</code></td><td>Route to Haiku, Sonnet, or Opus</td></tr>
+            <tr><td><code>skills</code></td><td>Preload skills into its context</td></tr>
+            <tr><td><code>maxTurns</code></td><td>Cap how long it runs</td></tr>
+            <tr><td><code>permissionMode</code></td><td>Its own permission level</td></tr>
+            <tr><td><code>memory</code></td><td>Persist learnings across sessions</td></tr>
+          </tbody>
+        </table>
+        <div class="col-label" style="margin-top: 20px;">Where they live</div>
+        <div class="items" style="margin-top: 6px; gap: 6px;">
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><code style="font-family: var(--mono); font-size: 12px;">.claude/agents/</code> project (check in)</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><code style="font-family: var(--mono); font-size: 12px;">~/.claude/agents/</code> personal (all projects)</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><code style="font-family: var(--mono); font-size: 12px;">/agents</code> interactive setup + Claude generation</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MCP ========== -->
+
+<!-- SLIDE 7: MCP overview -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="slide-label">Model Context Protocol</div>
+    <h2>Connect Claude to External Tools</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">MCP is an open protocol for connecting AI to external services. Each server exposes tools Claude can call.</p>
+    <div class="code-block" style="font-size: 13px; padding: 16px 22px;">
+      <span class="comment"># add a server from the registry</span><br/>
+      <span class="cmd">claude mcp add slack --transport http https://mcp.anthropic.com/slack</span><br/><br/>
+      <span class="comment"># add a local stdio server</span><br/>
+      <span class="cmd">claude mcp add my-db -- npx -y @my/db-server --connection-string $DB_URL</span><br/><br/>
+      <span class="comment"># list active servers</span><br/>
+      <span class="cmd">claude mcp list</span><br/><br/>
+      <span class="comment"># check token costs per server</span><br/>
+      <span class="cmd">/mcp</span>
+    </div>
+    <p style="margin-top: 16px; font-size: 15px; color: var(--body);">Examples: Slack, GitHub, Jira, Figma, Notion, PostgreSQL, Sentry, browser control, custom internal APIs.</p>
+  </div>
+</div>
+
+<!-- SLIDE 8: MCP scope + tool search -->
+<div class="slide" id="s7">
+  <div class="slide-inner">
+    <h2>MCP Configuration</h2>
+    <div class="two-col">
+      <div>
+        <div class="col-label">Scope hierarchy</div>
+        <div class="items" style="margin-top: 8px; gap: 8px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><strong>Local.</strong> <code style="font-family: var(--mono); font-size: 12px;">.mcp.json</code> in project root. Gitignored. Highest priority.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><strong>Project.</strong> <code style="font-family: var(--mono); font-size: 12px;">.claude/settings.json</code> shared with the team.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><strong>User.</strong> <code style="font-family: var(--mono); font-size: 12px;">~/.claude/settings.json</code> across all projects.</span></div>
+        </div>
+        <div class="col-label" style="margin-top: 18px;">Three transports</div>
+        <div class="items" style="margin-top: 6px; gap: 6px;">
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>stdio.</strong> Local process. Most common.</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>http.</strong> Remote, streamable HTTP.</span></div>
+          <div class="item" style="padding: 8px 14px;"><span class="item-text" style="font-size: 13px;"><strong>sse.</strong> Server-sent events (legacy).</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Tool search (deferred loading)</div>
+        <p style="font-size: 15px; color: var(--body); margin-top: 8px; line-height: 1.5;">MCP servers can expose dozens of tools. Claude Code defers their full schemas and loads only tool <em>names</em> at session start.</p>
+        <p style="font-size: 15px; color: var(--body); margin-top: 12px; line-height: 1.5;">When Claude needs a specific tool, it searches by keyword, loads the schema on demand, then calls it. Idle servers cost almost nothing in context.</p>
+        <div class="quote" style="margin-top: 18px;">
+          <p>Run <code style="font-family: var(--mono); font-size: 13px; color: var(--text);">/mcp</code> to see per-server token costs and connection status.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAUSE ========== -->
+
+<!-- SLIDE 9: Week title -->
+<div class="slide slide-dark" id="s8">
+  <div class="slide-inner" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="slide-label" style="color: #525252;">Week 2</div>
+    <h1 style="font-size: clamp(42px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.03em; color: #FFFFFF; margin-bottom: 18px;">Adapting A Coding Agent</h1>
+    <p class="subtitle" style="color: #525252; max-width: 540px; margin: 0 auto; font-size: 18px; text-align: center;">Skills, MCP, subagents, and the deeper principles of context engineering.</p>
+  </div>
+</div>
+
+<!-- ========== LONG-RUNNING AGENTS ========== -->
+
+<!-- SLIDE 10: The problem -->
+<div class="slide" id="s9">
+  <div class="slide-inner">
+    <div class="slide-label">Effective Harnesses for Long-Running Agents &middot; Anthropic &middot; Nov 2025</div>
+    <h2>The Long-Running Agent Problem</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Complex tasks span many context windows. Each new window starts with no memory of what came before.</p>
+    <div class="items">
+      <div class="item">
+        <span class="item-text"><strong>One-shotting.</strong> The agent tries to build the entire app at once, runs out of context mid-feature, and leaves the next session to guess what happened.</span>
+      </div>
+      <div class="item">
+        <span class="item-text"><strong>Declaring victory early.</strong> A later agent sees some features built, assumes the job is done, and stops working.</span>
+      </div>
+      <div class="item">
+        <span class="item-text"><strong>Unmarked bugs.</strong> Features get marked complete without proper end-to-end testing. Problems compound across sessions.</span>
+      </div>
+    </div>
+    <div class="quote">
+      <p>Imagine a project staffed by engineers in shifts, where each new engineer arrives with no memory of what happened on the previous shift.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: The two-part solution -->
+<div class="slide" id="s10">
+  <div class="slide-inner">
+    <h2>Two-Part Solution</h2>
+    <p class="subtitle" style="margin-bottom: 4px;">A specialized first session that sets up the environment, then every subsequent session makes incremental progress.</p>
+    <svg viewBox="0 0 760 120" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 14px 0 10px;">
+      <defs>
+        <marker id="arrH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#CC785C"/>
+        </marker>
+      </defs>
+      <!-- Initializer box -->
+      <rect x="10" y="20" width="200" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="10" y1="20" x2="10" y2="100" stroke="#CC785C" stroke-width="3"/>
+      <text x="30" y="46" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373" letter-spacing="0.06em">SESSION 1</text>
+      <text x="30" y="72" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0A0A0A">Initializer</text>
+      <text x="30" y="90" font-family="Source Serif 4, serif" font-size="12" fill="#262626">sets up environment</text>
+      <!-- Arrow -->
+      <line x1="218" y1="60" x2="258" y2="60" stroke="#CC785C" stroke-width="1.8" marker-end="url(#arrH)"/>
+      <!-- Coding agent box -->
+      <rect x="262" y="20" width="200" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="262" y1="20" x2="262" y2="100" stroke="#CC785C" stroke-width="3"/>
+      <text x="282" y="46" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373" letter-spacing="0.06em">SESSION 2</text>
+      <text x="282" y="72" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0A0A0A">Coding agent</text>
+      <text x="282" y="90" font-family="Source Serif 4, serif" font-size="12" fill="#262626">one feature, leave clean</text>
+      <!-- Arrow -->
+      <line x1="470" y1="60" x2="510" y2="60" stroke="#CC785C" stroke-width="1.8" marker-end="url(#arrH)"/>
+      <!-- Session 3 box -->
+      <rect x="514" y="20" width="200" height="80" rx="8" fill="#F7F7F7" stroke="#E5E5E5" stroke-width="1.5"/>
+      <line x1="514" y1="20" x2="514" y2="100" stroke="#CC785C" stroke-width="3"/>
+      <text x="534" y="46" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373" letter-spacing="0.06em">SESSION 3</text>
+      <text x="534" y="72" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0A0A0A">Coding agent</text>
+      <text x="534" y="90" font-family="Source Serif 4, serif" font-size="12" fill="#262626">next feature, leave clean</text>
+      <!-- Dots indicating continuation -->
+      <text x="730" y="66" font-family="Inter, sans-serif" font-size="20" fill="#737373">...</text>
+      <!-- Shared artifacts bar underneath -->
+      <rect x="10" y="108" width="704" height="2" fill="#E5E5E5"/>
+      <text x="380" y="118" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#737373" letter-spacing="0.08em">FEATURE LIST + PROGRESS FILE + GIT HISTORY</text>
+    </svg>
+    <div class="two-col" style="gap: 20px;">
+      <div class="card card-accent">
+        <h3>1. Initializer agent</h3>
+        <p style="margin-bottom: 10px;">Runs once, on the very first session. Sets up:</p>
+        <p><strong>Feature list.</strong> Structured JSON with all required features, each marked as failing. Gives the agent a clear definition of "done."</p>
+        <p style="margin-top: 8px;"><strong>Progress file.</strong> <code style="font-family: var(--mono); font-size: 12px;">claude-progress.txt</code> for session-to-session handoff notes.</p>
+        <p style="margin-top: 8px;"><strong>Init script.</strong> <code style="font-family: var(--mono); font-size: 12px;">init.sh</code> to start the dev server and run a basic smoke test.</p>
+        <p style="margin-top: 8px;"><strong>Initial git commit.</strong> Clean starting state the agent can always revert to.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>2. Coding agent</h3>
+        <p style="margin-bottom: 10px;">Every subsequent session follows the same routine:</p>
+        <p><strong>Get bearings.</strong> Read progress file, git log, feature list. Run init.sh and verify basic features still work.</p>
+        <p style="margin-top: 8px;"><strong>Work on one feature.</strong> Incremental progress, not one-shotting. Test end-to-end (browser automation, not just unit tests).</p>
+        <p style="margin-top: 8px;"><strong>Leave it clean.</strong> Git commit with a descriptive message, update the progress file, mark the feature as passing only after real verification.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: Failure modes table -->
+<div class="slide" id="s11">
+  <div class="slide-inner">
+    <h2>Failure Modes and Solutions</h2>
+    <table class="table">
+      <thead>
+        <tr><th style="width: 30%;">Problem</th><th style="width: 35%;">Initializer does</th><th style="width: 35%;">Coding agent does</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Declares victory early</strong></td>
+          <td>Feature list with all features marked failing</td>
+          <td>Read the list. Pick one feature. Work only on that.</td>
+        </tr>
+        <tr>
+          <td><strong>Leaves bugs or mess</strong></td>
+          <td>Set up git repo and progress file</td>
+          <td>Read progress + git log at start. Commit and update notes at end.</td>
+        </tr>
+        <tr>
+          <td><strong>Marks features done without testing</strong></td>
+          <td>Structured feature list with <code>passes: false</code></td>
+          <td>Verify end-to-end (browser automation). Only flip to <code>true</code> after real testing.</td>
+        </tr>
+        <tr>
+          <td><strong>Wastes time figuring out the environment</strong></td>
+          <td>Write <code>init.sh</code> with dev server and smoke test</td>
+          <td>Run <code>init.sh</code> first. Fix any existing bugs before starting new work.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="quote" style="margin-top: 18px;">
+      <p>The key insight: let agents quickly understand the state of work by combining a progress file with git history. Inspiration came from knowing what effective human engineers do every day.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== WRAP-UP ========== -->
+
+<!-- SLIDE 13: How they layer -->
+<div class="slide slide-dark" id="s12">
+  <div class="slide-inner">
+    <div class="slide-label">Recap</div>
+    <h2>How It All Fits</h2>
+    <svg viewBox="0 0 760 160" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 0 18px;">
+      <defs>
+        <marker id="arrW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#CC785C"/>
+        </marker>
+      </defs>
+      <!-- Central Claude node -->
+      <rect x="280" y="40" width="200" height="80" rx="10" fill="#1A1A1A" stroke="#CC785C" stroke-width="2"/>
+      <text x="380" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF">Claude Code</text>
+      <text x="380" y="92" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#A3A3A3">agentic harness</text>
+      <!-- Skills (left) -->
+      <rect x="20" y="12" width="170" height="56" rx="8" fill="#262626" stroke="#404040" stroke-width="1"/>
+      <text x="105" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Skills</text>
+      <text x="105" y="52" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10" fill="#A3A3A3">what it knows</text>
+      <line x1="190" y1="40" x2="278" y2="62" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrW)"/>
+      <!-- Subagents (left bottom) -->
+      <rect x="20" y="92" width="170" height="56" rx="8" fill="#262626" stroke="#404040" stroke-width="1"/>
+      <text x="105" y="116" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Subagents</text>
+      <text x="105" y="132" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10" fill="#A3A3A3">isolated workers</text>
+      <line x1="190" y1="120" x2="278" y2="98" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrW)"/>
+      <!-- MCP (right) -->
+      <rect x="570" y="12" width="170" height="56" rx="8" fill="#262626" stroke="#404040" stroke-width="1"/>
+      <text x="655" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">MCP</text>
+      <text x="655" y="52" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10" fill="#A3A3A3">what it can reach</text>
+      <line x1="570" y1="40" x2="482" y2="62" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrW)"/>
+      <!-- Harness (right bottom) -->
+      <rect x="570" y="92" width="170" height="56" rx="8" fill="#262626" stroke="#404040" stroke-width="1"/>
+      <text x="655" y="116" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Harness</text>
+      <text x="655" y="132" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10" fill="#A3A3A3">across sessions</text>
+      <line x1="570" y1="120" x2="482" y2="98" stroke="#CC785C" stroke-width="1.5" marker-end="url(#arrW)"/>
+    </svg>
+    <div class="items">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text"><strong>Skills</strong> extend what Claude <em>knows</em>. On-demand knowledge and workflows.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text"><strong>Subagents</strong> extend what Claude can <em>do in isolation</em>. Own context, own tools.</span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text"><strong>MCP</strong> extends what Claude can <em>reach</em>. Databases, Slack, anything with an API.</span>
+      </div>
+      <div class="item" style="border-left: 3px solid var(--orange); padding-left: 17px;">
+        <span class="item-text"><strong>Harness design</strong> ties them together across sessions. Feature lists, progress files, incremental commits, automated testing.</span>
+      </div>
+    </div>
+    <p style="margin-top: 28px; font-family: var(--mono); font-size: 12px; color: #A3A3A3; letter-spacing: 0.04em;">Next: discussion, then skill-building sprint.</p>
+  </div>
+</div>
+
+<script src="./slides.js"></script>
+
+</body>
+</html>
