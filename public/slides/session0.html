@@ -11,598 +11,337 @@
 
 <div class="progress" id="progress"></div>
 
-<!-- SLIDE 1: Title -->
-<div class="slide slide-dark active" id="s0">
+<!-- 1: Title -->
+<div class="slide slide-dark active">
   <div class="slide-inner">
     <div class="slide-label">Week 0 &middot; Session 0</div>
     <h1>Getting Started</h1>
     <p class="subtitle" style="color: #D4D4D4;">Introductions, a fast review of AI foundations, installing Claude Code, and a preview of the weeks ahead.</p>
-  </div>
-</div>
-
-<!-- SLIDE 2: Agenda (dark) -->
-<div class="slide slide-dark" id="s1">
-  <div class="slide-inner">
-    <div class="slide-label">Agenda</div>
-    <h2>Today's Session</h2>
-    <div class="items">
-      <div class="item">
-        <span class="item-num">0</span>
-        <span class="item-text"><strong>Introductions.</strong> Who are you? What do you build? Do you have your Claude subscription?</span>
-      </div>
-      <div class="item">
-        <span class="item-num">1</span>
-        <span class="item-text"><strong>AI Fluency review.</strong> The 4D Framework and foundations of working with AI.</span>
-      </div>
-      <div class="item">
-        <span class="item-num">2</span>
-        <span class="item-text"><strong>Setup Claude Code.</strong> Install, authenticate, and run your first command.</span>
-      </div>
-      <div class="item">
-        <span class="item-num">3</span>
-        <span class="item-text"><strong>Course overview.</strong> What we will cover in the next five weeks.</span>
-      </div>
+    <div class="kpi-ribbon" style="margin-top: 36px;">
+      <span class="kpi"><b>4</b> parts</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>~90</b> minutes</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>1</b> install</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>5</b> weeks ahead</span>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 3: Introductions -->
-<div class="slide" id="s2">
+<!-- 2: Agenda -->
+<div class="slide slide-dark">
+  <div class="slide-inner">
+    <div class="slide-label">Agenda</div>
+    <h2>Today</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">0</span><span class="item-text"><strong>Introductions.</strong> Who are you, what do you build, do you have a Claude subscription?</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>AI Fluency review.</strong> Foundations and the 4D framework.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Setup Claude Code.</strong> Install, authenticate, first command.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>The road ahead.</strong> What the next five weeks look like.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3: Introductions -->
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 0</div>
     <h2>Introductions</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Let's go around the room. For each person:</p>
     <div class="items">
-      <div class="item">
-        <span class="item-num">1</span>
-        <span class="item-text">Your name and what you work on</span>
-      </div>
-      <div class="item">
-        <span class="item-num">2</span>
-        <span class="item-text">Your experience with AI coding tools so far</span>
-      </div>
-      <div class="item">
-        <span class="item-num">3</span>
-        <span class="item-text">Do you have an active Claude subscription or Anthropic Console account?</span>
-      </div>
+      <div class="item"><span class="item-num">01</span><span class="item-text">Your name and what you work on</span></div>
+      <div class="item"><span class="item-num">02</span><span class="item-text">Your experience with AI coding tools so far</span></div>
+      <div class="item"><span class="item-num">03</span><span class="item-text">Do you have a Claude subscription or Anthropic Console account?</span></div>
     </div>
-    <div class="quote" style="margin-top: 24px;">
-      <p>If you don't have a subscription yet, we will help you get set up during the install step.</p>
-    </div>
+    <p class="meta" style="margin-top: 22px;">If you don't yet, we'll get you set up during the install step.</p>
   </div>
 </div>
 
-<!-- SLIDE 4: AI Fluency section title -->
-<div class="slide" id="s3">
+<!-- 4: Part 1 cover -->
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 1</div>
-    <h1>AI Fluency Review</h1>
-    <p class="subtitle">A fast recap of foundational concepts: what fluent AI use looks like and the 4D framework for reasoning about how we work with AI.</p>
+    <h1>AI Fluency</h1>
+    <p class="subtitle">A fast recap: what fluent AI use looks like, what models bring and where they fail, and the 4D framework for working with them.</p>
   </div>
 </div>
 
-<!-- SLIDE 5: Fluent AI use is... -->
-<div class="slide" id="s4">
+<!-- 5: Fluent AI = 4 E's -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>Fluent AI Use Is...</h2>
-    <div class="grid-2">
-      <div class="card card-accent">
-        <h3>Effective</h3>
-        <p>Achieves the desired outcome.</p>
+    <h2>Fluent AI Use Is&hellip;</h2>
+    <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stat-tile stat-tile-accent">
+        <div class="stat-num">E<span class="stat-prefix">1</span></div>
+        <h3 style="margin-top: 10px;">Effective</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Achieves the outcome.</p>
       </div>
-      <div class="card card-accent">
-        <h3>Efficient</h3>
-        <p>Uses time and resources wisely.</p>
+      <div class="stat-tile stat-tile-accent">
+        <div class="stat-num">E<span class="stat-prefix">2</span></div>
+        <h3 style="margin-top: 10px;">Efficient</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Uses time and resources wisely.</p>
       </div>
-      <div class="card card-accent">
-        <h3>Ethical</h3>
-        <p>Considers impact and fairness.</p>
+      <div class="stat-tile stat-tile-accent">
+        <div class="stat-num">E<span class="stat-prefix">3</span></div>
+        <h3 style="margin-top: 10px;">Ethical</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Considers impact and fairness.</p>
       </div>
-      <div class="card card-accent">
-        <h3>Safe</h3>
-        <p>Protects privacy and security.</p>
+      <div class="stat-tile stat-tile-accent">
+        <div class="stat-num">E<span class="stat-prefix">4</span></div>
+        <h3 style="margin-top: 10px;">Safe</h3>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Protects privacy and security.</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 22px; text-align: center;">Anthropic's three H's also apply to <em>us</em>: helpful, honest, harmless.</p>
   </div>
 </div>
 
-<!-- SLIDE 6: Three ways to interact -->
-<div class="slide" id="s5">
+<!-- 6: Three Modes (visual spectrum) -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>Three Ways to Interact with AI</h2>
-    <div class="items">
-      <div class="item">
-        <span class="item-num">01</span>
-        <span class="item-text"><strong>Automation.</strong> AI does work for you following explicit instructions.</span>
+    <h2>Three Modes of Working with AI</h2>
+    <div class="layer-stack">
+      <div class="layer">
+        <div class="layer-num">1</div>
+        <div class="layer-body">
+          <div class="layer-title">Automation</div>
+          <div class="layer-when">AI does work for you, following explicit instructions.</div>
+          <div class="layer-tags"><span class="layer-tag">scripted</span><span class="layer-tag">deterministic-ish</span></div>
+        </div>
       </div>
-      <div class="item">
-        <span class="item-num">02</span>
-        <span class="item-text"><strong>Augmentation.</strong> You and the AI collaboratively work together.</span>
+      <div class="layer-arrow">&rarr;</div>
+      <div class="layer">
+        <div class="layer-num">2</div>
+        <div class="layer-body">
+          <div class="layer-title">Augmentation</div>
+          <div class="layer-when">You and the AI work together, turn by turn.</div>
+          <div class="layer-tags"><span class="layer-tag">pair</span><span class="layer-tag">dialogic</span></div>
+        </div>
       </div>
-      <div class="item">
-        <span class="item-num">03</span>
-        <span class="item-text"><strong>Agency.</strong> AI works independently on your behalf.</span>
+      <div class="layer-arrow">&rarr;</div>
+      <div class="layer">
+        <div class="layer-num">3</div>
+        <div class="layer-body">
+          <div class="layer-title">Agency</div>
+          <div class="layer-when">AI works independently on your behalf.</div>
+          <div class="layer-tags"><span class="layer-tag">long-horizon</span><span class="layer-tag">tools</span></div>
+        </div>
       </div>
     </div>
-    <p style="margin-top: 22px; font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em;">This course focuses on the agency end of the spectrum: coding agents.</p>
+    <div class="layer-rule">This course lives at the right end &mdash; coding agents.</div>
   </div>
 </div>
 
-<!-- SLIDE 7: What Makes Generative AI Powerful -->
-<div class="slide" id="s6">
+<!-- 7: What models bring / where they fail -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>What Makes Generative AI Powerful</h2>
-    <div class="grid-3">
-      <div class="card card-accent">
-        <h3>Vast training</h3>
-        <p>Processes vast information during training and learns complex patterns.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>In-context learning</h3>
-        <p>Adapts to new tasks through in-context learning.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Emergent capabilities</h3>
-        <p>Demonstrates emergent capabilities from scale.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 8: Anthropic Goals of Fine-Tuning -->
-<div class="slide" id="s7">
-  <div class="slide-inner">
-    <h2>Anthropic Goals of Fine-Tuning</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Three principles guide how Claude is trained to behave.</p>
-    <div class="items">
-      <div class="item">
-        <span class="item-num">H</span>
-        <span class="item-text"><strong>Helpful.</strong> Useful, accurate, and responsive to what you need.</span>
-      </div>
-      <div class="item">
-        <span class="item-num">H</span>
-        <span class="item-text"><strong>Honest.</strong> Truthful, transparent about uncertainty and limitations.</span>
-      </div>
-      <div class="item">
-        <span class="item-num">H</span>
-        <span class="item-text"><strong>Harmless.</strong> Avoids causing harm, respects safety boundaries.</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 9: Capabilities and Limitations -->
-<div class="slide" id="s8">
-  <div class="slide-inner">
-    <h2>Capabilities and Limitations</h2>
+    <h2>What Models Bring, Where They Fail</h2>
     <div class="two-col">
       <div>
-        <div class="col-label">Capabilities</div>
+        <div class="col-label">Strengths</div>
         <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Knowledge and information retrieval</span></div>
-          <div class="item"><span class="item-text">Reasoning and analysis</span></div>
-          <div class="item"><span class="item-text">Code generation and debugging</span></div>
+          <div class="item"><span class="item-text">Vast training, in-context learning</span></div>
+          <div class="item"><span class="item-text">Reasoning, analysis, code generation</span></div>
+          <div class="item"><span class="item-text">Speed, scale, pattern recognition</span></div>
         </div>
       </div>
       <div>
-        <div class="col-label">Limitations</div>
+        <div class="col-label">Failure modes</div>
         <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Knowledge cutoff date</span></div>
-          <div class="item"><span class="item-text">Hallucination and incorrect information</span></div>
+          <div class="item"><span class="item-text">Knowledge cutoff, stale facts</span></div>
+          <div class="item"><span class="item-text">Hallucination, confident wrong answers</span></div>
           <div class="item"><span class="item-text">Non-deterministic output</span></div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- SLIDE 10: The AI Context Window -->
-<div class="slide" id="s9">
-  <div class="slide-inner">
-    <h2>The AI Context Window</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Everything the model can see in a single interaction.</p>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Your prompts.</strong> The instructions and questions you provide.</span></div>
-      <div class="item"><span class="item-text"><strong>AI responses.</strong> Everything the model has said so far in this conversation.</span></div>
-      <div class="item"><span class="item-text"><strong>Any other info you've shared.</strong> Files, code, images, tool results.</span></div>
-    </div>
-    <div class="quote" style="margin-top: 22px;">
-      <p>Context is finite. Managing it well is a core skill you will develop throughout this course.</p>
+    <div class="kpi-ribbon">
+      <span class="kpi"><b>Context window</b> = everything the model can see right now</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>Extended thinking</b> = let it reason longer before answering</span>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 11: Reasoning Limitations -> Extended Thinking -->
-<div class="slide" id="s10">
+<!-- 8: The 4D Cycle -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>Reasoning Limitations &rarr; Extended Thinking</h2>
-    <div class="two-col" style="margin-top: 28px;">
-      <div class="card">
-        <div class="tag">Limitation</div>
-        <h3>Reasoning limitations</h3>
-        <p>Models can struggle with complex multi-step reasoning, especially under time pressure or with limited context.</p>
-      </div>
-      <div class="card card-accent">
-        <div class="tag" style="border-color: var(--orange); color: var(--orange);">Solution</div>
-        <h3>Extended thinking</h3>
-        <p>Models can now "think" longer before responding. Claude's extended thinking allows deeper reasoning on complex problems.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 12: Humans Provide / AI Provides -->
-<div class="slide" id="s11">
-  <div class="slide-inner">
-    <h2>Humans Provide / AI Provides</h2>
-    <div class="two-col">
-      <div>
-        <div class="col-label">Humans provide</div>
-        <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Critical thinking</span></div>
-          <div class="item"><span class="item-text">Judgment</span></div>
-          <div class="item"><span class="item-text">Creativity</span></div>
-          <div class="item"><span class="item-text">Ethical oversight</span></div>
-        </div>
-      </div>
-      <div>
-        <div class="col-label">AI provides</div>
-        <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Speed</span></div>
-          <div class="item"><span class="item-text">Scale</span></div>
-          <div class="item"><span class="item-text">Pattern recognition</span></div>
-          <div class="item"><span class="item-text">Processing abilities</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 13: 4D Framework Title -->
-<div class="slide" id="s12">
-  <div class="slide-inner">
-    <div class="slide-label">The 4D Framework</div>
-    <h1>Four Core Competencies for AI Fluency</h1>
-    <p class="subtitle">Developed by Rick Dakan (Ringling College) and Joseph Feller (Cork University Business School). A cycle of interconnected skills for effective human-AI interaction.</p>
-  </div>
-</div>
-
-<!-- SLIDE 14: 4D Cycle -->
-<div class="slide" id="s13">
-  <div class="slide-inner">
+    <div class="slide-label">The 4D Framework &middot; Dakan &amp; Feller</div>
     <h2>The 4D Cycle</h2>
     <div class="grid-2">
       <div class="card card-accent">
         <h3>Delegation</h3>
-        <p>Deciding what to do with AI and how to divide the work.</p>
+        <p>What's worth doing with AI, and how do we split the work?</p>
       </div>
       <div class="card card-accent">
         <h3>Description</h3>
-        <p>Communicating your vision, requirements, and constraints to the AI.</p>
+        <p>Communicate the vision, requirements, constraints, and how the AI should behave.</p>
       </div>
       <div class="card card-accent">
         <h3>Discernment</h3>
-        <p>Critically evaluating AI output for quality, relevance, and correctness.</p>
+        <p>Critically evaluate every output. Is it useful, correct, right approach?</p>
       </div>
       <div class="card card-accent">
         <h3>Diligence</h3>
-        <p>Taking responsibility, ensuring accuracy, honesty, and ethical use.</p>
+        <p>Take responsibility for the final product. Accuracy, honesty, ethical use.</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 18px; text-align: center;">Delegation &rarr; Description &rarr; Discernment &rarr; Diligence &rarr; (repeat)</p>
   </div>
 </div>
 
-<!-- SLIDE 15: Delegation -->
-<div class="slide" id="s14">
+<!-- 9: Two quotes -->
+<div class="slide">
   <div class="slide-inner">
-    <div class="slide-label">4D Framework</div>
-    <h2>Delegation</h2>
-    <p class="subtitle" style="margin-bottom: 8px;"><em>So... who does what?</em></p>
-    <div class="items">
-      <div class="item"><span class="item-text">Understanding the problem you are trying to solve</span></div>
-      <div class="item"><span class="item-text">Understanding the capabilities of available AI tools</span></div>
-      <div class="item"><span class="item-text">Breaking down complex work into smaller parts</span></div>
-      <div class="item"><span class="item-text">Making strategic decisions about who does what</span></div>
-      <div class="item"><span class="item-text">Choosing the right mode of interaction</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 16: Description -->
-<div class="slide" id="s15">
-  <div class="slide-inner">
-    <div class="slide-label">4D Framework</div>
-    <h2>Description</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Effectively communicating your vision to AI systems.</p>
-    <div class="grid-2">
-      <div class="card">
-        <h3>What you want the final output to be</h3>
-        <p>Clear prompts defining desired outputs with specific characteristics.</p>
-      </div>
-      <div class="card">
-        <h3>How you want the AI to approach the task</h3>
-        <p>Iterative, dialogic prompting for multi-step collaborative work.</p>
-      </div>
-      <div class="card" style="grid-column: 1 / -1;">
-        <h3>How you want the AI to behave</h3>
-        <p>Defining AI behaviors, constraints, and guidelines for the interaction.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 17: Discernment -->
-<div class="slide" id="s16">
-  <div class="slide-inner">
-    <div class="slide-label">4D Framework</div>
-    <h2>Discernment</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Critically evaluating AI-generated outputs.</p>
-    <div class="items">
-      <div class="item"><span class="item-text">Is the output useful and correct?</span></div>
-      <div class="item"><span class="item-text">Is the AI taking the right approach?</span></div>
-      <div class="item"><span class="item-text">Is the AI behaving as desired?</span></div>
-    </div>
-    <div class="quote" style="margin-top: 22px;">
-      <p>This becomes critical with coding agents. You must be able to evaluate code you did not write. As Dex Horthy says: <strong>"Please read the code."</strong></p>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 18: Diligence -->
-<div class="slide" id="s17">
-  <div class="slide-inner">
-    <div class="slide-label">4D Framework</div>
-    <h2>Diligence</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Taking responsibility and vouching for the final product.</p>
-    <div class="items">
-      <div class="item"><span class="item-text">Ensuring accuracy and taking responsibility</span></div>
-      <div class="item"><span class="item-text">Honesty and transparency about AI involvement</span></div>
-      <div class="item"><span class="item-text">Ethical use and critical awareness</span></div>
-    </div>
-    <div class="quote" style="margin-top: 22px;">
-      <p>2026 is the year of no more slop. We have a profession to uphold.</p>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 19: AI Fluency Key Takeaways -->
-<div class="slide" id="s18">
-  <div class="slide-inner">
-    <div class="slide-label">AI Fluency</div>
-    <h2>Key Takeaways</h2>
+    <h2>Why This Matters</h2>
     <div class="two-col">
-      <div>
-        <div class="col-label">Fluent AI Use</div>
-        <div class="items" style="margin-top: 8px; gap: 8px;">
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Effective</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Efficient</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Ethical</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Safe</span></div>
-        </div>
+      <div class="quote" style="margin-top: 0;">
+        <p>Please read the code.</p>
+        <cite>Dex Horthy, on discernment</cite>
       </div>
-      <div>
-        <div class="col-label">The 4D Cycle</div>
-        <div class="items" style="margin-top: 8px; gap: 8px;">
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Delegation &rarr; Discernment</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 15px;">Description &rarr; Diligence</span></div>
-        </div>
-        <p style="margin-top: 14px; font-family: var(--serif); font-size: 14px; color: var(--body); line-height: 1.5;">Use your own expertise to decide what is worth doing and leverage the unique strengths of both human and artificial intelligence.</p>
+      <div class="quote" style="margin-top: 0;">
+        <p>2026 is the year of no more slop. We have a profession to uphold.</p>
+        <cite>On diligence</cite>
       </div>
     </div>
+    <p class="meta" style="margin-top: 22px;">Agency raises the stakes &mdash; you are vouching for code you did not type. Discernment and diligence are the load-bearing skills.</p>
   </div>
 </div>
 
-<!-- SLIDE 20: Looking Ahead -->
-<div class="slide" id="s19">
-  <div class="slide-inner">
-    <h2>Looking Ahead</h2>
-    <div class="items">
-      <div class="item">
-        <span class="item-text"><strong>Evolving landscape.</strong> AI capabilities are changing rapidly. What is true today may shift in months.</span>
-      </div>
-      <div class="item">
-        <span class="item-text"><strong>Human-AI collaboration.</strong> The most effective approach combines human judgment with AI capabilities.</span>
-      </div>
-      <div class="item">
-        <span class="item-text"><strong>Being hands-on.</strong> The best way to learn is to use the tools. That is what we are here for.</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 21: Setup Claude Code section title -->
-<div class="slide" id="s20">
+<!-- 10: Part 2 cover -->
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 2</div>
-    <h1>Setup Claude Code</h1>
-    <p class="subtitle">Claude Code is an agentic coding tool that reads your codebase, edits files, runs commands, and integrates with your development tools. Available in your terminal, IDE, desktop app, and browser.</p>
+    <h1>Claude Code</h1>
+    <p class="subtitle">An agentic coding tool that reads your codebase, edits files, runs commands, and integrates with your dev tools. Terminal, IDE, desktop, web, mobile.</p>
   </div>
 </div>
 
-<!-- SLIDE 22: What Can Claude Code Do -->
-<div class="slide" id="s21">
+<!-- 11: What it does -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>What Can Claude Code Do?</h2>
+    <h2>What It Does</h2>
     <div class="grid-2">
-      <div class="card">
-        <h3>Build features and fix bugs</h3>
-        <p>Describe what you want. Claude plans the approach and writes code across multiple files.</p>
+      <div class="card card-accent">
+        <h3>Build &amp; fix</h3>
+        <p>Describe what you want. It plans, edits across files, runs tests, iterates.</p>
       </div>
-      <div class="card">
-        <h3>Commits and pull requests</h3>
-        <p>Works directly with git. Stages changes, writes commit messages, creates PRs.</p>
+      <div class="card card-accent">
+        <h3>Git-native</h3>
+        <p>Stages changes, writes commit messages, opens pull requests.</p>
       </div>
-      <div class="card">
-        <h3>Connect tools with MCP</h3>
-        <p>Read design docs, update tickets, pull data from Slack, or use custom tooling.</p>
+      <div class="card card-accent">
+        <h3>Connect anything with MCP</h3>
+        <p>Design docs, tickets, Slack, custom internal tools.</p>
       </div>
-      <div class="card">
-        <h3>Customize with CLAUDE.md</h3>
-        <p>Set coding standards, architecture decisions, preferred libraries, review checklists.</p>
+      <div class="card card-accent">
+        <h3>Customise with CLAUDE.md</h3>
+        <p>Coding standards, architecture notes, libraries, review checklists.</p>
       </div>
-      <div class="card">
+      <div class="card card-accent">
         <h3>Agent teams</h3>
-        <p>Spawn multiple agents that work on different parts of a task simultaneously.</p>
+        <p>Spawn sub-agents that work different parts of a task in parallel.</p>
       </div>
-      <div class="card">
-        <h3>Pipe, script, automate</h3>
-        <p>Composable CLI. Pipe logs into it, run it in CI, chain it with other tools.</p>
+      <div class="card card-accent">
+        <h3>Pipe &amp; script</h3>
+        <p>Composable CLI. Pipe logs in, run in CI, chain with other tools.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 23: Available Everywhere -->
-<div class="slide" id="s22">
+<!-- 12: Where it runs -->
+<div class="slide">
   <div class="slide-inner">
     <h2>Available Everywhere</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Same engine, same settings, same CLAUDE.md across all surfaces.</p>
-    <div class="grid-3">
-      <div class="card card-accent">
-        <h3>Terminal</h3>
-        <p>Full-featured CLI. Our primary tool for this course.</p>
-      </div>
-      <div class="card">
-        <h3>VS Code</h3>
-        <p>Inline diffs, @-mentions, plan review.</p>
-      </div>
-      <div class="card">
-        <h3>JetBrains</h3>
-        <p>IntelliJ, PyCharm, WebStorm and more.</p>
-      </div>
-      <div class="card">
-        <h3>Desktop App</h3>
-        <p>Standalone app, visual diffs, multiple sessions.</p>
-      </div>
-      <div class="card">
-        <h3>Web</h3>
-        <p>No local setup. Run tasks from anywhere.</p>
-      </div>
-      <div class="card">
-        <h3>Mobile</h3>
-        <p>Continue sessions from your phone via iOS app.</p>
-      </div>
+    <p class="subtitle" style="margin-bottom: 8px;">Same engine, same settings, same <code>CLAUDE.md</code> across every surface.</p>
+    <div class="source-row" style="gap: 8px; margin-top: 22px;">
+      <span class="tag" style="font-size: 12px; padding: 7px 14px; border-color: var(--orange); color: var(--orange);">Terminal &middot; primary</span>
+      <span class="tag" style="font-size: 12px; padding: 7px 14px;">VS Code</span>
+      <span class="tag" style="font-size: 12px; padding: 7px 14px;">JetBrains</span>
+      <span class="tag" style="font-size: 12px; padding: 7px 14px;">Desktop app</span>
+      <span class="tag" style="font-size: 12px; padding: 7px 14px;">Web</span>
+      <span class="tag" style="font-size: 12px; padding: 7px 14px;">iOS</span>
+    </div>
+    <div class="kpi-ribbon" style="margin-top: 28px;">
+      <span class="kpi"><b>1</b> account</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>1</b> config</span>
+      <span class="kpi-sep">/</span>
+      <span class="kpi"><b>N</b> surfaces</span>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 24: Installation -->
-<div class="slide" id="s23">
+<!-- 13: Install -->
+<div class="slide">
   <div class="slide-inner">
-    <h2>Let's Install It</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">You need a Claude subscription or Anthropic Console account.</p>
+    <h2>Install &amp; Run</h2>
     <div class="code-block">
-      <span class="comment"># macOS, Linux, WSL (recommended)</span><br/>
+      <span class="comment"># macOS, Linux, WSL</span><br/>
       <span class="cmd">curl -fsSL https://claude.ai/install.sh | bash</span><br/><br/>
       <span class="comment"># Windows PowerShell</span><br/>
       <span class="cmd">irm https://claude.ai/install.ps1 | iex</span><br/><br/>
-      <span class="comment"># Or via Homebrew</span><br/>
+      <span class="comment"># Homebrew</span><br/>
       <span class="cmd">brew install --cask claude-code</span><br/><br/>
-      <span class="comment"># Then start it in any project</span><br/>
-      <span class="cmd">cd your-project</span><br/>
-      <span class="cmd">claude</span>
+      <span class="comment"># Run it</span><br/>
+      <span class="cmd">cd your-project &amp;&amp; claude</span>
     </div>
-    <p class="meta" style="margin-top: 16px;">You'll be prompted to log in on first use. Full docs at code.claude.com/docs/en/overview</p>
+    <p class="meta" style="margin-top: 16px;">Log in on first use. Docs: code.claude.com/docs</p>
   </div>
 </div>
 
-<!-- SLIDE 25: Live Demo -->
-<div class="slide" id="s24">
+<!-- 14: Live demo -->
+<div class="slide">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-label">Part 2</div>
+    <div class="slide-label">Together</div>
     <h1>Live Demo</h1>
-    <p class="subtitle" style="max-width: 520px; margin: 0 auto;">Let's open a terminal, navigate to a project, and take Claude Code for a spin.</p>
-    <div class="code-block" style="text-align: left; max-width: 520px; margin: 28px auto 0;">
-      <span class="cmd">cd ~/some-project</span><br/>
-      <span class="cmd">claude</span><br/><br/>
-      <span class="comment"># Try asking it to explore the codebase</span><br/>
-      <span class="comment"># or fix a simple issue</span>
-    </div>
+    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Open a terminal, pick a project, ask Claude Code to explore the codebase or fix a small issue.</p>
   </div>
 </div>
 
-<!-- SLIDE 26: What's Ahead -->
-<div class="slide" id="s25">
+<!-- 15: Course arc -->
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 3</div>
-    <h1>What's Ahead</h1>
-    <p class="subtitle">A preview of the five weeks ahead and the optional capstone.</p>
-  </div>
-</div>
-
-<!-- SLIDE 27: Course Arc -->
-<div class="slide" id="s26">
-  <div class="slide-inner">
-    <h2>Course Arc</h2>
+    <h2>The Road Ahead</h2>
     <div class="items">
       <div class="item" style="border-left: 3px solid var(--orange); padding-left: 17px;">
-        <span class="item-num" style="min-width: 60px; color: var(--orange);">Week 0</span>
-        <span class="item-text"><strong>Getting Started</strong></span>
-        <span class="meta" style="margin-left: auto;">You are here</span>
+        <span class="item-num" style="min-width: 64px; color: var(--orange);">Week 0</span>
+        <span class="item-text"><strong>Getting Started.</strong> You are here.</span>
       </div>
       <div class="item">
-        <span class="item-num" style="min-width: 60px;">Week 1</span>
-        <span class="item-text">One Coding Agent</span>
-        <span class="meta" style="margin-left: auto;">Hands-on exercises</span>
+        <span class="item-num" style="min-width: 64px;">Week 1</span>
+        <span class="item-text"><strong>One Coding Agent.</strong> Hands-on with Claude Code.</span>
       </div>
       <div class="item">
-        <span class="item-num" style="min-width: 60px;">Week 2</span>
-        <span class="item-text">Adapting A Coding Agent</span>
-        <span class="meta" style="margin-left: auto;">Skills, MCP, context engineering</span>
+        <span class="item-num" style="min-width: 64px;">Week 2</span>
+        <span class="item-text"><strong>Adapting a Coding Agent.</strong> Skills, MCP, context engineering.</span>
       </div>
       <div class="item">
-        <span class="item-num" style="min-width: 60px;">Week 3</span>
-        <span class="item-text">Solving Hard Problems</span>
-        <span class="meta" style="margin-left: auto;">Research, Plan, Implement</span>
+        <span class="item-num" style="min-width: 64px;">Week 3</span>
+        <span class="item-text"><strong>Working in Complex Codebases.</strong> Principles, approaches, open debates.</span>
       </div>
       <div class="item">
-        <span class="item-num" style="min-width: 60px;">Week 4</span>
-        <span class="item-text">Towards Agent-First SE</span>
-        <span class="meta" style="margin-left: auto;">Harness engineering</span>
+        <span class="item-num" style="min-width: 64px;">Week 4</span>
+        <span class="item-text"><strong>Towards Agent-First SE.</strong> Harness engineering.</span>
       </div>
       <div class="item">
-        <span class="item-num" style="min-width: 60px;">Week 5</span>
-        <span class="item-text">Capstone</span>
-        <span class="meta" style="margin-left: auto;">Optional</span>
+        <span class="item-num" style="min-width: 64px;">Week 5</span>
+        <span class="item-text"><strong>Capstone.</strong> Optional. Build something harness-first.</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 28: The Journey -->
-<div class="slide" id="s27">
-  <div class="slide-inner">
-    <h2>The Journey</h2>
-    <div class="grid-2">
-      <div class="card card-accent">
-        <h3>Weeks 1 and 2: Foundations</h3>
-        <p>Use a coding agent. Learn best practices. Customize it with skills, MCP, and context engineering.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Week 3: Discipline</h3>
-        <p>Learn the Research, Plan, Implement workflow for tackling complex, real-world codebases.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Week 4: Scale</h3>
-        <p>Design repositories where teams of agents can produce merge-ready code with minimal steering.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Week 5: Build</h3>
-        <p>Capstone. Build a real project harness-first. The code matters, but the scaffolding matters more.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 29: Pre-Work -->
-<div class="slide" id="s28">
+<!-- 16: Pre-work -->
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Before Week 1</div>
     <h2>Your Pre-Work</h2>
     <div class="items">
       <div class="item">
         <span class="item-num">1</span>
-        <span class="item-text"><strong>Complete</strong> <em>Claude Code in Action</em> &nbsp;<span class="meta">Anthropic Skilljar, includes exercises</span></span>
+        <span class="item-text"><strong>Complete</strong> <em>Claude Code in Action</em> &nbsp;<span class="meta">Anthropic Skilljar, with exercises</span></span>
       </div>
       <div class="item">
         <span class="item-num">2</span>
@@ -610,17 +349,17 @@
       </div>
     </div>
     <div class="quote" style="margin-top: 26px;">
-      <p>Come prepared to share what you tried during the exercises. We will discuss what worked and what did not.</p>
+      <p>Come ready to share what you tried during the exercises. We'll compare what worked and what didn't.</p>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 30: Thank you -->
-<div class="slide slide-dark" id="s29">
+<!-- 17: Closing -->
+<div class="slide slide-dark">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">Week 0 &middot; Session 0</div>
     <h1>Let's Get Started</h1>
-    <p class="subtitle" style="max-width: 520px; margin: 0 auto;">Full curriculum and all resources at:</p>
+    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Full curriculum and all resources at:</p>
     <p style="margin-top: 16px; font-family: var(--mono); font-size: 14px;">
       <a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/">antonio-tresol.github.io/agentic-se-course-early-2026</a>
     </p>

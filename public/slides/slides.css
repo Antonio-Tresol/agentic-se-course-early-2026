@@ -638,6 +638,10 @@ a:hover { border-bottom-color: var(--text); }
   background: #1A1A1A;
   border-color: #262626;
 }
+.slide-dark .kpi { color: #A3A3A3; }
+.slide-dark .kpi b { color: #FFFFFF; }
+.slide-dark .kpi-sep { color: #404040; }
+.slide-dark .kpi-ribbon { border-color: #262626; }
 
 /* ----- Responsive ----- */
 @media (max-width: 720px) {
