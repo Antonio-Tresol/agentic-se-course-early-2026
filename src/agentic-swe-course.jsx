@@ -95,6 +95,7 @@ const weeks = [
     title: "Towards Agent-First SE",
     intro: "Everything so far has been about making a single agent useful to you on individual tasks. This week shifts the ambition: what does it take to build a repository where teams of agents can autonomously produce features that are correct, coherent, elegant, and merge-ready, with as little human input as possible? The readings approach this from different angles: how to sustain agent work across many sessions, how a team shipped an entire product with zero manually written code, how the SE discipline itself needs to change, and how multiple agents can coordinate on a shared codebase.",
     prework: [
+      { text: "Software Engineering at the Tipping Point", url: "https://www.youtube.com/watch?v=2n41YjR5QfU", verb: "Watch", note: "Adam Bender · Google · 2026 · systems thinking frame; watch first" },
       { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", verb: "Read", note: "Anthropic · Nov 2025 · start here" },
       { text: "Harness Engineering: Leveraging Codex in an Agent-First World", url: "https://openai.com/index/harness-engineering/", verb: "Read", note: "OpenAI · Feb 2026" },
       { text: "Symphony: An Open-Source Spec for Codex Orchestration", url: "https://openai.com/index/open-source-codex-orchestration-symphony/", verb: "Read", note: "OpenAI · Apr 2026 · sequel to the OpenAI harness piece; ticket boards as the agent control plane" },
@@ -163,6 +164,7 @@ const resources = {
     { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", note: "Anthropic" },
   ],
   articles: [
+    { text: "Software Engineering at the Tipping Point", url: "https://www.youtube.com/watch?v=2n41YjR5QfU", note: "Adam Bender · Google · 2026" },
     { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", note: "Anthropic · May 2025" },
     { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", note: "Anthropic · Nov 2025" },
     { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", note: "Dex Horthy · AI Engineer · Dec 2025" },
