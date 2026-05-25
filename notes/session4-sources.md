@@ -404,7 +404,7 @@ URL: <https://code.claude.com/docs/en/agent-teams>
 
 ---
 
-## 8. Adam Bender — Software Engineering at the Tipping Point (2026, Google) ✅
+## 8. Adam Bender — Software Engineering at the Tipping Point (May 2026, Google) ✅
 
 URL: <https://www.youtube.com/watch?v=2n41YjR5QfU>
 
