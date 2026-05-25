@@ -1,5 +1,5 @@
 /* =====================================================================
-   slides.js — shared engine for every session deck.
+   slides.js: shared engine for every session deck.
 
    Each session*.html only needs:
      <link rel="stylesheet" href="./slides.css" />

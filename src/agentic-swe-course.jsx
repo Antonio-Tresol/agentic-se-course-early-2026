@@ -276,8 +276,8 @@ const furtherReading = [
 ];
 
 const palette = {
-  bg: "#F4F4F4",       // page background — light gray (Far AI style)
-  surface: "#FFFFFF",  // card surfaces — white, elevated against the gray page
+  bg: "#F4F4F4",       // page background, light grey (Far AI style)
+  surface: "#FFFFFF",  // card surfaces, white, elevated against the grey page
   border: "#E5E5E5",   // card borders and dividers
   text: "#0A0A0A",     // headings and primary text (also used for inline links + emphasized labels)
   body: "#262626",     // body paragraph text

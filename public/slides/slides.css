@@ -1,5 +1,5 @@
 /* =====================================================================
-   slides.css — shared engine for every session deck.
+   slides.css: shared engine for every session deck.
    Edit here once and every deck changes. Do NOT inline overrides in
    session*.html unless they are genuinely deck-specific.
    ===================================================================== */
@@ -382,7 +382,7 @@ p, li {
   user-select: none;
 }
 
-/* Compact loop strip — generator → discriminator → loop */
+/* Compact loop strip: generator, discriminator, loop */
 .loop-strip {
   display: flex;
   flex-wrap: wrap;

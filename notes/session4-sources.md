@@ -3,12 +3,12 @@
 Per-source notes from actually reading the seven Week 4 readings (and one paste from the user past a 403). Anything in quote marks is a verbatim copy from the source. Anything else is a paraphrase. Use this as the only ground truth when drafting the deck. If something is not in here, it should not be in the slides.
 
 Status of each source:
-- ✅ fetched and read
-- ⚠️ partial / proxy (notes derived from a related source)
+- [read] fetched and read
+- [partial] partial / proxy (notes derived from a related source)
 
 ---
 
-## 1. Anthropic — Effective Harnesses for Long-Running Agents (Nov 2025) ✅
+## 1. Anthropic, Effective Harnesses for Long-Running Agents (Nov 2025) [read]
 
 URL: <https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents>
 
@@ -29,8 +29,8 @@ URL: <https://www.anthropic.com/engineering/effective-harnesses-for-long-running
 - Session startup sequence: read progress/git logs → review feature list → run init.sh → work on a single feature → commit and document
 
 **Tradeoffs / open questions explicitly raised.**
-- Single vs multi-agent architecture — unclear whether one coding agent or specialised ones (test, QA, cleanup) does better
-- Domain generalisation — patterns optimised for web dev; unknown for science / financial modelling
+- Single vs multi-agent architecture, unclear whether one coding agent or specialised ones (test, QA, cleanup) does better
+- Domain generalisation, patterns optimised for web dev; unknown for science / financial modelling
 - Browser automation can't catch every bug (e.g. native alert modals invisible to Puppeteer MCP)
 
 **Verbatim quotes worth citing.**
@@ -47,7 +47,7 @@ URL: <https://www.anthropic.com/engineering/effective-harnesses-for-long-running
 
 ---
 
-## 2. OpenAI — Harness Engineering: Leveraging Codex in an Agent-First World (Feb 11, 2026, Ryan Lopopolo) ✅ (via user paste; the public URL is 403-blocked from WebFetch)
+## 2. OpenAI, Harness Engineering: Leveraging Codex in an Agent-First World (Feb 11, 2026, Ryan Lopopolo) [read] (via user paste; the public URL is 403-blocked from WebFetch)
 
 URL: <https://openai.com/index/harness-engineering/>
 
@@ -68,7 +68,7 @@ URL: <https://openai.com/index/harness-engineering/>
   - Chrome DevTools Protocol wired into the agent runtime, with skills for DOM snapshots, screenshots, navigation
   - Local observability stack ephemeral per worktree (Vector → Victoria Logs/Metrics/Traces, queryable via LogQL/PromQL/TraceQL). The agent can answer prompts like "ensure service startup completes in under 800ms".
 - "Single Codex runs work on a single task for upwards of six hours (often while the humans are sleeping)."
-- *Repository knowledge as system of record*. They tried "one big AGENTS.md" and it failed — context is scarce, too much guidance becomes non-guidance, monolithic manuals rot, hard to mechanically verify. Replacement: AGENTS.md is a ~100-line table of contents pointing into a structured `docs/` directory with `design-docs/`, `exec-plans/active|completed/`, `product-specs/`, `references/`, plus top-level files (`ARCHITECTURE.md`, `DESIGN.md`, `FRONTEND.md`, `PLANS.md`, `PRODUCT_SENSE.md`, `QUALITY_SCORE.md`, `RELIABILITY.md`, `SECURITY.md`).
+- *Repository knowledge as system of record*. They tried "one big AGENTS.md" and it failed, context is scarce, too much guidance becomes non-guidance, monolithic manuals rot, hard to mechanically verify. Replacement: AGENTS.md is a ~100-line table of contents pointing into a structured `docs/` directory with `design-docs/`, `exec-plans/active|completed/`, `product-specs/`, `references/`, plus top-level files (`ARCHITECTURE.md`, `DESIGN.md`, `FRONTEND.md`, `PLANS.md`, `PRODUCT_SENSE.md`, `QUALITY_SCORE.md`, `RELIABILITY.md`, `SECURITY.md`).
 - *Plans as first-class artefacts*: lightweight plans for small changes; full execution plans (with progress and decision logs) checked into the repo for complex work. Active and completed plans, plus a tech-debt tracker, all versioned together.
 - *Mechanical knowledge-base enforcement*: dedicated linters and CI jobs validate the knowledge base is up to date and cross-linked. A recurring "doc-gardening" agent scans for stale or obsolete docs and opens fix-up PRs.
 - *Layered domain architecture*: each business domain split into Types → Config → Repo → Service → Runtime → UI; cross-cutting concerns (auth, telemetry, feature flags, connectors) enter through a single explicit `Providers` interface. Enforced mechanically with custom (Codex-generated) linters and structural tests.
@@ -77,12 +77,12 @@ URL: <https://openai.com/index/harness-engineering/>
 - *Garbage collection*: "golden principles" encoded in the repo, plus background Codex tasks that scan for deviations, update quality grades, and open targeted refactoring PRs (most reviewable in under a minute and automerged). Replaces the old Friday "AI slop cleanup" that didn't scale.
 - *What "agent-generated" means*: product code, tests, CI, internal tooling, docs, evaluation harnesses, review comments, repo management scripts, dashboard definitions. Humans prioritise, translate user feedback into acceptance criteria, validate outcomes.
 
-**Greenfield disclaimer (in their own words).** "This behavior depends heavily on the specific structure and tooling of this repository and should not be assumed to generalize without similar investment — at least, not yet."
+**Greenfield disclaimer (in their own words).** "This behavior depends heavily on the specific structure and tooling of this repository and should not be assumed to generalize without similar investment, at least, not yet."
 
 **Open questions they call out.**
-- "How architectural coherence evolves over years in a fully agent-generated system" — unknown
-- Where human judgment adds the most leverage and how to encode that judgment so it compounds — still learning
-- How the system evolves as models continue to improve — unknown
+- "How architectural coherence evolves over years in a fully agent-generated system", unknown
+- Where human judgment adds the most leverage and how to encode that judgment so it compounds, still learning
+- How the system evolves as models continue to improve, unknown
 
 **Verbatim quotes worth citing.**
 - "Humans steer. Agents execute."
@@ -104,7 +104,7 @@ URL: <https://openai.com/index/harness-engineering/>
 
 ---
 
-## 3. OpenAI — An Open-Source Spec for Codex Orchestration: Symphony (Apr 27, 2026, Alex Kotliarskyi, Victor Zhu, Zach Brock) ✅ (via user paste)
+## 3. OpenAI, An Open-Source Spec for Codex Orchestration: Symphony (Apr 27, 2026, Alex Kotliarskyi, Victor Zhu, Zach Brock) [read] (via user paste)
 
 URL: <https://openai.com/index/open-source-codex-orchestration-symphony/>
 
@@ -118,13 +118,13 @@ URL: <https://openai.com/index/open-source-codex-orchestration-symphony/>
 - Each open Linear issue → a dedicated agent workspace.
 - Symphony continuously watches the task board and ensures every active task has an agent in the loop until done. Crashes and stalls trigger restart.
 - Tickets are the unit of work, not sessions or PRs. A single ticket may produce multiple PRs across repos, or be pure investigation that touches no code.
-- **Linear used as a state machine** — ticket statuses drive the workflow.
+- **Linear used as a state machine**: ticket statuses drive the workflow.
 - Agents only start tasks that aren't blocked. Blockers in Linear are honoured naturally, so a DAG of tasks executes in parallel where possible.
 - Agents can file new issues themselves when they spot follow-ups, refactors, or improvements. Cost of speculative tickets is "near zero".
-- **Workflow contract lives in `WORKFLOW.md`** — repo-versioned policy file with YAML front-matter (tracker, polling, workspace, hooks, agent, codex) and a Markdown prompt body. The workflow is what the team versions; Symphony is just the runner.
+- **Workflow contract lives in `WORKFLOW.md`**: repo-versioned policy file with YAML front-matter (tracker, polling, workspace, hooks, agent, codex) and a Markdown prompt body. The workflow is what the team versions; Symphony is just the runner.
 - **Agent objectives, not strict transitions.** Quote: "Treating agents as rigid nodes in a state machine doesn't work well. Models get smarter and can solve bigger problems than the box we try to fit them in." They moved from rigid transitions to assigning goals "much like a good manager would assign a goal to a direct report."
 - *Symphony was built using Symphony itself.* They first built it as a Codex session in tmux polling Linear, then iterated.
-- **Reference impl is Elixir**, but the spec is language-agnostic — they had Codex re-implement it in TypeScript, Go, Rust, Java, Python to find ambiguities and simplify.
+- **Reference impl is Elixir**, but the spec is language-agnostic, they had Codex re-implement it in TypeScript, Go, Rust, Java, Python to find ambiguities and simplify.
 - Built on **Codex App Server** (headless Codex with JSON-RPC protocol over stdio).
 - Optional `linear_graphql` dynamic tool call so Codex can talk to Linear without exposing tokens to subagents.
 - **Safety invariants from the spec (Section 9.5):**
@@ -136,13 +136,13 @@ URL: <https://openai.com/index/open-source-codex-orchestration-symphony/>
 - "Not every task fits the Symphony style of work. Some problems still require engineers working directly with interactive Codex sessions, especially ambiguous problems or work that requires strong judgment and expertise."
 - "When we moved from steering agents interactively to assigning them work at the ticket level, we lost the ability to constantly nudge them mid-flight and course-correct when needed."
 - Failure mode: agent produces something that completely misses the mark → useful as a signal that the system has a gap, fix the gap rather than the artefact.
-- They explicitly do NOT plan to maintain Symphony as a standalone product — it's a reference implementation.
+- They explicitly do NOT plan to maintain Symphony as a standalone product, it's a reference implementation.
 
 **Verbatim quotes worth citing.**
 - "Symphony is an agent orchestrator that turns a project-management board like Linear into a control plane for coding agents."
 - "We had effectively built a team of extremely capable junior engineers, then assigned our human engineers to micromanaging them. That wasn't going to scale."
 - "Treating agents as rigid nodes in a state machine doesn't work well. Models get smarter and can solve bigger problems than the box we try to fit them in."
-- "Manage work, not agents." (Used externally to describe Symphony — Linear founder.)
+- "Manage work, not agents." (Used externally to describe Symphony, Linear founder.)
 - "When the agent gets something wrong, that's still useful information, and the cost to us is near zero."
 - "The bottleneck at other companies will shift from writing code toward managing agentic work, too."
 
@@ -154,7 +154,7 @@ URL: <https://openai.com/index/open-source-codex-orchestration-symphony/>
 
 ---
 
-## 4. Ryan Lopopolo (Leopo) — Harness Engineering: Humans Steer, Agents Execute (AI Engineer London, 2026) ✅ (full transcript provided by user)
+## 4. Ryan Lopopolo (Leopo), Harness Engineering: Humans Steer, Agents Execute (AI Engineer London, 2026) [read] (full transcript provided by user)
 
 URL: <https://www.youtube.com/watch?v=am_oeAoUhew>
 
@@ -163,9 +163,9 @@ URL: <https://www.youtube.com/watch?v=am_oeAoUhew>
 **Talk thesis.** "Implementation is no longer the scarce resource of what it means to do the job of software engineering. Code is free." The bottleneck has moved up the stack to the engineer's ability to *productively deploy* the abundance of agent-produced code. Every engineer in the audience is now effectively a staff engineer with 5 / 50 / 5,000 agents available, and the role becomes systems thinking, system design, and delegation.
 
 **The three scarce resources (his explicit framework).**
-1. **Human time** — synchronous attention drain on engineers
-2. **Human and model attention** — both can be overwhelmed
-3. **Model context window** — finite, has to be earned
+1. **Human time**: synchronous attention drain on engineers
+2. **Human and model attention**: both can be overwhelmed
+3. **Model context window**: finite, has to be earned
 
 In a world where human time is the scarce resource and human time is required to write code, work gets stack-ranked into P0/P1/P2/P3 and the P3s never get done. In a world where code is free, P3s get kicked off immediately, sometimes 4× in parallel, and the best result wins.
 
@@ -181,27 +181,27 @@ In a world where human time is the scarce resource and human time is required to
 - "You can just simply say *do not produce slop. Don't accept slop.* You won't get slop in your codebase."
 
 **The "everything is a prompt" framing.**
-- "Loadbearing infrastructure for our AI future: you can just prompt things." → "AGENTS.md, rules files, skills, these lint error messages I am talking about — *prompts*. Review agents that inject comments onto the PR — *prompts*."
-- *Lint error messages with remediation* — write them so they re-prompt the agent. "It's not enough to say we've got a lint failure because we're awaiting in a loop... what we need is a prompt via a lint or a test failure that says no no no, you shouldn't have an unknown here at all because we parse-don't-validate at the edge."
+- "Loadbearing infrastructure for our AI future: you can just prompt things." → "AGENTS.md, rules files, skills, these lint error messages I am talking about, *prompts*. Review agents that inject comments onto the PR, *prompts*."
+- *Lint error messages with remediation*: write them so they re-prompt the agent. "It's not enough to say we've got a lint failure because we're awaiting in a loop... what we need is a prompt via a lint or a test failure that says no no no, you shouldn't have an unknown here at all because we parse-don't-validate at the edge."
 - *Tests about source code itself*, not behaviour. "We can write a test that limits the fact that files are no longer than 350 lines. We're adapting our codebase to the harness to the models to do a little bit of engineering to be context efficient." This is a distinct primitive from behavioural tests.
 
 **The QA-plan-as-leverage example.** One product-minded engineer documents what a good QA plan looks like (features, critical user journeys, expected media to attach to PR). Now every agent trajectory gets that plan. "I don't need to block on low-signal code review in order to learn what it means to write a good QA plan. To have one engineer on my team document that in a durable way means every agent trajectory is going to get a good QA plan." Net effect: "every engineer driving agents gets the best of every single person on my team."
 
-**Friday garbage-collection day (the workflow that operationalises the post's "golden principles").** "I asked every engineer on the team to take one day a week, Fridays — we called it garbage collection day — where our entire job was to take every bit of slop we had observed over the course of the week that was making a PR difficult to merge and figure out ways to categorically eliminate it from ever happening in the first place." The pipeline:
+**Friday garbage-collection day (the workflow that operationalises the post's "golden principles").** "I asked every engineer on the team to take one day a week, Fridays, we called it garbage collection day, where our entire job was to take every bit of slop we had observed over the course of the week that was making a PR difficult to merge and figure out ways to categorically eliminate it from ever happening in the first place." The pipeline:
 1. Human gives a code-review comment.
 2. The class of comment is bucketed under a *persona* (front-end architect, reliability engineer, scalability, etc.).
 3. The persona's expectations become docs in the repo.
 4. A persona-shaped review agent triggers on every push, asking *is this code good through this persona's lens?*
 5. Slop drops over time as personas accumulate.
 
-This is the "feedback gets promoted into code" loop made operational — distinct from "we have linters", because each loop iteration ratchets a class of human-spent attention into mechanical signal.
+This is the "feedback gets promoted into code" loop made operational, distinct from "we have linters", because each loop iteration ratchets a class of human-spent attention into mechanical signal.
 
 **Token allocation (his answer to "where does the billion go").** "Probably a third / a third / a third":
 1. Planning + ticket curation + documentation
 2. Implementation
 3. Stuff that runs in CI
 
-That CI third — review agents, structural tests, lints — is where most of the engineering shifts live. It is the budget cost of having "humans steer" at all.
+That CI third, review agents, structural tests, lints, is where most of the engineering shifts live. It is the budget cost of having "humans steer" at all.
 
 **On plan mode (worth quoting in the deck).**
 - "I should be able to drop a ticket in and have it do the job anyway without diverting through a plan."
@@ -209,19 +209,19 @@ That CI third — review agents, structural tests, lints — is where most of th
 - His recommendation: if plans are used, push them as single PRs with the plan only, human-review every line, block on approval before kicking off implementation.
 
 **Depending on first-party harnesses (Codex, Claude Code) deliberately.**
-- "The labs are not just post-training the models but post-training the models in the context of the harness in which they are primarily deployed. The apply_patch tool, the specific quoting semantics of how to invoke the bash tool — these are in the loop for the post-training process. There is leverage to be had by depending on these first-party harnesses directly."
+- "The labs are not just post-training the models but post-training the models in the context of the harness in which they are primarily deployed. The apply_patch tool, the specific quoting semantics of how to invoke the bash tool, these are in the loop for the post-training process. There is leverage to be had by depending on these first-party harnesses directly."
 - His own role moves up: from understanding harness internals to understanding model behaviour changes between releases.
 
-**On code review philosophy (the merge-conflict story).** With three engineers shipping 3-5 PRs/day each, merge conflicts dominated. Two-pronged response: (1) tree out the code into 750 PNPM packages so the file footprint of any one PR shrinks; (2) close PRs faster by replacing human review with agent review tied to documented persona expectations. Avoid the "catastrophic failure mode of your coding agent being bullied by all of the reviewers — bias toward code being accepted, not perfect, not drowning in minutia."
+**On code review philosophy (the merge-conflict story).** With three engineers shipping 3-5 PRs/day each, merge conflicts dominated. Two-pronged response: (1) tree out the code into 750 PNPM packages so the file footprint of any one PR shrinks; (2) close PRs faster by replacing human review with agent review tied to documented persona expectations. Avoid the "catastrophic failure mode of your coding agent being bullied by all of the reviewers, bias toward code being accepted, not perfect, not drowning in minutia."
 
-**On collaboration platform.** "Markdown files in the repository and GitHub" are the hub. The PR is the broadcast domain — like a Google Doc clean room — where humans and agents collaborate. Crucially: agents can *acknowledge, defer, or reject* feedback. Don't make every comment blocking; that breaks the model.
+**On collaboration platform.** "Markdown files in the repository and GitHub" are the hub. The PR is the broadcast domain, like a Google Doc clean room, where humans and agents collaborate. Crucially: agents can *acknowledge, defer, or reject* feedback. Don't make every comment blocking; that breaks the model.
 
-**On scaling architecture.** "750 packages in the PNPM workspace, isolated by business logic domain or layer of the stack." "Even if you don't actually have microservices, structuring your repositories in ways you can actually scope the directory subtree you are looking in to be able to do most of the change helps." Strong rule: "Code in the file system is also text which means it's effectively prompts you're giving to your coding agent." Pushed to its conclusion: "Make the code as much the same as possible — you should have one programming language, one way of writing CI scripts, one way of constructing async helpers, one way of adding lint rules."
+**On scaling architecture.** "750 packages in the PNPM workspace, isolated by business logic domain or layer of the stack." "Even if you don't actually have microservices, structuring your repositories in ways you can actually scope the directory subtree you are looking in to be able to do most of the change helps." Strong rule: "Code in the file system is also text which means it's effectively prompts you're giving to your coding agent." Pushed to its conclusion: "Make the code as much the same as possible, you should have one programming language, one way of writing CI scripts, one way of constructing async helpers, one way of adding lint rules."
 
 **LLM-as-fuzzy-compiler analogy (his model of what the harness is).**
 - The repository (docs, lints, tests, structural rules, review agents) is "constraints and optimization passes on which code is acceptable to build in the first place."
 - This is "pretty similar to the static analysis and optimization passes that LLVM would do in the process of compiling Rust code."
-- Swapping the model is like "changing your code generation backend from LLVM to cranelift in the Rust compiler" — same constraints, different x86. Symphony's spec is the "compiled artefact view" of the same idea.
+- Swapping the model is like "changing your code generation backend from LLVM to cranelift in the Rust compiler", same constraints, different x86. Symphony's spec is the "compiled artefact view" of the same idea.
 - Confirms "yes" to *"is code a disposable build artefact?"*
 
 **The closing principle (the talk's strongest single line).**
@@ -231,7 +231,7 @@ That CI third — review agents, structural tests, lints — is where most of th
 **On the bitter lesson and not over-engineering harnesses.** The thing that won't be obsoleted by model improvement is *getting the right context to the agent at the right time*. Don't front-load all instructions (overwhelms the agent); surface them at lint / test / review time. "All the harness should do is surface instructions to the model at the right time."
 
 **The vision.**
-- "Take a token budget and a quarter, a half, or a year's worth of work, take the human input to rank what is most important — success metrics, reliability metrics — give it to the machines and have them continually work and advance my product forward, without my hands explicitly on the wheels at all."
+- "Take a token budget and a quarter, a half, or a year's worth of work, take the human input to rank what is most important, success metrics, reliability metrics, give it to the machines and have them continually work and advance my product forward, without my hands explicitly on the wheels at all."
 
 **Verbatim quotes worth citing (from the talk specifically, distinct from the post).**
 - "I am a token billionaire."
@@ -245,41 +245,41 @@ That CI third — review agents, structural tests, lints — is where most of th
 
 **Vocabulary the talk introduces (or sharpens) over the post.**
 - *Token billionaire*
-- *Three scarce resources* — human time, human + model attention, model context window
+- *Three scarce resources*: human time, human + model attention, model context window
 - *Garbage collection day* and *personas* (named explicitly: front-end architect, reliability engineer, scalability)
 - *LLM as fuzzy compiler*
 - *Tests about source code* (file size limits, structural rules)
 
 ---
 
-## 5. Hassan et al. — Agentic Software Engineering: Foundational Pillars and a Research Roadmap (Sep 2025) ✅
+## 5. Hassan et al., Agentic Software Engineering: Foundational Pillars and a Research Roadmap (Sep 2025) [read]
 
 URL: <https://arxiv.org/html/2509.06216v2>
 
-**Thesis.** Autonomous AI agents are now first-class actors in software engineering. The paper redefines SE's foundational pillars (actors, processes, artefacts, tools) and introduces a structured duality — *SE for Humans (SE4H)* and *SE for Agents (SE4A)* — supported by distinct workbenches and machine-readable artefacts, to enable trustworthy human-agent collaboration at the team level rather than just individual-coder automation.
+**Thesis.** Autonomous AI agents are now first-class actors in software engineering. The paper redefines SE's foundational pillars (actors, processes, artefacts, tools) and introduces a structured duality, *SE for Humans (SE4H)* and *SE for Agents (SE4A)*: supported by distinct workbenches and machine-readable artefacts, to enable trustworthy human-agent collaboration at the team level rather than just individual-coder automation.
 
 **The four redefined SE pillars.**
-1. **Actors** — expand from solo human developers to hybrid teams of "Agent Coaches" (humans) and specialised software agents.
-2. **Processes** — from ad-hoc prompting to structured, repeatable engineering activities.
-3. **Artefacts** — from ephemeral prompts to durable, version-controlled, machine-readable structured documents (BriefingScripts, MentorScripts, LoopScripts, Consultation Request Packs, Merge-Readiness Packs).
-4. **Tools** — from one human-centric IDE to two specialised workbenches: the *Agent Command Environment (ACE)* for humans and the *Agent Execution Environment (AEE)* for agents.
+1. **Actors**: expand from solo human developers to hybrid teams of "Agent Coaches" (humans) and specialised software agents.
+2. **Processes**: from ad-hoc prompting to structured, repeatable engineering activities.
+3. **Artefacts**: from ephemeral prompts to durable, version-controlled, machine-readable structured documents (BriefingScripts, MentorScripts, LoopScripts, Consultation Request Packs, Merge-Readiness Packs).
+4. **Tools**: from one human-centric IDE to two specialised workbenches: the *Agent Command Environment (ACE)* for humans and the *Agent Execution Environment (AEE)* for agents.
 
 **SASE = Structured Agentic Software Engineering.** Six mutually reinforcing engineering activities:
-- **BriefingEng** — authoring detailed, testable mission briefs (BriefingScripts) that go beyond vague tickets.
-- **Agentic Loop Engineering (ALE)** — declarative LoopScripts specifying task decomposition, workflow rigour, parallelisation, and evidence-based acceptance.
-- **AI Teammate Mentorship Engineering (ATME)** — structured machine-readable MentorScripts capturing team norms.
-- **Agentic Guidance Engineering (AGE)** — structured human responses to *Consultation Request Packs* (agent asks for human expertise) and *Merge-Readiness Packs* (agent submits work for approval), tracked as *Version Controlled Resolutions*.
-- **AI Teammate Lifecycle Engineering (ATLE)** — persistent agent memory across tasks, proactive maintenance, long-term learning.
-- **AI Teammate Infrastructure Engineering (ATIE)** — agent-native tools, compute, MCP servers optimised for agent cognition rather than human cognition.
+- **BriefingEng**: authoring detailed, testable mission briefs (BriefingScripts) that go beyond vague tickets.
+- **Agentic Loop Engineering (ALE)**: declarative LoopScripts specifying task decomposition, workflow rigour, parallelisation, and evidence-based acceptance.
+- **AI Teammate Mentorship Engineering (ATME)**: structured machine-readable MentorScripts capturing team norms.
+- **Agentic Guidance Engineering (AGE)**: structured human responses to *Consultation Request Packs* (agent asks for human expertise) and *Merge-Readiness Packs* (agent submits work for approval), tracked as *Version Controlled Resolutions*.
+- **AI Teammate Lifecycle Engineering (ATLE)**: persistent agent memory across tasks, proactive maintenance, long-term learning.
+- **AI Teammate Infrastructure Engineering (ATIE)**: agent-native tools, compute, MCP servers optimised for agent cognition rather than human cognition.
 
 **Debates / tensions explicitly raised.**
 - *Speed-vs-trust gap.* Reported: median PR completion in 13.2 minutes, but 29.6% of "plausible" fixes introduce regressions, and rigorous retesting drops GPT-4's solve rate from 12.47% to 3.97%. Current merge-readiness falls far short of production standards.
 - *Bitter Lesson tension.* Their resolution: structure is essential for novel/high-stakes/coordination tasks; agents have autonomy in well-defined repetitive domains. The skill is knowing when to impose rigour and when to "let the agent loose."
-- *Inversion of SE principles for agents.* "DRY (Don't Repeat Yourself) is often reversed" — code duplication that costs humans simplifies agent reasoning and can be auto-refactored.
+- *Inversion of SE principles for agents.* "DRY (Don't Repeat Yourself) is often reversed", code duplication that costs humans simplifies agent reasoning and can be auto-refactored.
 - *Observability and archival crisis.* Current tools fail to systematically capture, version, and link the agent's reasoning, human guidance, and resulting code. CLI platforms lose conversation context; integrated platforms decouple mentorship from code.
 - *N-to-N collaboration complexity.* Routing decisions (which human gets the CRP?), conflict resolution, governance.
 - *Stateless vs stateful agents.* Stateless contractors → stateful teammates needs ATLE infrastructure but unlocks proactive maintenance.
-- *Specialisation vs generality* — monolithic vs specialised agent teams.
+- *Specialisation vs generality*: monolithic vs specialised agent teams.
 
 **Verbatim quotes worth citing.**
 - "Agentic SE radically reshapes this landscape, moving the conversation beyond 10x to the realm of 100x and even 1,000x productivity"
@@ -299,26 +299,26 @@ URL: <https://arxiv.org/html/2509.06216v2>
 
 ---
 
-## 6. Doll — Verified Spec-Driven Development (Mar 2026) ✅
+## 6. Doll, Verified Spec-Driven Development (Mar 2026) [read]
 
 URL: <https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00>
 
 **Thesis.** VSDD fuses Spec-Driven Development, TDD, and Verification-Driven Development into a single AI-orchestrated pipeline. Specifications are binding contracts that precede implementation; formal verification and adversarial code review are quality gates. *Specs say what; tests say how; adversarial verification says we didn't miss anything.*
 
 **Named principles.**
-1. **Spec Supremacy** — the spec is the highest authority below the human developer; nothing exists without traceable justification to a spec requirement.
-2. **Verification-First Architecture** — system design must accommodate formal provability from inception; clean separation between a deterministic *pure core* and an *effectful shell*.
-3. **Red Before Green** — no implementation code until failing tests demand it.
-4. **Anti-Slop Bias** — first correct version is assumed to contain hidden tech debt; trust is earned through adversarial survival.
-5. **Forced Negativity** — adversarial reviewers operate with zero tolerance and fresh context windows.
-6. **Linear Accountability** — every spec item, test, and code line linked via a *Chainlink "bead"* unit of work.
-7. **Four-Dimensional Convergence** — exit when specs, tests, implementation, and formal proofs have all independently survived adversarial review.
+1. **Spec Supremacy**: the spec is the highest authority below the human developer; nothing exists without traceable justification to a spec requirement.
+2. **Verification-First Architecture**: system design must accommodate formal provability from inception; clean separation between a deterministic *pure core* and an *effectful shell*.
+3. **Red Before Green**: no implementation code until failing tests demand it.
+4. **Anti-Slop Bias**: first correct version is assumed to contain hidden tech debt; trust is earned through adversarial survival.
+5. **Forced Negativity**: adversarial reviewers operate with zero tolerance and fresh context windows.
+6. **Linear Accountability**: every spec item, test, and code line linked via a *Chainlink "bead"* unit of work.
+7. **Four-Dimensional Convergence**: exit when specs, tests, implementation, and formal proofs have all independently survived adversarial review.
 
 **Phases.**
 1. Spec Crystallisation (Behavioural Spec, Verification Architecture, Property Specs)
 2-4. TDD with adversarial review loops
 5. Formal Hardening (Kani, Dafny, TLA+ as appropriate)
-6. Convergence — adversary forced to "hallucinate flaws"
+6. Convergence, adversary forced to "hallucinate flaws"
 
 **Real, named critiques (in the comment thread on the gist).**
 - *gitcnd* (1982-era coder): "airtight spec before building" repeats waterfall's original sin; edge cases cannot be enumerated before implementation because *implementation is discovery*; the Purity Boundary Map needs the full problem shape, which only emerges during building; ceremony scales poorly under delivery pressure; formal verification is realistically only 5-10% of typical codebases.
@@ -327,22 +327,22 @@ URL: <https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00>
 - *samsamit*: generated tests are formally complete but not pragmatic; needs a distillation step.
 
 **Verbatim quotes worth citing.**
-- "VSDD doesn't just generate code — it generates code that can prove why it exists, demonstrate that it works, and survive an adversary that wants it dead."
-- "The Adversary doesn't care about your feelings — it cares about your invariants."
+- "VSDD doesn't just generate code, it generates code that can prove why it exists, demonstrate that it works, and survive an adversary that wants it dead."
+- "The Adversary doesn't care about your feelings, it cares about your invariants."
 - "Spec Supremacy: The spec is the highest authority below the human developer."
 - (gitcnd, in opposition) "The spec becomes airtight because you built it, not before you build it."
-- (gitcnd, in opposition) "Deciding upfront which parts will be deterministic, side-effect-free core requires understanding the full problem — which you won't have until partially built."
+- (gitcnd, in opposition) "Deciding upfront which parts will be deterministic, side-effect-free core requires understanding the full problem, which you won't have until partially built."
 
 **Vocabulary introduced.**
-- *Chainlink Beads* — tracked units linking spec/test/code
-- *Purity Boundary Map* — split between deterministic core and effectful shell
+- *Chainlink Beads*: tracked units linking spec/test/code
+- *Purity Boundary Map*: split between deterministic core and effectful shell
 - *Four-Dimensional Convergence*
-- *The Adversary (Sarcasmotron)* — fresh-context AI reviewer with zero tolerance
+- *The Adversary (Sarcasmotron)*: fresh-context AI reviewer with zero tolerance
 - *Red Before Green*
 
 ---
 
-## 7. Anthropic — Agent Teams (Claude Code docs) ✅
+## 7. Anthropic, Agent Teams (Claude Code docs) [read]
 
 URL: <https://code.claude.com/docs/en/agent-teams>
 
@@ -351,10 +351,10 @@ URL: <https://code.claude.com/docs/en/agent-teams>
 **Thesis.** A pattern for multiple Claude Code instances coordinating as a team: one *team lead* spawns *teammates*, each with its own context window. Teammates communicate directly (not just back to the lead, the way subagents do). Coordination happens through a *shared task list* and a *mailbox*.
 
 **Architecture.**
-- **Team lead** — main session that spawns teammates and coordinates.
-- **Teammates** — separate full Claude Code instances; each has its own context window, loads its own CLAUDE.md / MCP / skills, does *not* inherit the lead's conversation.
-- **Shared task list** — work items teammates claim and complete, with dependency tracking.
-- **Mailbox** — direct teammate-to-teammate messaging.
+- **Team lead**: main session that spawns teammates and coordinates.
+- **Teammates**: separate full Claude Code instances; each has its own context window, loads its own CLAUDE.md / MCP / skills, does *not* inherit the lead's conversation.
+- **Shared task list**: work items teammates claim and complete, with dependency tracking.
+- **Mailbox**: direct teammate-to-teammate messaging.
 - Storage: `~/.claude/teams/{team-name}/config.json`, `~/.claude/tasks/{team-name}/`.
 
 **Subagent vs Agent Team comparison (from the page).**
@@ -367,7 +367,7 @@ URL: <https://code.claude.com/docs/en/agent-teams>
 | Token cost | Lower | Higher (each teammate is its own Claude) |
 
 **When to use teams.** Strongest when parallel exploration adds value:
-- Research and review (e.g. parallel PR review with one teammate per lens — security, performance, test coverage)
+- Research and review (e.g. parallel PR review with one teammate per lens, security, performance, test coverage)
 - New modules / features where teammates own separate pieces
 - Debugging with competing hypotheses (teammates as adversarial scientists)
 - Cross-layer coordination (frontend, backend, tests, each owned)
@@ -376,12 +376,12 @@ URL: <https://code.claude.com/docs/en/agent-teams>
 - 3-5 teammates is the practical sweet spot.
 - 5-6 tasks per teammate keeps everyone productive without context switching.
 - "Three focused teammates often outperform five scattered ones."
-- Self-contained tasks ("just right" sized) — too small means coordination overhead exceeds benefit; too large means too long without check-in.
+- Self-contained tasks ("just right" sized), too small means coordination overhead exceeds benefit; too large means too long without check-in.
 - Avoid file conflicts: break work so each teammate owns a different file set.
 - Start with research and review (clear boundaries, no code) before parallel implementation.
 - For risky work, require plan approval before implementation.
 
-**Hooks for quality gates.** `TeammateIdle`, `TaskCreated`, `TaskCompleted` — exit code 2 sends feedback / blocks creation / blocks completion.
+**Hooks for quality gates.** `TeammateIdle`, `TaskCreated`, `TaskCompleted`, exit code 2 sends feedback / blocks creation / blocks completion.
 
 **Limitations explicitly listed.**
 - No session resumption with in-process teammates (`/resume`, `/rewind` don't restore them).
@@ -404,29 +404,29 @@ URL: <https://code.claude.com/docs/en/agent-teams>
 
 ---
 
-## 8. Adam Bender — Software Engineering at the Tipping Point (May 2026, Google) ✅
+## 8. Adam Bender, Software Engineering at the Tipping Point (May 2026, Google) [read]
 
 URL: <https://www.youtube.com/watch?v=2n41YjR5QfU>
 
-**Thesis.** Software engineering as we know it is undergoing a 10x transformation driven by AI. To navigate this "tipping point", engineers must think in systems — understanding developer ecosystems (socio-technical systems combining people, culture, technology, incentives) rather than optimizing individual components. The talk frames this via software ecology: the study of developer ecosystems as dynamic, interconnected wholes where emergent properties arise from the constellation of choices made by an organization.
+**Thesis.** Software engineering as we know it is undergoing a 10x transformation driven by AI. To navigate this "tipping point", engineers must think in systems, understanding developer ecosystems (socio-technical systems combining people, culture, technology, incentives) rather than optimising individual components. The talk frames this via software ecology: the study of developer ecosystems as dynamic, interconnected wholes where emergent properties arise from the constellation of choices made by an organisation.
 
 **Core thesis statement.** "In a system, everything is connected. Small actions can have big consequences. Despite how it might seem, AI transformation is not the sole domain of your company's leaders. They have a role to play. But so do you. As front-line software engineers, in this tipping point moment, you are at the heart of deciding what software engineering is going to be."
 
 **Key concept: Software ecology.** "Software ecology is the holistic study of the socio-technical ecosystems that produce software." Ecosystems are characterized by:
 - Complex, interdependent actors (people, systems, incentives)
 - Emergent properties that can't be seen by examining individual components
-- Agency — components can make decisions
+- Agency, components can make decisions
 - Tight coupling between the environment and the system
 
 **Google's ecosystem as a case study.** Demonstrates how culture and technology are inseparable:
 - Culture: engineering-led, transparent, helpful, code-review-as-mentorship, blaming-less postmortems, standardization, continuous improvement
 - Technology: monorepo, trunk-based development, universal build tools, global test platform, opinionated frameworks, small set of core languages
-- Emergent property: Large Scale Changes (LSCs) — single developers refactoring millions of lines of code they've never seen, enabled by decades of integrated choices
+- Emergent property: Large Scale Changes (LSCs), single developers refactoring millions of lines of code they've never seen, enabled by decades of integrated choices
 
 **The concept of shared fate.** "Shared fate describes the degree to which an ecosystem and its components are tightly linked to each other." Google's monorepo creates shared fate:
 - One security patch propagates to all applications within a week
 - All code is tested together, all code is deployed together
-- Tradeoff: high coupling means shared fate isn't universally good — production systems deliberately avoid certain kinds of shared fate to prevent cascading failures
+- Trade-off: high coupling means shared fate isn't universally good, production systems deliberately avoid certain kinds of shared fate to prevent cascading failures
 
 **The 10x productivity moment and its systemic consequences.** When code-generation velocity increases 10x, Bender traces the cascading effects through a developer ecosystem graph:
 - More code → more liability
@@ -435,7 +435,7 @@ URL: <https://www.youtube.com/watch?v=2n41YjR5QfU>
 - More code → design challenges (component reuse, code factoring, agent-written code)
 - More commits → more testing (dependency graph grows *quadratically*, not linearly)
 - More code → code review bottleneck (reviewers can't sustain velocity; become blocking)
-- More code → version control performance strain (not optimized for velocity, optimized for consistency)
+- More code → version control performance strain (not optimised for velocity, optimised for consistency)
 - More code → release cadence pressure (must release more frequently or changes get dangerously large)
 - More code → internal APIs become public (agents will call any API they find, must harden internal APIs)
 
@@ -449,27 +449,27 @@ URL: <https://www.youtube.com/watch?v=2n41YjR5QfU>
 
 **Rollback posture shift.** Current rollbacks work because "you release software slightly slower than it takes you to detect a problem in production." At 10x velocity, detection can't keep up. Rollback must now contend with multiple conflicting changes already landed on top.
 
-**"Everyone's a builder" consequences.** Democratizing engineering via agents means everyone can spin up tooling, but now you must maintain everyone's custom tools. Without a common data substrate, social fabric of organization breaks.
+**"Everyone's a builder" consequences.** Democratising engineering via agents means everyone can spin up tooling, but now you must maintain everyone's custom tools. Without a common data substrate, social fabric of organisation breaks.
 
-**Technical leadership acceleration crisis.** Junior developers now have 50 agents at their disposal but zero intuition/judgment. "How do I teach 10 years of experience in six months?" — unsolved problem.
+**Technical leadership acceleration crisis.** Junior developers now have 50 agents at their disposal but zero intuition/judgment. "How do I teach 10 years of experience in six months?", unsolved problem.
 
 **Human attention as the most precious resource.** "We've benefited from the fact that we couldn't make more trouble for ourselves than we could pay attention to. And now that is not the case."
 
 **Systems thinking tools.** Two questions to understand any ecosystem:
-1. **Why** — drill into the heart of the system to understand how it works
-2. **What if** — challenge assumptions and require imagination
+1. **Why**: drill into the heart of the system to understand how it works
+2. **What if**: challenge assumptions and require imagination
 
 Systems analysis looks for: scale, effects over time, causality direction, coupling patterns, emergence, incentives (social and technical), capacity, feedback loops, bottlenecks.
 
 **AI as an amplifier (citing DORA research).** "Amplification is a magnitude and not a direction. AI doesn't care where all of that stuff goes. It's just going to give you more of it." Teams with solid fundamentals amplify good practices; teams without fundamentals amplify chaos.
 
-**Prediction.** "My guess is — this is a guess. You can come check me on it later. In 2030, our developer ecosystems today are going to feel like 2001 does to us now." (2001: shipping software on CD-ROMs.)
+**Prediction.** "My guess is, this is a guess. You can come check me on it later. In 2030, our developer ecosystems today are going to feel like 2001 does to us now." (2001: shipping software on CD-ROMs.)
 
 **Scaffolding recommendations for the 10x moment.**
-1. **Infrastructure capacity** — know how much compute you have to spend
-2. **Validation strategy** — validation is going to change; design a new one now
-3. **Isolation** — keep prototype code from reaching production
-4. **Abstraction** — build good abstractions so agents make good choices, not bad ones
+1. **Infrastructure capacity**: know how much compute you have to spend
+2. **Validation strategy**: validation is going to change; design a new one now
+3. **Isolation**: keep prototype code from reaching production
+4. **Abstraction**: build good abstractions so agents make good choices, not bad ones
 
 **Engineering practices are not sacred; principles matter.** Practices change. Understand the *why* behind your practices so you can evolve them:
 - Why does your team test the way it does?
@@ -478,13 +478,13 @@ Systems analysis looks for: scale, effects over time, causality direction, coupl
 
 **Intellectual control over code.** "We've been losing this war for at least the last 15 years. Our largest systems are way bigger than any of us can think about today." AI offers an opportunity: ask a continuously updated interactive architectural space questions like "what would happen if we took capacity from here and moved it to the East Coast?"
 
-**The closing vision.** Explore instead of optimizing everything. The most exciting problems are deepening understanding of what we've built, not just making the code machine go faster.
+**The closing vision.** Explore instead of optimising everything. The most exciting problems are deepening understanding of what we've built, not just making the code machine go faster.
 
 **Call to action.** 
 - Senior engineers: be mentors; help people who are stuck
 - If you've figured out your AI workflow: share it, not as a precious secret
 - Technical leads: steer how software engineering happens
-- If you care about quality/design: advocate for it — your bosses probably won't
+- If you care about quality/design: advocate for it, your bosses probably won't
 
 **Verbatim quotes worth citing.**
 - "Software ecology is the holistic study of the socio-technical ecosystems that produce software."
@@ -535,7 +535,7 @@ These are the points multiple sources converge on, *with at least one supporting
 
 3. **Mechanical signal everywhere.** OpenAI: "By enforcing invariants, not micromanaging implementations". Custom linters, structural tests, type at boundaries. Anthropic: "It is unacceptable to remove or edit tests". SASE: Merge-Readiness Pack with five evidence criteria. VSDD: tests + adversarial review + (where applicable) formal proofs. Agent Teams: hooks (TaskCompleted, TaskCreated, TeammateIdle).
 
-4. **Repository as the agent's universe.** OpenAI: "From the agent's point of view, anything it can't access in-context while running effectively doesn't exist." → push Slack discussions, tacit knowledge into markdown. SASE: durable artefacts replace ephemeral prompts. Agent Teams: teammates load CLAUDE.md, MCP servers, skills from the project — they only see the repo.
+4. **Repository as the agent's universe.** OpenAI: "From the agent's point of view, anything it can't access in-context while running effectively doesn't exist." → push Slack discussions, tacit knowledge into markdown. SASE: durable artefacts replace ephemeral prompts. Agent Teams: teammates load CLAUDE.md, MCP servers, skills from the project, they only see the repo.
 
 5. **Multi-agent coordination needs structure, but the sources disagree on the shape** (see disagreements below).
 
@@ -545,17 +545,17 @@ These are the points multiple sources converge on, *with at least one supporting
 
 These are real divergences, not rhetorical differences.
 
-1. **Greenfield vs brownfield.** OpenAI is explicit: "started with an empty git repository" and "this behavior depends heavily on the specific structure and tooling of this repository and should not be assumed to generalize without similar investment." SASE is aimed at hybrid existing teams. The Anthropic Harnesses post is greenfield-friendly. The greenfield/brownfield asymmetry is *real and explicitly acknowledged* by the OpenAI team — it isn't just my framing.
+1. **Greenfield vs brownfield.** OpenAI is explicit: "started with an empty git repository" and "this behavior depends heavily on the specific structure and tooling of this repository and should not be assumed to generalize without similar investment." SASE is aimed at hybrid existing teams. The Anthropic Harnesses post is greenfield-friendly. The greenfield/brownfield asymmetry is *real and explicitly acknowledged* by the OpenAI team, it isn't just my framing.
 
 2. **One agent vs swarm.**
-   - Anthropic Harnesses: two-agent (initialiser + coding) — minimalist.
-   - Symphony: many parallel agents on a Linear board — maximalist.
-   - Agent Teams: 3-5 peer teammates with mailbox — middle.
+   - Anthropic Harnesses: two-agent (initialiser + coding), minimalist.
+   - Symphony: many parallel agents on a Linear board, maximalist.
+   - Agent Teams: 3-5 peer teammates with mailbox, middle.
    - SASE: hybrid teams of specialised agents.
 
 3. **State-machine rigidity.** Symphony explicitly *moved away from this*: "Treating agents as rigid nodes in a state machine doesn't work well. Models get smarter and can solve bigger problems than the box we try to fit them in." VSDD relies on rigid pipeline phases.
 
-4. **Specs vs exploration.** VSDD: "Spec Supremacy" — nothing exists without spec traceability. OpenAI Harness: agent navigates a legible codebase, exec-plans for complex work, lightweight ephemeral plans for small change. SASE: structured BriefingScripts with autonomy locally.
+4. **Specs vs exploration.** VSDD: "Spec Supremacy", nothing exists without spec traceability. OpenAI Harness: agent navigates a legible codebase, exec-plans for complex work, lightweight ephemeral plans for small change. SASE: structured BriefingScripts with autonomy locally.
 
 5. **Merge gates.** OpenAI explicitly *removed* most blocking gates ("test flakes are often addressed with follow-up runs"). SASE explicitly tightens them via Merge-Readiness Packs. VSDD stacks four-dimensional convergence including formal proofs.
 
@@ -570,7 +570,7 @@ These are real divergences, not rhetorical differences.
 The frontier-lab incentive nuance the user flagged is well-supported by the sources actually saying it:
 
 - The OpenAI post is honest about the conditions: greenfield, empty repo, deliberate constraint of "no manually-written code", a specific small team, internal product. They explicitly disclaim generalisation.
-- The pillars they advocate (tests, types, linters, mechanical enforcement, clean docs, sound architecture, security) are mundane engineering. None of it is "AI magic". The user's framing — *"What they actually argue is mundane"* — lands accurately on the substance.
+- The pillars they advocate (tests, types, linters, mechanical enforcement, clean docs, sound architecture, security) are mundane engineering. None of it is "AI magic". The user's framing, *"What they actually argue is mundane"*: lands accurately on the substance.
 - The hard work is described as scaffolding (Anthropic), repository-as-system-of-record (OpenAI Harness), orchestration spec (Symphony), structured engineering activities (SASE), spec architecture (VSDD), team coordination (Agent Teams). Different vocabulary, same shape.
 
 ## What we might still be missing
@@ -595,13 +595,13 @@ I'll wait for go-ahead before drafting the deck from these notes.
 
 # Appendix: Field Report slide (added 2026-04-30)
 
-A "From the Field" slide was added between the comparison table (s16) and the Open Debates slide. Source for every claim: `harness.md` in the repo root — a primary-source technical reference document the user wrote about their own codebase. Mapping of slide claims to source sections:
+A "From the Field" slide was added between the comparison table (s16) and the Open Debates slide. Source for every claim: `harness.md` in the repo root, a primary-source technical reference document the user wrote about their own codebase. Mapping of slide claims to source sections:
 
-- "Agents, not humans, are the primary developers" — `harness.md` §0 TL;DR, lines 12–13.
-- "Greenfield from day one" — implied by the user's prompt; consistent with the harness being its own codebase rather than a retrofit.
-- "Three enforcement layers (Claude Code hooks → git pre-commit → agent review loop)" — `harness.md` §2, lines 75–91.
-- "You cannot leave a session, commit, or merge without all three passing" — verbatim language from §2 line 77.
-- "~17 skills, 6 specialised subagents, 13 mechanical-check modules with 38+ rules, 6 harness validators with 35 rules, 34 core beliefs, Promotion Log" — `harness.md` §0 TL;DR bullet list lines 17–25, plus §1 ("34 beliefs") and §6 (mechanical-check totals). Footnote: §9 caveat 3 notes the live count fluctuates ("17 or 18" depending on listing source); "around 17" hedges this.
-- "Error messages are agent prompts; every Violation ships a `fix` string" — `harness.md` §6.1 (Violation dataclass with `fix` field), §6.3 (verbatim claim "error messages are agent prompts").
-- "GAN loop: Claude generates, mechanical checks discriminate, subagents discriminate, loop until clean" — `harness.md` §0 lines 26 and §11 glossary entry "GAN loop".
-- "Codex-style codebase-preparation phase is in place; exploring Symphony as the next layer" — user's prompt; consistent with §1 (the harness "borrowed from OpenAI's Harness Engineering playbook"). Symphony is the deck's Approach 03 (slide s14).
+- "Agents, not humans, are the primary developers", `harness.md` §0 TL;DR, lines 12–13.
+- "Greenfield from day one", implied by the user's prompt; consistent with the harness being its own codebase rather than a retrofit.
+- "Three enforcement layers (Claude Code hooks → git pre-commit → agent review loop)", `harness.md` §2, lines 75–91.
+- "You cannot leave a session, commit, or merge without all three passing", verbatim language from §2 line 77.
+- "~17 skills, 6 specialised subagents, 13 mechanical-check modules with 38+ rules, 6 harness validators with 35 rules, 34 core beliefs, Promotion Log", `harness.md` §0 TL;DR bullet list lines 17–25, plus §1 ("34 beliefs") and §6 (mechanical-check totals). Footnote: §9 caveat 3 notes the live count fluctuates ("17 or 18" depending on listing source); "around 17" hedges this.
+- "Error messages are agent prompts; every Violation ships a `fix` string", `harness.md` §6.1 (Violation dataclass with `fix` field), §6.3 (verbatim claim "error messages are agent prompts").
+- "GAN loop: Claude generates, mechanical checks discriminate, subagents discriminate, loop until clean", `harness.md` §0 lines 26 and §11 glossary entry "GAN loop".
+- "Codex-style codebase-preparation phase is in place; exploring Symphony as the next layer", user's prompt; consistent with §1 (the harness "borrowed from OpenAI's Harness Engineering playbook"). Symphony is the deck's Approach 03 (slide s14).
