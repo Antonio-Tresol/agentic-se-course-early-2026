@@ -65,7 +65,7 @@ const weeks = [
     id: 3,
     label: "Week 3",
     title: "Working in Complex Codebases",
-    intro: "Coding agents handle small tasks fluently but struggle inside large brownfield code. This week is not a single workflow taught as the answer. It is the shape of the space: a small set of principles the sources agree on, a handful of approaches that put those principles to work in different ways, and a few open debates the community has not settled. We read multiple voices (Dex Horthy's two talks, the QRSPI revision, Google's Conductor, Anthropic's context engineering guide) and treat them as different instantiations of the same underlying problem rather than competing methodologies. This is research and active practice, not a settled discipline.",
+    intro: "Coding agents handle small tasks fluently but struggle inside large brownfield code. This week is not a single workflow taught as the answer. It is the shape of the space: a small set of principles the sources agree on, a handful of approaches that put those principles to work in different ways, and a few open debates the community has not settled. We read multiple voices (Dex Horthy's two talks, the QRSPI revision, Google's Conductor, Anthropic's context engineering guide, and three Claude Code guides on scoping large codebases, orchestrating workflows, and holding an agent to a goal) and treat them as different instantiations of the same underlying problem rather than competing methodologies. This is research and active practice, not a settled discipline.",
     prework: [
       { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", verb: "Watch", note: "Dex Horthy · AI Engineer · Dec 2025" },
       { text: "Advanced Context Engineering for Coding Agents", url: "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md", verb: "Read", note: "HumanLayer · Dec 2025 · companion write-up" },
@@ -73,6 +73,9 @@ const weeks = [
       { text: "From RPI to QRSPI", url: "https://alexlavaee.me/blog/from-rpi-to-qrspi/", verb: "Read", note: "Alex Lavaee · 2026 · summary of the revised framework" },
       { text: "Conductor: Introducing Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", verb: "Read", note: "Google · Dec 2025 · how another vendor is shipping the same idea" },
       { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Re-read", note: "Anthropic · May 2025 · with RPI in mind" },
+      { text: "Set up Claude Code in a monorepo or large codebase", url: "https://code.claude.com/docs/en/large-codebases", verb: "Read", note: "Anthropic · Jun 2026 · nested CLAUDE.md, sparse worktrees, per-package skills" },
+      { text: "Orchestrate subagents at scale with dynamic workflows", url: "https://code.claude.com/docs/en/workflows", verb: "Read", note: "Anthropic · Jun 2026 · scripting many subagents for audits and migrations" },
+      { text: "Keep Claude working toward a goal", url: "https://code.claude.com/docs/en/goal", verb: "Read", note: "Anthropic · Jun 2026 · completion conditions with /goal" },
     ],
     activity: {
       title: "Pick an Approach, Try It on a Hard Problem",
@@ -162,6 +165,9 @@ const resources = {
     { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", note: "Anthropic" },
     { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", note: "Anthropic" },
     { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", note: "Anthropic" },
+    { text: "Set up Claude Code in a monorepo or large codebase", url: "https://code.claude.com/docs/en/large-codebases", note: "Anthropic · Jun 2026" },
+    { text: "Orchestrate subagents at scale with dynamic workflows", url: "https://code.claude.com/docs/en/workflows", note: "Anthropic · Jun 2026" },
+    { text: "Keep Claude working toward a goal", url: "https://code.claude.com/docs/en/goal", note: "Anthropic · Jun 2026" },
   ],
   articles: [
     { text: "Software Engineering at the Tipping Point", url: "https://www.youtube.com/watch?v=2n41YjR5QfU", note: "Adam Bender · Google · 2026" },
