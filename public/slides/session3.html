@@ -657,26 +657,27 @@
   <div class="slide-inner">
     <div class="slide-label">Activity &middot; Bring the Three Home</div>
     <h2>Scope, Orchestrate, Verify</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Take one real brownfield repository this week and put all three readings to work on a single cross-cutting task.</p>
+    <p class="subtitle" style="margin-bottom: 6px;">Work on a real, larger codebase this week: lanorme, a stdlib-only Python linter with 23 checks and a full test suite. Put all three readings to work on it.</p>
+    <div class="source-row" style="margin-bottom: 4px;"><span class="pill">github.com/lanorme/lanorme</span><span class="pill">~11k LOC</span><span class="pill pill-orange">23 checks</span></div>
     <div class="items">
       <div class="item">
         <span class="item-num">1</span>
-        <span class="item-text"><strong>Scope it down.</strong> Pick the repo and a task that spans it. Set up nested CLAUDE.md, a sparse worktree, and Read deny rules so the agent only sees the subtree the task touches. <span style="color: var(--muted);">(large codebases)</span></span>
+        <span class="item-text"><strong>Scope it down.</strong> Start the agent scoped to src/lanorme/checks/. Add a per-directory CLAUDE.md, take a sparse worktree of src/lanorme and tests, and deny reads of benchmarks/ and the deliberately dirty tests/fixtures/. <span style="color: var(--muted);">(large codebases)</span></span>
       </div>
       <div class="item">
         <span class="item-num">2</span>
-        <span class="item-text"><strong>Orchestrate it.</strong> State the task as something that fans out, such as auditing every endpoint for a missing check or renaming an API across all its call sites, and run it as a workflow. Read the script Claude writes. <span style="color: var(--muted);">(dynamic workflows)</span></span>
+        <span class="item-text"><strong>Orchestrate it.</strong> The 23 checks are a natural fan-out. Run a workflow that audits every check for one consistent contract, such as a positive and a negative fixture plus a unit test, one agent per check, cross-checked. <span style="color: var(--muted);">(dynamic workflows)</span></span>
       </div>
       <div class="item">
         <span class="item-num">3</span>
-        <span class="item-text"><strong>Verify it.</strong> Wrap the change in /goal with a measurable end state, such as the tests passing and the build staying green, and let it run to that condition. <span style="color: var(--muted);">(keep working toward a goal)</span></span>
+        <span class="item-text"><strong>Verify it.</strong> Set /goal to "the unit tests pass and lanorme lints its own source clean", and let it run to that end state. A linter that lints itself is a clean completion condition. <span style="color: var(--muted);">(keep working toward a goal)</span></span>
       </div>
       <div class="item">
         <span class="item-num">4</span>
         <span class="item-text"><strong>Reflect.</strong> Which invariant did each tool serve? Where did the tooling carry the work, and where did you still have to step in?</span>
       </div>
     </div>
-    <p style="margin-top: 18px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">Bring your scoping config, the workflow script Claude wrote, your /goal condition, and a one-paragraph reflection to next week.</p>
+    <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">Bring your scoping config, the workflow script Claude wrote, your /goal condition, and a one-paragraph reflection to next week.</p>
   </div>
 </div>
 
