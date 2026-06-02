@@ -623,8 +623,65 @@
   </div>
 </div>
 
-<!-- ================== SLIDE 24: Closing ================== -->
-<div class="slide slide-dark" id="s23">
+<!-- ================== SLIDE 24: This week's new readings ================== -->
+<div class="slide" id="s23">
+  <div class="slide-inner">
+    <div class="slide-label">This Week's New Readings &middot; Anthropic &middot; Jun 2026</div>
+    <h2>From Invariants to Tooling</h2>
+    <p class="subtitle">Three Claude Code guides shipped this month turn the abstract invariants into concrete mechanisms you can run. Read them, then put all three to work in the activity.</p>
+    <div class="grid-3" style="margin-top: 18px;">
+      <div class="card card-accent">
+        <h3>Large Codebases</h3>
+        <p>Scope the agent to the subtree a task touches: nested CLAUDE.md, sparse worktrees, Read deny rules, code intelligence, per-package skills.</p>
+        <div class="meta" style="margin-top: 12px;">/large-codebases &middot; serves "context is scarce"</div>
+      </div>
+      <div class="card card-accent">
+        <h3>Dynamic Workflows</h3>
+        <p>A script orchestrates dozens of subagents for a codebase audit, a large migration, or cross-checked research. Intermediate results stay out of your main window.</p>
+        <div class="meta" style="margin-top: 12px;">/workflows &middot; serves "sub-agents are context control"</div>
+      </div>
+      <div class="card card-accent">
+        <h3>Keep Working Toward a Goal</h3>
+        <p>The /goal command sets a completion condition. A fresh model checks after every turn and keeps the agent working until the condition holds.</p>
+        <div class="meta" style="margin-top: 12px;">/goal &middot; serves "enforce mechanically"</div>
+      </div>
+    </div>
+    <div class="source-row">
+      <span class="pill">Anthropic</span><span class="pill">Claude Code docs</span><span class="pill pill-orange">June 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 25: Activity, bring the three home ================== -->
+<div class="slide" id="s24">
+  <div class="slide-inner">
+    <div class="slide-label">Activity &middot; Bring the Three Home</div>
+    <h2>Scope, Orchestrate, Verify</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Take one real brownfield repository this week and put all three readings to work on a single cross-cutting task.</p>
+    <div class="items">
+      <div class="item">
+        <span class="item-num">1</span>
+        <span class="item-text"><strong>Scope it down.</strong> Pick the repo and a task that spans it. Set up nested CLAUDE.md, a sparse worktree, and Read deny rules so the agent only sees the subtree the task touches. <span style="color: var(--muted);">(large codebases)</span></span>
+      </div>
+      <div class="item">
+        <span class="item-num">2</span>
+        <span class="item-text"><strong>Orchestrate it.</strong> State the task as something that fans out, such as auditing every endpoint for a missing check or renaming an API across all its call sites, and run it as a workflow. Read the script Claude writes. <span style="color: var(--muted);">(dynamic workflows)</span></span>
+      </div>
+      <div class="item">
+        <span class="item-num">3</span>
+        <span class="item-text"><strong>Verify it.</strong> Wrap the change in /goal with a measurable end state, such as the tests passing and the build staying green, and let it run to that condition. <span style="color: var(--muted);">(keep working toward a goal)</span></span>
+      </div>
+      <div class="item">
+        <span class="item-num">4</span>
+        <span class="item-text"><strong>Reflect.</strong> Which invariant did each tool serve? Where did the tooling carry the work, and where did you still have to step in?</span>
+      </div>
+    </div>
+    <p style="margin-top: 18px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">Bring your scoping config, the workflow script Claude wrote, your /goal condition, and a one-paragraph reflection to next week.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 26: Closing ================== -->
+<div class="slide slide-dark" id="s25">
   <div class="slide-inner">
     <div class="slide-label">Closing</div>
     <h2>Nothing Here Is Settled</h2>
