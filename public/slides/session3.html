@@ -655,26 +655,26 @@
 <!-- ================== SLIDE 25: Activity, bring the three home ================== -->
 <div class="slide" id="s24">
   <div class="slide-inner">
-    <div class="slide-label">Activity &middot; Open a Real PR to lanorme</div>
+    <div class="slide-label">Activity &middot; Ship a Real PR to lanorme</div>
     <h2>Scope, Orchestrate, Verify</h2>
-    <p class="subtitle" style="margin-bottom: 6px;">lanorme is a stdlib-only Python linter with 19 open issues and no CI on pull requests yet. Implement issue #1: add a workflow that runs the gates on every PR. Use all three readings, then open a real pull request.</p>
-    <div class="source-row" style="margin-bottom: 4px;"><span class="pill">github.com/lanorme/lanorme</span><span class="pill">issue #1</span><span class="pill pill-orange">good first issue</span></div>
+    <p class="subtitle" style="margin-bottom: 6px;">lanorme is a stdlib-only Python linter with open issues and CI that runs the gates on every pull request. Claim a labelled issue, fix it with the three readings, and open a real PR.</p>
+    <div class="source-row" style="margin-bottom: 4px;"><span class="pill">github.com/lanorme/lanorme</span><span class="pill">good first issue</span><span class="pill pill-orange">CI on every PR</span></div>
     <div class="items">
       <div class="item">
         <span class="item-num">1</span>
-        <span class="item-text"><strong>Scope it down.</strong> Fork the repo and scope the agent to the CI surface: the existing release.yml as a template, .pre-commit-config.yaml, and pyproject.toml. Deny reads of benchmarks/ and the deliberately dirty tests/fixtures/. <span style="color: var(--muted);">(large codebases)</span></span>
+        <span class="item-text"><strong>Scope it down.</strong> Fork the repo and claim a labelled issue, such as a new check (#11 swallowed exceptions, #10 mutable default arguments). Scope the agent to src/lanorme/checks/ and tests/, and deny reads of benchmarks/ and unrelated fixtures. <span style="color: var(--muted);">(large codebases)</span></span>
       </div>
       <div class="item">
         <span class="item-num">2</span>
-        <span class="item-text"><strong>Orchestrate it.</strong> The gates are spread across the repo: pytest, the 23 checks, and the self-lint dogfood. Run a workflow that audits how each gate is invoked, then drafts the ci.yml that runs them all on every pull request. <span style="color: var(--muted);">(dynamic workflows)</span></span>
+        <span class="item-text"><strong>Orchestrate it.</strong> A new check has parts that fan out. Run a workflow that studies how a few of the 23 existing checks are built, then drafts the check, its positive and negative fixtures, and its unit test, cross-checked for consistency. <span style="color: var(--muted);">(dynamic workflows)</span></span>
       </div>
       <div class="item">
         <span class="item-num">3</span>
-        <span class="item-text"><strong>Verify it.</strong> Set /goal to "uv run pytest tests/unit passes and uv run lanorme check . is clean", and let it run to that end state. Your new workflow then runs on its own pull request. <span style="color: var(--muted);">(keep working toward a goal)</span></span>
+        <span class="item-text"><strong>Verify it.</strong> Set /goal to "uv run pytest tests/unit passes and uv run lanorme check . is clean", and let it run to that end state. The PR's CI then runs the same gates automatically. <span style="color: var(--muted);">(keep working toward a goal)</span></span>
       </div>
       <div class="item">
         <span class="item-num">4</span>
-        <span class="item-text"><strong>Ship and get it approved.</strong> Done when the PR's checks are green and a reviewer approves it. Claim a different labelled issue if #1 is already taken. <span style="color: var(--muted);">(the real loop)</span></span>
+        <span class="item-text"><strong>Ship and get it approved.</strong> Done when the PR's CI is green and a reviewer approves it. Pick another labelled issue if yours is taken. <span style="color: var(--muted);">(the real loop)</span></span>
       </div>
     </div>
     <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">Bring your PR link, the workflow script Claude wrote, and a one-paragraph reflection on which invariant each tool served to next week.</p>

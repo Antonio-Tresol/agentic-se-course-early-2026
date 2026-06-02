@@ -177,7 +177,7 @@ Twenty-four questions across eight sections, roughly twenty-five minutes. The mu
 - c) Always plan mode (read-only)
 - d) `bypassPermissions`
 
-**24.** (Short answer) In the Week 3 activity you implement lanorme issue #1 (CI that runs the gates on pull requests). Map each of the three Claude Code readings (large codebases, workflows, goal) to one concrete thing you would do in that task.
+**24.** (Short answer) In the Week 3 activity you claim a labelled lanorme issue (for example, a new check) and open a PR. Map each of the three Claude Code readings (large codebases, workflows, goal) to one concrete thing you would do in that task.
 
 ---
 
@@ -233,7 +233,7 @@ Twenty-four questions across eight sections, roughly twenty-five minutes. The mu
 
 **23. b.** Workflow subagents always run in `acceptEdits` mode with file edits auto-approved, regardless of the session's mode; only out-of-allowlist shell, web, or MCP calls can still prompt. (Workflows, approve the plan before it runs.)
 
-**24.** A reasonable mapping (any concrete, correct version counts):
-- Large codebases: scope the agent to the CI surface (the existing `release.yml`, `pyproject.toml`, `.pre-commit-config.yaml`); use a sparse worktree or `Read` deny rules to keep `tests/fixtures/` and `benchmarks/` out of context.
-- Dynamic workflows: fan out an audit of how each gate is invoked (pytest, the 23 checks, the `lanorme check .` dogfood), then have the script draft the `ci.yml` that runs them on `pull_request`.
-- Keep working toward a goal: set `/goal` to "`uv run pytest tests/unit` passes and `uv run lanorme check .` is clean" and let it run to that end state.
+**24.** A reasonable mapping for a new-check issue (any concrete, correct version counts):
+- Large codebases: scope the agent to `src/lanorme/checks/` and `tests/`; use a sparse worktree or `Read` deny rules to keep `benchmarks/` and unrelated fixtures out of context.
+- Dynamic workflows: fan out the parts of a new check, study how a few of the 23 existing checks are built, then draft the check, its positive and negative fixtures, and its unit test, cross-checked for consistency.
+- Keep working toward a goal: set `/goal` to "`uv run pytest tests/unit` passes and `uv run lanorme check .` is clean" and let it run to that end state; the PR's CI then runs the same gates.
