@@ -235,5 +235,5 @@ Twenty-four questions across eight sections, roughly twenty-five minutes. The mu
 
 **24.** A reasonable mapping for a new-check issue (any concrete, correct version counts):
 - Large codebases: scope the agent to `src/lanorme/checks/` and `tests/`; use a sparse worktree or `Read` deny rules to keep `benchmarks/` and unrelated fixtures out of context.
-- Dynamic workflows: fan out the parts of a new check, study how a few of the 23 existing checks are built, then draft the check, its positive and negative fixtures, and its unit test, cross-checked for consistency.
+- Dynamic workflows: fan out the parts of a new check, study how a few of the existing checks are built, then draft the check, its positive and negative fixtures, and its unit test, cross-checked for consistency.
 - Keep working toward a goal: set `/goal` to "`uv run pytest tests/unit` passes and `uv run lanorme check .` is clean" and let it run to that end state; the PR's CI then runs the same gates.

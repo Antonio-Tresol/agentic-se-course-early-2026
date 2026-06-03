@@ -662,11 +662,11 @@
     <div class="items">
       <div class="item">
         <span class="item-num">1</span>
-        <span class="item-text"><strong>Scope it down.</strong> Fork the repo and claim a labelled issue, such as a new check (#11 swallowed exceptions, #10 mutable default arguments). Scope the agent to src/lanorme/checks/ and tests/, and deny reads of benchmarks/ and unrelated fixtures. <span style="color: var(--muted);">(large codebases)</span></span>
+        <span class="item-text"><strong>Scope it down.</strong> Fork the repo and claim any open labelled issue, such as a new check, a new output format, or a bug fix. Scope the agent to the part of the tree it touches, for example src/lanorme/checks/ and tests/, and deny reads of benchmarks/ and unrelated fixtures. <span style="color: var(--muted);">(large codebases)</span></span>
       </div>
       <div class="item">
         <span class="item-num">2</span>
-        <span class="item-text"><strong>Orchestrate it.</strong> A new check has parts that fan out. Run a workflow that studies how a few of the 23 existing checks are built, then drafts the check, its positive and negative fixtures, and its unit test, cross-checked for consistency. <span style="color: var(--muted);">(dynamic workflows)</span></span>
+        <span class="item-text"><strong>Orchestrate it.</strong> Many issues fan out: a new check needs the check itself plus positive and negative fixtures plus a unit test. Run a workflow that studies how the existing checks are built, then drafts the parts, cross-checked for consistency. <span style="color: var(--muted);">(dynamic workflows)</span></span>
       </div>
       <div class="item">
         <span class="item-num">3</span>
