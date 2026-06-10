@@ -16,11 +16,11 @@
   <div class="slide-inner">
     <div class="slide-label">Week 4 &middot; Session 4 &middot; 20-Minute Review</div>
     <h1>Towards Agent-First SE</h1>
-    <p class="subtitle" style="color: #D4D4D4;">When teams of agents become the primary code producers, the engineering work shifts from writing code to building the system around the code. The industry calls this <em>harness engineering</em>. This session is the shape of that work, drawn from the seven readings.</p>
+    <p class="subtitle" style="color: #D4D4D4;">When teams of agents become the primary code producers, the engineering work shifts from writing code to building the system around the code. The industry calls this <em>harness engineering</em>. This session is the shape of that work, drawn from the readings.</p>
     <div class="items" style="margin-top: 32px;">
       <div class="item">
         <span class="item-num">1</span>
-        <span class="item-text"><strong>The shift.</strong> Code is free. The bottleneck moves up the stack. Read the frontier labs honestly.</span>
+        <span class="item-text"><strong>The frame and the shift.</strong> Zoom out to the ecosystem (Bender), then: code is free, the bottleneck moves up the stack, read the frontier labs honestly.</span>
       </div>
       <div class="item">
         <span class="item-num">2</span>
@@ -31,6 +31,62 @@
         <span class="item-text"><strong>Approaches and open debates.</strong> Different shapes that put the pillars to work, and where the sources actually disagree.</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 1b: Bender, the strategic frame ================== -->
+<div class="slide" id="s0a">
+  <div class="slide-inner">
+    <div class="slide-label">Part 1 &middot; The Frame</div>
+    <h2>Zoom Out Before You Optimise</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Adam Bender, Google, 2026. Watch this one first. It is the strategic frame for every tactical reading that follows.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"Software ecology is the holistic study of the socio-technical ecosystems that produce software." A developer ecosystem is people, culture, technology, and incentives, tightly coupled. "In a system, everything is connected."</p>
+      <cite>Adam Bender &middot; Google &middot; 2026</cite>
+    </div>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">His warning: when code-generation velocity rises tenfold, the strain does not land in one place. It cascades through the whole ecosystem at once.</p>
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <div class="col-label">The 10x cascade</div>
+        <div class="items" style="margin-top: 8px;">
+          <div class="item"><span class="item-text">More code, more liability to maintain</span></div>
+          <div class="item"><span class="item-text">Tests grow quadratically, not linearly, with the codebase</span></div>
+          <div class="item"><span class="item-text">Code review becomes the human bottleneck</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">And further out</div>
+        <div class="items" style="margin-top: 8px;">
+          <div class="item"><span class="item-text">Version control strains; built for consistency, not velocity</span></div>
+          <div class="item"><span class="item-text">Internal APIs become public; agents call anything they can reach</span></div>
+          <div class="item"><span class="item-text">Human attention becomes the scarcest resource of all</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 1c: Bender, AI as amplifier ================== -->
+<div class="slide" id="s0b">
+  <div class="slide-inner">
+    <div class="slide-label">Part 1 &middot; The Frame</div>
+    <h2>AI Amplifies. It Does Not Aim.</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Why your fundamentals decide whether agents help or hurt.</p>
+    <div class="quote" style="margin-top: 22px;">
+      <p>"AI doesn't solve any of these problems for you, by default. It can amplify the practices you have, if they're good. But if they're not good, it's going to cause more trouble."</p>
+      <cite>Adam Bender &middot; Google &middot; 2026, citing DORA</cite>
+    </div>
+    <div class="two-col" style="margin-top: 24px;">
+      <div class="card card-accent">
+        <div class="col-label" style="margin-bottom: 8px;">Amplification is magnitude, not direction</div>
+        <p>AI gives you more of whatever you already do: more tests or more confusion, more clarity or more slop. It does not care where the output goes.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="col-label" style="margin-bottom: 8px;">So the question is your fundamentals</div>
+        <p>Decision-making culture, code health, review discipline, release hygiene, security posture. Solid fundamentals aim the amplifier. The harness pillars that follow are how you build them.</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Bender's two tools for interrogating any ecosystem: ask <em>why</em> it works the way it does, then ask <em>what if</em> the constraints changed. And his charge to the room: <em>"You have more agency than you think."</em> You are not just absorbing this shift; you are deciding what software engineering becomes.</p>
   </div>
 </div>
 
