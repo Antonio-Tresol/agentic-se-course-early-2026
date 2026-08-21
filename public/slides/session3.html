@@ -16,7 +16,7 @@
   <div class="slide-inner">
     <div class="slide-label">Week 3 &middot; Session 3 &middot; 20-Minute Review</div>
     <h1>Working in Complex Codebases</h1>
-    <p class="subtitle" style="color: #D4D4D4;">Principles, approaches, and open debates around using coding agents in large and brownfield code. This is an active area of practice, not a settled one. Our job this session is to see the shape of the space.</p>
+    <p class="subtitle" style="color: #D4D4D4;">Principles, approaches, and open debates around using coding agents in large and brownfield code. Practice here is still moving. Our job this session is to map what the field agrees on and where it still argues.</p>
     <div class="items" style="margin-top: 32px;">
       <div class="item">
         <span class="item-num">1</span>
@@ -24,7 +24,7 @@
       </div>
       <div class="item">
         <span class="item-num">2</span>
-        <span class="item-text"><strong>Approaches.</strong> Four ways practitioners have instantiated the invariants.</span>
+        <span class="item-text"><strong>Approaches.</strong> Four ways practitioners have put the invariants into practice.</span>
       </div>
       <div class="item">
         <span class="item-num">3</span>
@@ -78,7 +78,7 @@
     </svg>
     <div class="quote">
       <p>Context engineering is the art and science of curating what will go into the limited context window from that constantly evolving universe of possible information.</p>
-      <cite>Anthropic, Effective Context Engineering for AI Agents (May 2025)</cite>
+      <cite>Anthropic, Effective Context Engineering for AI Agents (Sep 2025)</cite>
     </div>
   </div>
 </div>
@@ -165,7 +165,7 @@
   <div class="slide-inner">
     <div class="slide-label">Invariant 3 of 6</div>
     <h2>Compact on Purpose</h2>
-    <p class="subtitle">Instead of steering one long conversation until it breaks, compress the useful tokens into a Markdown file, review it, and start again. The artefact persists; the chat does not.</p>
+    <p class="subtitle">When a conversation heads towards its limit, compress the useful tokens into a Markdown file, review it, and start again. The artefact persists; the chat does not.</p>
     <svg viewBox="0 0 760 150" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 12px 0 8px;">
       <defs>
         <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
@@ -208,7 +208,7 @@
   <div class="slide-inner">
     <div class="slide-label">Invariant 4 of 6</div>
     <h2>Sub-Agents Are Context Control, Not Roles</h2>
-    <p class="subtitle">Not a product manager, a QA engineer, and a frontend specialist in a trench coat. A fresh context window that goes looking for something specific and returns a short answer.</p>
+    <p class="subtitle">A sub-agent is a fresh context window that goes looking for something specific and returns a short answer. Naming it after a job title changes nothing about how it works.</p>
     <svg viewBox="0 0 760 150" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 14px 0 10px;">
       <defs>
         <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
@@ -260,7 +260,7 @@
       <text x="540" y="98" font-family="Source Serif 4, serif" font-size="12" fill="#262626" font-style="italic">one wrong code line</text>
       <text x="380" y="132" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#CC785C" letter-spacing="0.1em">HUMAN ATTENTION BELONGS HERE, NOT HERE</text>
     </svg>
-    <p style="font-size: 16px; color: var(--body); line-height: 1.55; margin-top: 4px;">This is also why code review is really about mental alignment, not bug-catching. With agents writing two to three times the volume, nobody reads every diff. The artefacts further upstream are shorter, higher signal, and arrive before any code is written.</p>
+    <p style="font-size: 16px; color: var(--body); line-height: 1.55; margin-top: 4px;">This is also why code review is really about mental alignment. Bug-catching is the smaller part of what it does. With agents writing two to three times the volume, nobody reads every diff. The artefacts further upstream are shorter, higher signal, and arrive before any code is written.</p>
     <div class="source-row">
       <span class="pill">ACE-FCA</span><span class="pill">Anthropic harnesses</span>
     </div>
@@ -271,7 +271,7 @@
 <div class="slide" id="s9">
   <div class="slide-inner">
     <div class="slide-label">Invariant 6 of 6</div>
-    <h2>Enforce Mechanically, Not With Words</h2>
+    <h2>Enforce Rules Mechanically</h2>
     <p class="subtitle">Instructions in a prompt compete with other instructions and can be silently skipped. A failing test, a linter, a CI gate, or a pre-commit hook cannot. When you can move a rule from words into code, do it.</p>
     <div class="two-col" style="gap: 20px;">
       <div>
@@ -285,7 +285,7 @@
       <div>
         <div class="col-label">Mechanical backstops to prefer</div>
         <div class="items" style="margin-top: 8px; gap: 6px;">
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Verifiable feedback loops.</strong> Tests that fail on regression, not vibes.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Verifiable feedback loops.</strong> Tests that fail on regression give you a check the agent cannot talk its way past.</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Structured artefacts.</strong> A feature list with <code style="font-family: var(--mono); font-size: 12px;">passes: false</code> until end-to-end tests flip it.</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Environment scripts.</strong> <code style="font-family: var(--mono); font-size: 12px;">init.sh</code> proves the dev loop works before new work starts.</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Review gates.</strong> Human must sign off the plan file before implementation runs.</span></div>
@@ -304,16 +304,16 @@
   <div class="slide-inner" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <div class="slide-label" style="color: #525252;">Part 2 of 3</div>
     <h1 style="font-size: clamp(42px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.03em; color: #FFFFFF; margin-bottom: 18px;">Approaches</h1>
-    <p class="subtitle" style="color: #A3A3A3; max-width: 620px; margin: 0 auto; font-size: 18px; text-align: center;">Four concrete instantiations of the six invariants, from different vendors and authors, drawn from this week's reading.</p>
+    <p class="subtitle" style="color: #A3A3A3; max-width: 620px; margin: 0 auto; font-size: 18px; text-align: center;">Four concrete versions of the six invariants, from different vendors and authors, drawn from this week's reading.</p>
   </div>
 </div>
 
 <!-- ================== SLIDE 12: Anthropic ================== -->
 <div class="slide" id="s11">
   <div class="slide-inner">
-    <div class="slide-label">Approach 1 &middot; Anthropic &middot; May 2025</div>
+    <div class="slide-label">Approach 1 &middot; Anthropic &middot; Sep 2025</div>
     <h2>The Abstract Frame</h2>
-    <p class="subtitle" style="margin-bottom: 10px;">The earliest and most general articulation. Not a workflow, a vocabulary. Everything that follows can be read as a concrete instantiation of these ideas.</p>
+    <p class="subtitle" style="margin-bottom: 10px;">The earliest and most general articulation. It gives you a vocabulary. Everything that follows can be read as a concrete version of these ideas.</p>
     <div class="grid-2">
       <div class="card card-accent">
         <h3>Just-in-time retrieval</h3>
@@ -321,7 +321,7 @@
       </div>
       <div class="card card-accent">
         <h3>Progressive disclosure</h3>
-        <p>Each interaction yields context that informs the next decision. The agent discovers what it needs through exploration, not prebriefing.</p>
+        <p>Each interaction yields context that informs the next decision. The agent discovers what it needs by exploring as it goes.</p>
       </div>
       <div class="card card-accent">
         <h3>Compaction</h3>
@@ -352,7 +352,7 @@
       </div>
       <div class="card card-accent">
         <h3>Implement</h3>
-        <p><strong>Execute.</strong> Read the plan, do the work, compact progress back after each phase. The file is the source of truth, not the chat.</p>
+        <p><strong>Execute.</strong> Read the plan, do the work, compact progress back after each phase. The file is the source of truth.</p>
       </div>
     </div>
     <div class="quote">
@@ -411,7 +411,7 @@
   <div class="slide-inner">
     <div class="slide-label">Approach 4 &middot; Google &middot; December 2025</div>
     <h2>Conductor</h2>
-    <p class="subtitle">A Gemini CLI extension that ships the same shape under different vocabulary. Three slash commands. The specs and plans are Markdown files in the repository, not chat history.</p>
+    <p class="subtitle">A Gemini CLI extension that ships the same shape under different vocabulary. Three slash commands. The specs and plans live as Markdown files in the repository.</p>
     <div class="items">
       <div class="item">
         <span class="item-text"><code style="font-family: var(--mono); font-size: 14px;">/conductor:setup</code> captures product goals, technical stack, and team workflows into repository artefacts.</span>
@@ -433,7 +433,7 @@
 <!-- ================== SLIDE 16: Comparison ================== -->
 <div class="slide" id="s15">
   <div class="slide-inner">
-    <h2>Same Shape, Different Dress</h2>
+    <h2>Four Approaches, One Structure</h2>
     <p class="subtitle" style="margin-bottom: 4px;">Every approach above realises the same invariants: context is curated, compacted, and persisted as artefacts, with human leverage upstream.</p>
     <table class="table">
       <thead>
@@ -466,7 +466,7 @@
         </tr>
       </tbody>
     </table>
-    <p style="margin-top: 18px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">The disagreements are not about the shape. They are about how many stages, how much ceremony, and where human attention pays the most.</p>
+    <p style="margin-top: 18px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">The disagreements are about how many stages, how much ceremony, and where human attention pays the most.</p>
   </div>
 </div>
 
@@ -515,7 +515,7 @@
         <tr><td><strong>Hard, cross-cutting, unfamiliar.</strong></td><td>Full pipeline. Sub-agents. Human review at every compaction.</td></tr>
       </tbody>
     </table>
-    <p style="margin-top: 22px; font-size: 15px; color: var(--muted); font-family: var(--serif); font-style: italic;">It takes reps. You will over-engineer simple tasks and under-engineer hard ones. The calibration does not come from a slide.</p>
+    <p style="margin-top: 22px; font-size: 15px; color: var(--muted); font-family: var(--serif); font-style: italic;">It takes practice. You will over-engineer simple tasks and under-engineer hard ones. The calibration does not come from a slide.</p>
   </div>
 </div>
 
@@ -686,7 +686,7 @@
   <div class="slide-inner">
     <div class="slide-label">Closing</div>
     <h2>Nothing Here Is Settled</h2>
-    <p class="subtitle" style="color: #D4D4D4;">The invariants feel stable. The approaches are iterating in public. The debates are real. Your job as a practitioner is not to pick one workflow and defend it, but to run experiments and recognise which invariant a new practice is serving.</p>
+    <p class="subtitle" style="color: #D4D4D4;">The invariants feel stable. The approaches are iterating in public. The debates are real. Your job as a practitioner is to run experiments and recognise which invariant a new practice is serving. Picking one workflow and defending it leaves you stuck when it changes.</p>
     <div class="items" style="margin-top: 28px;">
       <div class="item">
         <span class="item-num">1</span>
@@ -694,7 +694,7 @@
       </div>
       <div class="item">
         <span class="item-num">2</span>
-        <span class="item-text"><strong>Pick one approach and get reps.</strong> Do not min-max across tools.</span>
+        <span class="item-text"><strong>Pick one approach and use it repeatedly.</strong> Do not keep switching tools chasing the best of each.</span>
       </div>
       <div class="item">
         <span class="item-num">3</span>

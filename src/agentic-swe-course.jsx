@@ -16,13 +16,14 @@ const weeks = [
     id: 1,
     label: "Week 1",
     title: "One Coding Agent",
-    intro: "This week is about getting your hands dirty. You install a coding agent, work through structured exercises, and learn the established best practices for steering it effectively.",
+    intro: "This week is about getting your hands dirty. You install a coding agent, work through two structured courses, and learn the established best practices for steering it effectively.",
     prework: [
-      { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", verb: "Complete", note: "Anthropic · Mar 2026 · includes exercises" },
+      { text: "Claude Code 101", url: "https://anthropic.skilljar.com/claude-code-101", verb: "Complete", note: "Anthropic · 12 lectures · start here; assumes no prior agent experience" },
+      { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", verb: "Complete", note: "Anthropic · 9 lectures · take after 101; long hands-off sessions, hooks, verification" },
       { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", verb: "Read", note: "Anthropic" },
     ],
     activity: null,
-    session: "We share what we tried during the course exercises and discuss what worked and what did not. Then we break into pairs for the nanobot exercise.",
+    session: "We share what we tried while working through the courses and discuss what worked and what did not. Then we break into pairs for the nanobot exercise.",
     slidesPath: "session1.html",
     liveActivity: {
       title: "Hands-On with nanobot",
@@ -45,7 +46,7 @@ const weeks = [
       { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", verb: "Complete", note: "Anthropic · Mar 2026" },
       { text: "Introduction to Subagents", url: "https://anthropic.skilljar.com/introduction-to-subagents", verb: "Complete", note: "Anthropic · Apr 2026" },
       { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", verb: "Read", note: "Anthropic" },
-      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read", note: "Anthropic · May 2025" },
+      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read", note: "Anthropic · Sep 2025" },
     ],
     activity: null,
     session: "We discuss questions from the courses and the context engineering article. Then we do a skill-building sprint.",
@@ -65,27 +66,27 @@ const weeks = [
     id: 3,
     label: "Week 3",
     title: "Working in Complex Codebases",
-    intro: "Coding agents handle small tasks fluently but struggle inside large brownfield code. This week is not a single workflow taught as the answer. It is the shape of the space: a small set of principles the sources agree on, a handful of approaches that put those principles to work in different ways, and a few open debates the community has not settled. We read multiple voices (Dex Horthy's two talks, the QRSPI revision, Google's Conductor, Anthropic's context engineering guide, and three Claude Code guides on scoping large codebases, orchestrating workflows, and holding an agent to a goal) and treat them as different instantiations of the same underlying problem rather than competing methodologies. This is research and active practice, not a settled discipline.",
+    intro: "Coding agents handle small tasks fluently but struggle inside large brownfield code. This week surveys the whole field: six invariants the sources agree on, a handful of approaches that put those principles to work in different ways, and a few open debates the community has not settled. We read multiple voices and treat them as different ways of working on one shared problem. This is still research and active practice.",
     prework: [
       { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", verb: "Watch", note: "Dex Horthy · AI Engineer · Dec 2025" },
       { text: "Advanced Context Engineering for Coding Agents", url: "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md", verb: "Read", note: "HumanLayer · Dec 2025 · companion write-up" },
       { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", verb: "Watch", note: "Dex Horthy · AI Engineer · 2026 · watch after the previous two" },
       { text: "From RPI to QRSPI", url: "https://alexlavaee.me/blog/from-rpi-to-qrspi/", verb: "Read", note: "Alex Lavaee · 2026 · summary of the revised framework" },
       { text: "Conductor: Introducing Context-Driven Development for Gemini CLI", url: "https://developers.googleblog.com/conductor-introducing-context-driven-development-for-gemini-cli/", verb: "Read", note: "Google · Dec 2025 · how another vendor is shipping the same idea" },
-      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Re-read", note: "Anthropic · May 2025 · with RPI in mind" },
+      { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Re-read", note: "Anthropic · Sep 2025 · with RPI in mind" },
       { text: "Set up Claude Code in a monorepo or large codebase", url: "https://code.claude.com/docs/en/large-codebases", verb: "Read", note: "Anthropic · Jun 2026 · nested CLAUDE.md, sparse worktrees, per-package skills" },
       { text: "Orchestrate subagents at scale with dynamic workflows", url: "https://code.claude.com/docs/en/workflows", verb: "Read", note: "Anthropic · Jun 2026 · scripting many subagents for audits and migrations" },
       { text: "Keep Claude working toward a goal", url: "https://code.claude.com/docs/en/goal", verb: "Read", note: "Anthropic · Jun 2026 · completion conditions with /goal" },
     ],
     activity: {
       title: "Pick an Approach, Try It on a Hard Problem",
-      description: "Pick a non-trivial task in a real codebase you know: an open issue, a missing feature, a multi-package refactor, a tricky bug. Choose one of the approaches from the readings (RPI, CRISPY/QRSPI, Conductor's spec-and-plan loop, the abstract research-plan-implement frame, or your own variant grounded in the six invariants). Run it deliberately and keep a short log so we can compare across approaches in the live session.",
-      detail: "The point is not to follow any one author's recipe. The point is to feel where the principles bite and where they do not.",
+      description: "Pick a non-trivial task in a real codebase you know: an open issue, a missing feature, a multi-package refactor, a tricky bug. Choose one of the approaches from the readings (RPI, QRSPI, HumanLayer's CRISPY, Conductor's spec-and-plan loop, the abstract research-plan-implement frame, or your own variant grounded in the six invariants). Run it deliberately and keep a short log so we can compare across approaches in the live session.",
+      detail: "The point is to feel where the principles hold and where they break down, whichever author's recipe you start from.",
       steps: [
         "Pick the codebase and the task. Write down why this task is non-trivial: where the relevant logic lives, what the dependencies are, what could go wrong.",
-        "Pick an approach. Note which of the six invariants you expect to lean on most (context as the only lever, context scarcity, compaction, sub-agents as context control, leverage upstream, mechanical enforcement).",
+        "Pick an approach. Note which of the six invariants you expect to lean on most (context as the only lever, context scarcity, compaction, subagents as context control, working upstream where a fix has the most leverage, mechanical enforcement).",
         "Run it. Keep a brief log: what context you gave the agent, where you compacted, where you verified, where you intervened.",
-        "Reflect in one paragraph: did the chosen approach hold? Which invariants actually mattered? Which open debate did you bump into (read the plan or read the code, full pipeline vs. lighter touch, vertical slices vs. horizontal layers, how far the agent could verify itself)?",
+        "Reflect in one paragraph: did the chosen approach hold? Which invariants actually mattered? Which open debate did you bump into (read the plan or read the code, full pipeline or lighter touch, vertical slices or horizontal layers, how far the agent could verify itself)?",
       ],
       deliverable: "Bring the task description, the approach you chose, the brief log, and the reflection paragraph to the live session.",
     },
@@ -105,7 +106,7 @@ const weeks = [
       { text: "Harness Engineering: Humans Steer, Agents Execute", url: "https://www.youtube.com/watch?v=am_oeAoUhew", verb: "Watch", note: "Ryan Lopopolo · AI Engineer London · 2026 · live synthesis after nine months of operating the harness" },
       { text: "Agentic Software Engineering: Foundational Pillars and a Research Roadmap", url: "https://arxiv.org/html/2509.06216v2", verb: "Read", note: "Hassan et al. · Sep 2025 · focus on SASE framework" },
       { text: "Verified Spec-Driven Development", url: "https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00", verb: "Read", note: "Doll · Mar 2026" },
-      { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Anthropic" },
+      { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", verb: "Read", note: "Anthropic · experimental, set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 before trying it" },
     ],
     activity: {
       title: "Harness Design Document",
@@ -127,12 +128,12 @@ const weeks = [
     label: "Week 5",
     title: "Capstone",
     optional: true,
-    intro: "No new readings. This is where everything comes together. You build a real project from scratch, but instead of writing the code yourself, you design the harness and let the agent be the primary code producer.",
+    intro: "No new readings. This is where everything comes together. You build a real project from scratch. Your job is to design the harness and let the agent be the primary code producer.",
     prework: [],
     activity: {
       title: "Build a Project, Harness-First",
       description: "Choose your own project idea. It can be anything: a CLI tool, a web app, an API, a library, a game. The scope should be ambitious enough that you cannot finish it in one sitting, but realistic enough to have something working by demo day.",
-      detail: "You are not just building a project. You are building the engineering system around the project. Use the agent to build the harness itself. Skills, hooks, subagent definitions, MCP configurations, documentation structure: all of it can and should be agent-produced.",
+      detail: "You are building a project and the engineering system around it. Use the agent to build the harness itself. Skills, hooks, subagent definitions, MCP configurations, documentation structure: all of it can and should be agent-produced.",
       steps: [
         "CLAUDE.md / AGENTS.md: project standards, architecture decisions, and constraints",
         "docs/ directory: progressive disclosure, high-level map at the top, detailed references linked from it",
@@ -154,7 +155,8 @@ const weeks = [
 const resources = {
   courses: [
     { text: "AI Fluency: Framework & Foundations", url: "https://anthropic.skilljar.com/ai-fluency-framework-foundations", note: "Anthropic · prerequisite · Mar 2026" },
-    { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", note: "Anthropic · Mar 2026" },
+    { text: "Claude Code 101", url: "https://anthropic.skilljar.com/claude-code-101", note: "Anthropic · 12 lectures" },
+    { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", note: "Anthropic · 9 lectures · assumes prior Claude Code use" },
     { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", note: "Anthropic · Mar 2026" },
     { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", note: "Anthropic · Mar 2026" },
     { text: "AI Capabilities and Limitations", url: "https://anthropic.skilljar.com/ai-capabilities-and-limitations", note: "Anthropic · prerequisite · Apr 2026" },
@@ -164,14 +166,14 @@ const resources = {
     { text: "Claude Code Product Page", url: "https://claude.com/product/claude-code", note: "Anthropic" },
     { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", note: "Anthropic" },
     { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", note: "Anthropic" },
-    { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", note: "Anthropic" },
+    { text: "Agent Teams", url: "https://code.claude.com/docs/en/agent-teams", note: "Anthropic · experimental, needs CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1" },
     { text: "Set up Claude Code in a monorepo or large codebase", url: "https://code.claude.com/docs/en/large-codebases", note: "Anthropic · Jun 2026" },
     { text: "Orchestrate subagents at scale with dynamic workflows", url: "https://code.claude.com/docs/en/workflows", note: "Anthropic · Jun 2026" },
     { text: "Keep Claude working toward a goal", url: "https://code.claude.com/docs/en/goal", note: "Anthropic · Jun 2026" },
   ],
   articles: [
     { text: "Software Engineering at the Tipping Point", url: "https://www.youtube.com/watch?v=2n41YjR5QfU", note: "Adam Bender · Google · 2026" },
-    { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", note: "Anthropic · May 2025" },
+    { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", note: "Anthropic · Sep 2025" },
     { text: "Effective Harnesses for Long-Running Agents", url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents", note: "Anthropic · Nov 2025" },
     { text: "No Vibes Allowed: Solving Hard Problems in Complex Codebases", url: "https://www.youtube.com/watch?v=rmvDxxNubIg", note: "Dex Horthy · AI Engineer · Dec 2025" },
     { text: "No More Slop: What We Got Wrong About RPI", url: "https://www.youtube.com/watch?v=YwZR6tc7qYg", note: "Dex Horthy · AI Engineer · 2026" },
@@ -216,7 +218,7 @@ const furtherReading = [
       {
         title: "Scaling Managed Agents",
         url: "https://www.anthropic.com/engineering/managed-agents",
-        source: "Anthropic · Feb 2026",
+        source: "Anthropic · Apr 2026",
         blurb: "Anthropic argues that harnesses encode assumptions that become obsolete as underlying models improve, and propose an operating-systems-inspired decomposition of the agent runtime: the brain (model plus harness), the hands (sandboxes and tools), and the session (an event log), each communicating through narrow and stable interfaces. Reported results include a 60% reduction in time-to-first-token at p50, improved fault tolerance, and a security boundary in which credentials no longer flow into sandboxes executing untrusted code.",
       },
       {
@@ -898,7 +900,7 @@ function FurtherReadingView() {
     <>
       <Section style={{ padding: "52px 28px 0" }}>
         <p style={{ fontFamily: "var(--body)", fontSize: "15.5px", lineHeight: 1.72, color: palette.body, maxWidth: "640px" }}>
-          Selected deployment reports, architecture pieces, evaluation methodology, and recent research on agent-first software engineering. None of this is required for the course. It is here for the participant who wants to go deeper. Annotations are descriptive, not endorsements. Read them critically.
+          Selected deployment reports, architecture pieces, evaluation methodology, and recent research on agent-first software engineering. None of this is required for the course. It is here for the participant who wants to go deeper. The annotations describe what each piece claims. Read them critically.
         </p>
       </Section>
 
@@ -1076,10 +1078,10 @@ export default function AgenticSECourse() {
           Agentic SE Course
         </h1>
         <p style={{ fontFamily: "var(--display)", fontSize: "22px", lineHeight: 1.5, fontWeight: 400, color: palette.text, maxWidth: "640px", marginBottom: "24px", letterSpacing: "-0.005em" }}>
-          Coding agents are already exceeding human throughput for many software engineering tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck is no longer writing code but ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.
+          Coding agents are already exceeding human throughput for many software engineering tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck moves from writing code to ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.
         </p>
         <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
-          This course prepares you for that shift. You start by using a coding agent. Then you customise it. Then you learn disciplined workflows for complex codebases. And finally, you learn to design repositories built for agents: environments where teams of agents can do real work and do it right. We know this is new ground. Rather than prescribe answers, we explore several perspectives on what agent-first engineering could look like.
+          This course prepares you for that shift. You start by using a coding agent. Then you customise it. Then you learn disciplined workflows for complex codebases. And finally, you learn to design repositories built for agents: environments where teams of agents can do real work and do it right. We know this is new ground, so we explore several perspectives on what agent-first engineering could look like.
         </p>
         <p style={{ fontFamily: "var(--body)", fontSize: "17px", lineHeight: 1.72, color: palette.body, maxWidth: "640px", marginBottom: "16px" }}>
           Each week you complete pre-work on your own (courses, readings, videos) and then we meet for one hour to discuss, ask questions, and work on something together.

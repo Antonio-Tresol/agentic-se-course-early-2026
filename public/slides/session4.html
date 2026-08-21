@@ -44,20 +44,20 @@
       <p>"Software ecology is the holistic study of the socio-technical ecosystems that produce software." A developer ecosystem is people, culture, technology, and incentives, tightly coupled. "In a system, everything is connected."</p>
       <cite>Adam Bender &middot; Google &middot; 2026</cite>
     </div>
-    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">His warning: when code-generation velocity rises tenfold, the strain does not land in one place. It cascades through the whole ecosystem at once.</p>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">His warning: when code-generation velocity rises tenfold, the strain cascades through the whole ecosystem at once.</p>
     <div class="two-col" style="margin-top: 16px;">
       <div>
         <div class="col-label">The 10x cascade</div>
         <div class="items" style="margin-top: 8px;">
           <div class="item"><span class="item-text">More code, more liability to maintain</span></div>
-          <div class="item"><span class="item-text">Tests grow quadratically, not linearly, with the codebase</span></div>
+          <div class="item"><span class="item-text">Tests grow quadratically with the codebase</span></div>
           <div class="item"><span class="item-text">Code review becomes the human bottleneck</span></div>
         </div>
       </div>
       <div>
         <div class="col-label">And further out</div>
         <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Version control strains; built for consistency, not velocity</span></div>
+          <div class="item"><span class="item-text">Version control strains; it was built for consistency and now has to carry velocity</span></div>
           <div class="item"><span class="item-text">Internal APIs become public; agents call anything they can reach</span></div>
           <div class="item"><span class="item-text">Human attention becomes the scarcest resource of all</span></div>
         </div>
@@ -70,7 +70,7 @@
 <div class="slide" id="s0b">
   <div class="slide-inner">
     <div class="slide-label">Part 1 &middot; The Frame</div>
-    <h2>AI Amplifies. It Does Not Aim.</h2>
+    <h2>AI Amplifies Whatever You Already Do</h2>
     <p class="subtitle" style="margin-bottom: 8px;">Why your fundamentals decide whether agents help or hurt.</p>
     <div class="quote" style="margin-top: 22px;">
       <p>"AI doesn't solve any of these problems for you, by default. It can amplify the practices you have, if they're good. But if they're not good, it's going to cause more trouble."</p>
@@ -86,7 +86,7 @@
         <p>Decision-making culture, code health, review discipline, release hygiene, security posture. Solid fundamentals aim the amplifier. The harness pillars that follow are how you build them.</p>
       </div>
     </div>
-    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Bender's two tools for interrogating any ecosystem: ask <em>why</em> it works the way it does, then ask <em>what if</em> the constraints changed. And his charge to the room: <em>"You have more agency than you think."</em> You are not just absorbing this shift; you are deciding what software engineering becomes.</p>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Bender's two tools for interrogating any ecosystem: ask <em>why</em> it works the way it does, then ask <em>what if</em> the constraints changed. And his charge to the room: <em>"You have more agency than you think."</em> You are helping decide what software engineering becomes.</p>
   </div>
 </div>
 
@@ -137,7 +137,7 @@
         <p>The arms race between labs makes it expensive to lie to themselves about their own codebases. What they describe operating internally is probably real, even if its public presentation is glossier than the lived experience.</p>
       </div>
     </div>
-    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">Crucially, the OpenAI piece is honest about the conditions: <em>"There was no pre-existing human-written code to anchor the system. From the beginning, the repository was shaped by the agent."</em> They explicitly disclaim generalisation. What they actually argue for, once you strip the framing, is mundane: tests, types, lints, reviews, clean documentation, sound architecture, security. Reasonable. Actionable. Not magic.</p>
+    <p style="margin-top: 22px; font-size: 16px; color: var(--body);">The OpenAI piece is honest about the conditions: <em>"There was no pre-existing human-written code to anchor the system. From the beginning, the repository was shaped by the agent."</em> They explicitly disclaim generalisation. What they actually argue for, once you strip the framing, is mundane: tests, types, lints, reviews, clean documentation, sound architecture, security. Reasonable. Actionable. Not magic.</p>
   </div>
 </div>
 
@@ -146,7 +146,7 @@
   <div class="slide-inner">
     <div class="slide-label">Part 2</div>
     <h1>Six Pillars</h1>
-    <p class="subtitle">Things multiple sources converge on, with the actual passages attached. None is novel as an engineering practice. What is novel is treating them as the centre of the work, not its periphery.</p>
+    <p class="subtitle">Things multiple sources converge on, with the actual passages attached. None is novel as an engineering practice. What is novel is treating them as the centre of the work.</p>
   </div>
 </div>
 
@@ -168,7 +168,7 @@
 <div class="slide" id="s5">
   <div class="slide-inner">
     <div class="slide-label">Pillar 02</div>
-    <h2>Persistent State, Not Chat</h2>
+    <h2>State That Survives the Session</h2>
     <p class="subtitle" style="margin-bottom: 8px;">A long-running agent treated as a chat session forgets, drifts, and contradicts itself. The same agent treated as a worker that reads and writes durable artefacts is a different animal.</p>
     <div class="quote" style="margin-top: 22px;">
       <p>"Each new session begins with no memory of what came before."</p>
@@ -218,7 +218,7 @@
       </div>
       <div class="card">
         <h3>Tests <em>about the source</em></h3>
-        <p>Not just behavioural tests. Lopopolo: a test that asserts files are no longer than 350 lines, structural tests on dependency edges between layers.</p>
+        <p>Behavioural tests plus tests on the code itself. Lopopolo: a test that asserts files are no longer than 350 lines, structural tests on dependency edges between layers.</p>
       </div>
     </div>
   </div>
@@ -276,7 +276,7 @@
   <div class="slide-inner">
     <div class="slide-label">Part 3</div>
     <h1>Approaches</h1>
-    <p class="subtitle">Six instantiations of the pillars. Same problem, different pressure points. Read them as a sample of what the field has tried, not as competing methodologies you have to pick from.</p>
+    <p class="subtitle">Six ways the pillars have been put into practice. Same problem, different pressure points. Read them as a sample of what the field has tried. You do not have to pick one.</p>
   </div>
 </div>
 
@@ -292,7 +292,7 @@
       <div class="item"><span class="item-text">init.sh standardising dev-server startup. Browser automation for end-to-end verification.</span></div>
       <div class="item"><span class="item-text">"Clean state" defined as <em>"the kind of code that would be appropriate for merging to a main branch."</em></span></div>
     </div>
-    <p style="margin-top: 22px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Tradeoffs they call out: single vs multi-agent unclear, browser automation cannot catch every bug, generalisation beyond web dev unknown.</p>
+    <p style="margin-top: 22px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Tradeoffs they call out: one agent or several is unclear, browser automation cannot catch every bug, generalisation beyond web development is unknown.</p>
   </div>
 </div>
 
@@ -317,7 +317,7 @@
       </div>
       <div class="card card-accent">
         <h3>Throughput changes the merge philosophy</h3>
-        <p>Minimal blocking gates. Short-lived PRs. Test flakes addressed with follow-up runs rather than blocking. Justified because corrections are cheap and waiting is expensive.</p>
+        <p>Minimal blocking gates. Short-lived PRs. Test flakes get a follow-up run and the merge goes ahead. Justified because corrections are cheap and waiting is expensive.</p>
       </div>
     </div>
   </div>
@@ -327,7 +327,7 @@
 <div class="slide" id="s13">
   <div class="slide-inner">
     <div class="slide-label">Approach 02 (continued) &middot; The Talk</div>
-    <h2>The Operational Gloss</h2>
+    <h2>What the Talk Adds</h2>
     <p class="subtitle" style="margin-bottom: 8px;">Lopopolo's AI Engineer London talk presents the same nine months of work with sharper practical detail.</p>
     <div class="items" style="margin-top: 18px;">
       <div class="item">
@@ -336,7 +336,7 @@
       </div>
       <div class="item">
         <span class="item-num">B</span>
-        <span class="item-text"><strong>Tests <em>about</em> the source code.</strong> A test that asserts no file is longer than three hundred and fifty lines. Structural tests on dependency edges between layers. Code shape becomes a load-bearing concern, not an aesthetic one.</span>
+        <span class="item-text"><strong>Tests <em>about</em> the source code.</strong> A test that asserts no file is longer than three hundred and fifty lines. Structural tests on dependency edges between layers. Code shape becomes a load-bearing concern.</span>
       </div>
       <div class="item">
         <span class="item-num">C</span>
@@ -344,7 +344,7 @@
       </div>
       <div class="item">
         <span class="item-num">D</span>
-        <span class="item-text"><strong>The closing principle.</strong> "Every time I have to type continue to the agent is a failure of the harness to provide enough context around what it means to continue to completion."</span>
+        <span class="item-text"><strong>The closing principle.</strong> "Every time I have to type continue to the agent is like a failure of the harness to provide enough context around what it means to continue to completion."</span>
       </div>
     </div>
   </div>
@@ -371,7 +371,7 @@
       </div>
       <div class="item">
         <span class="item-num">C</span>
-        <span class="item-text"><strong>Objectives, not transitions.</strong> They explicitly moved away from rigid state machines. <em>"Models can solve bigger problems than the box we try to fit them in."</em></span>
+        <span class="item-text"><strong>Give agents objectives.</strong> They explicitly moved away from rigid state machines. <em>"Models can solve bigger problems than the box we try to fit them in."</em></span>
       </div>
     </div>
   </div>
@@ -453,7 +453,7 @@
   <div class="slide-inner">
     <div class="slide-label">Worked Example &middot; harness.md &middot; Apr 2026</div>
     <h2>Anatomy of One Harness</h2>
-    <p class="subtitle" style="margin-bottom: 0; max-width: 820px;">A team's full technical reference for their own implementation. The same six pillars, rendered at full resolution.</p>
+    <p class="subtitle" style="margin-bottom: 0; max-width: 820px;">A team's full technical reference for their own implementation. The same six pillars, worked out in full detail.</p>
 
     <div class="layer-stack">
       <div class="layer">
@@ -605,7 +605,7 @@
   <div class="slide-inner">
     <div class="slide-label">Closing</div>
     <h1>The Bottleneck Is the System</h1>
-    <p class="subtitle" style="color: #D4D4D4;">Coding agents are not magic. The argument the seven readings make, with different vocabulary, is that the engineering work moves up the stack: you stop optimising the writing of code and you start optimising the system that makes correct code easy to produce. That system is your harness. The capstone is a chance to build one.</p>
+    <p class="subtitle" style="color: #D4D4D4;">Coding agents are not magic. The argument the seven readings make, with different vocabulary, is that the engineering work moves up the stack: the work moves from optimising how code gets written to optimising the system that makes correct code easy to produce. That system is your harness. The capstone is a chance to build one.</p>
     <div class="quote" style="margin-top: 28px; background: #1A1A1A; border-left-color: var(--orange);">
       <p style="color: #E5E5E5;">"Every time I have to type continue to the agent is like a failure of the harness to provide enough context around what it means to continue to completion."</p>
       <cite style="color: #A3A3A3;">Ryan Lopopolo &middot; AI Engineer London 2026</cite>

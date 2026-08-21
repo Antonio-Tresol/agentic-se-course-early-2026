@@ -236,7 +236,7 @@
       </div>
       <div class="card">
         <h3>Hooks</h3>
-        <p>Deterministic scripts that run on lifecycle events. No LLM involved.</p>
+        <p>Deterministic scripts that run on lifecycle events. They are plain shell commands.</p>
       </div>
       <div class="card">
         <h3>Plugins</h3>
@@ -406,7 +406,7 @@
         <div class="items" style="margin-top: 8px; gap: 6px;">
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Anything Claude can read from the code</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Standard language conventions</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Detailed API docs (link instead)</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Detailed API docs (link to them)</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Info that changes frequently</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">File-by-file descriptions</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">"Write clean code" style platitudes</span></div>
@@ -497,7 +497,7 @@
       </thead>
       <tbody>
         <tr><td><code>default</code></td><td>Reads only</td><td>Getting started, sensitive work</td></tr>
-        <tr><td><code>acceptEdits</code></td><td>Reads, edits, common fs commands</td><td>Iterating on code you review after</td></tr>
+        <tr><td><code>acceptEdits</code></td><td>Reads, edits, common filesystem commands</td><td>Iterating on code you review after</td></tr>
         <tr><td><code>plan</code></td><td>Reads only, writes a plan</td><td>Exploring a codebase before changing it</td></tr>
         <tr><td><code>auto</code></td><td>Everything, with classifier checks</td><td>Long tasks, reducing prompt fatigue</td></tr>
         <tr><td><code>dontAsk</code></td><td>Only pre-approved tools</td><td>Locked-down CI and scripts</td></tr>
@@ -580,7 +580,7 @@
         <div class="items" style="margin-top: 8px; gap: 6px;">
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 13px;">CronCreate</code> schedule a task</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 13px;">CronList</code> list scheduled tasks</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 13px;">CronDelete</code> cancel by 8-char ID</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;"><code style="font-family: var(--mono); font-size: 13px;">CronDelete</code> cancel by 8-character ID</span></div>
         </div>
       </div>
       <div>
@@ -589,7 +589,7 @@
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Up to 50 tasks per session</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Recurring tasks expire after 7 days</span></div>
           <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Session-scoped, die when session exits</span></div>
-          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Fire between turns, not mid-response</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Fire between turns, after a response completes</span></div>
         </div>
       </div>
     </div>
