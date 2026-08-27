@@ -32,18 +32,33 @@ bot-blocking already recorded in `session4-sources.md`. A browser reaches both.
 
 ## Date errors
 
-| Where | Current note | Correct |
-|---|---|---|
-| Week 3, Effective Context Engineering | Anthropic · May 2025 | 29 September 2025 |
-| Further reading, Scaling Managed Agents | Anthropic · Feb 2026 | 8 April 2026 |
-| Week 4, OpenAI Harness Engineering | Feb 2026 | Disputed |
+All three are now settled. Resolved 27 August 2026.
 
-Both corrections come from Anthropic's engineering index. The full title of the
-second is "Scaling Managed Agents: Decoupling the brain from the hands".
+| Where | Was | Correct | Status |
+|---|---|---|---|
+| Week 3, Effective Context Engineering | Anthropic · May 2025 | 29 September 2025 | Applied in 82efbbc |
+| Further reading, Scaling Managed Agents | Anthropic · Feb 2026 | 8 April 2026 | Applied in 82efbbc |
+| Week 4, OpenAI Harness Engineering | Feb 2026 | 11 February 2026 | Already correct |
 
-The OpenAI date is a genuine conflict. `session4-sources.md` records 11 February
-2026 from the user paste; a search result asserts 27 April 2026 with named
-authors. The page is 403-blocked, so settling it needs a browser.
+The first two corrections come from Anthropic's engineering index. The full
+title of the second is "Scaling Managed Agents: Decoupling the brain from the
+hands".
+
+The OpenAI conflict was a mix-up between two different OpenAI posts. Harness
+Engineering is 11 February 2026 by Ryan Lopopolo; the 27 April 2026 date with
+named authors belongs to Symphony (Alex Kotliarskyi, Victor Zhu and Zach
+Brock), which the site already dates to April 2026. Four independent sources
+put the harness post on 11 February 2026: the user paste recorded in
+`session4-sources.md`, Jay Taylor's saved copy at
+`jaytaylor.com/notes/node/1770842156000.html` whose node ID is a Unix
+millisecond timestamp decoding to 11 February 2026 20:35 UTC, the
+AkihikoWatanabe paper-notes entry titled "Ryan Lopopolo, 2026.02", and InfoQ's
+coverage published 21 February 2026 under `/news/2026/02/`.
+
+The page itself stayed unreadable. `openai.com` returns 403 to command-line
+fetchers, the pre-installed Chromium cannot tunnel through this session's
+egress proxy, and `web.archive.org` is blocked by egress policy, so the
+confirmation is from secondary sources rather than the publisher's own page.
 
 ## Week 3, item by item
 
