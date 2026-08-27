@@ -448,7 +448,7 @@
   <div class="slide-inner">
     <div class="slide-label">Part 4</div>
     <h1>Permission Modes</h1>
-    <p class="subtitle">Default mode has you review each action. Looser modes let Claude work in longer stretches. Pick the one that matches the work.</p>
+    <p class="subtitle">On Pro, Max and Team plans a session now starts in auto mode, where a classifier reviews each action instead of you. Manual mode puts every action back in front of you. Pick the one that matches the work.</p>
     <svg viewBox="0 0 760 180" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 30px 0 10px;">
       <defs>
         <marker id="arrLeft" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="8" markerHeight="8" orient="auto">
@@ -464,9 +464,9 @@
       <text x="700" y="118" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373" letter-spacing="0.08em">MORE AUTONOMY</text>
       <!-- default -->
       <circle cx="130" cy="90" r="6" fill="#CC785C"/>
-      <text x="130" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">default</text>
-      <text x="130" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">asks for</text>
-      <text x="130" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">everything</text>
+      <text x="130" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">default (Manual)</text>
+      <text x="130" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">you approve</text>
+      <text x="130" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">each action</text>
       <!-- acceptEdits -->
       <circle cx="310" cy="90" r="6" fill="#CC785C"/>
       <text x="310" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">acceptEdits</text>
@@ -474,6 +474,7 @@
       <text x="310" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">bash still prompts</text>
       <!-- auto -->
       <circle cx="500" cy="90" r="6" fill="#CC785C"/>
+      <text x="500" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="500" fill="#CC785C" letter-spacing="0.08em">STARTING MODE</text>
       <text x="500" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">auto</text>
       <text x="500" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">classifier reviews</text>
       <text x="500" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">each action</text>
@@ -496,15 +497,15 @@
         <tr><th>Mode</th><th>What runs without asking</th><th>Best for</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>default</code></td><td>Reads only</td><td>Getting started, sensitive work</td></tr>
-        <tr><td><code>acceptEdits</code></td><td>Reads, edits, common filesystem commands</td><td>Iterating on code you review after</td></tr>
-        <tr><td><code>plan</code></td><td>Reads only, writes a plan</td><td>Exploring a codebase before changing it</td></tr>
-        <tr><td><code>auto</code></td><td>Everything, with classifier checks</td><td>Long tasks, reducing prompt fatigue</td></tr>
+        <tr><td><code>default</code> (Manual)</td><td>Reads only</td><td>Reviewing every action yourself, sensitive work</td></tr>
+        <tr><td><code>acceptEdits</code></td><td>Reads, file edits, common filesystem commands</td><td>Iterating on code you review after</td></tr>
+        <tr><td><code>plan</code></td><td>Reads, plus classifier-approved commands when auto is available</td><td>Exploring a codebase before changing it</td></tr>
+        <tr><td><code>auto</code></td><td>Everything, with classifier checks</td><td>Starting mode on Pro, Max and Team. Long tasks, less prompt fatigue</td></tr>
         <tr><td><code>dontAsk</code></td><td>Only pre-approved tools</td><td>Locked-down CI and scripts</td></tr>
-        <tr><td><code>bypassPermissions</code></td><td>Everything except protected paths</td><td>Isolated containers and VMs only</td></tr>
+        <tr><td><code>bypassPermissions</code></td><td>Everything, protected paths included</td><td>Isolated containers and VMs only</td></tr>
       </tbody>
     </table>
-    <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Writes to protected paths (.git, .claude, .bashrc, .mcp.json, etc.) never auto-approve in any mode.</p>
+    <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Writes to protected paths (.git, .claude, .bashrc, .mcp.json, etc.) never auto-approve except in bypassPermissions. The mode that reviews everything is labelled Manual in the CLI; its config value is still <code>default</code>.</p>
   </div>
 </div>
 
@@ -516,20 +517,21 @@
       <div class="card card-accent">
         <h3>Plan mode</h3>
         <p style="margin-bottom: 10px;">Claude researches and proposes changes without making them. Reads files, runs shell commands to explore, writes a plan.</p>
-        <p style="font-size: 13px; color: var(--muted); font-family: var(--mono);">Enter: Shift+Tab or <code style="color: var(--text);">/plan</code>. When ready, choose: approve and auto, approve and review, keep planning, or refine with Ultraplan.</p>
+        <p style="font-size: 13px; color: var(--muted); font-family: var(--mono);">Enter: Shift+Tab or <code style="color: var(--text);">/plan</code>. When ready, choose: approve and use auto mode, approve and review each edit, or keep planning. Ctrl+G opens the plan in your editor.</p>
       </div>
       <div class="card card-accent">
-        <h3>Auto mode <span style="font-size: 11px; font-family: var(--mono); color: var(--muted); font-weight: 500; letter-spacing: 0.06em; margin-left: 6px;">RESEARCH PREVIEW</span></h3>
-        <p style="margin-bottom: 10px;">A classifier model reviews each action. Blocks scope escalation, unknown infrastructure, hostile-content-driven actions.</p>
-        <p style="font-size: 13px; color: var(--muted); font-family: var(--mono);">Requires Team/Enterprise/API plan, Sonnet 4.6 or Opus 4.6, Anthropic API. Falls back after 3 consecutive or 20 total blocks.</p>
+        <h3>Auto mode <span style="font-size: 11px; font-family: var(--mono); color: #CC785C; font-weight: 500; letter-spacing: 0.06em; margin-left: 6px;">NOW THE DEFAULT</span></h3>
+        <p style="margin-bottom: 10px;">A classifier model reviews each action instead of you. Blocks scope escalation, unknown infrastructure, hostile-content-driven actions. Reads and edits inside your working directory skip the classifier.</p>
+        <p style="font-size: 13px; color: var(--muted); font-family: var(--mono);">All plans, Opus 4.6, Sonnet 4.6 or Fable 5 and later. Starting mode on Pro, Max and Team from v2.1.228. Admins can disable it. Falls back to prompting after 3 consecutive or 20 total blocks.</p>
       </div>
     </div>
     <div class="code-block" style="font-size: 13px; padding: 16px 20px; margin-top: 18px;">
       <span class="comment"># during a session</span><br/>
-      <span class="cmd">Shift+Tab</span>  <span class="comment">cycle default → acceptEdits → plan</span><br/>
+      <span class="cmd">Shift+Tab</span>  <span class="comment">cycle default → acceptEdits → plan → auto</span><br/>
+      <span class="comment"># from auto, the first press drops you to default</span><br/>
       <span class="comment"># at startup</span><br/>
       <span class="cmd">claude --permission-mode plan</span><br/>
-      <span class="cmd">claude --enable-auto-mode</span>
+      <span class="cmd">claude --permission-mode default</span>  <span class="comment">Manual</span>
     </div>
   </div>
 </div>
@@ -615,7 +617,7 @@
       <div class="item"><span class="item-text"><strong>Context is the constraint.</strong> Most best practices are about managing it.</span></div>
       <div class="item"><span class="item-text"><strong>Verify, then explore, plan, code, commit.</strong> Specific prompts with something to check against.</span></div>
       <div class="item"><span class="item-text"><strong>CLAUDE.md for always-on, skills for on-demand.</strong> Keep CLAUDE.md short.</span></div>
-      <div class="item"><span class="item-text"><strong>Pick the mode that matches the work.</strong> Default for sensitive, plan for exploration, acceptEdits for iteration.</span></div>
+      <div class="item"><span class="item-text"><strong>Pick the mode that matches the work.</strong> Auto for long stretches, Manual for sensitive, plan for exploration, acceptEdits for iteration.</span></div>
     </div>
   </div>
 </div>
