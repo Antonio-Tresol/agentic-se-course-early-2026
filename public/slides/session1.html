@@ -464,7 +464,7 @@
       <text x="700" y="118" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#737373" letter-spacing="0.08em">MORE AUTONOMY</text>
       <!-- default -->
       <circle cx="130" cy="90" r="6" fill="#CC785C"/>
-      <text x="130" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">default (Manual)</text>
+      <text x="130" y="68" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">Manual</text>
       <text x="130" y="144" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">you approve</text>
       <text x="130" y="158" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#737373">each action</text>
       <!-- acceptEdits -->
@@ -497,7 +497,7 @@
         <tr><th>Mode</th><th>What runs without asking</th><th>Best for</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>default</code> (Manual)</td><td>Reads only</td><td>Reviewing every action yourself, sensitive work</td></tr>
+        <tr><td>Manual (<code>default</code>)</td><td>Reads only</td><td>Reviewing every action yourself, sensitive work</td></tr>
         <tr><td><code>acceptEdits</code></td><td>Reads, file edits, common filesystem commands</td><td>Iterating on code you review after</td></tr>
         <tr><td><code>plan</code></td><td>Reads, plus classifier-approved commands when auto is available</td><td>Exploring a codebase before changing it</td></tr>
         <tr><td><code>auto</code></td><td>Everything, with classifier checks</td><td>Starting mode on Pro, Max and Team. Long tasks, less prompt fatigue</td></tr>
@@ -505,7 +505,7 @@
         <tr><td><code>bypassPermissions</code></td><td>Everything, protected paths included</td><td>Isolated containers and VMs only</td></tr>
       </tbody>
     </table>
-    <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Writes to protected paths (.git, .claude, .bashrc, .mcp.json, etc.) never auto-approve except in bypassPermissions. The mode that reviews everything is labelled Manual in the CLI; its config value is still <code>default</code>.</p>
+    <p style="margin-top: 16px; font-size: 14px; color: var(--muted); font-family: var(--mono);">Writes to protected paths (.git, .claude, .bashrc, .mcp.json, etc.) never auto-approve except in bypassPermissions. The mode that reviews everything is labelled Manual in the CLI, VS Code and the desktop app. Its config value is <code>default</code>, which is what settings and hooks use, and the CLI also accepts <code>manual</code> wherever you type the value.</p>
   </div>
 </div>
 
@@ -527,11 +527,11 @@
     </div>
     <div class="code-block" style="font-size: 13px; padding: 16px 20px; margin-top: 18px;">
       <span class="comment"># during a session</span><br/>
-      <span class="cmd">Shift+Tab</span>  <span class="comment">cycle default → acceptEdits → plan → auto</span><br/>
-      <span class="comment"># from auto, the first press drops you to default</span><br/>
+      <span class="cmd">Shift+Tab</span>  <span class="comment">cycle manual → acceptEdits → plan → auto</span><br/>
+      <span class="comment"># from auto, the first press drops you to manual</span><br/>
       <span class="comment"># at startup</span><br/>
       <span class="cmd">claude --permission-mode plan</span><br/>
-      <span class="cmd">claude --permission-mode default</span>  <span class="comment">Manual</span>
+      <span class="cmd">claude --permission-mode manual</span>
     </div>
   </div>
 </div>
