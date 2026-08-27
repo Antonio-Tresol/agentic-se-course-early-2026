@@ -1,6 +1,6 @@
 # Agentic SE Course
 
-This is a proposal of curriculum for agentic software engineering given the latest developments (as of march 2026)
+This is a proposal of curriculum for agentic software engineering given the latest developments. Developed in March and April 2026, last reviewed in August 2026.
 
 Coding agents are already exceeding human throughput for many SE tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck is no longer writing code but ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.
 
