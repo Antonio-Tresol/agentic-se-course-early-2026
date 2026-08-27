@@ -1090,7 +1090,7 @@ export default function AgenticSECourse() {
           The Anthropic Skilljar courses used in Weeks 1 and 2 award certificates on completion.
         </p>
         <p style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.muted, lineHeight: 1.6 }}>
-          This curriculum was developed in March-April 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.
+          This curriculum was developed in March-April 2026 and last reviewed in August 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.
         </p>
       </header>
 
