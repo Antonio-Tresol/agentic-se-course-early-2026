@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Session 3 Appendix &middot; Working in Complex Codebases</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./slides.css" />
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ================== APPENDIX divider ================== -->
+<div class="slide slide-dark active" id="s0">
+  <div class="slide-inner">
+    <div class="slide-label">Reference</div>
+    <h2>Appendix</h2>
+    <p class="subtitle" style="color: #D4D4D4;">The six invariants and the four approaches in full, one slide each. Skipped in the twenty-minute run, kept here for the detail behind any question that comes up.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 5: Invariant 1 ================== -->
+<div class="slide" id="s1">
+  <div class="slide-inner">
+    <div class="slide-label">Invariant 1 of 6</div>
+    <h2>Context Is the Only Lever</h2>
+    <p class="subtitle">LLMs are stateless. Every turn, the only thing shaping the next token is the tokens already in the window. Better tokens in, better tokens out.</p>
+    <div class="two-col" style="gap: 20px;">
+      <div>
+        <div class="col-label">Priority order for what goes in</div>
+        <div class="items" style="margin-top: 8px;">
+          <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Correctness.</strong> Wrong facts are worst. The agent builds on them.</span></div>
+          <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Completeness.</strong> Missing facts cascade into wrong answers.</span></div>
+          <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Size and noise.</strong> Everything else clutters reasoning.</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Trajectory matters too</div>
+        <p style="font-size: 15px; color: var(--body); margin-top: 8px; line-height: 1.5;">If the conversation shows the agent doing wrong things and being corrected, the next most likely token is another wrong thing. The history is part of the prompt.</p>
+        <div class="quote" style="margin-top: 18px;">
+          <p style="font-size: 14px;">Output quality is roughly (correctness &times; completeness) divided by (noise + size).</p>
+          <cite>ACE-FCA, simplified</cite>
+        </div>
+      </div>
+    </div>
+    <div class="source-row">
+      <span class="pill">Anthropic</span><span class="pill">ACE-FCA</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 10: Invariant 6 ================== -->
+<div class="slide" id="s2">
+  <div class="slide-inner">
+    <div class="slide-label">Invariant 6 of 6</div>
+    <h2>Enforce Rules Mechanically</h2>
+    <p class="subtitle">Instructions in a prompt compete with other instructions and can be silently skipped. A failing test, a linter, a CI gate, or a pre-commit hook cannot. When you can move a rule from words into code, do it.</p>
+    <div class="two-col" style="gap: 20px;">
+      <div>
+        <div class="col-label">Why words leak</div>
+        <p style="font-size: 15px; color: var(--body); margin-top: 8px; line-height: 1.55;">Frontier models follow roughly 150 to 200 instructions with consistency. By the time you add CLAUDE.md, the system prompt, tool descriptions, MCP instructions, and a workflow prompt, you are rolling the dice on which rules get attended to.</p>
+        <div class="quote" style="margin-top: 16px;">
+          <p style="font-size: 14px;">Don't use prompts for control flow if you can use control flow for control flow. The if-statement is really, really powerful.</p>
+          <cite>Dex Horthy, No More Slop</cite>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Mechanical backstops to prefer</div>
+        <div class="items" style="margin-top: 8px; gap: 6px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Verifiable feedback loops.</strong> Tests that fail on regression give you a check the agent cannot talk its way past.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Structured artefacts.</strong> A feature list with <code style="font-family: var(--mono); font-size: 12px;">passes: false</code> until end-to-end tests flip it.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Environment scripts.</strong> <code style="font-family: var(--mono); font-size: 12px;">init.sh</code> proves the dev loop works before new work starts.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Review gates.</strong> Human must sign off the plan file before implementation runs.</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 13px;"><strong>Hooks and linters.</strong> Block bad commits without asking the agent to remember.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="source-row">
+      <span class="pill">Anthropic harnesses</span><span class="pill">ACE-FCA</span><span class="pill">Conductor</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 12: Anthropic ================== -->
+<div class="slide" id="s3">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 1 &middot; Anthropic &middot; Sep 2025</div>
+    <h2>The Abstract Frame</h2>
+    <p class="subtitle" style="margin-bottom: 10px;">The earliest and most general articulation. It gives you a vocabulary. Everything that follows can be read as a concrete version of these ideas.</p>
+    <div class="grid-2">
+      <div class="card card-accent">
+        <h3>Just-in-time retrieval</h3>
+        <p>Agents hold lightweight identifiers (file paths, queries, URLs) and load data into context only when they need it.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Progressive disclosure</h3>
+        <p>Each interaction yields context that informs the next decision. The agent discovers what it needs by exploring as it goes.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Compaction</h3>
+        <p>When nearing the limit, summarise and reinitiate. Keep architectural decisions and open issues. Drop redundant tool output.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Sub-agent architectures</h3>
+        <p>Specialised agents handle focused tasks in clean context windows, returning roughly one to two thousand tokens of distilled summary.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 13: RPI ================== -->
+<div class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 2 &middot; HumanLayer &middot; December 2025</div>
+    <h2>Research, Plan, Implement</h2>
+    <p class="subtitle" style="margin-bottom: 10px;">Frequent intentional compaction, organised as three phases. Each phase lives in its own context window and writes its output to a Markdown file.</p>
+    <div class="grid-3" style="margin-top: 14px;">
+      <div class="card card-accent">
+        <h3>Research</h3>
+        <p><strong>Compress truth.</strong> Objective facts about how the codebase works today. No implementation opinions. Ticket hidden from the researcher.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Plan</h3>
+        <p><strong>Compress intent.</strong> Exact files, exact changes, code snippets, test checkpoints. Human reviews before any code is written.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Implement</h3>
+        <p><strong>Execute.</strong> Read the plan, do the work, compact progress back after each phase. The file is the source of truth.</p>
+      </div>
+    </div>
+    <div class="quote">
+      <p>A bad line of code is a bad line of code. A bad line in a plan is a hundred bad lines of code. A bad line in research is thousands.</p>
+      <cite>ACE-FCA</cite>
+    </div>
+  </div>
+</div>
+
+<!-- ================== SLIDE 14: CRISPY / QRSPI ================== -->
+<div class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 3 &middot; HumanLayer &middot; February 2026</div>
+    <h2>CRISPY <span class="pill pill-orange" style="vertical-align: middle; font-size: 10px;">QRSPI</span></h2>
+    <p class="subtitle" style="margin-bottom: 10px;">Eight stages instead of three. Same principles; the planning monolith is split so fewer instructions live in each prompt and human review happens earlier.</p>
+    <svg viewBox="0 0 760 120" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 10px 0 8px;">
+      <g font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#0A0A0A">
+        <rect x="10" y="36" width="80" height="48" rx="6" fill="#FAE7DC" stroke="#CC785C" stroke-width="1"/>
+        <text x="50" y="58" text-anchor="middle">Questions</text>
+        <text x="50" y="74" text-anchor="middle" font-size="9" fill="#737373">align</text>
+        <rect x="100" y="36" width="80" height="48" rx="6" fill="#FAE7DC" stroke="#CC785C" stroke-width="1"/>
+        <text x="140" y="58" text-anchor="middle">Research</text>
+        <text x="140" y="74" text-anchor="middle" font-size="9" fill="#737373">align</text>
+        <rect x="190" y="36" width="80" height="48" rx="6" fill="#FAE7DC" stroke="#CC785C" stroke-width="1"/>
+        <text x="230" y="54" text-anchor="middle">Design</text>
+        <text x="230" y="68" text-anchor="middle">discuss</text>
+        <text x="230" y="80" text-anchor="middle" font-size="9" fill="#737373">align</text>
+        <rect x="280" y="36" width="80" height="48" rx="6" fill="#FAE7DC" stroke="#CC785C" stroke-width="1"/>
+        <text x="320" y="54" text-anchor="middle">Structure</text>
+        <text x="320" y="68" text-anchor="middle">outline</text>
+        <text x="320" y="80" text-anchor="middle" font-size="9" fill="#737373">align</text>
+        <rect x="370" y="36" width="80" height="48" rx="6" fill="#FAE7DC" stroke="#CC785C" stroke-width="1"/>
+        <text x="410" y="58" text-anchor="middle">Plan</text>
+        <text x="410" y="74" text-anchor="middle" font-size="9" fill="#737373">align</text>
+        <rect x="460" y="36" width="80" height="48" rx="6" fill="#F7F7F7" stroke="#525252" stroke-width="1"/>
+        <text x="500" y="54" text-anchor="middle">Work</text>
+        <text x="500" y="68" text-anchor="middle">tree</text>
+        <text x="500" y="80" text-anchor="middle" font-size="9" fill="#737373">execute</text>
+        <rect x="550" y="36" width="80" height="48" rx="6" fill="#F7F7F7" stroke="#525252" stroke-width="1"/>
+        <text x="590" y="58" text-anchor="middle">Implement</text>
+        <text x="590" y="74" text-anchor="middle" font-size="9" fill="#737373">execute</text>
+        <rect x="640" y="36" width="80" height="48" rx="6" fill="#F7F7F7" stroke="#525252" stroke-width="1"/>
+        <text x="680" y="54" text-anchor="middle">Pull</text>
+        <text x="680" y="68" text-anchor="middle">request</text>
+        <text x="680" y="80" text-anchor="middle" font-size="9" fill="#737373">execute</text>
+      </g>
+      <text x="215" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#CC785C" letter-spacing="0.08em">FIVE ALIGNMENT PHASES</text>
+      <text x="590" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="500" fill="#525252" letter-spacing="0.08em">THREE EXECUTION PHASES</text>
+    </svg>
+    <p style="margin-top: 10px; font-size: 15px; color: var(--body); line-height: 1.55;">Why more stages? Instruction budget. The December RPI prompt had 85 directives in one prompt. Splitting them across stages keeps each prompt under the model's reliable instruction-following limit, and gives the human a shorter artefact to redirect at each step.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 15: Conductor ================== -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="slide-label">Approach 4 &middot; Google &middot; December 2025</div>
+    <h2>Conductor</h2>
+    <p class="subtitle">A Gemini CLI extension that ships the same shape under different vocabulary. Three slash commands. The specs and plans live as Markdown files in the repository.</p>
+    <div class="items">
+      <div class="item">
+        <span class="item-text"><code style="font-family: var(--mono); font-size: 14px;">/conductor:setup</code> captures product goals, technical stack, and team workflows into repository artefacts.</span>
+      </div>
+      <div class="item">
+        <span class="item-text"><code style="font-family: var(--mono); font-size: 14px;">/conductor:newTrack</code> generates specs and phased plans (phases, tasks, subtasks). Reviewed before implementation.</span>
+      </div>
+      <div class="item">
+        <span class="item-text"><code style="font-family: var(--mono); font-size: 14px;">/conductor:implement</code> executes the plan with progress saved to files. Pause and resume from the artefacts.</span>
+      </div>
+    </div>
+    <div class="quote">
+      <p>Control your code. Shift project context from chat windows into the codebase itself.</p>
+      <cite>Google Developers Blog, on Conductor</cite>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================== SLIDE 18: Debate 1 ================== -->
+<div class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="slide-label">Part 3 of 3 &middot; Debate 1 &middot; where does human review pay?</div>
+    <h2>Read the Plan, or Read the Code?</h2>
+    <div class="two-col" style="gap: 20px;">
+      <div class="card" style="border-left: 3px solid var(--orange); padding-left: 21px;">
+        <h3>ACE-FCA, December 2025</h3>
+        <p style="font-style: italic;">"A well-written 200-line plan is more reviewable than 2,000 lines of generated code. Reviewing plans maintains team alignment better than post-implementation code review."</p>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--orange); padding-left: 21px;">
+        <h3>No More Slop, February 2026</h3>
+        <p style="font-style: italic;">"Don't read the plans. Please read the code. Plans hide surprises and you end up reviewing the same feature twice."</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 15px; color: var(--body); line-height: 1.55;">Same author, two months apart. What changed? Possibly: model capability, workflow maturity, or the realisation that plans create a false sense of safety when humans skim them. The honest answer is that we do not know yet.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 19: Debate 2 ================== -->
+<div class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="slide-label">Debate 2 &middot; how much ceremony</div>
+    <h2>When Is the Full Pipeline Overkill?</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">The ceiling of problems you can solve goes up with how much context engineering you are willing to do. But running the full pipeline on a one-line change is its own kind of waste.</p>
+    <table class="table">
+      <thead>
+        <tr><th style="width: 38%;">Task</th><th>Workflow</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tiny change.</strong> Rename, button colour, typo.</td><td>Just talk to the agent.</td></tr>
+        <tr><td><strong>Small feature in one file.</strong></td><td>Short plan, no dedicated research.</td></tr>
+        <tr><td><strong>Medium, across multiple files.</strong></td><td>Research, plan, implement.</td></tr>
+        <tr><td><strong>Hard, cross-cutting, unfamiliar.</strong></td><td>Full pipeline. Sub-agents. Human review at every compaction.</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 22px; font-size: 15px; color: var(--muted); font-family: var(--serif); font-style: italic;">It takes practice. You will over-engineer simple tasks and under-engineer hard ones. The calibration does not come from a slide.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 20: Debate 3 ================== -->
+<div class="slide" id="s9">
+  <div class="slide-inner">
+    <div class="slide-label">Debate 3 &middot; how to shape work</div>
+    <h2>Vertical Slices or Horizontal Layers?</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">Left untreated, models write horizontal plans: all the database, then all the services, then all the API. Two thousand lines later, nothing runs end-to-end.</p>
+    <div class="two-col" style="gap: 20px;">
+      <div class="card" style="border-left: 3px solid #B85450; padding-left: 21px;">
+        <h3 style="color: #B85450;">Horizontal plan</h3>
+        <p>Phase 1: all DB migrations. Phase 2: all services. Phase 3: all endpoints. Phase 4: UI. Test at the end.</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Vertical plan</h3>
+        <p>Phase 1: one slice end-to-end with mock data. Phase 2: wire the service layer. Phase 3: swap mocks for real DB. Test at every seam.</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px; font-size: 15px; color: var(--body); line-height: 1.55;">Vertical slices produce natural checkpoints. But not every problem factors this way: some architectural refactors are genuinely horizontal, and forcing verticality produces awkward scaffolding. Judgement call.</p>
+  </div>
+</div>
+
+<!-- ================== SLIDE 21: Debate 4 ================== -->
+<div class="slide" id="s10">
+  <div class="slide-inner">
+    <div class="slide-label">Debate 4 &middot; trust and verification</div>
+    <h2>How Far Can the Agent Verify Itself?</h2>
+    <p class="subtitle">Mechanical enforcement catches a lot. It does not catch everything. Where is the boundary?</p>
+    <div class="two-col" style="gap: 20px;">
+      <div>
+        <div class="col-label">Things machines verify well</div>
+        <div class="items" style="margin-top: 8px; gap: 6px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Unit and integration test passes</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Linter, type-check, build green</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">End-to-end browser automation on known flows</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Structural invariants enforced by the codebase</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Things that still need humans</div>
+        <div class="items" style="margin-top: 8px; gap: 6px;">
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Is this the right abstraction for the team?</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Does the architecture still hang together?</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">What fails silently in production next quarter?</span></div>
+          <div class="item" style="padding: 10px 16px;"><span class="item-text" style="font-size: 14px;">Are we solving the problem the user asked for?</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 18px; font-size: 14px; color: var(--muted); font-family: var(--serif); font-style: italic;">Next week's readings push on this boundary further: long-running harnesses, spec-driven verification, and agent teams all try to move the line.</p>
+  </div>
+</div>
+
+
+
+<script src="./slides.js"></script>
+
+</body>
+</html>

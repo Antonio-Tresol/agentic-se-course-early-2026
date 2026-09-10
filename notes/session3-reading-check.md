@@ -168,7 +168,7 @@ Twenty-four questions across eight sections, roughly twenty-five minutes. The mu
 
 ## Part 8: Tying it together
 
-**22.** (Short answer) The deck calls RPI, QRSPI, and Conductor "the same shape, different dress". Name one principle all three share.
+**22.** (Short answer) The deck presents RPI, QRSPI, and Conductor as four approaches with one shared structure. Name one principle all three share.
 
 **23.** When a dynamic workflow spawns subagents, what permission mode do those subagents run in?
 
