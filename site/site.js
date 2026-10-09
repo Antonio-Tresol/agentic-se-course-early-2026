@@ -6,7 +6,7 @@
 
    LOAD ORDER
      <head>  the pre-paint snippet from week-1.html (sets html.track-codex,
-             data-theme from ?theme=).
+             data-theme from ?theme= or localStorage "agentic-se-theme").
      <body>  ...page... <script src="progress.js"></script>
              <script src="site.js"></script>, then any page script, which
              can use window.AgenticSite once this file has run.
@@ -18,6 +18,12 @@
        ?track= with replaceState, toggles html.track-codex, calls
        AgenticProgress.setTrack (on load only if it differs) and writes the
        live region [data-track-live].
+     - Theme control: input[type=radio][name=theme] in header.topbar .topbar__inner.
+       Three-way toggle (System, Light, Dark). Precedence on load:
+       ?theme= > localStorage "agentic-se-theme" > "system". "System" removes
+       data-theme on html; "Light" and "Dark" set data-theme="light" or "dark".
+       A change saves the choice to localStorage "agentic-se-theme", announces
+       the new theme to a polite live region, and syncs tabs via storage events.
      - Registers every week in COURSE (core items, outcome ids) with
        AgenticProgress.registerWeek, so summary() is complete everywhere.
      - Re-renders on AgenticProgress.on("change"), from this tab or another.
@@ -305,6 +311,93 @@
     if (region) { region.textContent = ""; setTimeout(function () { region.textContent = msg; }, 30); }
   }
 
+  /* ---------- theme ---------- */
+  var THEME_KEY = "agentic-se-theme";
+  function validTheme(m) { return m === "light" || m === "dark" || m === "system" ? m : null; }
+  function initialTheme() {
+    var m = validTheme(param("theme"));
+    if (m) return m;
+    try { m = validTheme(window.localStorage.getItem(THEME_KEY)); } catch (e) { m = null; }
+    return m || "system";
+  }
+  var currentTheme = initialTheme();
+  function setThemeRadios(m) {
+    $$('input[type="radio"][name="theme"]').forEach(function (r) { r.checked = r.value === m; });
+  }
+  function applyTheme(m, store) {
+    m = validTheme(m) || "system";
+    currentTheme = m;
+    if (m === "system") {
+      root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", m);
+    }
+    if (store) {
+      try { window.localStorage.setItem(THEME_KEY, m); } catch (e) { /* blocked */ }
+      announceTheme(m);
+    }
+    setThemeRadios(m);
+    if (started) render();
+  }
+  function announceTheme(m) {
+    var label = m === "dark" ? "Dark" : (m === "light" ? "Light" : "System");
+    var msg = "Theme: " + label;
+    var region = document.querySelector('[aria-live="polite"]');
+    if (!region) {
+      region = document.createElement("div");
+      region.className = "sr-only";
+      region.setAttribute("aria-live", "polite");
+      document.body.appendChild(region);
+    }
+    region.textContent = "";
+    setTimeout(function () { region.textContent = msg; }, 30);
+  }
+  function renderThemeSwitch() {
+    var inner = document.querySelector("header.topbar .topbar__inner");
+    if (!inner || inner.querySelector(".theme-switch")) return;
+    var host = inner.querySelector(".topbar__right") || inner;
+
+    var fieldset = document.createElement("fieldset");
+    fieldset.className = "theme-switch";
+
+    var legend = document.createElement("legend");
+    legend.className = "sr-only";
+    legend.textContent = "Theme";
+    fieldset.appendChild(legend);
+
+    var opts = document.createElement("div");
+    opts.className = "theme-switch__opts";
+
+    var iconSystem = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 1 A7 7 0 0 1 8 15 Z" fill="currentColor"/></svg>';
+    var iconLight = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="3" fill="currentColor"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.1" y2="4.1"/><line x1="11.9" y1="11.9" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.1" y2="11.9"/><line x1="11.9" y1="4.1" x2="12.95" y2="3.05"/></svg>';
+    var iconDark = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M14 9.5a5.5 5.5 0 0 1-7.5-7.5A6 6 0 1 0 14 9.5z"/></svg>';
+
+    var items = [
+      { value: "system", label: "System", icon: iconSystem },
+      { value: "light", label: "Light", icon: iconLight },
+      { value: "dark", label: "Dark", icon: iconDark }
+    ];
+
+    items.forEach(function (it) {
+      var radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "theme";
+      radio.value = it.value;
+      radio.id = "theme-" + it.value;
+      if (it.value === currentTheme) radio.checked = true;
+
+      var lbl = document.createElement("label");
+      lbl.htmlFor = radio.id;
+      lbl.innerHTML = it.icon + " " + it.label;
+
+      opts.appendChild(radio);
+      opts.appendChild(lbl);
+    });
+
+    fieldset.appendChild(opts);
+    host.appendChild(fieldset);
+  }
+
   /* ---------- stats ---------- */
   // Minutes done are the planned minutes of ticked items (not self-reported
   // time), so a 5 min reading moves the bar 5 min and a 90 min course 90.
@@ -426,6 +519,12 @@
       if (P && P.get().learner.track !== t) P.setTrack(t);
       return;
     }
+    if (el.name === "theme" && el.type === "radio") {
+      var m = validTheme(el.value);
+      if (!m) return;
+      applyTheme(m, true);
+      return;
+    }
     if (!P) return;
     var ref;
     if (el.hasAttribute("data-progress-item")) {
@@ -545,7 +644,7 @@
       '<div class="tb__bar">' + segs.map(function (o) { return segHTML(o); }).join("") + "</div>" +
       '<div class="tb__labels" aria-hidden="true">' + segs.map(function (o) {
         return '<span class="tb__label" style="--m:' + o.item.minutes + '">' + glyph(o.item.kind) + "<span>" + fmt(o.item.minutes) + "</span></span>";
-      }).join("") + "</div></figure>" :
+      }).join("") + '</div><div class="tb__axis-title axis-title axis-title--x">Planned minutes</div></figure>' :
       '<p class="meta">Minutes for this week\'s items are not measured yet, so there is no time bar. The table lists every item.</p>');
     var opts = s.optional.filter(function (o) { return o.item.minutes !== null; });
     if (opts.length && s.planned) {
@@ -657,16 +756,18 @@
         el.innerHTML =
           '<figure class="cmap" aria-labelledby="cmap-title">' +
           '<div class="cmap__head"><p id="cmap-title" class="cmap__title">Pre-work by week, ' + trackName(track) + " track</p>" +
-          '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done</span>' +
-          '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range</span></div></div>' +
+          '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done (filled as you tick items off)</span>' +
+          '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range (Week 5: 6 to 8 h build)</span></div></div>' +
           '<div class="cmap__frame">' +
+          '<div class="cmap__ytitle axis-title axis-title--y">Planned minutes of pre-work</div>' +
           '<div class="cmap__yaxis" aria-hidden="true">' + SCALE_TICKS.map(function (t) {
             return '<span style="bottom:' + (t / SCALE_MAX * 100) + '%">' + t + "</span>";
           }).join("") + "</div>" +
           '<div class="cmap__grid" aria-hidden="true">' + SCALE_TICKS.map(function (t) {
             return '<span class="' + (t === 0 ? "is-base" : "") + '" style="bottom:' + (t / SCALE_MAX * 100) + '%"></span>';
           }).join("") + "</div>" +
-          '<div class="cmap__xaxis" aria-hidden="true"><span style="left:0">0</span><span style="left:50%">240</span><span style="left:100%">480 min</span></div>' +
+          '<div class="cmap__xaxis-wrap"><div class="cmap__xaxis" aria-hidden="true"><span style="left:0">0</span><span style="left:50%">240</span><span style="left:100%">480</span></div>' +
+          '<div class="cmap__xaxis-title axis-title">Planned minutes of pre-work</div></div>' +
           '<ol class="cmap__weeks">' + views.map(function (v) {
             var w = v.w, s = v.s, tag = w.href ? "a" : "div";
             return '<li class="cmap__week' + (v.done ? " is-done" : "") + (v.current ? " is-current" : "") + (w.href ? "" : " is-nopage") +
@@ -680,8 +781,9 @@
               '<span class="cmap__txt" aria-hidden="true" data-cmap-txt></span>' +
               '<span class="sr-only" data-cmap-sr></span>' +
               "</" + tag + "></li>";
-          }).join("") + "</ol></div>" +
-          '<div class="cmap__foot"><p class="meta">Columns share one axis: planned minutes for your track, filled as you tick items off. Week 5 is a 6 to 8 h build.</p>' +
+          }).join("") + "</ol>" +
+          '<div class="cmap__xtitle axis-title axis-title--x">Week</div></div>' +
+          '<div class="cmap__foot">' +
           '<button type="button" class="disclose" data-disclosure aria-expanded="false" aria-controls="cmap-table" data-label-open="Hide the table" data-label-closed="Show as table">Show as table</button></div>' +
           '<div class="table-scroll" id="cmap-table" tabindex="0" role="region" aria-label="Pre-work by week table" hidden><table class="data-table"><caption>Pre-work by week, ' + trackName(track) + ' track, minutes</caption>' +
           '<thead><tr><th scope="col">Week</th><th scope="col">Title</th><th scope="col" class="r">Planned</th><th scope="col" class="r">Done</th><th scope="col">Status</th><th scope="col">Deliverable</th></tr></thead>' +
@@ -1228,7 +1330,6 @@
       var m = niceMax(max);
       var ticks = [0, 1, 2, 3, 4].map(function (i) {
         var t = m * i / 4, txt = spec.unit === "$" ? "$" + r2(t) : r2(t);
-        if (i === 4 && spec.unit !== "$") txt += " min";
         return '<span style="left:' + (i * 25) + '%">' + txt + "</span>";
       }).join("");
       var h = '<figure class="stl" role="img" aria-label="' + esc(spec.aria) + '"><figcaption class="stl__title">' + esc(spec.title) + "</figcaption>";
@@ -1241,6 +1342,8 @@
             return isNum(s.v) ? '<span class="stl__bar ' + s.cls + '" style="--d:' + (s.v / m).toFixed(4) + '"></span>' : "";
           }).join("") + '</span><span class="hbars__val stl__val">' + r.val + (r.flags || []).map(function (f) { return '<span class="stl__flag">' + f + "</span>"; }).join("") + "</span></div>";
       });
+      var axisTitle = spec.unit === "$" ? "Cost ($)" : "Human minutes";
+      h += '<div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">' + esc(axisTitle) + "</span><span></span></div>";
       h += "</div>" + (spec.total ? '<p class="stl__total">' + spec.total + "</p>" : "") + "</figure>";
       return h;
     }
@@ -1272,7 +1375,7 @@
       var ariaC = "Cost by stage, " + label + ": " + list.map(function (e) { return nameOf(STAGES, e.stage) + " " + (isNum(e.costUsd) ? usd(e.costUsd) : "not logged"); }).join(", ") + (anyC ? "; " + usd(tc) + " in all." : ".");
       var total = "Total: " + S.fmt(tm) + " human minutes" + (anyT ? " · " + tok(tt) + " tokens" : "") + (anyC ? " · " + usd(tc) : "") + " · " + plural(ti, "intervention", "interventions");
       return chart({ title: "Human minutes by stage", sub: label, aria: ariaM, unit: "min", rows: mrows, total: total }) +
-        chart({ title: "Cost by stage", sub: label + ". Hatched bars are cost.", aria: ariaC, unit: "$", rows: crows });
+        chart({ title: "Cost by stage", sub: label, aria: ariaC, unit: "$", rows: crows });
     }
 
     /* ---------- log form and entry list ---------- */
@@ -1522,6 +1625,9 @@
     live.setAttribute("data-site-live", "");
     document.body.appendChild(live);
 
+    renderThemeSwitch();
+    applyTheme(currentTheme, false);
+
     root.classList.toggle("track-codex", track === "codex");
     setRadios(track);
     if (P) {
@@ -1533,6 +1639,7 @@
     document.addEventListener("click", onClick);
     window.addEventListener("storage", function (e) {
       if (e.key === TRACK_KEY && validTrack(e.newValue) && e.newValue !== track) applyTrack(e.newValue, false);
+      if (e.key === THEME_KEY && validTheme(e.newValue) && e.newValue !== currentTheme) applyTheme(e.newValue, false);
     });
     var t = null;
     window.addEventListener("resize", function () {
@@ -1551,6 +1658,7 @@
   window.AgenticSite = {
     weeks: WEEKS, week: week, calendar: calendar, session: function (n) { return sessionOf(n); }, stageLog: SL, kinds: KINDS, kindOrder: KIND_ORDER, conf: CONF,
     track: function () { return track; }, trackName: trackName,
+    theme: function () { return currentTheme; }, setTheme: function (m) { applyTheme(m, true); },
     weekStats: weekStats, currentWeek: currentWeek, nextSession: nextSession,
     attemptScore: attemptScore, attemptCells: attemptCells, quizSummary: quizSummary, scorebarHTML: scorebarHTML,
     fmt: fmt, esc: esc, glyph: glyph, findItem: findItem, parseRef: parseRef,

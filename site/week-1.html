@@ -13,13 +13,15 @@
 <link rel="stylesheet" href="bench.css">
 <script>
 /* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t) {
+(function (d, q, t, m) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
   if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
   if (t === "codex") d.classList.add("track-codex");
-  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
 })(document.documentElement);
 </script>
 </head>
@@ -411,7 +413,7 @@
 
   <div class="bench-sub" id="bench-frontier-time">
     <h4 class="bench-h">How the frontier moved</h4>
-    <p class="bench-p">Three series from the same sources. Each has its own axis: minutes of human time, percent of Verified tasks, and percent of Terminal-Bench trials are different measures, so they are never drawn on one scale.</p>
+    <p class="bench-p">Three series from the same sources. Different measures are never drawn on one scale.</p>
     <div data-bench-metr></div>
     <div class="bench-fig__pair">
       <div data-bench-swev></div>
@@ -425,6 +427,7 @@
       <p id="bench-sbar-cap" class="label">60 minutes, by who is working</p>
       <div class="bench-sbar__track" aria-hidden="true" data-sbar></div>
       <div class="bench-sbar__scale meta" aria-hidden="true"><span>0:00</span><span>30:00</span><span>60:00</span></div>
+      <div class="bench-sbar__axis-title axis-title axis-title--x">Session time (mm:ss)</div>
       <div class="bench-legend" data-sbar-legend></div>
     </figure>
     <ol class="bench-plan" data-plan aria-label="Activity plan"></ol>
@@ -1954,15 +1957,17 @@
       var anchor = p <= 0 ? "start" : (p >= 100 ? "end" : "middle");
       ax.appendChild(sv("text", { class: "bench-tick", x: p + "%", y: 12, "text-anchor": anchor, text: t.label }));
     });
-    var axis = el("div", { class: "bench-axis", "aria-hidden": "true" }, [ax, el("span", { class: "bench-axis__unit", text: scale.unit || "" })]);
-    return el("div", null, [ul, axis]);
+    var axis = el("div", { class: "bench-axis", "aria-hidden": "true" }, [ax, el("span", { class: "bench-axis__unit" })]);
+    var titleEl = el("div", { class: "bench-axis__title axis-title axis-title--x", text: scale.axisTitle || "Percent" });
+    return el("div", null, [ul, axis, titleEl]);
   }
 
-  var PCT_SCALE = { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "%" };
+  var PCT_SCALE = { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "%", axisTitle: "Percent" };
   var PANEL_META = {
     "swe-bench-verified": {
       title: "SWE-bench Verified", tags: ["Saturated", "Contaminated", "Retired by OpenAI"],
       newest: "Newest entry on the board: 26 Feb 2026.",
+      axisTitle: "Percent resolved",
       row: function (e) {
         var att = /2\+/.test(e.attempts) ? "2+ attempts" : (/- 2$/.test(e.attempts) ? "2 attempts" : "1 attempt");
         return { name: e.system, meta: fmtDate(e.date) + " · " + att, value: e.score, valueText: fx(e.score, 1) + "%" };
@@ -1973,6 +1978,7 @@
     "swe-bench-pro-public": {
       title: "SWE-Bench Pro, public set (v1, 731 tasks)", tags: ["About 30% of tasks broken", "Partial board"],
       newest: "Newest entry: 9 Jul 2026. No GPT-6, Claude 5 series or Fable model is on this board.",
+      axisTitle: "Percent resolved",
       row: function (e) {
         return { name: e.system.replace(/\*$/, ""), meta: e.harness + " · ± " + fx(e.ci95, 1) + " · added " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
       },
@@ -1982,6 +1988,7 @@
     "terminal-bench-4": {
       title: "Terminal-Bench 4.0", tags: ["Compare within a version only"],
       newest: "Board read 9 Oct 2026; best reasoning effort per model and agent.",
+      axisTitle: "Percent passed",
       row: function (e) {
         return { name: e.model + " in " + e.agent, meta: e.reasoningEffort + " effort · ± " + fx(e.ci95, 1) + " · " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
       },
@@ -1990,24 +1997,24 @@
     },
     "frontiercode-main": {
       title: "FrontierCode 1.1 Main (Cognition)", tags: ["Private tasks", "Vendor-run board"],
-      newest: "Dates from the board's changelog. Score is a rubric score out of 100, not a percentage.",
+      newest: "Dates from the board's changelog.",
       row: function (e) {
         var when = /launch/.test(e.dateMeaning || "") ? "on the board since launch, " + fmtDate(e.date) : "added " + fmtDate(e.date);
         return { name: e.system, meta: e.reasoningEffort + " effort · pass rate " + fx(e.passRate, 1) + "% · " + when, value: e.score, valueText: fx(e.score, 1) };
       },
       table: function (e) { return [String(e.rank), e.system, e.reasoningEffort, fx(e.score, 1), fx(e.passRate, 1), fmtDate(e.date)]; },
       head: ["Rank", "Model", "Effort", "Score", "Pass rate %", "Date"],
-      scale: { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "score" }
+      scale: { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "score", axisTitle: "Rubric score out of 100" }
     },
     "metr-time-horizon": {
       title: "METR 50% time horizon (TH 1.1)", tags: ["Frozen since 8 Sep 2026", "Top entry above reliable range"],
-      newest: "Different unit: minutes, not percent. Grey band: 95% CI. Dashed line: 960 min (16 h), the longest horizon METR measures reliably.",
+      newest: "Grey band: 95% CI. Dashed line: 960 min (16 h), the longest horizon METR measures reliably.",
       row: function (e) {
         return { name: e.system, meta: "95% CI " + fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1) + " min · released " + fmtDate(e.date), value: e.score, lo: e.ciLow, hi: e.ciHigh, valueText: fx(e.score, 1) };
       },
       table: function (e) { return [String(e.rank), e.system, fx(e.score, 1), fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1), fmtDate(e.date)]; },
       head: ["Rank", "Model", "p50 (min)", "95% CI (min)", "Released"],
-      scale: { max: 4000, grid: [2000], ref: 960, ticks: [{ v: 0, label: "0" }, { v: 2000, label: "2,000" }, { v: 4000, label: "4,000" }], unit: "min" }
+      scale: { max: 4000, grid: [2000], ref: 960, ticks: [{ v: 0, label: "0" }, { v: 2000, label: "2,000" }, { v: 4000, label: "4,000" }], unit: "min", axisTitle: "p50 human minutes" }
     }
   };
 
@@ -2027,7 +2034,7 @@
           src ? extLink(src.url, "source") : null
         ]),
         el("p", { class: "bench-tags" }, [el("span", { class: "sr-only", text: "Caveats: " })].concat(m.tags.map(function (t, i) { return el("span", { class: "bench-tag" }, [warnIcon(), t + (i < m.tags.length - 1 ? "" : ""), el("span", { class: "sr-only", text: i < m.tags.length - 1 ? ";" : "." })]); }))),
-        barRows(b.entries.map(function (e) { var r = m.row(e); r.rank = e.rank; return r; }), m.scale || PCT_SCALE),
+        barRows(b.entries.map(function (e) { var r = m.row(e); r.rank = e.rank; return r; }), m.scale || { max: PCT_SCALE.max, grid: PCT_SCALE.grid, ticks: PCT_SCALE.ticks, unit: PCT_SCALE.unit, axisTitle: m.axisTitle || "Percent" }),
         el("p", { class: "meta", style: "margin-top:6px", text: m.newest }),
         el("ul", { class: "bench-notes", "aria-label": "Notes from the sources" }, b.caveats.map(function (c) { return el("li", { text: c }); })),
         el("div", { class: "bench-panel__foot" }, [details("Show as table", table(m.title + ", read " + fmtDate(DATA.fetchedAt), m.head, b.entries.map(m.table)))])
@@ -2093,7 +2100,7 @@
       if (!W) return;
       var narrow = W < 520;
       var H = narrow ? 280 : 330;
-      var m = { l: 40, r: 12, t: 22, b: 30 };
+      var m = { l: 52, r: 12, t: 22, b: 42 };
       var t0 = Date.UTC(2019, 0, 1), t1 = Date.UTC(2026, 11, 31);
       var yLo = 0.05, yHi = 6000;
       var pw = W - m.l - m.r, ph = H - m.t - m.b;
@@ -2114,11 +2121,12 @@
         svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
         svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: group(String(g)) }));
       });
-      svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: m.t - 10, "text-anchor": "start", text: "minutes" }));
+      svg.appendChild(sv("text", { class: "axis-title", transform: "rotate(-90)", x: -(m.t + ph / 2), y: 14, "text-anchor": "middle", text: "p50 human minutes, log scale" }));
       svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: m.t + ph, y2: m.t + ph }));
       yearTicks(t0, t1, narrow ? 2 : 1).forEach(function (yt) {
-        svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 8, "text-anchor": "middle", text: yt.label }));
+        svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 22, "text-anchor": "middle", text: yt.label }));
       });
+      svg.appendChild(sv("text", { class: "axis-title", x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", text: "Release year" }));
       svg.appendChild(sv("line", { class: "bench-ref-line", x1: m.l, x2: m.l + pw, y1: Y(960), y2: Y(960) }));
       svg.appendChild(sv("text", { class: "bench-label bench-label--muted", x: m.l + 4, y: narrow ? Y(960) + 15 : Y(960) - 6, text: narrow ? "960 min: reliable limit" : "960 min (16 h): METR's reliable limit" }));
       var dots = [];
@@ -2194,7 +2202,7 @@
     function draw() {
       var W = shell.plot.clientWidth;
       if (!W) return;
-      var H = 210, m = { l: 34, r: 12, t: 16, b: 28 };
+      var H = 220, m = { l: 48, r: 12, t: 16, b: 42 };
       var t0 = Date.UTC(2023, 8, 1), t1 = Date.UTC(2026, 3, 1);
       var pw = W - m.l - m.r, ph = H - m.t - m.b;
       function X(t) { return m.l + (t - t0) / (t1 - t0) * pw; }
@@ -2202,11 +2210,13 @@
       var svg = sv("svg", { width: W, height: H, role: "img", "aria-label": "SWE-bench Verified board record rising in steps from " + fx(first.score, 1) + "% in " + fmtMonth(first.date) + " to " + fx(last.score, 1) + "% in " + fmtMonth(last.date) + ", with no new record since." });
       [25, 50, 75, 100].forEach(function (g) {
         svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
-        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: g + "%" }));
+        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: String(g) }));
       });
+      svg.appendChild(sv("text", { class: "axis-title", transform: "rotate(-90)", x: -(m.t + ph / 2), y: 14, "text-anchor": "middle", text: "Percent resolved" }));
       svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: Y(0), y2: Y(0) }));
       svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(0) + 4, "text-anchor": "end", text: "0" }));
-      yearTicks(t0, t1, 1).forEach(function (yt) { svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 8, "text-anchor": "middle", text: yt.label })); });
+      yearTicks(t0, t1, 1).forEach(function (yt) { svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 22, "text-anchor": "middle", text: yt.label })); });
+      svg.appendChild(sv("text", { class: "axis-title", x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", text: "Submission date" }));
       var d = "";
       pts.forEach(function (p, i) {
         var x = X(utc(p.date)), y = Y(p.score);
@@ -2236,13 +2246,13 @@
     var host2 = el("figure", { class: "bench-fig" });
     var frame = el("div", { class: "bench-fig__frame" }, [
       el("p", { class: "bench-fig__title", text: "Terminal-Bench: top score at each version" }),
-      el("p", { class: "bench-fig__sub", text: "% of trials passed. Each version is a different task set, so the bars are not a trend." })
+      el("p", { class: "bench-fig__sub", text: "Each version is a different task set, so the bars are not a trend." })
     ]);
     var rows = series.points.map(function (p) {
       var meta = p.version === "2.1" ? "best of the models compared in the 3.0 post" : (p.version === "3.0" ? "3.0 release post" : "leaderboard, " + fmtDate(p.date));
       return { name: "Version " + p.version + ": " + p.system, meta: meta, value: p.score, valueText: fx(p.score, 1) + "%" };
     });
-    frame.appendChild(barRows(rows, PCT_SCALE));
+    frame.appendChild(barRows(rows, { max: PCT_SCALE.max, grid: PCT_SCALE.grid, ticks: PCT_SCALE.ticks, unit: PCT_SCALE.unit, axisTitle: "Percent passed" }));
     host2.appendChild(frame);
     host2.appendChild(el("figcaption", null, [series.caveats.join(" ") + " Version 4.0 removed eight tasks, two of them for saturation. ", tb3 ? extLink(tb3.url, "3.0 post") : null, " · ", lb ? extLink(lb.url, "leaderboard") : null]));
     host2.appendChild(details("Show as table", table("Top Terminal-Bench score by version", ["Version", "System", "% passed", "Reported"], series.points.map(function (p) { return [p.version, p.system, fx(p.score, 1), p.dateMeaning]; }), [2])));
@@ -2712,7 +2722,8 @@
       ax.appendChild(sv("text", { class: "bench-tick" + (k % 2 && p < 100 ? " est-tick--minor" : ""), x: p + "%", y: 12, "text-anchor": p <= 0 ? "start" : (p >= 100 ? "end" : "middle"), text: group(String(tk)) }));
     });
     wrap.appendChild(ax);
-    wrap.appendChild(el("p", { class: "est-hint", text: "Minutes, log scale. 60 min is 1 hour; 960 min is 16 hours." }));
+    wrap.appendChild(el("div", { class: "est-cal__axis-title axis-title axis-title--x", text: "Human minutes, log scale" }));
+    wrap.appendChild(el("p", { class: "est-hint", text: "60 min is 1 hour; 960 min is 16 hours." }));
     return wrap;
   }
   function legendSvg(kind) {

@@ -12,13 +12,15 @@
 <link rel="stylesheet" href="site.css">
 <script>
 /* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t) {
+(function (d, q, t, m) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
   if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
   if (t === "codex") d.classList.add("track-codex");
-  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
 })(document.documentElement);
 </script>
 </head>
@@ -77,10 +79,11 @@
           <span class="tb__aside" data-session-aside="5" data-prefix="Demo day" hidden></span>
         </div>
         <figure class="tb__fig" role="img" aria-label="Week 5 build time: an estimate of 6 to 8 hours, on a scale from 0 to 8 hours. There are no readings, so there are no pre-work segments.">
-          <div class="hbars">
-            <div class="hbars__axis"><span></span><span class="hbars__ticks hbars__ticks--5" aria-hidden="true"><span style="left:0%">0</span><span style="left:25%">2</span><span style="left:50%">4</span><span style="left:75%">6</span><span style="left:100%">8 h</span></span><span></span></div>
-            <div class="hbars__row"><span class="hbars__label">Build</span><span class="hbars__plot"><span class="hbars__range" style="--r0:0.75;--r1:1"></span></span><span class="hbars__val">6 to 8 h</span></div>
-          </div>
+            <div class="hbars">
+              <div class="hbars__axis"><span></span><span class="hbars__ticks hbars__ticks--5" aria-hidden="true"><span style="left:0%">0</span><span style="left:25%">2</span><span style="left:50%">4</span><span style="left:75%">6</span><span style="left:100%">8</span></span><span></span></div>
+              <div class="hbars__row"><span class="hbars__label">Build</span><span class="hbars__plot"><span class="hbars__range" style="--r0:0.75;--r1:1"></span></span><span class="hbars__val">6 to 8 h</span></div>
+              <div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">Planned hours</span><span></span></div>
+            </div>
         </figure>
         <div class="tb__key" role="group" aria-label="Key"><span class="tb__key-item"><span class="cmap__key cmap__key--range"></span>Dashed outline: estimated range</span></div>
         <p class="meta tb__note">Setup hours count in your report, separately from the per-change figures.</p>

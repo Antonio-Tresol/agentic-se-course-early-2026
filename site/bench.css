@@ -128,6 +128,13 @@
 .bench-row__val { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--text, #0A0A0A); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .bench-axis { margin-top: 2px; }
 .bench-axis__unit { font-family: var(--font-mono); font-size: var(--meta, 12px); color: var(--muted, #6B6B6B); text-align: right; }
+.bench-axis__title {
+  text-align: center;
+  margin-top: 4px;
+  display: block;
+  padding-right: calc(4.6em + 8px);
+  box-sizing: border-box;
+}
 .bench-bar { fill: var(--text, #0A0A0A); }
 .bench-bar--accent { fill: var(--orange, #C86E50); }
 .bench-ci { fill: var(--tag-border, #CFCFCF); }
@@ -345,6 +352,24 @@
 .est-cal__empty { font-size: 15px; line-height: 1.6; color: var(--body, #262626); padding: 8px 0; }
 .est-cal .bench-legend { margin-top: 0; }
 .est-legend-svg { width: 22px; height: 14px; flex: none; overflow: visible; }
+.est-cal__axis-title {
+  text-align: center;
+  margin-top: 6px;
+  display: block;
+}
+.bench-sbar__axis-title {
+  text-align: center;
+  margin-top: 6px;
+  display: block;
+}
+text.axis-title {
+  font-family: var(--font-mono);
+  font-size: var(--meta, 12px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--muted, #6B6B6B);
+}
 
 /* Reference list */
 .bench-refs { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; max-width: 700px; }

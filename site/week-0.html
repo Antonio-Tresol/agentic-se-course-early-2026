@@ -13,20 +13,16 @@
 <link rel="stylesheet" href="week0.css">
 <script>
 /* Pre-paint: track and theme. site.js does the rest. */
-(function () {
-  var root = document.documentElement, q = null, t = null, th = null;
+(function (d, q, t, m) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
-  if (q && (q.get("track") === "codex" || q.get("track") === "claude")) {
-    t = q.get("track");
-    try { localStorage.setItem("agentic-se-track", t); } catch (e) {}
-  } else {
-    try { t = localStorage.getItem("agentic-se-track"); } catch (e) {}
-  }
-  if (t === "codex") root.classList.add("track-codex");
-  th = q && q.get("theme");
-  if (th === "dark" || th === "light") root.setAttribute("data-theme", th);
-  if (q && q.get("annotate") === "1") root.classList.add("show-ann");
-})();
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
+})(document.documentElement);
 </script>
 </head>
 <body>
@@ -272,7 +268,8 @@
       <span class="planbar__seg" style="--m:10">10</span>
       <span class="planbar__seg" style="--m:10">10</span>
     </div>
-    <div class="planbar__axis meta" aria-hidden="true"><span>0</span><span>60 min</span></div>
+    <div class="planbar__axis meta" aria-hidden="true"><span>0</span><span>60</span></div>
+    <div class="axis-title axis-title--x" style="margin-top:-8px;margin-bottom:12px">Session minutes</div>
     <ol class="plan">
       <li><span class="plan__min">10 min</span><span>Introductions: your name, what you work on, your experience with AI coding tools so far, and the account you will use with your agent.</span></li>
       <li><span class="plan__min">10 min</span><span>AI Fluency recap: what fluent use looks like, the three modes of working with AI, what models bring and where they fail, and the 4D framework.</span></li>

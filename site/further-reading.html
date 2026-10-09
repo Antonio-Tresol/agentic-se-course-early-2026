@@ -12,13 +12,15 @@
 <link rel="stylesheet" href="site.css">
 <script>
 /* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t) {
+(function (d, q, t, m) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
   if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
   if (t === "codex") d.classList.add("track-codex");
-  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
 })(document.documentElement);
 </script>
 </head>

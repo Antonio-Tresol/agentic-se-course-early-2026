@@ -12,13 +12,15 @@
 <link rel="stylesheet" href="site.css">
 <script>
 /* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t) {
+(function (d, q, t, m) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
   if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
   if (t === "codex") d.classList.add("track-codex");
-  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
 })(document.documentElement);
 </script>
 </head>
@@ -278,7 +280,7 @@
       return '<div class="chart__head"><p id="pw-cap" class="chart__title">Minutes ticked off against the plan, ' + S.trackName(track) + " track</p></div>" +
         '<p class="chart__sub">Planned minutes of the items you ticked, on one scale for every week.</p>' +
         '<div class="chart__legend" aria-hidden="true"><span><i class="key-bar"></i>Done</span><span><i class="key-bar key-bar--plan"></i>Planned</span><span><i class="hbars__here"></i>You are here</span></div>' +
-        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML(ticks, smax, "min") + "<span></span></div>" +
+        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML(ticks, smax, "") + "<span></span></div>" +
         stats.map(function (s) {
           var w = s.week, plot, val;
           if (s.range) { plot = '<span class="hbars__nm">6 to 8 h build, off this scale</span>'; val = "Optional"; }
@@ -289,7 +291,8 @@
           }
           return '<div class="hbars__row"><span class="hbars__label">Week ' + w.n + (cur === w.n ? ' <i class="hbars__here" aria-hidden="true"></i><span class="sr-only">, you are here</span>' : "") +
             '</span><span class="hbars__plot" aria-hidden="true">' + plot + '</span><span class="hbars__val">' + val + "</span></div>";
-        }).join("") + "</div>" +
+        }).join("") +
+        '<div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">Planned minutes</span><span></span></div></div>' +
         tableToggle("pw-table", "Pre-work by week, minutes, " + S.trackName(track) + " track",
           ["Week", "Title", { t: "Planned", r: 1 }, { t: "Done", r: 1 }, "Items done"],
           stats.map(function (s) {
@@ -325,7 +328,8 @@
           }
           return '<div class="hbars__row"><span class="hbars__label">Week ' + r.w.n + '</span><span class="hbars__plot hbars__plot--plain" aria-hidden="true">' + plot +
             '</span><span class="hbars__val">' + val + "</span></div>";
-        }).join("") + "</div>" +
+        }).join("") +
+        '<div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">Score out of ' + max + '</span><span></span></div></div>' +
         tableToggle("sc-table", "Self-check tries", ["Week", "Try", "Submitted", { t: "Score", r: 1 }, { t: "Out of", r: 1 }],
           [].concat.apply([], rows.map(function (r) {
             return r.sum.submitted.map(function (a, i) {
@@ -354,13 +358,14 @@
       return '<div class="chart__head"><p id="cal-cap" class="chart__title">Calibration: choice questions right at each confidence level</p></div>' +
         '<p class="chart__sub">You say how sure you are before each answer is shown. Well calibrated, the bars rise from Guess to Certain. Short answers are self-scored, so they are left out.</p>' +
         (any ? "" : '<p class="chart__empty">No submitted choice answers yet. Finish a self-check to see this chart.</p>') +
-        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML([0, 25, 50, 75, 100], 100, "%") + "<span></span></div>" +
+        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML([0, 25, 50, 75, 100], 100, "") + "<span></span></div>" +
         S.conf.map(function (c) {
           var b = by[c[0]], share = b.n ? b.right / b.n : 0;
           return '<div class="hbars__row"><span class="hbars__label">' + c[1] + '</span><span class="hbars__plot" aria-hidden="true">' +
             (b.n ? '<span class="hbars__fill" style="--d:' + pct(share) + '"></span>' : '<span class="hbars__nm">no answers</span>') +
             '</span><span class="hbars__val">' + (b.n ? "<strong>" + b.right + "</strong> of " + b.n + ' <span class="muted">right, ' + Math.round(share * 100) + "%</span>" : '<span class="muted">0 answers</span>') + "</span></div>";
-        }).join("") + "</div>" +
+        }).join("") +
+        '<div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">Percent correct</span><span></span></div></div>' +
         tableToggle("cal-table", "Choice answers right by confidence", ["Confidence", { t: "Right", r: 1 }, { t: "Answers", r: 1 }, { t: "Share", r: 1 }],
           S.conf.map(function (c) { var b = by[c[0]]; return [c[1], b.right, b.n, b.n ? Math.round(b.right / b.n * 100) + "%" : ""]; }));
     });
@@ -391,14 +396,15 @@
         '<p class="chart__sub">You logged <strong>' + fmt(took) + " min</strong> on " + plural(rows.length, "item", "items") + ". Their estimates add up to " + fmt(est) + " min" +
         (diff === null ? "." : " (" + (diff > 0 ? diff + "% more time than estimated" : diff < 0 ? (-diff) + "% less time than estimated" : "the same") + ").") + "</p>" +
         '<div class="chart__legend" aria-hidden="true"><span><i class="key-bar"></i>Your time</span><span><i class="key-tick"></i>Estimate</span></div>' +
-        '<div class="tv"><div class="tv__axis">' + ticksHTML([0, step, step * 2, step * 3, max], max, "min") + "<span></span></div>" +
+        '<div class="tv"><div class="tv__axis">' + ticksHTML([0, step, step * 2, step * 3, max], max, "") + "<span></span></div>" +
         rows.map(function (r) {
           return '<div class="tv__row"><p class="tv__title"><span class="kind kind--' + r.kind + '"><span class="kind__sw"></span>' + S.glyph(r.kind) + S.kinds[r.kind] + "</span> " +
             esc(r.title) + ' <span class="meta">Week ' + r.week + "</span></p>" +
             '<div class="bullet"><div class="bullet__track k-' + r.kind + '" aria-hidden="true"><span class="bullet__bar" style="--v:' + pct(r.took / max) + '"></span>' +
             (r.est === null ? "" : '<span class="bullet__tick" style="--e:' + pct(r.est / max) + '"></span>') + "</div>" +
             '<span class="bullet__text"><span class="muted">est</span> ' + (r.est === null ? "n/a" : fmt(r.est)) + ' <span class="muted">· took</span> ' + fmt(r.took) + ' <span class="muted">min</span></span></div></div>';
-        }).join("") + "</div>" +
+        }).join("") +
+        '<div class="tv__axis tv__axis--bottom"><span class="axis-title">Minutes</span><span></span></div></div>' +
         tableToggle("tv-table", "Minutes logged against the estimate", ["Item", "Week", { t: "Estimate", r: 1 }, { t: "Took", r: 1 }],
           rows.map(function (r) { return [r.title, "Week " + r.week, r.est === null ? "n/a" : r.est, r.took]; }));
     });

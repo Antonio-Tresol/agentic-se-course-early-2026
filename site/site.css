@@ -1091,6 +1091,72 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
   z-index: 1;
 }
 
+/* ---------- Theme switch (compact segmented control) ---------- */
+.theme-switch {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+}
+.theme-switch__opts {
+  display: inline-flex;
+  position: relative;
+}
+.theme-switch__opts input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.theme-switch__opts label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  min-height: var(--target);
+  padding: 0 9px;
+  border: 1px solid var(--text);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard);
+}
+.theme-switch__opts label:first-of-type {
+  border-radius: 6px 0 0 6px;
+}
+.theme-switch__opts label:not(:first-of-type) {
+  margin-left: -1px;
+}
+.theme-switch__opts label:last-of-type {
+  border-radius: 0 6px 6px 0;
+}
+.theme-switch__opts label:hover {
+  background: var(--hover-card);
+}
+.theme-switch__opts input:checked + label {
+  background: var(--text);
+  color: var(--on-ink);
+  font-weight: 500;
+}
+.theme-switch__opts input:focus-visible + label {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+.theme-switch__icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex: none;
+}
+
 /* Track visibility. Claude is the default and the no-JS state. */
 html:not(.track-codex) [data-track="codex"] { display: none !important; }
 html.track-codex [data-track="claude"] { display: none !important; }
@@ -1494,20 +1560,47 @@ html.track-codex [data-track="claude"] { display: none !important; }
 .cmap__key--done { background: var(--text); }
 .cmap__key--plan { box-shadow: inset 0 0 0 1.5px var(--text); }
 .cmap__key--range { border: 1.5px dashed var(--text); }
-.cmap__frame { position: relative; padding-left: 38px; }
+.cmap__frame { position: relative; padding-left: 64px; }
+.cmap__ytitle {
+  position: absolute;
+  left: 0;
+  top: calc(var(--plot-h) / 2);
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center center;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
 .cmap__yaxis {
-  position: absolute; left: 0; top: 0; width: 34px; height: var(--plot-h);
+  position: absolute; left: 24px; top: 0; width: 34px; height: var(--plot-h);
   font-family: var(--font-mono); font-size: var(--meta); color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .cmap__yaxis span { position: absolute; right: 4px; transform: translateY(50%); line-height: 1; }
 .cmap__grid {
-  position: absolute; left: 38px; right: 0; top: 0; height: var(--plot-h);
+  position: absolute; left: 64px; right: 0; top: 0; height: var(--plot-h);
   pointer-events: none;
 }
 .cmap__grid span { position: absolute; left: 0; right: 0; height: 1px; background: var(--border); }
 .cmap__grid span.is-base { background: var(--text); }
 .cmap__xaxis { display: none; }
+.cmap__xaxis-wrap { display: none; }
+.cmap__xaxis-title { display: none; }
+.cmap__xtitle {
+  text-align: center;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .cmap__weeks {
   position: relative;
   display: grid;
@@ -1833,6 +1926,48 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
 .hbars__val .muted { color: var(--muted); }
 .hbars__here { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--text); outline: 2px solid var(--orange); outline-offset: 1px; flex: none; }
 
+/* ---------- Chart axis titles ---------- */
+.axis-title {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.axis-title--x {
+  text-align: center;
+  margin-top: 6px;
+  display: block;
+}
+.tb__axis-title {
+  text-align: center;
+  margin-top: 6px;
+}
+.hbars__axis--bottom {
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+.hbars__axis-title {
+  text-align: center;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv__axis--bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 19ch;
+  gap: 0 12px;
+  max-width: none;
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+.tv__axis--bottom .axis-title {
+  text-align: center;
+}
+
 /* Dot plot on a 0 to 5 axis: latest filled, best hollow. */
 .dots__mark {
   position: absolute; top: 50%;
@@ -1953,17 +2088,30 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
     letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
   }
 
+  .theme-switch {
+    width: 100%;
+    margin-top: 4px;
+  }
+
   /* Course map: the rail turns vertical, one row per week, bars on one scale. */
   .cmap { padding: 16px 14px 12px; }
   .cmap__frame { padding-left: 0; }
-  .cmap__yaxis, .cmap__grid { display: none; }
+  .cmap__yaxis, .cmap__grid, .cmap__ytitle, .cmap__xtitle { display: none; }
+  .cmap__xaxis-wrap {
+    display: block;
+    margin: 0 0 6px 88px;
+  }
   .cmap__xaxis {
     display: block;
     position: relative;
     height: 16px;
-    margin: 0 0 4px 88px;
     font-family: var(--font-mono); font-size: var(--meta); color: var(--muted);
     font-variant-numeric: tabular-nums;
+  }
+  .cmap__xaxis-title {
+    display: block;
+    text-align: center;
+    margin-top: 4px;
   }
   .cmap__xaxis span { position: absolute; top: 0; line-height: 16px; transform: translateX(-50%); }
   .cmap__xaxis span:first-child { transform: none; }
@@ -2010,6 +2158,8 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   .chart { padding: 16px 14px 12px; }
   .tv__axis, .tv .bullet { grid-template-columns: minmax(0, 1fr); }
   .tv__axis > span:last-child { display: none; }
+  .tv__axis--bottom { grid-template-columns: minmax(0, 1fr); }
+  .tv__axis--bottom > :last-child { display: none; }
   .panel { padding: 18px 16px; }
 }
 @media (max-width: 379.98px) {
@@ -2025,6 +2175,7 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   .scorebar__cell.is-half { forced-color-adjust: none; background: repeating-linear-gradient(135deg, Highlight 0 2px, Canvas 2px 5px); }
   .cmap__station, .dots__mark--best { forced-color-adjust: none; border: 1px solid CanvasText; }
   .bullet__tick { forced-color-adjust: none; background: CanvasText; }
+  .theme-switch__opts input:checked + label { background: Highlight; color: HighlightText; }
 }
 
 /* ---------- Reduced motion: fills and reveals appear at once ---------- */
@@ -2041,6 +2192,7 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   .acc__trigger[aria-expanded="true"] .acc__icon { transform: none; }
   .acc__trigger[aria-expanded="true"] .acc__icon::after { transform: rotate(90deg) scaleX(0); }
   .disclose::before { transition: none; }
+  .theme-switch__opts label { transition: none; }
   /* Only colour changes animate. */
   .tb__seg, .scorebar__cell, .cmap__station { transition: background-color var(--motion-fast) linear; }
   .cmap__fill, .hbars__fill, .bullet__bar { transition: none; }
