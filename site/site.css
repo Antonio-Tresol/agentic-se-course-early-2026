@@ -623,7 +623,7 @@ textarea.field { width: 100%; min-height: 96px; resize: vertical; font-size: 12p
   color: var(--text);
   margin-bottom: 4px;
 }
-.field-hint { font-family: var(--font-mono); font-size: var(--meta); color: var(--muted); line-height: 1.6; margin-top: 4px; }
+.field-hint { font-family: var(--font-mono); font-size: var(--meta); color: var(--muted); line-height: 1.6; margin-top: 4px; overflow-wrap: anywhere; word-break: break-word; }
 input[type="checkbox"], input[type="radio"] { accent-color: var(--text); }
 input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
 

@@ -284,12 +284,12 @@
 .est-scale { border: 0; margin: 16px 0 0; padding: 0; min-width: 0; }
 .est-scale__opts { display: flex; flex-direction: column; gap: 4px; }
 .est-opt {
-  display: grid; grid-template-columns: 20px 24px minmax(0, 1fr); gap: 8px; align-items: start;
+  display: grid; grid-template-columns: 24px 24px minmax(0, 1fr); gap: 8px; align-items: center;
   padding: 6px 8px; min-height: 36px; border-radius: 6px; cursor: pointer;
   border: 1px solid transparent;
 }
 .est-opt:hover { background: var(--hover-row, #FAFAFA); }
-.est-opt input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--text, #0A0A0A); }
+.est-opt input { width: 24px; height: 24px; margin: 0; accent-color: var(--text, #0A0A0A); }
 .est-opt__n {
   display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 4px;
   border: 1px solid var(--control, #8A8A8A); font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text, #0A0A0A);
