@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capstone (optional): A minimal factory, measured · Agentic SE Course</title>
+<meta name="description" content="Week 5: A minimal factory, measured. Capstone project running an unattended delivery loop and observer.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html" aria-current="page"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+
+  <div class="whero">
+    <div class="whero__top">
+      <div class="whero__titles">
+        <p class="label week-head__label">Week 5 · Capstone (optional)</p>
+        <h1 class="week-head__title">A minimal factory, measured</h1>
+      </div>
+      <fieldset class="track-switch" data-announce-claude="Showing the Claude Code track. The stage table lists Claude Code features."
+        data-announce-codex="Showing the Codex track. The stage table lists Codex features.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">You build the loop you designed in Week 4 on your lanorme fork, run it on real issues, and report what each merged change cost in human minutes and money, set against your Week 3 baseline.</p>
+
+    <section class="whero__panel" aria-labelledby="budget-h">
+      <h2 id="budget-h" class="sr-only">Time budget</h2>
+      <div class="tb">
+        <div class="tb__head">
+          <div class="tb__headline">
+            <span class="stat"><span class="stat__value">6 to 8</span><span class="stat__unit">h build, estimate</span></span>
+            <span class="tb__of">No new readings</span>
+          </div>
+          <span class="tb__aside" data-session-aside="5" data-prefix="Demo day" hidden></span>
+        </div>
+        <figure class="tb__fig" role="img" aria-label="Week 5 build time: an estimate of 6 to 8 hours, on a scale from 0 to 8 hours. There are no readings, so there are no pre-work segments.">
+          <div class="hbars">
+            <div class="hbars__axis"><span></span><span class="hbars__ticks hbars__ticks--5" aria-hidden="true"><span style="left:0%">0</span><span style="left:25%">2</span><span style="left:50%">4</span><span style="left:75%">6</span><span style="left:100%">8 h</span></span><span></span></div>
+            <div class="hbars__row"><span class="hbars__label">Build</span><span class="hbars__plot"><span class="hbars__range" style="--r0:0.75;--r1:1"></span></span><span class="hbars__val">6 to 8 h</span></div>
+          </div>
+        </figure>
+        <div class="tb__key" role="group" aria-label="Key"><span class="tb__key-item"><span class="cmap__key cmap__key--range"></span>Dashed outline: estimated range</span></div>
+        <p class="meta tb__note">Setup hours count in your report, separately from the per-change figures.</p>
+      </div>
+    </section>
+
+    <section class="whero__panel oc" aria-labelledby="oc-h">
+      <div class="oc__head">
+        <h2 id="oc-h" class="label label--ink">By the end of the capstone you can</h2>
+        <span class="oc__count" data-progress-outcome-count="5">0 of 4 ticked</span>
+      </div>
+      <p class="meta oc__hint">Tick one once you can do it, after the self-check, the deliverable or the live session.</p>
+      <ol class="oc__list">
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w5-o1-text">Run a loop on a lanorme fork that takes a labelled issue to a pull request awaiting human approval, with no human starting any stage.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w5:o1" aria-describedby="w5-o1-text">I can do this</label>
+              <a href="#rubric-w5-1">Rubric: An unattended loop</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w5-o2-text">Run an observer loop that changes one skill from human corrections, and show its effect on a rerun.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w5:o2" aria-describedby="w5-o2-text">I can do this</label>
+              <a href="#rubric-w5-3">Rubric: A working observer</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w5-o3-text">Report human minutes and cost per merged change, with the replayed Week 3 issue as a like-for-like comparison, failed runs and setup time included.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w5:o3" aria-describedby="w5-o3-text">I can do this</label>
+              <a href="#rubric-w5-4">Rubric: An honest comparison</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w5-o4-text">Defend where each human checkpoint sits and what evidence crosses it.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w5:o4" aria-describedby="w5-o4-text">I can do this</label>
+              <a href="#rubric-w5-2">Rubric: Evidence at the checkpoints</a>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- No new readings: reference pages only -->
+  <section class="section" aria-labelledby="refs-h">
+    <h2 id="refs-h" class="h-section">No new readings</h2>
+    <p class="section-intro">Reference pages, for looking things up while you build.</p>
+    <ul class="pw-list">
+      <li class="pw-row" data-track="claude">
+        <div class="pw-row__aside"><span class="pw-row__num">Docs</span></div>
+        <div class="pw-row__main">
+          <a class="link-row" href="https://code.claude.com/docs/en/github-actions" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Claude Code GitHub Actions</span><span class="link-row__meta">triage, review and observer jobs</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://code.claude.com/docs/en/headless" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Run Claude Code programmatically</span><span class="link-row__meta"><code>claude -p</code> and <code>total_cost_usd</code></span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://code.claude.com/docs/en/routines" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Automate work with routines</span><span class="link-row__meta">research preview; an optional upgrade</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://code.claude.com/docs/en/agents" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Run agents in parallel</span><span class="link-row__meta">compares the ways to run agents in parallel</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="pw-row" data-track="codex">
+        <div class="pw-row__aside"><span class="pw-row__num">Docs</span></div>
+        <div class="pw-row__main">
+          <a class="link-row" href="https://learn.chatgpt.com/docs/github-action" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Codex GitHub Action</span><span class="link-row__meta"><code>openai/codex-action@v1</code> runs <code>codex exec</code> in CI</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Non-interactive mode</span><span class="link-row__meta"><code>codex exec --json</code> reports token usage per turn</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/automations" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Scheduled tasks</span><span class="link-row__meta">recurring unattended runs; an optional upgrade</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/third-party/github" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Review GitHub pull requests with Codex</span><span class="link-row__meta"><code>@codex review</code>; an optional upgrade</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Build skills</span><span class="link-row__meta">where Codex looks for <code>.agents/skills</code></span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/environments/git-worktrees" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">Worktrees</span><span class="link-row__meta">running agents in parallel without collisions</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="pw-row">
+        <div class="pw-row__aside"><span class="pw-row__num">Model</span></div>
+        <div class="pw-row__main">
+          <a class="link-row" href="https://github.com/warpdotdev/oz-for-oss" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__title">oz-for-oss</span><span class="link-row__meta">Warp · its <code>update-pr-review</code> skill is a model observer</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- The stage table; the track switch shows one feature column -->
+  <section class="section" aria-labelledby="stages-h">
+    <h2 id="stages-h" class="h-section">The loop to build</h2>
+    <p class="section-intro">Seven stages, each started by the previous stage's artefact. The track switch shows the features for your track.</p>
+    <table class="rubric">
+      <caption>Stages, triggers and gates</caption>
+      <thead>
+        <tr><th scope="col">Stage</th><th scope="col">Trigger</th><th scope="col" data-track="claude">Claude Code track</th><th scope="col" data-track="codex">Codex track</th><th scope="col">Gate</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Intake</th><td data-label="Trigger">Issue on the fork labelled <code>factory</code></td><td data-label="Claude Code track" data-track="claude">GitHub issue</td><td data-label="Codex track" data-track="codex">GitHub issue</td><td data-label="Gate">None</td></tr>
+        <tr><th scope="row">Triage</th><td data-label="Trigger"><code>issues: labeled</code></td><td data-label="Claude Code track" data-track="claude">GitHub Action with a triage skill; applies <code>easy</code> or <code>needs-spec</code> with a reason</td><td data-label="Codex track" data-track="codex"><code>openai/codex-action@v1</code> running <code>codex exec</code></td><td data-label="Gate">Deterministic: the label must come from the allowed set</td></tr>
+        <tr><th scope="row">Spec</th><td data-label="Trigger"><code>needs-spec</code></td><td data-label="Claude Code track" data-track="claude">Agent writes <code>specs/&lt;issue&gt;.md</code> and opens a spec pull request</td><td data-label="Codex track" data-track="codex">As on the Claude Code track: the agent writes <code>specs/&lt;issue&gt;.md</code> and opens a spec pull request</td><td data-label="Gate">Human checkpoint 1: the learner reads and merges the spec</td></tr>
+        <tr><th scope="row">Implement</th><td data-label="Trigger"><code>easy</code>, or a merged spec</td><td data-label="Claude Code track" data-track="claude"><code>claude -p "/goal ..."</code> with the Week 3 condition, on a branch inside the fork</td><td data-label="Codex track" data-track="codex"><code>codex exec</code> with the same condition</td><td data-label="Gate">lanorme CI</td></tr>
+        <tr><th scope="row">Agent review</th><td data-label="Trigger">Pull request opened</td><td data-label="Claude Code track" data-track="claude">Review skill run by the Action, posting inline comments</td><td data-label="Codex track" data-track="codex">A review skill run by <code>openai/codex-action@v1</code>, posting inline comments; Codex's own GitHub review (<code>@codex review</code>) is an optional upgrade</td><td data-label="Gate">Advisory</td></tr>
+        <tr><th scope="row">Human checkpoint 2</th><td data-label="Trigger">CI green and review posted</td><td data-label="Claude Code track" data-track="claude">The learner marks each finding accepted or rejected with a reason, then merges or returns the change</td><td data-label="Codex track" data-track="codex">As on the Claude Code track: the learner marks each finding accepted or rejected with a reason, then merges or returns the change</td><td data-label="Gate">Human</td></tr>
+        <tr><th scope="row">Observer</th><td data-label="Trigger">Weekly schedule or manual dispatch</td><td data-label="Claude Code track" data-track="claude">Reads the week's replies to agent comments, edits only <code>factory/.claude/skills/review/SKILL.md</code>, opens a pull request</td><td data-label="Codex track" data-track="codex">Reads the week's replies to agent comments, edits only the review skill's <code>SKILL.md</code>, opens a pull request</td><td data-label="Gate">A CI check fails any diff outside that path; the learner merges</td></tr>
+      </tbody>
+    </table>
+
+    <div class="prose" style="margin-top:18px">
+      <p data-track="claude">Factory skills live in <code>factory/.claude/skills/&lt;name&gt;/SKILL.md</code> and load with <code>--add-dir factory</code> (<a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer">Extend Claude with skills<span class="sr-only"> (opens in a new tab)</span></a>). lanorme's CI requires every skill under the root <code>.claude/skills/</code> to have a synced copy in <code>.agents/skills/</code>, so this location keeps factory skills clear of that check and out of any upstream pull request. The observer may write only <code>factory/.claude/skills/review/SKILL.md</code>. Agent teams play no part, since teammates do not spawn under <code>-p</code> (<a href="https://code.claude.com/docs/en/agent-teams" target="_blank" rel="noopener noreferrer">Orchestrate teams of Claude Code sessions<span class="sr-only"> (opens in a new tab)</span></a>). Managed Code Review and routines are optional upgrades for learners whose plans include them.</p>
+      <p data-track="codex">Codex scans <code>.agents/skills</code> in each directory from the working directory up to the repository root, and <code>--add-dir</code> grants extra writable directories without loading skills (<a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">Build skills<span class="sr-only"> (opens in a new tab)</span></a>). Where factory skills should live on this track, clear of lanorme's skill-sync check, is resolved on the fork. The observer may write only the review skill's <code>SKILL.md</code>. Scheduled tasks and Codex's GitHub review are optional upgrades.</p>
+      <p data-track="claude">Each agent job prints one JSON line with stage, issue, outcome, duration and cost, taken from <code>total_cost_usd</code>. You record human minutes at each checkpoint, and a short script joins the two into a per-change table.</p>
+      <p data-track="codex">Each agent job prints one JSON line with stage, issue, outcome, duration and cost, taken from the token usage that <code>codex exec --json</code> reports. You record human minutes at each checkpoint, and a short script joins the two into a per-change table.</p>
+    </div>
+  </section>
+
+  <!-- Success criterion -->
+  <section class="section" aria-labelledby="success-h">
+    <h2 id="success-h" class="h-section">Success criterion</h2>
+    <div class="card card--activity">
+      <p>The capstone is done when:</p>
+      <ul class="bullets">
+        <li>three or more issues on the fork reach a pull request that passes lanorme's CI and waits only on your approval;</li>
+        <li>one of them goes through the spec path, and one replays the Week 3 issue from the recorded base commit;</li>
+        <li>no human starts a stage;</li>
+        <li>the observer loop has made at least one accepted change to the review skill, and a rerun shows its effect;</li>
+        <li>the report sets the replayed issue's human minutes and cost beside its Week 3 figures, gives per-change figures for the others, counts failed runs, and reports setup hours separately.</li>
+      </ul>
+      <p data-track="claude">Before the first run, add the API key or <code>CLAUDE_CODE_OAUTH_TOKEN</code> secret and create the factory labels on the fork. Open at most one pull request upstream, by hand.</p>
+      <p data-track="codex">Before the first run, add the API key secret and create the factory labels on the fork. Open at most one pull request upstream, by hand.</p>
+    </div>
+  </section>
+
+  <!-- Example per-change report -->
+  <section class="section" aria-labelledby="report-h">
+    <h2 id="report-h" class="h-section">The per-change report</h2>
+    <p class="section-intro" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px"><span class="label label--ink">Example</span> <span>Factory against your Week 3 baseline. Only the replayed issue has a baseline. Cost includes failed runs.</span></p>
+    <div class="stl-wrap" id="example-report"></div>
+    <div class="stat-row" style="margin-top:16px" role="group" aria-label="Example setup figures, reported separately from the per-change bars">
+      <div class="stat-tile"><p class="label">Setup time</p><p class="stat-tile__value">7.5<small>h</small></p><p class="meta">Week 3 setup: 8 min</p></div>
+      <div class="stat-tile"><p class="label">Setup cost</p><p class="stat-tile__value">$6.40</p><p class="meta">Week 3 setup: none</p></div>
+      <div class="stat-tile"><p class="label">Failed runs wiring it</p><p class="stat-tile__value">5</p><p class="meta">not per change</p></div>
+    </div>
+    <button type="button" class="disclose" data-disclosure aria-expanded="false" aria-controls="report-table" data-label-open="Hide the table" data-label-closed="Show as table">Show as table</button>
+    <div id="report-table" hidden class="table-scroll" tabindex="0" role="region" aria-label="Example per-change report table">
+    <table class="rubric">
+      <caption>Per-change report, example data (the text alternative to the bars above)</caption>
+      <thead>
+        <tr><th scope="col">Change</th><th scope="col">Path</th><th scope="col">Human minutes, factory</th><th scope="col">Human minutes, Week 3</th><th scope="col">Cost, factory</th><th scope="col">Cost, Week 3</th><th scope="col">Failed runs</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Issue 4, replayed from Week 3</th><td data-label="Path">spec</td><td data-label="Human minutes, factory">14</td><td data-label="Human minutes, Week 3">47</td><td data-label="Cost, factory">$4.10</td><td data-label="Cost, Week 3">$2.90</td><td data-label="Failed runs">1</td></tr>
+        <tr><th scope="row">Issue 9</th><td data-label="Path">easy</td><td data-label="Human minutes, factory">4</td><td data-label="Human minutes, Week 3">no baseline</td><td data-label="Cost, factory">$1.20</td><td data-label="Cost, Week 3">no baseline</td><td data-label="Failed runs">0</td></tr>
+        <tr><th scope="row">Issue 11</th><td data-label="Path">spec</td><td data-label="Human minutes, factory">11</td><td data-label="Human minutes, Week 3">no baseline</td><td data-label="Cost, factory">$3.60</td><td data-label="Cost, Week 3">no baseline</td><td data-label="Failed runs">2</td></tr>
+        <tr><th scope="row">Mean per merged change</th><td data-label="Path">3 changes</td><td data-label="Human minutes, factory">9.7</td><td data-label="Human minutes, Week 3">47, one change only</td><td data-label="Cost, factory">$2.97</td><td data-label="Cost, Week 3">$2.90, one change only</td><td data-label="Failed runs">1.0</td></tr>
+        <tr><th scope="row">Setup, reported separately</th><td data-label="Path">not per change</td><td data-label="Human minutes, factory">7.5 h</td><td data-label="Human minutes, Week 3">8 min</td><td data-label="Cost, factory">$6.40</td><td data-label="Cost, Week 3">none</td><td data-label="Failed runs">5 while wiring</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">The Week 3 figures match the example log on the Week 3 page. On the replayed issue the factory took 33 fewer human minutes and $1.20 more. At that saving, the 7.5 setup hours repay after about 14 changes.</p>
+
+    <h3 class="h-card" id="mine-h" style="margin-top:32px">Your report</h3>
+    <p class="section-intro">Built from your own logs: your Week 3 stage log, and the factory stages you log below. A change is compared with Week 3 when both use the same change name, such as issue 4.</p>
+    <div id="my-report" data-stage-report="5" data-baseline-week="3"></div>
+    <p class="w35-note">Tick "This run failed" on a stage that failed. Its minutes and cost still count in the totals, and the report counts failed runs per change.</p>
+
+    <div id="mine-log" style="margin-top:24px" role="group" aria-labelledby="mine-log-h">
+      <h3 class="h-card" id="mine-log-h">Log your factory runs</h3>
+      <div id="flog-mount" style="margin-top:12px" data-stage-log="5" data-stage-label="your log"
+        data-stage-intro="One stage of one factory run at a time. Human minutes are the minutes you spent at the checkpoint or fixing the run; cost is the agent job's cost from your logs."></div>
+    </div>
+  </section>
+
+  <!-- Demo day -->
+  <section class="section" aria-labelledby="demo-h">
+    <h2 id="demo-h" class="h-section">Demo day</h2>
+    <dl class="facts" style="margin-bottom:14px">
+      <div data-session-fact="5" hidden></div>
+      <div><dt>Length</dt><dd>60 min</dd></div>
+    </dl>
+    <ol class="plan">
+      <li><span class="plan__min">5 min</span><span>Retrieval opener on the three measures and the observer's write limit <span class="tag">Active</span></span></li>
+      <li><span class="plan__min">40 min</span><span>Five-minute demos: one merged change traced from issue to merge, the observer's diff, the numbers <span class="tag">Constructive</span></span></li>
+      <li><span class="plan__min">10 min</span><span>A cohort table of factory against baseline; discussion of what the numbers hide <span class="tag">Interactive</span></span></li>
+      <li><span class="plan__min">5 min</span><span>Course retrospective <span class="tag">Interactive</span></span></li>
+    </ol>
+    <p class="note">Tags give each block's mode of engagement in the ICAP framework: passive, active, constructive or interactive.</p>
+  </section>
+
+  <!-- Deliverable and rubric -->
+  <section class="section" aria-labelledby="rubric-h">
+    <h2 id="rubric-h" class="h-section">Deliverable and rubric</h2>
+    <p class="section-intro">The running factory on your fork, the per-change report and a five-minute demo. Before demo day, mark where you stand on each row.</p>
+    <table class="rubric">
+      <caption>Capstone rubric</caption>
+      <thead>
+        <tr><th scope="col">Where am I going</th><th scope="col">How am I going: developing</th><th scope="col">How am I going: secure</th><th scope="col">Where to next</th></tr>
+      </thead>
+      <tbody>
+        <tr id="rubric-w5-1"><th scope="row">An unattended loop</th><td data-label="Developing">A human starts one or more stages</td><td data-label="Secure">Every stage starts from the previous artefact</td><td data-label="Where to next">Which stage failed most often, and why?</td></tr>
+        <tr id="rubric-w5-2"><th scope="row">Evidence at the checkpoints</th><td data-label="Developing">The learner reads the diff cold</td><td data-label="Secure">The pull request carries the spec link, CI result and review findings</td><td data-label="Where to next">What evidence would let you skip a checkpoint for easy issues?</td></tr>
+        <tr id="rubric-w5-3"><th scope="row">A working observer</th><td data-label="Developing">No accepted change, or edits outside its file</td><td data-label="Secure">One accepted, bounded change with a before-and-after rerun</td><td data-label="Where to next">What signal would you add next?</td></tr>
+        <tr id="rubric-w5-4"><th scope="row">An honest comparison</th><td data-label="Developing">Successful runs only</td><td data-label="Secure">Failed runs and setup time included, set against the baseline</td><td data-label="Where to next">At what volume would the factory repay its setup time?</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <nav class="pager" aria-label="Previous week">
+    <a href="week-4.html">
+      <span class="pager__dir"><svg class="arrow arrow--back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M11 6H1M1 6L5.5 1.5M1 6L5.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Previous · Week 4</span>
+      <span class="pager__title">From harness to factory</span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+<script>
+(function () {
+  "use strict";
+  var SL = window.AgenticSite && window.AgenticSite.stageLog;
+  if (!SL) return;
+  document.getElementById("example-report").innerHTML = SL.report([
+    { label: "Issue 4", notes: ["replayed from Week 3, spec path"], fmin: 14, bmin: 47, fcost: 4.1, bcost: 2.9, failed: 1 },
+    { label: "Issue 9", notes: ["easy path"], fmin: 4, bmin: null, fcost: 1.2, bcost: null, failed: 0 },
+    { label: "Issue 11", notes: ["spec path"], fmin: 11, bmin: null, fcost: 3.6, bcost: null, failed: 2 }
+  ], "example data, three merged changes");
+})();
+</script>
+</body>
+</html>

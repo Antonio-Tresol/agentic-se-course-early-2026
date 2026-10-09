@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My progress · Agentic SE Course</title>
+<meta name="description" content="Track your course progress: pre-work, self-check scores, activity estimates, and data export.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to your progress</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html" aria-current="page">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+  <div class="whero">
+    <div class="whero__top">
+      <div class="whero__titles">
+        <p class="label">Saved in this browser only</p>
+        <h1 class="week-head__title">My progress</h1>
+      </div>
+      <fieldset class="track-switch"
+        data-announce-claude="Showing the Claude Code track."
+        data-announce-codex="Showing the Codex track.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">What you have ticked off, how your self-checks went and how long things took you, drawn from your own records on these pages. At the end of the course, download the file and send it to the course owner.</p>
+    <p class="privacy"><span>Everything here stays in this browser. Nothing is sent anywhere until you download or copy the file and send it yourself: there is no account and no server. Clearing your browser data deletes the record, so export a copy now and then.</span></p>
+  </div>
+
+  <div class="stat-row" data-pg-stats role="group" aria-label="Totals"></div>
+
+  <!-- Pre-work by week: aligned bars on one scale -->
+  <section class="section" aria-labelledby="pw-h">
+    <h2 id="pw-h" class="h-section">Pre-work by week</h2>
+    <figure class="chart" aria-labelledby="pw-cap" data-pg-weeks></figure>
+  </section>
+
+  <!-- Self-checks and calibration -->
+  <section class="section" aria-labelledby="sc-h">
+    <h2 id="sc-h" class="h-section">Self-checks</h2>
+    <figure class="chart" aria-labelledby="sc-cap" data-pg-scores></figure>
+    <figure class="chart" aria-labelledby="cal-cap" data-pg-calibration></figure>
+  </section>
+
+  <!-- Time against the estimate -->
+  <section class="section" aria-labelledby="tv-h">
+    <h2 id="tv-h" class="h-section">Your time against the estimate</h2>
+    <figure class="chart" aria-labelledby="tv-cap" data-pg-time></figure>
+  </section>
+
+  <!-- Week 1 estimates -->
+  <section class="section" aria-labelledby="est-h">
+    <h2 id="est-h" class="h-section">Estimates you logged</h2>
+    <div class="chart" data-pg-estimates></div>
+  </section>
+
+  <!-- Export -->
+  <!-- Cohort calendar -->
+  <section class="section" id="calendar" aria-labelledby="calendar-h">
+    <h2 id="calendar-h" class="h-section">Cohort calendar</h2>
+    <div class="panel">
+      <p>Your course owner shares a calendar.json for your cohort; an example lives at <a href="calendar.example.json">calendar.example.json</a>. Load it once and the session dates appear on the overview and on each week. Without it the pages show no dates, and "You are here" follows your own progress. The calendar is saved in this browser only and is not part of your progress file, except that the progress file names the cohort.</p>
+      <div data-calendar-drop></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="export-h">
+    <h2 id="export-h" class="h-section">Export</h2>
+    <div class="panel">
+      <p>Send this file to the course owner at the end of the course. It holds the items you ticked and the minutes you logged, every self-check try with your answers, confidence and scores, the outcomes you ticked and your Week 1 estimates. It holds no name or email unless you type one as your alias.</p>
+      <div class="panel__grid">
+        <div>
+          <label class="field-label" for="alias">Alias (optional)</label>
+          <input class="field field--wide" id="alias" type="text" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="alias-hint">
+          <p class="field-hint" id="alias-hint">Shown in the file name and to the course owner. Leave it empty to stay pseudonymous: the file then carries only a random id.</p>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn--primary" data-pg-download>Download JSON</button>
+          <button type="button" class="btn" data-pg-copy>Copy JSON</button>
+          <button type="button" class="btn" data-pg-select>Select all</button>
+        </div>
+        <div data-pg-export-msg role="status"></div>
+        <div>
+          <label class="field-label" for="export-json">Your progress file (read-only)</label>
+          <textarea class="field" id="export-json" rows="9" readonly spellcheck="false" aria-describedby="export-hint"></textarea>
+          <p class="field-hint" id="export-hint">If downloading and copying are both blocked, select all, copy, paste it into a text file and save that as a .json file.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Import -->
+  <section class="section" aria-labelledby="import-h">
+    <h2 id="import-h" class="h-section">Import</h2>
+    <div class="panel">
+      <p>Move your progress from another browser or device, or restore a copy you exported. Choose the file or paste its text; this page says what it holds before anything changes.</p>
+      <div class="panel__grid">
+        <div>
+          <label class="field-label" for="import-file">Choose a file</label>
+          <input class="field" id="import-file" type="file" accept=".json,application/json">
+        </div>
+        <div>
+          <label class="field-label" for="import-text">Or paste the JSON</label>
+          <textarea class="field" id="import-text" rows="5" spellcheck="false"></textarea>
+        </div>
+        <div data-pg-import-preview role="status"></div>
+        <fieldset class="radio-row">
+          <legend class="field-label">How to combine it</legend>
+          <label><input type="radio" name="import-mode" value="merge" checked>Merge: keep what is here and add the file's records</label>
+          <label><input type="radio" name="import-mode" value="replace">Replace: discard what this browser holds and use the file</label>
+        </fieldset>
+        <div class="btn-row">
+          <button type="button" class="btn btn--primary" data-pg-import disabled aria-describedby="import-hint">Import</button>
+          <span class="meta" id="import-hint">Choose or paste a file first.</span>
+        </div>
+        <div data-pg-import-result></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reset -->
+  <section class="section" aria-labelledby="reset-h">
+    <h2 id="reset-h" class="h-section">Clear my progress</h2>
+    <div class="panel panel--danger">
+      <p>Delete everything this browser holds for the course and start again with a new id. Export a copy first if you might need it.</p>
+      <div class="btn-row" style="margin-top:12px">
+        <button type="button" class="btn" data-pg-reset aria-expanded="false" aria-controls="reset-confirm">Clear my progress</button>
+      </div>
+      <div class="confirm" id="reset-confirm" role="group" aria-labelledby="confirm-h" tabindex="-1" hidden>
+        <p class="confirm__title" id="confirm-h">Clear all your progress in this browser?</p>
+        <p data-pg-confirm-detail></p>
+        <div class="btn-row" style="margin-top:10px">
+          <button type="button" class="btn btn--primary" data-pg-reset-yes>Yes, clear my progress</button>
+          <button type="button" class="btn" data-pg-reset-no>Keep my progress</button>
+        </div>
+      </div>
+      <div data-pg-reset-msg role="status"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html" aria-current="page">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+<script>
+/* My progress (visual-design.md 3.5). Charts read AgenticProgress through
+   AgenticSite; each one keeps its values as visible text and has a table. */
+(function () {
+  "use strict";
+  var P = window.AgenticProgress, S = window.AgenticSite;
+  if (!P || !S) return;
+  var fmt = S.fmt, esc = S.esc;
+  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function $$(sel, ctx) { return [].slice.call((ctx || document).querySelectorAll(sel)); }
+  function pct(v) { return Math.max(0, Math.min(1, v)).toFixed(4); }
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function niceStep(max, n) {
+    var raw = max / n, steps = [1, 2, 5, 10, 15, 20, 30, 60, 120];
+    for (var i = 0; i < steps.length; i++) if (steps[i] >= raw) return steps[i];
+    return Math.ceil(raw / 60) * 60;
+  }
+  function ticksHTML(ticks, max, unit) {
+    return '<span class="hbars__ticks' + (ticks.length === 5 ? " hbars__ticks--5" : "") + '" aria-hidden="true">' + ticks.map(function (t, i) {
+      return '<span style="left:' + (t / max * 100) + '%">' + t + (i === ticks.length - 1 && unit ? " " + unit : "") + "</span>";
+    }).join("") + "</span>";
+  }
+  function tableToggle(id, caption, head, rows) {
+    return '<button type="button" class="disclose" data-disclosure aria-expanded="false" aria-controls="' + id +
+      '" data-label-open="Hide the table" data-label-closed="Show as table">Show as table</button>' +
+      '<div class="table-scroll" id="' + id + '" tabindex="0" role="region" aria-label="' + esc(caption) + '" hidden><table class="data-table"><caption>' + esc(caption) + "</caption><thead><tr>" +
+      head.map(function (h, i) { return '<th scope="col"' + (h.r ? ' class="r"' : "") + ">" + esc(h.t || h) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" + rows.map(function (r) {
+        return "<tr>" + r.map(function (c, i) { return i === 0 ? '<th scope="row">' + esc(c) + "</th>" : '<td' + (typeof c === "number" ? ' class="r"' : "") + ">" + esc(c) + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table></div>";
+  }
+  // Keep a disclosure open across re-renders.
+  function keepOpen(el, fn) {
+    var open = $$('[data-disclosure][aria-expanded="true"]', el).map(function (b) { return b.getAttribute("aria-controls"); });
+    el.innerHTML = fn();
+    open.forEach(function (id) {
+      var b = $('[aria-controls="' + id + '"]', el), p = document.getElementById(id);
+      if (b && p) { b.setAttribute("aria-expanded", "true"); b.textContent = "Hide the table"; p.hidden = false; }
+    });
+  }
+
+  /* ---------- totals ---------- */
+  function renderStats(st) {
+    var track = S.track(), planned = 0, done = 0, oc = 0, ocTotal = 0, tries = 0, weeksTried = 0, mins = 0, logged = 0;
+    S.weeks.forEach(function (w) {
+      var s = S.weekStats(w.n, track, st);
+      if (s.hasItems && s.planned !== null) { planned += s.planned; done += s.done; }
+      (w.outcomes || []).forEach(function (id) {
+        ocTotal++;
+        var r = st.outcomes && st.outcomes["w" + w.n] && st.outcomes["w" + w.n][id];
+        if (r && r.checked) oc++;
+      });
+    });
+    Object.keys(st.quizzes || {}).forEach(function (k) {
+      var n = st.quizzes[k].filter(function (a) { return a.submittedAt; }).length;
+      tries += n; if (n) weeksTried++;
+    });
+    Object.keys(st.items).forEach(function (k) {
+      if (typeof st.items[k].minutesSpent === "number") { mins += st.items[k].minutesSpent; logged++; }
+    });
+    $("[data-pg-stats]").innerHTML =
+      tile("Pre-work ticked off", fmt(done), "of " + fmt(planned) + " min") +
+      tile("Outcomes ticked", String(oc), "of " + ocTotal) +
+      tile("Self-check tries", String(tries), weeksTried ? "in " + plural(weeksTried, "week", "weeks") : "none yet") +
+      tile("Time you logged", fmt(mins), "min on " + plural(logged, "item", "items"));
+  }
+  function tile(label, value, small) {
+    return '<div class="stat-tile"><p class="label">' + esc(label) + '</p><p class="stat-tile__value">' + esc(value) + "<small>" + esc(small) + "</small></p></div>";
+  }
+
+  /* ---------- pre-work by week ---------- */
+  function renderWeeks(st) {
+    var track = S.track(), cur = S.currentWeek(st), max = 0;
+    var stats = S.weeks.map(function (w) { var s = S.weekStats(w.n, track, st); if (!s.range && s.planned) max = Math.max(max, s.planned); return s; });
+    var step = niceStep(max, 4), smax = step * 4, ticks = [0, step, step * 2, step * 3, smax];
+    keepOpen($("[data-pg-weeks]"), function () {
+      return '<div class="chart__head"><p id="pw-cap" class="chart__title">Minutes ticked off against the plan, ' + S.trackName(track) + " track</p></div>" +
+        '<p class="chart__sub">Planned minutes of the items you ticked, on one scale for every week.</p>' +
+        '<div class="chart__legend" aria-hidden="true"><span><i class="key-bar"></i>Done</span><span><i class="key-bar key-bar--plan"></i>Planned</span><span><i class="hbars__here"></i>You are here</span></div>' +
+        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML(ticks, smax, "min") + "<span></span></div>" +
+        stats.map(function (s) {
+          var w = s.week, plot, val;
+          if (s.range) { plot = '<span class="hbars__nm">6 to 8 h build, off this scale</span>'; val = "Optional"; }
+          else if (s.planned === null) { plot = '<span class="hbars__nm">minutes not measured yet</span>'; val = s.hasItems ? s.doneCount + " of " + s.total + " items" : ""; }
+          else {
+            plot = '<span class="hbars__plan" style="--p:' + pct(s.planned / smax) + '"></span><span class="hbars__fill" style="--d:' + pct(s.done / smax) + '"></span>';
+            val = s.hasItems ? "<strong>" + fmt(s.done) + "</strong> of " + fmt(s.planned) + ' <span class="muted">min</span>' : fmt(s.planned) + ' <span class="muted">min, no page yet</span>';
+          }
+          return '<div class="hbars__row"><span class="hbars__label">Week ' + w.n + (cur === w.n ? ' <i class="hbars__here" aria-hidden="true"></i><span class="sr-only">, you are here</span>' : "") +
+            '</span><span class="hbars__plot" aria-hidden="true">' + plot + '</span><span class="hbars__val">' + val + "</span></div>";
+        }).join("") + "</div>" +
+        tableToggle("pw-table", "Pre-work by week, minutes, " + S.trackName(track) + " track",
+          ["Week", "Title", { t: "Planned", r: 1 }, { t: "Done", r: 1 }, "Items done"],
+          stats.map(function (s) {
+            return ["Week " + s.week.n, s.week.title, s.range ? "360 to 480" : s.planned === null ? "not measured" : s.planned,
+              s.hasItems && s.planned !== null ? s.done : "", s.hasItems ? s.doneCount + " of " + s.total : ""];
+          }));
+    });
+  }
+
+  /* ---------- self-check scores ---------- */
+  function renderScores(st) {
+    var rows = S.weeks.filter(function (w) {
+      return w.n === 1 || (st.quizzes && st.quizzes["w" + w.n] && st.quizzes["w" + w.n].length);
+    }).map(function (w) { return { w: w, sum: S.quizSummary(w.n, st) }; });
+    var max = 5;
+    rows.forEach(function (r) { if (r.sum.best) max = Math.max(max, r.sum.best.max); });
+    keepOpen($("[data-pg-scores]"), function () {
+      return '<div class="chart__head"><p id="sc-cap" class="chart__title">Self-check scores, out of ' + max + "</p></div>" +
+        '<p class="chart__sub">Choice questions score 1 when right. Short answers score what you gave them: matched 1, partly 0.5, missed 0.</p>' +
+        '<div class="chart__legend" aria-hidden="true"><span><i class="key-dot"></i>Latest try</span><span><i class="key-dot key-dot--hollow"></i>Best try</span></div>' +
+        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML([0, 1, 2, 3, 4, 5].filter(function (t) { return t <= max; }), max, "") + "<span></span></div>" +
+        rows.map(function (r) {
+          var sum = r.sum, plot, val;
+          if (!sum.latest) {
+            plot = '<span class="hbars__nm">not taken yet</span>';
+            val = r.w.n === 1 ? '<a href="week-1-check.html">Take it</a>' : "";
+          } else {
+            var latest = S.attemptScore(sum.latest);
+            plot = '<span class="dots__mark dots__mark--best" style="--x:' + pct(sum.best.value / max) + '"></span>' +
+              '<span class="dots__mark dots__mark--latest" style="--x:' + pct(latest.value / max) + '"></span>';
+            val = "<strong>" + fmt(latest.value) + '</strong> <span class="muted">latest · best</span> ' + fmt(sum.best.value) +
+              ' <span class="muted">· ' + plural(sum.submitted.length, "try", "tries") + "</span>";
+          }
+          return '<div class="hbars__row"><span class="hbars__label">Week ' + r.w.n + '</span><span class="hbars__plot hbars__plot--plain" aria-hidden="true">' + plot +
+            '</span><span class="hbars__val">' + val + "</span></div>";
+        }).join("") + "</div>" +
+        tableToggle("sc-table", "Self-check tries", ["Week", "Try", "Submitted", { t: "Score", r: 1 }, { t: "Out of", r: 1 }],
+          [].concat.apply([], rows.map(function (r) {
+            return r.sum.submitted.map(function (a, i) {
+              var s = S.attemptScore(a);
+              return ["Week " + r.w.n, "Try " + (i + 1), String(a.submittedAt).slice(0, 16).replace("T", " "), s.value, s.max];
+            });
+          })));
+    });
+  }
+
+  /* ---------- calibration ---------- */
+  function renderCalibration(st) {
+    var by = {};
+    S.conf.forEach(function (c) { by[c[0]] = { right: 0, n: 0 }; });
+    Object.keys(st.quizzes || {}).forEach(function (k) {
+      st.quizzes[k].forEach(function (a) {
+        if (!a.submittedAt) return;
+        a.answers.forEach(function (x) {
+          if (x.type !== "mcq" || typeof x.confidence !== "number" || typeof x.correct !== "boolean") return;
+          by[x.confidence].n++; if (x.correct) by[x.confidence].right++;
+        });
+      });
+    });
+    var any = S.conf.some(function (c) { return by[c[0]].n; });
+    keepOpen($("[data-pg-calibration]"), function () {
+      return '<div class="chart__head"><p id="cal-cap" class="chart__title">Calibration: choice questions right at each confidence level</p></div>' +
+        '<p class="chart__sub">You say how sure you are before each answer is shown. Well calibrated, the bars rise from Guess to Certain. Short answers are self-scored, so they are left out.</p>' +
+        (any ? "" : '<p class="chart__empty">No submitted choice answers yet. Finish a self-check to see this chart.</p>') +
+        '<div class="hbars"><div class="hbars__axis"><span></span>' + ticksHTML([0, 25, 50, 75, 100], 100, "%") + "<span></span></div>" +
+        S.conf.map(function (c) {
+          var b = by[c[0]], share = b.n ? b.right / b.n : 0;
+          return '<div class="hbars__row"><span class="hbars__label">' + c[1] + '</span><span class="hbars__plot" aria-hidden="true">' +
+            (b.n ? '<span class="hbars__fill" style="--d:' + pct(share) + '"></span>' : '<span class="hbars__nm">no answers</span>') +
+            '</span><span class="hbars__val">' + (b.n ? "<strong>" + b.right + "</strong> of " + b.n + ' <span class="muted">right, ' + Math.round(share * 100) + "%</span>" : '<span class="muted">0 answers</span>') + "</span></div>";
+        }).join("") + "</div>" +
+        tableToggle("cal-table", "Choice answers right by confidence", ["Confidence", { t: "Right", r: 1 }, { t: "Answers", r: 1 }, { t: "Share", r: 1 }],
+          S.conf.map(function (c) { var b = by[c[0]]; return [c[1], b.right, b.n, b.n ? Math.round(b.right / b.n * 100) + "%" : ""]; }));
+    });
+  }
+
+  /* ---------- time against the estimate ---------- */
+  function renderTime(st) {
+    var rows = [];
+    Object.keys(st.items).forEach(function (key) {
+      var rec = st.items[key];
+      if (typeof rec.minutesSpent !== "number") return;
+      var ref = S.parseRef(key), item = ref ? S.findItem(ref.week, ref.id) : null;
+      var est = typeof rec.estimateMinutes === "number" ? rec.estimateMinutes : item && item.minutes !== null ? item.minutes : null;
+      rows.push({ key: key, week: ref ? ref.week : null, title: item ? item.title : key, kind: item ? item.kind : "practice", est: est, took: rec.minutesSpent });
+    });
+    rows.sort(function (a, b) { return (a.week - b.week) || (a.key < b.key ? -1 : 1); });
+    var hi = 0, took = 0, est = 0;
+    rows.forEach(function (r) { hi = Math.max(hi, r.took, r.est || 0); took += r.took; if (r.est !== null) est += r.est; });
+    var step = niceStep(hi || 60, 4), max = step * 4;
+    keepOpen($("[data-pg-time]"), function () {
+      var cap = '<div class="chart__head"><p id="tv-cap" class="chart__title">Minutes you logged against the page estimate</p></div>';
+      if (!rows.length) {
+        return cap +
+          '<p class="chart__empty">Nothing logged yet. When you tick an item on a week page, a "Took" field appears; the minutes you enter show up here.</p>';
+      }
+      var diff = est ? Math.round((took - est) / est * 100) : null;
+      return cap +
+        '<p class="chart__sub">You logged <strong>' + fmt(took) + " min</strong> on " + plural(rows.length, "item", "items") + ". Their estimates add up to " + fmt(est) + " min" +
+        (diff === null ? "." : " (" + (diff > 0 ? diff + "% more time than estimated" : diff < 0 ? (-diff) + "% less time than estimated" : "the same") + ").") + "</p>" +
+        '<div class="chart__legend" aria-hidden="true"><span><i class="key-bar"></i>Your time</span><span><i class="key-tick"></i>Estimate</span></div>' +
+        '<div class="tv"><div class="tv__axis">' + ticksHTML([0, step, step * 2, step * 3, max], max, "min") + "<span></span></div>" +
+        rows.map(function (r) {
+          return '<div class="tv__row"><p class="tv__title"><span class="kind kind--' + r.kind + '"><span class="kind__sw"></span>' + S.glyph(r.kind) + S.kinds[r.kind] + "</span> " +
+            esc(r.title) + ' <span class="meta">Week ' + r.week + "</span></p>" +
+            '<div class="bullet"><div class="bullet__track k-' + r.kind + '" aria-hidden="true"><span class="bullet__bar" style="--v:' + pct(r.took / max) + '"></span>' +
+            (r.est === null ? "" : '<span class="bullet__tick" style="--e:' + pct(r.est / max) + '"></span>') + "</div>" +
+            '<span class="bullet__text"><span class="muted">est</span> ' + (r.est === null ? "n/a" : fmt(r.est)) + ' <span class="muted">· took</span> ' + fmt(r.took) + ' <span class="muted">min</span></span></div></div>';
+        }).join("") + "</div>" +
+        tableToggle("tv-table", "Minutes logged against the estimate", ["Item", "Week", { t: "Estimate", r: 1 }, { t: "Took", r: 1 }],
+          rows.map(function (r) { return [r.title, "Week " + r.week, r.est === null ? "n/a" : r.est, r.took]; }));
+    });
+  }
+
+  /* ---------- estimates (Week 1 activity) ---------- */
+  function renderEstimates(st) {
+    var list = st.estimates || [];
+    $("[data-pg-estimates]").innerHTML = '<p class="chart__title">' + (list.length ? plural(list.length, "estimate", "estimates") + " from the Week 1 benchmark activity" : "No estimates yet") + "</p>" +
+      (list.length ? '<div class="table-scroll" tabindex="0" role="region" aria-label="Your Week 1 estimates"><table class="data-table"><caption class="sr-only">Your Week 1 estimates</caption><thead><tr><th scope="col">Task</th><th scope="col" class="r">Minutes, no AI help</th>' +
+        '<th scope="col" class="r">Complexity, 1 to 5</th><th scope="col" class="r">Specification, 1 to 5</th><th scope="col">Answer shown</th></tr></thead><tbody>' +
+        list.map(function (e) {
+          return '<tr><th scope="row">' + esc(e.taskId) + '</th><td class="r">' + fmt(e.estimateMinutes) + '</td><td class="r">' + (e.complexity === null ? "" : e.complexity) +
+            '</td><td class="r">' + (e.specQuality === null ? "" : e.specQuality) + "</td><td>" + (e.revealedAt ? "Yes, estimate locked" : "Not yet") + "</td></tr>";
+        }).join("") + "</tbody></table></div>" :
+        '<p class="chart__empty">The <a href="week-1.html#bench-activity">Week 1</a> benchmark activity records your estimate for each task here, before the real answer is shown.</p>');
+  }
+
+  /* ---------- export ---------- */
+  var exportBox = $("#export-json"), exportMsg = $("[data-pg-export-msg]"), alias = $("#alias");
+  function renderExport(st) {
+    exportBox.value = P.exportJSON();
+    if (document.activeElement !== alias) alias.value = st.learner.alias || "";
+  }
+  function msg(el, kind, html) { el.innerHTML = '<p class="msg' + (kind ? " msg--" + kind : "") + '">' + html + "</p>"; }
+  function selectExport() { exportBox.focus(); exportBox.select(); try { exportBox.setSelectionRange(0, exportBox.value.length); } catch (e) { /* ignore */ } }
+  alias.addEventListener("change", function () {
+    P.setAlias(alias.value);
+    S.announce(alias.value.trim() ? "Alias saved." : "Alias cleared.");
+  });
+  $("[data-pg-download]").addEventListener("click", function () {
+    if (alias.value !== (P.get().learner.alias || "")) P.setAlias(alias.value);
+    if (P.download()) {
+      msg(exportMsg, "ok", "Download started. Send the file to the course owner.");
+    } else {
+      msg(exportMsg, "warn", "Downloads are blocked here, as they are in a preview or sandboxed page. Use Copy JSON, or select the text below and save it as a .json file.");
+      selectExport();
+    }
+  });
+  $("[data-pg-copy]").addEventListener("click", function () {
+    P.copyToClipboard().then(function (ok) {
+      if (ok) msg(exportMsg, "ok", "Copied. Paste it into an email or a text file saved as .json.");
+      else { msg(exportMsg, "warn", "Copying was blocked. The text below is selected: press Ctrl+C, or Cmd+C on a Mac."); selectExport(); }
+    });
+  });
+  $("[data-pg-select]").addEventListener("click", function () { selectExport(); msg(exportMsg, "", "Selected. Press Ctrl+C, or Cmd+C on a Mac, to copy."); });
+
+  /* ---------- import ---------- */
+  var importText = $("#import-text"), importFile = $("#import-file"), preview = $("[data-pg-import-preview]");
+  var importBtn = $("[data-pg-import]"), importHint = $("#import-hint"), importResult = $("[data-pg-import-result]");
+  function describe(d) {
+    var weeks = {}, items = 0, tries = 0;
+    Object.keys(d.items || {}).forEach(function (k) { items++; weeks[k.split(":")[0]] = 1; });
+    Object.keys(d.quizzes || {}).forEach(function (k) { weeks[k] = 1; tries += (d.quizzes[k] || []).length; });
+    var oc = 0;
+    Object.keys(d.outcomes || {}).forEach(function (k) { Object.keys(d.outcomes[k] || {}).forEach(function () { oc++; }); });
+    return plural(Object.keys(weeks).length, "week", "weeks") + ", " + plural(items, "item", "items") + ", " + plural(tries, "self-check try", "self-check tries") +
+      ", " + plural((d.estimates || []).length, "estimate", "estimates") + ", " + plural(oc, "outcome", "outcomes");
+  }
+  function updatePreview() {
+    importResult.innerHTML = "";
+    var text = importText.value.trim(), d = null;
+    if (!text) { preview.innerHTML = ""; importBtn.disabled = true; importHint.textContent = "Choose or paste a file first."; return; }
+    try { d = JSON.parse(text); } catch (e) { d = null; }
+    if (!d || typeof d !== "object") {
+      msg(preview, "error", "This is not valid JSON, so it cannot be imported.");
+      importBtn.disabled = true; importHint.textContent = "Fix the file or paste it again.";
+      return;
+    }
+    var who = d.learner && d.learner.id ? (d.learner.alias ? '"' + esc(d.learner.alias) + '", ' : "") + esc(d.learner.id) : "no learner id";
+    msg(preview, "", "This file holds " + esc(describe(d)) + ". Learner " + who + (d.learner && d.learner.track ? ", " + esc(S.trackName(d.learner.track)) + " track" : "") +
+      (d.exportedAt ? ", exported " + esc(String(d.exportedAt).slice(0, 10)) : "") + ".");
+    importBtn.disabled = false; importHint.textContent = "Pick Merge or Replace, then import.";
+  }
+  importText.addEventListener("input", updatePreview);
+  importFile.addEventListener("change", function () {
+    var f = importFile.files && importFile.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () { importText.value = String(r.result || ""); updatePreview(); };
+    r.onerror = function () { msg(preview, "error", "The file could not be read."); };
+    r.readAsText(f);
+  });
+  importBtn.addEventListener("click", function () {
+    var mode = ($('input[name="import-mode"]:checked') || {}).value === "replace" ? "replace" : "merge";
+    var res = P.importJSON(importText.value, { mode: mode });
+    if (!res.ok) {
+      importResult.innerHTML = '<div class="msg msg--error" role="alert"><p>Nothing was imported. The file has ' + plural(res.errors.length, "problem", "problems") + ":</p><ul>" +
+        res.errors.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul></div>";
+      return;
+    }
+    var t = P.get().learner.track;
+    if (t !== S.track()) S.setTrack(t);
+    msg(importResult, "ok", (mode === "replace" ? "Replaced" : "Merged") + ". The charts above now include the file.");
+    S.announce((mode === "replace" ? "Replaced" : "Merged") + " the imported file.");
+    importText.value = ""; importFile.value = ""; preview.innerHTML = "";
+    importBtn.disabled = true; importHint.textContent = "Choose or paste a file first.";
+  });
+
+  /* ---------- reset: in-page two-step confirmation ---------- */
+  var resetBtn = $("[data-pg-reset]"), confirmBox = $("#reset-confirm"), resetMsg = $("[data-pg-reset-msg]");
+  resetBtn.addEventListener("click", function () {
+    var st = P.get(), tries = 0, done = 0;
+    Object.keys(st.items).forEach(function (k) { if (st.items[k].status === "done") done++; });
+    Object.keys(st.quizzes).forEach(function (k) { tries += st.quizzes[k].length; });
+    $("[data-pg-confirm-detail]").textContent = "This deletes " + plural(done, "ticked item", "ticked items") + ", " + plural(tries, "self-check try", "self-check tries") +
+      " and " + plural(st.estimates.length, "estimate", "estimates") + ". It cannot be undone.";
+    resetMsg.innerHTML = "";
+    confirmBox.hidden = false;
+    resetBtn.setAttribute("aria-expanded", "true");
+    confirmBox.focus();
+  });
+  $("[data-pg-reset-no]").addEventListener("click", function () {
+    confirmBox.hidden = true; resetBtn.setAttribute("aria-expanded", "false"); resetBtn.focus();
+  });
+  $("[data-pg-reset-yes]").addEventListener("click", function () {
+    var t = S.track();
+    P.reset();
+    if (P.get().learner.track !== t) P.setTrack(t);
+    confirmBox.hidden = true; resetBtn.setAttribute("aria-expanded", "false");
+    msg(resetMsg, "ok", "Your progress was cleared. This browser now holds an empty record with a new id.");
+    resetBtn.focus();
+    S.announce("Your progress was cleared.");
+  });
+
+  S.onRender(function (st) {
+    renderStats(st); renderWeeks(st); renderScores(st); renderCalibration(st); renderTime(st); renderEstimates(st); renderExport(st);
+  });
+})();
+</script>
+</body>
+</html>

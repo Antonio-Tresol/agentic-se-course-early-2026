@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 2: Adapting a Coding Agent · Agentic SE Course</title>
+<meta name="description" content="Week 2: Adapting a Coding Agent. Skills, Model Context Protocol (MCP), subagents, and context engineering.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html" aria-current="page"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+
+  <div class="whero">
+    <div class="whero__top">
+      <div class="whero__titles">
+        <p class="label week-head__label">Week 2</p>
+        <h1 class="week-head__title">Adapting a Coding Agent</h1>
+      </div>
+      <fieldset class="track-switch" data-announce-week="2"
+        data-announce-claude="Showing the Claude Code track. Week 2 pre-work is 189 minutes."
+        data-announce-codex="Showing the Codex track. Week 2 pre-work is 204 minutes.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">A generic agent is useful. An agent that knows your team's PR checklist, can query your database, and applies your coding standards automatically is transformative. This week you learn skills (how to encode knowledge), MCP (how to connect tools), and the deeper principles of context engineering.</p>
+
+    <section class="whero__panel" aria-labelledby="budget-h">
+      <h2 id="budget-h" class="sr-only">Time budget</h2>
+      <div data-progress-budget="2"
+        data-note="Course times from the catalogue pages; reading time at 238 words per minute.">
+        <p class="budget__line">Pre-work: <strong><span data-track="claude">189 min</span><span data-track="codex">204 min</span></strong> core.</p>
+      </div>
+    </section>
+
+    <section class="whero__panel oc" aria-labelledby="oc-h">
+      <div class="oc__head">
+        <h2 id="oc-h" class="label label--ink">By the end of this week you can</h2>
+        <span class="oc__count" data-progress-outcome-count="2">0 of 4 ticked</span>
+      </div>
+      <p class="meta oc__hint">Tick one once you can do it, after the pre-work or the live session.</p>
+      <ol class="oc__list">
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w2-o1-text">Write a SKILL.md that triggers on the right tasks, and say when a skill beats a rule in CLAUDE.md or AGENTS.md.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w2:o1" aria-describedby="w2-o1-text">I can do this</label>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w2-o2-text">Connect an MCP server and explain what it adds to the agent's context and what it costs.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w2:o2" aria-describedby="w2-o2-text">I can do this</label>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w2-o3-text">Decide when to hand work to a subagent, and how to check what it returns.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w2:o3" aria-describedby="w2-o3-text">I can do this</label>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w2-o4-text">Apply two context-engineering strategies, such as compaction and just-in-time retrieval, to a long task.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w2:o4" aria-describedby="w2-o4-text">I can do this</label>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- Core pre-work -->
+  <section class="section" aria-labelledby="core-h">
+    <h2 id="core-h" class="h-section">Core pre-work</h2>
+    <p class="section-intro">In this order. The live session assumes every item on your track. Read the questions before you start each item, and tick it when you finish.</p>
+
+    <ol class="pw-list">
+      <!-- Row 1, Claude track: Skills -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-agent-skills">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Introduction to Agent Skills</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~60 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-agent-skills" hidden>
+              <label for="took-w2-agent-skills">Took<span class="sr-only">: minutes Introduction to Agent Skills actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-agent-skills" data-progress-minutes="w2:pw-agent-skills">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/introduction-to-agent-skills" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Introduction to Agent Skills</span><span class="link-row__meta">Anthropic · Mar 2026 · build, configure and share skills</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>How do you configure a skill's description so Claude invokes it on the right tasks, and how do you share skills across a team?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-agent-skills" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 1, Codex track: Skills -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-codex-skills">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Build skills</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">6 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-codex-skills" hidden>
+              <label for="took-w2-codex-skills">Took<span class="sr-only">: minutes Build skills actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-codex-skills" data-progress-minutes="w2:pw-codex-skills">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Build skills</span><span class="link-row__meta">OpenAI · Codex skills follow the same open agent skills standard</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Which skill locations does Codex scan from CWD up to the repo root, and what happens when two skills share a name?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-codex-skills" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 2, Both tracks: MCP -->
+      <li class="pw-row">
+        <div class="pw-row__aside">
+          <label class="pw-done">
+            <input type="checkbox" data-progress-item="w2:pw-mcp">
+            <span class="pw-done__text">Done</span><span class="sr-only">: Introduction to Model Context Protocol</span>
+          </label>
+        </div>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~60 min</span>
+              <span class="tag tag--track">Both tracks</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-mcp" hidden>
+              <label for="took-w2-mcp">Took<span class="sr-only">: minutes Introduction to Model Context Protocol actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-mcp" data-progress-minutes="w2:pw-mcp">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/introduction-to-model-context-protocol" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Introduction to Model Context Protocol</span><span class="link-row__meta">Anthropic · Mar 2026 · vendor-neutral; tools, resources and prompts</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What are the roles of tools, resources and prompts in an MCP server, and how does connecting a server change what the agent loads into context?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-mcp" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 3, Claude track: Subagents -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-subagents">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Introduction to Subagents</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~45 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-subagents" hidden>
+              <label for="took-w2-subagents">Took<span class="sr-only">: minutes Introduction to Subagents actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-subagents" data-progress-minutes="w2:pw-subagents">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/introduction-to-subagents" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Introduction to Subagents</span><span class="link-row__meta">Anthropic · Apr 2026 · decompose complex tasks across parallel subagents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>When does decomposing a task across parallel subagents beat running a single session, and how do you orchestrate them deterministically?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-subagents" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 3, Codex track: Scale Codex -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-scale-codex">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Scale Codex Across Teams and Systems</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~100 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-scale-codex" hidden>
+              <label for="took-w2-scale-codex">Took<span class="sr-only">: minutes Scale Codex Across Teams and Systems actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-scale-codex" data-progress-minutes="w2:pw-scale-codex">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.openai.com/public/courses/scale-codex-across-teams-and-systems-jr83a" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Scale Codex Across Teams and Systems</span><span class="link-row__meta">OpenAI · advanced · replaces Introduction to Subagents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Why does the page say to prefer parallel subagents for read-heavy work and be careful with write-heavy work?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-scale-codex" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 4, Claude track: How Claude Code Works -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-how-claude-works">
+          <span class="pw-done__text">Done</span><span class="sr-only">: How Claude Code Works</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">10 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-how-claude-works" hidden>
+              <label for="took-w2-how-claude-works">Took<span class="sr-only">: minutes How Claude Code Works actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-how-claude-works" data-progress-minutes="w2:pw-how-claude-works">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">How Claude Code Works</span><span class="link-row__meta">Anthropic · the agentic loop, tools and permissions</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>How does the agentic loop decide when to call a tool, and how do permission modes constrain what tools can execute?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-how-claude-works" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 4, Codex track: Sandbox & Approvals -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-codex-sandbox">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Sandbox</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">7 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-codex-sandbox" hidden>
+              <label for="took-w2-codex-sandbox">Took<span class="sr-only">: minutes Sandbox actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-codex-sandbox" data-progress-minutes="w2:pw-codex-sandbox">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/sandboxing" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Sandbox</span><span class="link-row__meta">OpenAI · partial match replacing How Claude Code Works</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Sandbox mode and approval policy are separate controls: which one stops a command from writing outside the workspace, and which one decides whether Codex asks first?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-codex-sandbox" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:pw-codex-approvals">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Agent approvals & security</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">19 min</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-codex-approvals" hidden>
+              <label for="took-w2-codex-approvals">Took<span class="sr-only">: minutes Agent approvals & security actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-codex-approvals" data-progress-minutes="w2:pw-codex-approvals">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/agent-approvals-security" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Agent approvals &amp; security</span><span class="link-row__meta">OpenAI · security controls and permission modes</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="bullet" data-progress-bullet="w2:pw-codex-approvals" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 5, Both tracks: Effective Context Engineering -->
+      <li class="pw-row">
+        <div class="pw-row__aside">
+          <label class="pw-done">
+            <input type="checkbox" data-progress-item="w2:pw-context-eng">
+            <span class="pw-done__text">Done</span><span class="sr-only">: Effective Context Engineering for AI Agents</span>
+          </label>
+        </div>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">13 min</span>
+              <span class="tag tag--track">Both tracks</span>
+            </span>
+            <span class="took" data-progress-took="w2:pw-context-eng" hidden>
+              <label for="took-w2-context-eng">Took<span class="sr-only">: minutes Effective Context Engineering for AI Agents actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-context-eng" data-progress-minutes="w2:pw-context-eng">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Effective Context Engineering for AI Agents</span><span class="link-row__meta">Anthropic · Sep 2025 · compaction, note-taking and sub-agent architectures</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Why is context a finite resource even with large context windows, and how do compaction and structured notes sustain long-horizon tasks?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:pw-context-eng" hidden></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Optional pre-work -->
+  <section class="section" aria-labelledby="opt-h" data-track="codex">
+    <h2 id="opt-h" class="h-section">Optional pre-work</h2>
+    <p class="section-intro">Supplementary reading for the Codex track.</p>
+    <ol class="pw-list">
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w2:opt-codex-mcp">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Model Context Protocol</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">11 min</span>
+              <span class="tag tag--optional">Optional</span>
+            </span>
+            <span class="took" data-progress-took="w2:opt-codex-mcp" hidden>
+              <label for="took-w2-opt-codex-mcp">Took<span class="sr-only">: minutes Model Context Protocol actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w2-opt-codex-mcp" data-progress-minutes="w2:opt-codex-mcp">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Model Context Protocol</span><span class="link-row__meta">OpenAI · MCP configuration in Codex</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What are the two MCP server transports Codex supports, and where does its configuration live so the CLI, IDE and app share it?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w2:opt-codex-mcp" hidden></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Self-check -->
+  <section class="section" aria-labelledby="check-h">
+    <h2 id="check-h" class="h-section">Self-check</h2>
+    <p class="section-intro">The self-check for this week is being written; the session opens with retrieval questions.</p>
+  </section>
+
+  <!-- Live session -->
+  <section class="section" aria-labelledby="live-h">
+    <h2 id="live-h" class="h-section">Live session</h2>
+    <dl class="facts" style="margin-bottom:14px">
+      <div data-session-fact="2" hidden></div>
+      <div><dt>Length</dt><dd>60 min</dd></div>
+    </dl>
+    <p class="section-intro">We discuss questions from the courses and the context engineering article, then break into pairs for the skill-building sprint.</p>
+
+    <!-- Activity card: Skill-Building Sprint -->
+    <article class="card card--activity" aria-labelledby="sprint-h">
+      <h3 id="sprint-h" class="h-card">Skill-Building Sprint</h3>
+      <p>Pick a repository from one of the Week 1 benchmark tasks, or a project of your own, and write a SKILL.md that encodes a repeating pattern or workflow. Swap with a partner and test whether the skill triggers correctly.</p>
+      <ol class="steps">
+        <li>Choose a repository: a Week 1 benchmark task's repository or your own project.</li>
+        <li>Write a SKILL.md that encodes a repeating pattern or workflow.</li>
+        <li>Swap with a partner and test whether the skill triggers when it should, and stays quiet when it should not.</li>
+      </ol>
+    </article>
+
+    <div style="margin-top:28px">
+      <h3 class="h-card">Plan for the hour</h3>
+      <ol class="plan">
+        <li><span class="plan__min">5 min</span><span>Retrieval opener <span class="tag">Active</span></span></li>
+        <li><span class="plan__min">15 min</span><span>Discussion of the courses and the context-engineering article <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">35 min</span><span>Skill-building sprint in pairs <span class="tag">Constructive</span>, then <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">5 min</span><span>Debrief <span class="tag">Interactive</span></span></li>
+      </ol>
+      <p class="note">Tags give each block's mode of engagement in the ICAP framework: passive, active, constructive or interactive.</p>
+    </div>
+
+    <p style="margin-top:24px">
+      <a class="btn" href="slides/session2.html">Open slides
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </p>
+  </section>
+
+  <!-- Pager: previous and next week -->
+  <nav class="pager" aria-label="Previous and next week">
+    <a href="week-1.html">
+      <span class="pager__dir"><svg class="arrow arrow--back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M11 6H1M1 6L5.5 1.5M1 6L5.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Previous · Week 1</span>
+      <span class="pager__title">One Coding Agent</span>
+    </a>
+    <a href="week-3.html">
+      <span class="pager__dir">Next · Week 3<svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="pager__title">One change through the whole loop</span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

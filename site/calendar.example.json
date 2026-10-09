@@ -1,0 +1,15 @@
+{
+  "schema": "agentic-se-calendar",
+  "schemaVersion": 1,
+  "note": "Example calendar for a cohort. Invented dates, times and places; replace with your cohort's own file.",
+  "cohort": "example-cohort",
+  "timezone": "Europe/London",
+  "sessions": [
+    { "week": 0, "date": "2026-09-24", "time": "18:00", "place": "Room 2.14, Main Building" },
+    { "week": 1, "date": "2026-10-01", "time": "18:00", "place": "Room 2.14, Main Building" },
+    { "week": 2, "date": "2026-10-08", "time": "18:00", "place": "Room 2.14, Main Building" },
+    { "week": 3, "date": "2026-10-15", "time": "18:00", "place": "https://example.invalid/meeting" },
+    { "week": 4, "date": "2026-10-22", "time": "18:00", "place": "Room 2.14, Main Building" },
+    { "week": 5, "date": "2026-10-29", "time": "17:30", "place": "Main hall" }
+  ]
+}

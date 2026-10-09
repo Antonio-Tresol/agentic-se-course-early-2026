@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 4: From harness to factory · Agentic SE Course</title>
+<meta name="description" content="Week 4: From harness to factory. Software factories, governance gates, and observer loops.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html" aria-current="page"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+
+  <div class="whero">
+    <div class="whero__top">
+      <div class="whero__titles">
+        <p class="label week-head__label">Week 4</p>
+        <h1 class="week-head__title">From harness to factory</h1>
+      </div>
+      <fieldset class="track-switch" data-announce-week="4"
+        data-announce-claude="Showing the Claude Code track. Week 4 pre-work is 146.7 minutes, the activity included."
+        data-announce-codex="Showing the Codex track. Week 4 pre-work is 146.7 minutes, the activity included.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">Last week you ran one change through the loop by hand. This week you design the automated version for the same fork: which stages an agent runs, where a person checks, what an observer may change, and how you will measure the result against your Week 3 log.</p>
+
+    <section class="whero__panel" aria-labelledby="budget-h">
+      <h2 id="budget-h" class="sr-only">Time budget</h2>
+      <div data-progress-budget="4"
+        data-note="Video times from the player; reading times at 238 words per minute. The playbook figure covers only the selected plays. The activity is an estimate.">
+        <p class="budget__line">Pre-work: <strong>146.7 min</strong> core, activity included.</p>
+      </div>
+      <p class="meta tb__note" style="margin-top:10px">Core: 101.7 min of talks and reading, then the 45 min activity. Optional: 93.5 min, plus one item not measured.</p>
+    </section>
+
+    <section class="whero__panel oc" aria-labelledby="oc-h">
+      <div class="oc__head">
+        <h2 id="oc-h" class="label label--ink">By the end of this week you can</h2>
+        <span class="oc__count" data-progress-outcome-count="4">0 of 4 ticked</span>
+      </div>
+      <p class="meta oc__hint">Tick one once you can do it, after the self-check, the deliverable or the live session.</p>
+      <ol class="oc__list">
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w4-o1-text">Map the delivery loop for one repository into stages, each with a trigger, a committed artefact and a gate marked deterministic, agent or human, with a risk argument for each human gate.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w4:o1" aria-describedby="w4-o1-text">I can do this</label>
+              <a href="#rubric-w4-1">Rubric: Every stage has a trigger, an artefact and a justified gate</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w4-o2-text">Weigh a factory claim against counter-evidence, distinguishing output measures from outcome measures.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w4:o2" aria-describedby="w4-o2-text">I can do this</label>
+              <a href="#rubric-w4-5">Rubric: A critique with evidence</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w4-o3-text">Specify an observer loop by its signal, the one file it may change, and the check that keeps it away from CI and its own evaluator.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w4:o3" aria-describedby="w4-o3-text">I can do this</label>
+              <a href="#rubric-w4-3">Rubric: A bounded observer loop</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w4-o4-text">Choose the automation features for each stage within the subscription plan you hold.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w4:o4" aria-describedby="w4-o4-text">I can do this</label>
+              <a href="#rubric-w4-2">Rubric: The design fits the available tools</a>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- 4. Core pre-work -->
+  <section class="section" aria-labelledby="core-h">
+    <h2 id="core-h" class="h-section">Core pre-work</h2>
+    <p class="section-intro">In this order: the thesis, its strongest counter, the systems view, then a governed version of the loop. Read the questions before you start each item; the chapter links jump to the parts that answer them.</p>
+
+    <ol class="pw-list">
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:pw-lloyd">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Software Engineering Is Becoming Factory Engineering</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">20.6 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:pw-lloyd" hidden>
+              <label for="took-w4-pw-lloyd">Took<span class="sr-only">: minutes Software Engineering Is Becoming Factory Engineering actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-pw-lloyd" data-progress-minutes="w4:pw-lloyd">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=tUPPVhBBcoM" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">Software Engineering Is Becoming Factory Engineering</span><span class="link-row__meta">Zach Lloyd · AI Engineer World's Fair 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>At which stages of his loop does a human step in, and what decides whether human review happens at all?</li>
+              <li>Of the quantities he says to measure, which would expose a factory that ships features nobody wants?</li>
+            </ul>
+            <p class="chapters"><span class="meta">Chapters</span>
+              <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=220s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Lloyd talk from </span>3:40<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=565s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Lloyd talk from </span>9:25<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=830s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Lloyd talk from </span>13:50<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=860s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Lloyd talk from </span>14:20<span class="sr-only"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:pw-lloyd" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:pw-horthy-fail">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Why Software Factories Fail</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">19.3 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:pw-horthy-fail" hidden>
+              <label for="took-w4-pw-horthy-fail">Took<span class="sr-only">: minutes Why Software Factories Fail actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-pw-horthy-fail" data-progress-minutes="w4:pw-horthy-fail">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=Ib5GBkD555M" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">Why Software Factories Fail</span><span class="link-row__meta">Dex Horthy · AI Engineer World's Fair 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Why, in his account, does training on passing tests leave maintainability unrewarded, and which part of that claim does he concede he cannot prove?</li>
+              <li>Which stage of Lloyd's loop does restoring human review change?</li>
+            </ul>
+            <p class="chapters"><span class="meta">Chapters</span>
+              <a href="https://www.youtube.com/watch?v=Ib5GBkD555M&amp;t=450s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Horthy talk from </span>7:30<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=Ib5GBkD555M&amp;t=536s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Horthy talk from </span>8:56<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=Ib5GBkD555M&amp;t=898s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Horthy talk from </span>14:58<span class="sr-only"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:pw-horthy-fail" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:pw-bender">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Software engineering at the tipping point</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">39.6 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:pw-bender" hidden>
+              <label for="took-w4-pw-bender">Took<span class="sr-only">: minutes Software engineering at the tipping point actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-pw-bender" data-progress-minutes="w4:pw-bender">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=2n41YjR5QfU" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">Software engineering at the tipping point</span><span class="link-row__meta">Adam Bender · Google I/O 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Take two of his consequences of ten times more code, for example the review bottleneck and rollback, and name the factory stage that absorbs each.</li>
+              <li>Bender argues that AI amplifies whatever practices a team already has; what does that predict for a team that automates a loop it has never run by hand?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:pw-bender" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:pw-playbook">
+          <span class="pw-done__text">Done</span><span class="sr-only">: The AI-native SDLC playbook</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">22.2 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:pw-playbook" hidden>
+              <label for="took-w4-pw-playbook">Took<span class="sr-only">: minutes The AI-native SDLC playbook actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-pw-playbook" data-progress-minutes="w4:pw-playbook">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <p class="note" style="margin:0 0 4px">Read only these plays: introduction; capture intent; give Claude a feedback loop; continuous evals in CI; AI in the PR review loop; hooks as approval gates; closing the loop.</p>
+          <a class="link-row" href="https://claude.com/resources/articles/the-ai-native-sdlc-playbook" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">The AI-native SDLC playbook</span><span class="link-row__meta">Louis Claxton · Anthropic · Aug 2026 · selected plays</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What artefact does each stage commit, and which commit starts the next stage?</li>
+              <li>Which code does the playbook reserve for human review, and how does a hook that asks differ from one that blocks?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:pw-playbook" hidden></div>
+        </div>
+      </li>
+    </ol>
+    <p class="note">Ticked items fill the bar at the top of the page. "Took" is optional: it helps the course owner check these estimates.</p>
+  </section>
+
+  <!-- 5. Optional pre-work -->
+  <section class="section" aria-labelledby="optional-h">
+    <h2 id="optional-h" class="h-section">Optional pre-work</h2>
+    <p class="section-intro">Further evidence for the debate and the failure walk. The debate runs on the core readings; if you read one of these, bring it as extra evidence.</p>
+    <ol class="pw-list">
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-clinton">
+          <span class="pw-done__text">Done</span><span class="sr-only">: How Anthropic secures its AI-native software development lifecycle</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">11.9 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-clinton" hidden>
+              <label for="took-w4-opt-clinton">Took<span class="sr-only">: minutes How Anthropic secures its AI-native software development lifecycle actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-clinton" data-progress-minutes="w4:opt-clinton">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://claude.com/resources/articles/how-anthropic-secures-its-ai-native-software-development-lifecycle" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">How Anthropic secures its AI-native software development lifecycle</span><span class="link-row__meta">Jason Clinton · Anthropic · Jul 2026 · the page states 6 min</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What did the incident agent do after the model upgrade, and which control caught it?</li>
+              <li>Which of shadow mode, sampling and single-purpose identities would you copy into a two-person team's factory?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-clinton" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-uber">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Building Blocks for Uber's Software Factory</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">18.4 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-uber" hidden>
+              <label for="took-w4-opt-uber">Took<span class="sr-only">: minutes Building Blocks for Uber's Software Factory actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-uber" data-progress-minutes="w4:opt-uber">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=17-YSUHo6Lk" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">Building Blocks for Uber's Software Factory</span><span class="link-row__meta">Uday Kiran Medisetty and Adam Huda · AI Engineer World's Fair 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Why does the demonstrated workflow stop at a work-in-progress pull request before CI?</li>
+              <li>What does Huda name as the bottleneck once building is cheap?</li>
+            </ul>
+            <p class="chapters"><span class="meta">Chapters</span>
+              <a href="https://www.youtube.com/watch?v=17-YSUHo6Lk&amp;t=694s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Uber talk from </span>11:34<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=17-YSUHo6Lk&amp;t=808s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Uber talk from </span>13:28<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=17-YSUHo6Lk&amp;t=1049s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Uber talk from </span>17:29<span class="sr-only"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-uber" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-cooke">
+          <span class="pw-done__text">Done</span><span class="sr-only">: No, That's Not a Software Factory</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">19.0 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-cooke" hidden>
+              <label for="took-w4-opt-cooke">Took<span class="sr-only">: minutes No, That's Not a Software Factory actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-cooke" data-progress-minutes="w4:opt-cooke">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=HvboD89DyQ8" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">No, That's Not a Software Factory</span><span class="link-row__meta">Ryan Cooke · AI Engineer World's Fair 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Which output measures does Cooke reject, and which outcome measures replace them?</li>
+              <li>Why does he rank an MCP gateway as the first investment?</li>
+            </ul>
+            <p class="chapters"><span class="meta">Chapters</span>
+              <a href="https://www.youtube.com/watch?v=HvboD89DyQ8&amp;t=77s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Cooke talk from </span>1:17<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=HvboD89DyQ8&amp;t=157s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Cooke talk from </span>2:37<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=HvboD89DyQ8&amp;t=957s" target="_blank" rel="noopener noreferrer"><span class="sr-only">Cooke talk from </span>15:57<span class="sr-only"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-cooke" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-ureview">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Building uReview, Uber's Multi-Agent Code Review Engine</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--video"><span class="kind__sw"></span><span class="glyph glyph--video" aria-hidden="true"></span>Video</span>
+              <span class="pw-row__time">15.1 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-ureview" hidden>
+              <label for="took-w4-opt-ureview">Took<span class="sr-only">: minutes Building uReview, Uber's Multi-Agent Code Review Engine actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-ureview" data-progress-minutes="w4:opt-ureview">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://www.youtube.com/watch?v=EL123UNokkI" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Watch</span> <span class="link-row__title">Building uReview, Uber's Multi-Agent Code Review Engine</span><span class="link-row__meta">Will Bond and Ameya Ketkar · AI Engineer World's Fair 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What does the 67% addressal rate measure, and what does it leave unproven?</li>
+              <li>Why does a review read by other agents need higher accuracy?</li>
+            </ul>
+            <p class="chapters"><span class="meta">Chapters</span>
+              <a href="https://www.youtube.com/watch?v=EL123UNokkI&amp;t=593s" target="_blank" rel="noopener noreferrer"><span class="sr-only">uReview talk from </span>9:53<span class="sr-only"> (opens in a new tab)</span></a>
+              <a href="https://www.youtube.com/watch?v=EL123UNokkI&amp;t=671s" target="_blank" rel="noopener noreferrer"><span class="sr-only">uReview talk from </span>11:11<span class="sr-only"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-ureview" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-harnesses">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Effective harnesses for long-running agents</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">9.1 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-harnesses" hidden>
+              <label for="took-w4-opt-harnesses">Took<span class="sr-only">: minutes Effective harnesses for long-running agents actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-harnesses" data-progress-minutes="w4:opt-harnesses">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <!-- Question from design.md section 3, "Guiding questions"; the curriculum gives none for this short article. -->
+          <a class="link-row" href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Effective harnesses for long-running agents</span><span class="link-row__meta">Justin Young · Anthropic · Nov 2025</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding question</span></p>
+            <ul class="gq__list">
+              <li>Which artefacts let a fresh session recover the state of earlier work?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-harnesses" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-sase">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Agentic Software Engineering: Foundational Pillars and a Research Roadmap</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">20.0 min</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-sase" hidden>
+              <label for="took-w4-opt-sase">Took<span class="sr-only">: minutes Agentic Software Engineering: Foundational Pillars and a Research Roadmap actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-sase" data-progress-minutes="w4:opt-sase">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://arxiv.org/abs/2509.06216" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read Sections 2 and 5 of</span> <span class="link-row__title">Agentic Software Engineering: Foundational Pillars and a Research Roadmap</span><span class="link-row__meta">Hassan et al. · arXiv, version 3 · Jun 2026 · timed on version 2</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What must a Merge-Readiness Pack contain, and who answers it?</li>
+              <li>At which stage of your loop would an agent raise a Consultation Request Pack?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:opt-sase" hidden></div>
+        </div>
+      </li>
+
+      <li class="pw-row pw-row--tracked">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:opt-harness-engineering">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Harness engineering: leveraging Codex in an agent-first world</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">not measured</span>
+            </span>
+            <span class="took" data-progress-took="w4:opt-harness-engineering" hidden>
+              <label for="took-w4-opt-harness-engineering">Took<span class="sr-only">: minutes Harness engineering: leveraging Codex in an agent-first world actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-opt-harness-engineering" data-progress-minutes="w4:opt-harness-engineering">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <p class="note" style="margin:0 0 4px">The page refuses automated fetches, so it has no measured time.</p>
+          <a class="link-row" href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Harness engineering: leveraging Codex in an agent-first world</span><span class="link-row__meta">Ryan Lopopolo · OpenAI · Feb 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="bullet" data-progress-bullet="w4:opt-harness-engineering" hidden></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 6. Pre-work activity: the loop to design around, then the task -->
+  <section class="section" aria-labelledby="activity-h">
+    <h2 id="activity-h" class="h-section">Pre-work activity</h2>
+    <p class="section-intro">Guidance fades this week. Instead of a worked example you get the loop to design around: the stages your fork will run in the capstone.</p>
+
+    <figure class="loop-fig">
+      <div class="loop-fig__frame">
+        <svg viewBox="0 0 346 410" role="img" aria-labelledby="loop-title" aria-describedby="loop-desc" focusable="false">
+          <title id="loop-title">The factory loop: nine stages from intake back to intake, with two human checkpoints</title>
+          <desc id="loop-desc">Down the left: intake, where an issue arrives with a label; triage, gated by a deterministic label check; spec, where the agent opens a spec pull request; human checkpoint 1; and implement, gated by lanorme CI. Easy issues skip from triage straight to implement. Across to the right and up: agent review, which is advisory; human checkpoint 2; merge, after approval; and monitor and observer, whose output returns to intake as new work. The two human checkpoints are drawn as dark boxes labelled Human.</desc>
+          <defs>
+            <marker id="loop-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+              <path class="loop__head" d="M0 0L10 5L0 10z"/>
+            </marker>
+          </defs>
+
+          <!-- Return path: monitor and observer back to intake -->
+          <path class="loop__edge loop__edge--return" d="M272 44V28H102V43" marker-end="url(#loop-arrow)"/>
+          <text class="loop__note" x="187" y="18" text-anchor="middle">back to intake</text>
+
+          <!-- Easy issues skip the spec and checkpoint 1 -->
+          <path class="loop__edge" d="M34 150H22V374H33" marker-end="url(#loop-arrow)"/>
+          <text class="loop__note" x="14" y="262" text-anchor="middle" transform="rotate(-90 14 262)">easy</text>
+
+          <!-- Left column, top to bottom -->
+          <rect class="loop__box" x="34" y="44" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="102" y="66" text-anchor="middle">Intake</text>
+          <text class="loop__note" x="102" y="86" text-anchor="middle">labelled issue</text>
+          <path class="loop__edge" d="M102 96V119" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box" x="34" y="120" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="102" y="142" text-anchor="middle">Triage</text>
+          <text class="loop__note" x="102" y="162" text-anchor="middle">label check</text>
+          <path class="loop__edge" d="M102 172V195" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box" x="34" y="196" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="102" y="218" text-anchor="middle">Spec</text>
+          <text class="loop__note" x="102" y="238" text-anchor="middle">spec PR</text>
+          <path class="loop__edge" d="M102 248V271" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box loop__box--human" x="34" y="272" width="136" height="52" rx="6"/>
+          <text class="loop__kind" x="102" y="294" text-anchor="middle">HUMAN</text>
+          <text class="loop__name loop__name--human" x="102" y="314" text-anchor="middle">Checkpoint 1</text>
+          <path class="loop__edge" d="M102 324V347" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box" x="34" y="348" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="102" y="370" text-anchor="middle">Implement</text>
+          <text class="loop__note" x="102" y="390" text-anchor="middle">lanorme CI</text>
+
+          <!-- Across the bottom -->
+          <path class="loop__edge" d="M170 374H203" marker-end="url(#loop-arrow)"/>
+
+          <!-- Right column, bottom to top -->
+          <rect class="loop__box" x="204" y="348" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="272" y="370" text-anchor="middle">Agent review</text>
+          <text class="loop__note" x="272" y="390" text-anchor="middle">advisory</text>
+          <path class="loop__edge" d="M272 348V300" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box loop__box--human" x="204" y="247" width="136" height="52" rx="6"/>
+          <text class="loop__kind" x="272" y="269" text-anchor="middle">HUMAN</text>
+          <text class="loop__name loop__name--human" x="272" y="289" text-anchor="middle">Checkpoint 2</text>
+          <path class="loop__edge" d="M272 247V198" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box" x="204" y="145" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="272" y="167" text-anchor="middle">Merge</text>
+          <text class="loop__note" x="272" y="187" text-anchor="middle">after approval</text>
+          <path class="loop__edge" d="M272 145V97" marker-end="url(#loop-arrow)"/>
+
+          <rect class="loop__box" x="204" y="44" width="136" height="52" rx="6"/>
+          <text class="loop__name" x="272" y="66" text-anchor="middle">Monitor and</text>
+          <text class="loop__name" x="272" y="86" text-anchor="middle">observer</text>
+        </svg>
+      </div>
+      <figcaption class="loop-fig__caption">Dark boxes marked Human are the two human checkpoints; the second line in each box names the stage's gate or output. Easy issues skip the spec and checkpoint 1, and the dashed line returns new work and skill changes to intake. Loop after Zach Lloyd's talk (<a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=220s" target="_blank" rel="noopener noreferrer">from 3:40<span class="sr-only">, opens in a new tab</span></a>) and Louis Claxton's <a href="https://claude.com/resources/articles/the-ai-native-sdlc-playbook" target="_blank" rel="noopener noreferrer">The AI-native SDLC playbook<span class="sr-only"> (opens in a new tab)</span></a>; stage names follow the <a href="week-5.html#stages-h">Week 5 stage table</a>.</figcaption>
+    </figure>
+
+    <article class="card card--activity" aria-labelledby="design-h" style="margin-top:28px">
+      <div class="card__label">
+        <span class="label label--ink">On your own · 45 min, estimate</span>
+      </div>
+      <h3 id="design-h" class="h-card">Factory design document</h3>
+      <p>Write a factory design document of one to two pages for your lanorme fork, starting from the Week 3 log. It contains:</p>
+      <ul class="bullets">
+        <li>a stage table giving trigger, actor, committed artefact, gate type and risk argument for each stage;</li>
+        <li data-track="claude">the automation feature for each stage, chosen from the Claude Code column of the <a href="week-5.html#stages-h">Week 5 table</a> to fit your plan;</li>
+        <li data-track="codex">the automation feature for each stage, chosen from the Codex column of the <a href="week-5.html#stages-h">Week 5 table</a> to fit your plan;</li>
+        <li>an observer loop: what it reads, the one file it may change, and how CI enforces that limit;</li>
+        <li>a measurement plan defining a merged change and how human minutes, cost and failed runs are counted, plus one outcome measure;</li>
+        <li>one paragraph weighing Lloyd's thesis against one counter-source.</li>
+      </ul>
+      <p>This document replaces v1's Harness Design Document. Its repository-knowledge and guardrail questions now sit inside the stage table, as the context each stage reads.</p>
+      <p class="deliverable">Deliverable: the factory design document. Bring it to the session for the design review. <a href="#rubric-h">See the criteria</a>.</p>
+      <div class="pw-row pw-row--tracked act-done">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w4:act-factory-design">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Factory design document</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges"><span class="kind kind--practice"><span class="kind__sw"></span><span class="glyph glyph--practice" aria-hidden="true"></span>Practice</span></span>
+            <span class="took" data-progress-took="w4:act-factory-design" hidden>
+              <label for="took-w4-act">Took<span class="sr-only">: minutes Factory design document actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w4-act" data-progress-minutes="w4:act-factory-design">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <div class="bullet" data-progress-bullet="w4:act-factory-design" hidden></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 7. Self-check (page not mocked yet) -->
+  <section class="section" aria-labelledby="check-h">
+    <h2 id="check-h" class="h-section">Self-check</h2>
+    <p>The self-check for this week is being written; the session opens with retrieval questions.</p>
+  </section>
+
+  <!-- 8. Live session -->
+  <section class="section" aria-labelledby="live-h">
+    <h2 id="live-h" class="h-section">Live session</h2>
+    <dl class="facts" style="margin-bottom:14px">
+      <div data-session-fact="4" hidden></div>
+      <div><dt>Length</dt><dd>60 min</dd></div>
+    </dl>
+    <p class="section-intro">Bring your design document, and one piece of evidence from the core readings for the debate. We debate Lloyd against Horthy, review stage tables in threes, and test the designs against a real incident.</p>
+
+    <div class="callout" role="group" aria-labelledby="opener-h" style="margin-top:20px">
+      <h3 id="opener-h" class="h-card">Five-minute retrieval opener</h3>
+      <p>Closed-book questions on paper, for example: "Name the four parts Lloyd says a factory needs" and "Why does Horthy say a harness cannot fix maintainability?"</p>
+    </div>
+
+    <div style="margin-top:28px">
+      <h3 class="h-card">Plan for the hour</h3>
+      <ol class="plan">
+        <li><span class="plan__min">5 min</span><span>Retrieval opener <span class="tag">Active</span></span></li>
+        <li><span class="plan__min">15 min</span><span>Structured debate. Half the room argues Lloyd's position and half Horthy's, each using one piece of evidence from the core readings: Lloyd and the playbook for one side, Horthy and Bender for the other. The facilitator closes with Bender's question of where the bottleneck moves. <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">25 min</span><span>Design review in threes. Each learner presents their stage table for five minutes; peers apply the first and third rubric rows. <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">10 min</span><span>Failure walk. The facilitator presents Clinton's agent-to-agent incident; each group checks whether its design's identities and write limits would have stopped it. <span class="tag">Constructive</span></span></li>
+        <li><span class="plan__min">5 min</span><span>Capstone launch: success criterion, log format, fork rules <span class="tag">Passive</span></span></li>
+      </ol>
+      <p class="note">Tags give each block's mode of engagement in the ICAP framework: passive, active, constructive or interactive.</p>
+    </div>
+  </section>
+
+  <!-- 9. Deliverable and rubric -->
+  <section class="section" aria-labelledby="rubric-h">
+    <h2 id="rubric-h" class="h-section">Deliverable and rubric</h2>
+    <p class="section-intro">The factory design document, one to two pages. In the design review your peers apply the first and third rows. Before the session, mark where you stand on each row.</p>
+    <table class="rubric">
+      <caption>Week 4 rubric</caption>
+      <thead>
+        <tr><th scope="col">Where am I going</th><th scope="col">How am I going: developing</th><th scope="col">How am I going: secure</th><th scope="col">Where to next</th></tr>
+      </thead>
+      <tbody>
+        <tr id="rubric-w4-1"><th scope="row">Every stage has a trigger, an artefact and a justified gate</th><td data-label="Developing">Stages listed without artefacts, or human gates without a reason</td><td data-label="Secure">Each human gate is tied to a risk named in the Week 3 log or a reading</td><td data-label="Where to next">Which human gate could become an agent gate with shadow mode and sampling?</td></tr>
+        <tr id="rubric-w4-2"><th scope="row">The design fits the available tools</th><td data-label="Developing">Relies on features the learner's plan lacks</td><td data-label="Secure">Each stage names a feature that the learner's plan includes</td><td data-label="Where to next">Which stage would you build first to test feasibility?</td></tr>
+        <tr id="rubric-w4-3"><th scope="row">A bounded observer loop</th><td data-label="Developing">"The agent improves its skills"</td><td data-label="Secure">Names the signal, the single writable file and the CI check on its diff</td><td data-label="Where to next">What evidence would show the loop made reviews worse?</td></tr>
+        <tr id="rubric-w4-4"><th scope="row">Measurement against the baseline</th><td data-label="Developing">Counts pull requests</td><td data-label="Secure">Counts human minutes and cost per merged change, failed runs included, plus one outcome measure</td><td data-label="Where to next">What would the numbers hide?</td></tr>
+        <tr id="rubric-w4-5"><th scope="row">A critique with evidence</th><td data-label="Developing">Restates Lloyd or Horthy</td><td data-label="Secure">Sets a specific claim against specific counter-evidence</td><td data-label="Where to next">What result from your capstone would change your view?</td></tr>
+      </tbody>
+    </table>
+
+    <div class="panel" id="dlv" style="margin-top:20px">
+      <h3 class="h-card" id="dlv-h">Your self-mark and design document</h3>
+      <p>Mark where you stand on each row, and link your design document so you can find it again. Both are saved in this browser and leave it only when you export from My progress.</p>
+      <form id="dlv-form" novalidate aria-labelledby="dlv-h">
+        <div id="dlv-rows"></div>
+        <div class="dlv__grid">
+          <div>
+            <label class="field-label" for="dlv-url">Link to your design document</label>
+            <input class="field field--wide" type="url" id="dlv-url" inputmode="url" autocomplete="off" aria-describedby="dlv-url-h">
+            <p class="field-hint" id="dlv-url-h">A link to a file, a gist or a pull request on your fork. Optional.</p>
+          </div>
+          <div>
+            <label class="field-label" for="dlv-note">Note to yourself</label>
+            <textarea class="field" id="dlv-note" maxlength="2000"></textarea>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:14px"><button type="submit" class="btn btn--primary">Save link and note</button></div>
+        <p class="slf__msg" id="dlv-msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <nav class="pager" aria-label="Previous and next week">
+    <a href="week-3.html">
+      <span class="pager__dir"><svg class="arrow arrow--back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M11 6H1M1 6L5.5 1.5M1 6L5.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Previous · Week 3</span>
+      <span class="pager__title">One change through the whole loop</span>
+    </a>
+    <a href="week-5.html">
+      <span class="pager__dir">Next · Week 5<svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="pager__title">A minimal factory, measured</span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+<script>
+(function () {
+  "use strict";
+  var P = window.AgenticProgress, S = window.AgenticSite;
+  if (!P || !P.setDeliverable) return;
+  var ROWS = [["stages", "Every stage has a trigger, an artefact and a justified gate"], ["tools", "The design fits the available tools"], ["observer", "A bounded observer loop"], ["measurement", "Measurement against the baseline"], ["critique", "A critique with evidence"]];
+  var host = document.getElementById("dlv-rows"), url = document.getElementById("dlv-url"), note = document.getElementById("dlv-note"), msg = document.getElementById("dlv-msg"), form = document.getElementById("dlv-form");
+  host.innerHTML = ROWS.map(function (r, i) {
+    return '<fieldset class="dlv__row"><legend>' + (i + 1) + '. ' + S.esc(r[1]) + '</legend><div class="radio-row">' +
+      '<label><input type="radio" name="rs-' + r[0] + '" value="developing" data-rs="' + r[0] + '">Developing</label>' +
+      '<label><input type="radio" name="rs-' + r[0] + '" value="secure" data-rs="' + r[0] + '">Secure</label></div></fieldset>';
+  }).join("");
+  function cur() { var d = (P.get().deliverables || {}).w4 || {}; return { url: d.url || "", note: d.note || "", rubricSelf: d.rubricSelf || {} }; }
+  function fill(first) {
+    var c = cur();
+    Array.prototype.forEach.call(host.querySelectorAll("input[type=radio]"), function (el) { el.checked = c.rubricSelf[el.getAttribute("data-rs")] === el.value; });
+    if (first || (document.activeElement !== url && !url.dataset.dirty)) url.value = c.url;
+    if (first || (document.activeElement !== note && !note.dataset.dirty)) note.value = c.note;
+  }
+  function say(t, err) { msg.textContent = t; msg.classList.toggle("is-error", !!err); }
+  url.addEventListener("input", function () { url.dataset.dirty = "1"; url.removeAttribute("aria-invalid"); });
+  note.addEventListener("input", function () { note.dataset.dirty = "1"; });
+  host.addEventListener("change", function (e) {
+    var el = e.target; if (!el.getAttribute || !el.getAttribute("data-rs")) return;
+    var c = cur(); c.rubricSelf[el.getAttribute("data-rs")] = el.value;
+    P.setDeliverable(4, { url: c.url, note: c.note, rubricSelf: c.rubricSelf });
+    say("Saved: " + el.closest("fieldset").querySelector("legend").textContent.replace(/^\d+\. /, "") + " marked " + el.value + ".");
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = url.value.trim();
+    if (v && !/^https?:\/\/\S+$/i.test(v)) { url.setAttribute("aria-invalid", "true"); say("The link must start with http:// or https://.", true); url.focus(); return; }
+    url.removeAttribute("aria-invalid");
+    var c = cur();
+    P.setDeliverable(4, { url: v, note: note.value, rubricSelf: c.rubricSelf });
+    delete url.dataset.dirty; delete note.dataset.dirty;
+    say(v ? "Saved your link and note in this browser." : "Saved your note. No link is set.");
+  });
+  fill(true);
+  P.on("change", function () { fill(false); });
+})();
+</script>
+</body>
+</html>

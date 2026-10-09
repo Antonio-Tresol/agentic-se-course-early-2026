@@ -1,0 +1,2846 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1: One Coding Agent · Agentic SE Course</title>
+<meta name="description" content="Week 1: Foundations of Agentic Engineering. Benchmark estimation, agent capabilities, and single-agent workflows.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="bench.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- 1. Header: one line home, week links, My progress -->
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html" aria-current="page"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+
+  <!-- 2. Week hero (visual-design.md 3.2): title, track, minutes left, budget bar, outcomes -->
+  <div class="whero">
+    <div class="whero__top">
+      <div class="whero__titles">
+        <p class="label week-head__label">Week 1</p>
+        <h1 class="week-head__title">One Coding Agent</h1>
+      </div>
+      <fieldset class="track-switch" data-announce-week="1"
+        data-announce-claude="Showing the Claude Code track. Week 1 pre-work is 172 minutes."
+        data-announce-codex="Showing the Codex track. Week 1 pre-work is 185 minutes.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">This week is about getting your hands dirty. You install a coding agent, work through two structured courses, and learn the established best practices for steering it effectively.</p>
+
+    <section class="whero__panel" aria-labelledby="budget-h">
+      <h2 id="budget-h" class="sr-only">Time budget</h2>
+      <div data-progress-budget="1"
+        data-note="Course times from the catalogue pages; reading time at 238 words per minute. No optional items and no pre-work activity this week; the benchmark estimation activity runs in the session.">
+        <p class="budget__line">Pre-work: <strong><span data-track="claude">172 min</span><span data-track="codex">185 min</span></strong> core. No optional items, no pre-work activity.</p>
+      </div>
+    </section>
+
+    <section class="whero__panel oc" aria-labelledby="oc-h">
+      <div class="oc__head">
+        <h2 id="oc-h" class="label label--ink">By the end of this week you can</h2>
+        <span class="oc__count" data-progress-outcome-count="1">0 of 4 ticked</span>
+      </div>
+      <p class="meta oc__hint">Tick one once you can do it, after the self-check or the live session.</p>
+      <ol class="oc__list">
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w1-o1-text">Take a small change in an unfamiliar repository from prompt to verified diff, giving the agent a check to run: a test, a linter or a build.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w1:o1" aria-describedby="w1-o1-text">I can do this</label>
+              <a href="week-1-check.html#q1">Self-check, question 1</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w1-o2-text">Choose a permission mode for a task and say what the agent may do in that mode without asking.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w1:o2" aria-describedby="w1-o2-text">I can do this</label>
+              <a href="week-1-check.html#q5">Self-check, question 5</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w1-o3-text">Write a short CLAUDE.md (or AGENTS.md) holding the commands and conventions the agent cannot infer from the code.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w1:o3" aria-describedby="w1-o3-text">I can do this</label>
+              <a href="week-1-check.html#q3">Self-check, question 3</a>
+            </div>
+          </div>
+        </li>
+        <li class="oc__item">
+          <div>
+            <p class="oc__text" id="w1-o4-text">Scope a real task from a hard software-engineering benchmark with your agent, estimate its human time, complexity and specification quality, and compare your estimate with the published figure.</p>
+            <div class="oc__ctl">
+              <label class="check"><input type="checkbox" data-progress-outcome="w1:o4" aria-describedby="w1-o4-text">I can do this</label>
+              <a href="#bench-activity">Live activity, benchmark estimates</a>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- 3. Core pre-work (3.3): done checkbox, kind badge, took field, bullet graph -->
+  <section class="section" aria-labelledby="core-h">
+    <h2 id="core-h" class="h-section">Core pre-work</h2>
+    <p class="section-intro">In this order. The self-check and the live session assume every item on your track. Read the questions before you start each item, and tick it when you finish.</p>
+
+    <ol class="pw-list">
+      <!-- Row 1, Claude track -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-claude-101">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Claude Code 101</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~90 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-claude-101" hidden>
+              <label for="took-w1-cc101">Took<span class="sr-only">: minutes Claude Code 101 actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cc101" data-progress-minutes="w1:pw-claude-101">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/claude-code-101" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Claude Code 101</span><span class="link-row__meta">Anthropic · 12 lessons · start here</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>What fills the context window as a session goes on, and what do <code>/context</code>, <code>/compact</code> and <code>/clear</code> each do about it?</li>
+              <li>Of CLAUDE.md, skills, subagents, MCP and hooks, which would you use for a rule that must hold every time, and which for knowledge the agent needs only sometimes?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-claude-101" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 1, Codex track -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-codex-get-started">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Get Started with Codex</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~80 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-codex-get-started" hidden>
+              <label for="took-w1-cx-start">Took<span class="sr-only">: minutes Get Started with Codex actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cx-start" data-progress-minutes="w1:pw-codex-get-started">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.openai.com/public/courses/get-started-with-codex-jkhsq" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Get Started with Codex</span><span class="link-row__meta">OpenAI · start here; no prior Codex experience assumed</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>How do you give Codex a check to run, such as a test, a linter or a build, and how do you see what it returned?</li>
+              <li>What would you put in an AGENTS.md for your repository that Codex could not work out from the code?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-codex-get-started" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 2, Claude track -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-cc-in-action">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Claude Code in Action</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~60 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-cc-in-action" hidden>
+              <label for="took-w1-cc-action">Took<span class="sr-only">: minutes Claude Code in Action actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cc-action" data-progress-minutes="w1:pw-cc-in-action">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/claude-code-in-action" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Claude Code in Action</span><span class="link-row__meta">Anthropic · 9 lessons · take after 101</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>In a long session, when would you rewind rather than compact, and what does a <code>/goal</code> condition add that a single prompt does not?</li>
+              <li>Which repeated task from your own work would you automate first, and what check would tell the agent it had finished correctly?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-cc-in-action" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 2, Codex track -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-codex-extend">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Extend Codex Workflows</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~90 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-codex-extend" hidden>
+              <label for="took-w1-cx-extend">Took<span class="sr-only">: minutes Extend Codex Workflows actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cx-extend" data-progress-minutes="w1:pw-codex-extend">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://academy.openai.com/public/courses/extend-codex-workflows-4e61p" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">Extend Codex Workflows</span><span class="link-row__meta">OpenAI · take after Get Started</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>Which workflow you repeat would you turn into a reusable skill, and what would the skill need to know?</li>
+              <li>When would you hand part of a task to a subagent, and how would you check its result before relying on it?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-codex-extend" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 3, Claude track -->
+      <li class="pw-row pw-row--tracked" data-track="claude">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-best-practices">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Best Practices for Claude Code</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">~22 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-best-practices" hidden>
+              <label for="took-w1-bp">Took<span class="sr-only">: minutes Best Practices for Claude Code actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-bp" data-progress-minutes="w1:pw-best-practices">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Best Practices for Claude Code</span><span class="link-row__meta">Anthropic · docs</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding questions</span></p>
+            <ul class="gq__list">
+              <li>The guide says most of its advice follows from one constraint. Which constraint, and how does it shape the advice on <code>/clear</code> and subagents?</li>
+              <li>What turns a session you have to watch into one you can walk away from?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-best-practices" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 3, Codex track -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-codex-best-practices">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Best practices, Codex docs</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">~10 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-codex-best-practices" hidden>
+              <label for="took-w1-cx-bp">Took<span class="sr-only">: minutes Best practices actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cx-bp" data-progress-minutes="w1:pw-codex-best-practices">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/guides/best-practices" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Best practices</span><span class="link-row__meta">OpenAI · Codex docs</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding question</span></p>
+            <ul class="gq__list">
+              <li>Which of the four prompt elements (goal, context, constraints, done-when) do you leave out most often, and what does the page say goes wrong when you do?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-codex-best-practices" hidden></div>
+        </div>
+      </li>
+
+      <!-- Row 4, Codex track -->
+      <li class="pw-row pw-row--tracked" data-track="codex">
+        <label class="pw-done">
+          <input type="checkbox" data-progress-item="w1:pw-codex-agents-md">
+          <span class="pw-done__text">Done</span><span class="sr-only">: Custom instructions with AGENTS.md</span>
+        </label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--reading"><span class="kind__sw"></span><span class="glyph glyph--reading" aria-hidden="true"></span>Reading</span>
+              <span class="pw-row__time">~5 min</span>
+            </span>
+            <span class="took" data-progress-took="w1:pw-codex-agents-md" hidden>
+              <label for="took-w1-cx-agents">Took<span class="sr-only">: minutes Custom instructions with AGENTS.md actually took (optional)</span></label>
+              <input class="field field--num" type="number" min="0" step="1" inputmode="numeric" id="took-w1-cx-agents" data-progress-minutes="w1:pw-codex-agents-md">
+              <span class="meta" aria-hidden="true">min</span>
+            </span>
+          </div>
+          <a class="link-row" href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Custom instructions with AGENTS.md</span><span class="link-row__meta">OpenAI · Codex docs</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding question</span></p>
+            <ul class="gq__list">
+              <li>Codex reads AGENTS.md files from the repository root down to your working directory. Which file wins when two conflict, and what belongs in yours that Codex cannot work out from the code?</li>
+            </ul>
+          </div>
+          <div class="bullet" data-progress-bullet="w1:pw-codex-agents-md" hidden></div>
+        </div>
+      </li>
+    </ol>
+    <p class="note">Ticked items fill the bar at the top of the page. "Took" is optional: it helps the course owner check these estimates.</p>
+  </section>
+
+  <!-- 5. Optional pre-work: none this week. 6. Pre-work activity: none this week. -->
+
+  <!-- 7. Self-check: score from this browser, then the check page -->
+  <section class="section" aria-labelledby="check-h">
+    <h2 id="check-h" class="h-section">Self-check</h2>
+    <p class="section-intro">Five questions on this week's pre-work, answered from memory the day before the session. Say how sure you are before each answer is shown. Your answers are saved in this browser only.</p>
+    <div class="score-card">
+      <p class="label">Your latest try</p>
+      <div data-quiz-summary="1" data-questions="5"></div>
+      <div class="btn-row">
+        <a class="btn btn--primary btn--small" href="week-1-check.html">Take the Week 1 self-check</a>
+        <span class="meta">5 questions · about 10 min</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Live session -->
+  <section class="section" aria-labelledby="live-h">
+    <h2 id="live-h" class="h-section">Live session</h2>
+    <dl class="facts" style="margin-bottom:14px">
+      <div data-session-fact="1" hidden></div>
+      <div><dt>Length</dt><dd>60 min</dd></div>
+    </dl>
+    <p class="section-intro">We share briefly what worked in the courses and what did not. Then, in pairs, we estimate real benchmark tasks: scope each task with your agent, estimate its human time, complexity and specification quality, and compare your estimates with the published figures.</p>
+
+    <div class="callout" role="group" aria-labelledby="opener-h" style="margin-top:20px">
+      <h3 id="opener-h" class="h-card">Five-minute retrieval opener</h3>
+      <p>We start on paper, without notes: three short questions, two on this week's pre-work and one from Week 0. Then we compare answers before moving on.</p>
+    </div>
+
+
+
+    <section id="bench-activity" class="section" aria-labelledby="bench-activity-h">
+  <div class="card__label"><span class="label label--ink">Live session activity · in pairs · 60 min</span></div>
+  <h3 id="bench-activity-h" class="bench-title">How hard are the hardest benchmarks?</h3>
+  <p class="bench-p">You installed your agent in Week 0 and have worked through this week's courses. In the session you point it at someone else's hardest problems. First look at the latest numbers on the hardest public software-engineering benchmarks, then open real tasks from them. In pairs, take ten minutes per task: use your coding agent to understand the task and its size, then estimate how long it would take, how complex it is and how well specified it is. Only then do you see the published answers.</p>
+
+  <noscript><p class="note">The charts, task cards and estimate forms need JavaScript. The same data is in data/benchmarks.json.</p></noscript>
+
+  <div class="bench-sub" id="bench-frontier">
+    <h4 class="bench-h">Where the frontier stands</h4>
+    <p class="bench-p">We read every board on 9 October 2026. The hardest public boards show saturation followed by replacement. SWE-bench Verified last set a record on its own board in December 2025, at 79.2%. OpenAI stopped reporting it in February 2026, after finding that 59.4% of 138 audited hard tasks had flawed tests or descriptions and that every frontier model it probed could reproduce gold patches or problem text for some tasks. OpenAI recommended SWE-Bench Pro instead. Scale's public board tops out at 61.5% (Muse Spark 1.1, July 2026), yet in July OpenAI estimated that about 30% of Pro's public tasks are broken and withdrew its recommendation. Scale released a revised 642-task V2 on 22 September.</p>
+    <p class="bench-p">Terminal-Bench now versions itself continuously: among the models its team compared, the best score was 83.8% on version 2.1 and 34.4% on 3.0, and the 4.0 board is led by Claude Opus 5.5 in Claude Code at 64.8%. FrontierCode, Cognition's private benchmark graded on whether a maintainer would merge the patch, is led by Claude Opus 5.5 at 54.6. METR's 50% time horizon reached about 17 hours for Claude Mythos Preview, beyond the 16 hours METR calls reliable, and METR stopped updating the page in September. Passing tests also overstates usefulness: maintainers would not merge about half of test-passing Verified patches.</p>
+    <div class="bench-grid" data-bench-panels></div>
+  </div>
+
+  <div class="bench-sub" id="bench-frontier-time">
+    <h4 class="bench-h">How the frontier moved</h4>
+    <p class="bench-p">Three series from the same sources. Each has its own axis: minutes of human time, percent of Verified tasks, and percent of Terminal-Bench trials are different measures, so they are never drawn on one scale.</p>
+    <div data-bench-metr></div>
+    <div class="bench-fig__pair">
+      <div data-bench-swev></div>
+      <div data-bench-tbv></div>
+    </div>
+  </div>
+
+  <div class="bench-sub" id="bench-hour">
+    <h4 class="bench-h">The Week 1 session, minute by minute</h4>
+    <figure class="bench-sbar" aria-labelledby="bench-sbar-cap">
+      <p id="bench-sbar-cap" class="label">60 minutes, by who is working</p>
+      <div class="bench-sbar__track" aria-hidden="true" data-sbar></div>
+      <div class="bench-sbar__scale meta" aria-hidden="true"><span>0:00</span><span>30:00</span><span>60:00</span></div>
+      <div class="bench-legend" data-sbar-legend></div>
+    </figure>
+    <ol class="bench-plan" data-plan aria-label="Activity plan"></ol>
+  </div>
+
+  <div class="bench-sub" id="bench-rules">
+    <h4 class="bench-h">Rules for the agent</h4>
+    <p class="bench-p">The agent may read and run code. It must not edit files, search the web, or open <code>README.md</code>, <code>task.toml</code>, <code>solution/</code>, <code>tests/</code> or the linked pull request: those hold the answer or the published time. Give it this starter prompt, identical for Claude Code and Codex, then read its answer and probe it with follow-up questions.</p>
+    <div class="bench-prompt bench-code" data-copy-src="prompt">
+      <blockquote><p data-prompt>Help us scope this task before anyone writes code. Read TASK.md (or instruction.md). Do not edit any file, do not search the web, and do not open README.md, task.toml, solution/, tests/ or any linked pull request. Then (1) list the files and functions involved, one line each; (2) describe what a complete solution must change; (3) name the two riskiest unknowns; (4) say how you would check the solution works. Keep the answer under 300 words.</p></blockquote>
+    </div>
+    <p class="bench-p" style="margin-top:14px">Every estimate answers one question. It asks about an experienced engineer rather than about you, because the published human times assume roughly that person.</p>
+    <p class="bench-question">How many minutes would an experienced engineer, new to this repository, need without AI help to reach a solution that passes the task's tests?</p>
+  </div>
+
+  <div class="bench-sub" id="bench-tasks">
+    <h4 class="bench-h">The six tasks</h4>
+    <p class="bench-p">Two tasks from each of SWE-bench Verified, Terminal-Bench 4.0 and SWE-Bench Pro V2. Each pair scopes two of them, one per round. The cards hold back the published answers until you reveal them, because the upstream folders and IDs give them away.</p>
+    <div class="est-pair">
+      <div>
+        <label for="bench-pair-num">Your pair number</label>
+        <input id="bench-pair-num" type="number" min="1" step="1" inputmode="numeric" aria-describedby="bench-pair-out bench-pair-rule">
+      </div>
+      <p class="est-pair__out" id="bench-pair-out" aria-live="polite"></p>
+    </div>
+    <p class="note" id="bench-pair-rule">Pair <i>p</i> takes task ((<i>p</i> − 1) mod 6) + 1 in round 1 and task ((<i>p</i> + 2) mod 6) + 1 in round 2, so each pair meets two benchmarks.</p>
+    <div class="est-tabs" role="tablist" aria-label="Benchmark tasks" data-tabs></div>
+    <div data-panels></div>
+  </div>
+
+  <div class="bench-sub" id="bench-calibration">
+    <h4 class="bench-h">Your estimates against the ground truth</h4>
+    <p class="bench-p">Each revealed task with a published human time gets a row on a log scale, because the times run from under 15 minutes to 960. Terminal-Bench tasks compare with the task author's point estimate as log<sub>2</sub>(estimate ÷ point): +1 is twice as long, −1 half as long. SWE-bench Verified tasks count as inside the annotators' bucket, or else take the log<sub>2</sub> distance to the nearer bound.</p>
+    <div data-cal></div>
+    <p class="note">SWE-Bench Pro publishes no per-task human time, so Tasks 5 and 6 never appear here. This page shows your own estimates only; the room's spread comes from the files the facilitator gathers.</p>
+  </div>
+
+  <div class="bench-sub" id="bench-exit">
+    <h4 class="bench-h">Exit question</h4>
+    <div class="callout">
+      <p>Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?</p>
+    </div>
+  </div>
+
+  <div class="bench-sub" id="bench-why">
+    <h4 class="bench-h">Why we estimate before we look</h4>
+    <p class="bench-p">Prediction before the reveal carries most of the learning. Crouch and colleagues found that students who only watched a physics demonstration understood the underlying concepts no better than students who never saw it, while students who predicted the outcome first showed significantly greater understanding [<a href="#bench-ref-crouch2004">1</a>]. Asking questions before instruction has a related benefit: prequestions before segments of an educational video improved later test performance on both the prequestioned and the non-prequestioned material [<a href="#bench-ref-carpenter2017">2</a>]. The estimate form plays the part of the prediction and the reveal plays the demonstration, so the page locks each estimate before any ground truth appears.</p>
+    <p class="bench-p">Calibration feedback follows the reveal. Hattie and Timperley conclude that feedback is among the strongest influences on learning, and that its type and the way it is given decide whether it helps [<a href="#bench-ref-hattie2007">3</a>]. In software estimation specifically, lessons-learned sessions on professionals' own estimates did not improve estimation accuracy, while feedback about other professionals' estimation performance produced more realistic uncertainty assessments than the same feedback about one's own [<a href="#bench-ref-jorgensen2009">4</a>]. The discussion therefore opens on the class distribution for each task, with every pair's estimate on one axis, before any pair examines its own error.</p>
+    <p class="bench-p">The wording of the estimate question draws on the planning fallacy: people underestimate their own task completion times, focusing on plans rather than past experience, while observers overestimate the completion times of others [<a href="#bench-ref-buehler1994">5</a>]. Asking about an experienced engineer new to the repository puts pairs in the observer's position and matches the ground-truth definitions. The activity also previews the idea behind METR's time horizon, which measures task difficulty by how long humans take [<a href="#bench-ref-kwa2025">6</a>]; the reveal lets you check whether human time and agent success point the same way on your two tasks.</p>
+    <ol class="bench-refs" aria-label="References">
+      <li id="bench-ref-crouch2004">1. Crouch, C., Fagen, A. P., Callan, J. P. and Mazur, E. (2004). Classroom demonstrations: Learning tools or entertainment? <i>American Journal of Physics</i>, 72(6), 835 to 838. <a href="https://doi.org/10.1119/1.1707018">doi:10.1119/1.1707018</a></li>
+      <li id="bench-ref-carpenter2017">2. Carpenter, S. K. and Toftness, A. R. (2017). The effect of prequestions on learning from video presentations. <i>Journal of Applied Research in Memory and Cognition</i>, 6(1), 104 to 109. <a href="https://doi.org/10.1016/j.jarmac.2016.07.014">doi:10.1016/j.jarmac.2016.07.014</a></li>
+      <li id="bench-ref-hattie2007">3. Hattie, J. and Timperley, H. (2007). The power of feedback. <i>Review of Educational Research</i>, 77(1), 81 to 112. <a href="https://doi.org/10.3102/003465430298487">doi:10.3102/003465430298487</a></li>
+      <li id="bench-ref-jorgensen2009">4. Jørgensen, M. and Gruschke, T. M. (2009). The impact of lessons-learned sessions on effort estimation and uncertainty assessments. <i>IEEE Transactions on Software Engineering</i>, 35(3), 368 to 383. <a href="https://doi.org/10.1109/TSE.2009.2">doi:10.1109/TSE.2009.2</a></li>
+      <li id="bench-ref-buehler1994">5. Buehler, R., Griffin, D. and Ross, M. (1994). Exploring the "planning fallacy": Why people underestimate their task completion times. <i>Journal of Personality and Social Psychology</i>, 67(3), 366 to 381. <a href="https://doi.org/10.1037/0022-3514.67.3.366">doi:10.1037/0022-3514.67.3.366</a></li>
+      <li id="bench-ref-kwa2025">6. Kwa, T., West, B., Becker, J. and others (2025). Measuring AI ability to complete long software tasks. arXiv:2503.14499. <a href="https://arxiv.org/abs/2503.14499">arxiv.org/abs/2503.14499</a></li>
+    </ol>
+  </div>
+  <div class="sr-only" aria-live="polite" data-bench-live></div>
+</section>
+<script type="application/json" id="bench-data">
+{
+  "fetchedAt": "2026-10-09",
+  "description": "Chart data and task cards for the Week 0 benchmark-estimation activity (notes/benchmark-activity.md).",
+  "sources": [
+    {
+      "id": "swebench-leaderboard",
+      "title": "SWE-bench leaderboards (Verified board), data/leaderboards.json",
+      "url": "https://www.swebench.com/",
+      "dataUrl": "https://raw.githubusercontent.com/SWE-bench/swe-bench.github.io/master/data/leaderboards.json",
+      "bibKey": "swebench2026leaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "File last changed 2026-09-01; newest Verified entry dated 2026-02-26."
+    },
+    {
+      "id": "swebench-experiments",
+      "title": "SWE-bench/experiments, evaluation/verified per-instance results",
+      "url": "https://github.com/SWE-bench/experiments/tree/main/evaluation/verified",
+      "bibKey": "swebench2026experiments",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "swebench-verified-hf",
+      "title": "princeton-nlp/SWE-bench_Verified dataset (difficulty field)",
+      "url": "https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified",
+      "revision": "c104f840cc67f8b6eec6f759ebc8b2693d585d4a",
+      "bibKey": "princeton2025swebenchverifiedhf",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-swev-intro",
+      "title": "Introducing SWE-bench Verified (OpenAI, 13 August 2024)",
+      "url": "https://openai.com/index/introducing-swe-bench-verified/",
+      "bibKey": "openai2024swebenchverified",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-swev-retire",
+      "title": "Why we no longer evaluate SWE-bench Verified (OpenAI, 23 February 2026)",
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
+      "bibKey": "openai2026noswebenchverified",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-signal-noise",
+      "title": "Separating signal from noise in coding evaluations (OpenAI, 8 July 2026)",
+      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations/",
+      "bibKey": "openai2026signalnoise",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "scale-swepro-leaderboard",
+      "title": "SWE-Bench Pro leaderboard (Scale), public and private sets",
+      "url": "https://labs.scale.com/leaderboard/swe_bench_pro",
+      "bibKey": "scale2026sweproleaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "Requested as scale.com/leaderboard/swe_bench_pro_public, which redirects here. Entries are the v1 (731-task) public set."
+    },
+    {
+      "id": "scale-swepro-v2",
+      "title": "ScaleAI/SWE-bench_Pro dataset card, V2 (2026-09-22)",
+      "url": "https://huggingface.co/datasets/ScaleAI/SWE-bench_Pro",
+      "revision": "2d52cb3df914a3fcf80c7f66738b3a88ae37fc50",
+      "bibKey": "scale2026sweprov2",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "scale-swepro-repo",
+      "title": "scaleapi/SWE-bench_Pro-os, v2/README.md and v2/hard51_ids.txt",
+      "url": "https://github.com/scaleapi/SWE-bench_Pro-os/tree/66f92766bba642462d4bbe5479e83f91f9211862/v2",
+      "bibKey": "scale2026sweprov2",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "swepro-paper",
+      "title": "SWE-Bench Pro paper (Deng et al., arXiv:2509.16941)",
+      "url": "https://arxiv.org/abs/2509.16941",
+      "bibKey": "deng2025swebenchpro",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb-leaderboard",
+      "title": "Terminal-Bench 4.0 leaderboard (tbench.ai, embedded Harbor Hub data)",
+      "url": "https://www.tbench.ai/",
+      "bibKey": "tbench2026leaderboard",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb4-blog",
+      "title": "Terminal-Bench 4.0 announcement (28 August 2026)",
+      "url": "https://www.tbench.ai/news/terminal-bench-4-0",
+      "bibKey": "tbench2026tb4",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb3-blog",
+      "title": "Terminal-Bench 3.0 announcement (30 July 2026)",
+      "url": "https://www.tbench.ai/news/terminal-bench-3-0",
+      "bibKey": "tbench2026tb3",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb-repo",
+      "title": "harbor-framework/terminal-bench at tag v4.0.0 (task.toml, README.md, instruction.md)",
+      "url": "https://github.com/harbor-framework/terminal-bench/tree/v4.0.0",
+      "commit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "bibKey": "tbench2026repo",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "harbor-job-opus55",
+      "title": "Harbor Hub job for the Opus 5.5 / Claude Code (max) TB 4.0 leaderboard entry",
+      "url": "https://hub.harborframework.com/jobs/bfd722a4-4c18-5a00-a874-c70b646870b8",
+      "bibKey": "harbor2026jobopus55",
+      "fetchedAt": "2026-10-09",
+      "note": "330 trials read from the Trials tab; 214 rewards of 1.00, matching the leaderboard's 64.85%."
+    },
+    {
+      "id": "harbor-job-gpt61sol",
+      "title": "Harbor Hub job for the GPT-6.1 Sol / Codex (max) TB 4.0 leaderboard entry",
+      "url": "https://hub.harborframework.com/jobs/3837153f-6673-539d-b3e2-99a6edd3c5db",
+      "bibKey": "harbor2026jobgpt61sol",
+      "fetchedAt": "2026-10-09",
+      "note": "330 trials; 192 rewards of 1.00, matching the leaderboard's 58.18%."
+    },
+    {
+      "id": "metr-th",
+      "title": "Task-Completion Time Horizons of Frontier AI Models (METR), TH 1.1 raw data",
+      "url": "https://metr.org/time-horizons/",
+      "dataUrl": "https://metr.org/assets/benchmark_results_1_1.yaml",
+      "bibKey": "metr2026timehorizons",
+      "fetchedAt": "2026-10-09",
+      "note": "Page last updated 8 September 2026 and marked as no longer actively updated."
+    },
+    {
+      "id": "metr-paper",
+      "title": "Measuring AI Ability to Complete Long Software Tasks (Kwa et al., arXiv:2503.14499)",
+      "url": "https://arxiv.org/abs/2503.14499",
+      "bibKey": "kwa2025timehorizon",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "frontiercode-blog",
+      "title": "Introducing FrontierCode (Cognition, 8 June 2026)",
+      "url": "https://cognition.com/blog/frontier-code",
+      "bibKey": "cognition2026frontiercode",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "frontiercode-leaderboard",
+      "title": "FrontierCode leaderboard (Cognition), FrontierCode 1.1 Main",
+      "url": "https://cognition.com/frontiercode",
+      "bibKey": "cognition2026frontiercodeleaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "Rendered client-side; table and changelog read through a browser on 2026-10-09."
+    },
+    {
+      "id": "metr-mergeability",
+      "title": "Many SWE-bench-Passing PRs Would Not Be Merged into Main (METR note, 10 March 2026)",
+      "url": "https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/",
+      "bibKey": "metr2026mergeability",
+      "fetchedAt": "2026-10-09"
+    }
+  ],
+  "charts": {
+    "topScores": {
+      "description": "Current top results per benchmark, as published on each board on 2026-10-09.",
+      "selectionRules": [
+        "Take the board's own ranking metric; ties share a rank.",
+        "SWE-bench Verified: keep every entry whose score equals or exceeds the fifth-highest score (three entries tie at 76.8), earliest date first within a tie. 'attempts' repeats the board's tag; entries marked 2 or 2+ used more than one attempt.",
+        "Terminal-Bench 4.0: keep the best reasoning effort per (model, agent) pair, then the top five pairs. Rank 5 (57.88%) is shared with other efforts of GPT-6 Astra and Fable 5.1 that were removed as duplicates.",
+        "SWE-Bench Pro: the Scale board's public-set ranking, which predates the 642-task V2 release of 2026-09-22 and so scores the 731-task v1 set. 'date' is the entry's createdAt on the board.",
+        "FrontierCode: the 1.1 Main table, best reasoning effort per model, ranked by score. 'date' comes from the leaderboard changelog.",
+        "METR: 50% time horizon in minutes from TH 1.1 raw data; 'date' is the model release date in that file.",
+        "Vendor-reported scores that no board lists (for example OpenAI's 80.9% on Verified and 80.3% on the Pro public set) are in 'caveats', never in 'entries'."
+      ],
+      "benchmarks": [
+        {
+          "id": "swe-bench-verified",
+          "name": "SWE-bench Verified",
+          "metric": "% of 500 tasks resolved",
+          "sourceId": "swebench-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Sonar Foundation Agent + Claude 4.5 Opus",
+              "model": "Claude 4.5 Opus",
+              "score": 79.2,
+              "date": "2025-12-05",
+              "attempts": "Attempts - 1",
+              "folder": "20251205_sonar-foundation-agent_claude-opus-4-5"
+            },
+            {
+              "rank": 1,
+              "system": "live-SWE-agent + Claude 4.5 Opus medium (20251101)",
+              "model": "Claude 4.5 Opus",
+              "score": 79.2,
+              "date": "2025-12-15",
+              "attempts": "Attempts - 1",
+              "folder": "20251215_livesweagent_claude-opus-4-5"
+            },
+            {
+              "rank": 3,
+              "system": "TRAE + Doubao-Seed-Code",
+              "model": "Doubao-Seed-Code",
+              "score": 78.8,
+              "date": "2025-09-28",
+              "attempts": "Attempts - 2+",
+              "folder": "20250928_trae_doubao_seed_code"
+            },
+            {
+              "rank": 4,
+              "system": "live-SWE-agent + Gemini 3 Pro Preview (2025-11-18)",
+              "model": "Gemini 3 Pro Preview",
+              "score": 77.4,
+              "date": "2025-11-20",
+              "attempts": "Attempts - 1",
+              "folder": "20251120_livesweagent_gemini-3-pro-preview"
+            },
+            {
+              "rank": 5,
+              "system": "EPAM AI/Run Developer Agent v20250719 + Claude 4 Sonnet",
+              "model": "Claude 4 Sonnet",
+              "score": 76.8,
+              "date": "2025-08-04",
+              "attempts": "Attempts - 2+",
+              "folder": "20250804_epam-ai-run-claude-4-sonnet"
+            },
+            {
+              "rank": 5,
+              "system": "Atlassian Rovo Dev (2025-09-02)",
+              "model": "Multiple",
+              "score": 76.8,
+              "date": "2025-09-02",
+              "attempts": "Attempts - 2",
+              "folder": "20250902_atlassian-rovo-dev"
+            },
+            {
+              "rank": 5,
+              "system": "Claude 4.5 Opus (high)",
+              "model": "Claude 4.5 Opus",
+              "score": 76.8,
+              "date": "2026-02-17",
+              "attempts": "Attempts - 1",
+              "folder": "20260217_mini-v2.0.0_claude-4-5-opus-high"
+            }
+          ],
+          "caveats": [
+            "Newest entry on the board is dated 2026-02-26; the board stopped receiving frontier submissions.",
+            "OpenAI stopped reporting Verified on 2026-02-23, citing contamination and flawed tests, after state-of-the-art progress from 74.9% to 80.9% in six months (vendor-reported, not on this board).",
+            "OpenAI audited 138 tasks that o3 did not consistently solve and found 59.4% had material test or description issues.",
+            "METR found that roughly half of test-passing Verified PRs from mid-2024 to late-2025 agents would not be merged by maintainers."
+          ]
+        },
+        {
+          "id": "swe-bench-pro-public",
+          "name": "SWE-Bench Pro (Scale, public set, v1)",
+          "metric": "% resolved",
+          "sourceId": "scale-swepro-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Muse Spark 1.1*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 61.5,
+              "ci95": 3.1,
+              "date": "2026-07-09"
+            },
+            {
+              "rank": 2,
+              "system": "gpt-5.4 (xHigh)*",
+              "harness": "mini-swe-agent",
+              "company": "openai",
+              "score": 59.1,
+              "ci95": 3.56,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 3,
+              "system": "Muse Spark*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 55.0,
+              "ci95": 3.6,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 4,
+              "system": "claude-opus-4-6 (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "anthropic",
+              "score": 51.9,
+              "ci95": 3.61,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 5,
+              "system": "gemini-3.1-pro (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "google",
+              "score": 46.1,
+              "ci95": 3.6,
+              "date": "2026-04-08"
+            }
+          ],
+          "privateSetTop5": [
+            {
+              "rank": 1,
+              "system": "Muse Spark 1.1*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 51.5,
+              "ci95": 5.5,
+              "date": "2026-07-09"
+            },
+            {
+              "rank": 2,
+              "system": "claude-opus-4-6 (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "anthropic",
+              "score": 47.1,
+              "ci95": 6.07,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 3,
+              "system": "Muse Spark*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 44.7,
+              "ci95": 6.05,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 4,
+              "system": "gpt-5.4(xHigh)*",
+              "harness": "mini-swe-agent",
+              "company": "openai",
+              "score": 43.4,
+              "ci95": 6.03,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 5,
+              "system": "gemini-3.1-pro (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "google",
+              "score": 32.2,
+              "ci95": 5.69,
+              "date": "2026-04-08"
+            }
+          ],
+          "caveats": [
+            "* in the model name means the run used the mini-swe-agent harness, per the board's legend.",
+            "OpenAI (2026-07-08) estimated that about 30% of the public tasks are broken (human review flagged 249, 34.1%) and retracted its recommendation of SWE-Bench Pro. OpenAI also wrote that frontier models improved from 23.3% to 80.3% on the public split in eight months, a figure absent from Scale's board.",
+            "Scale released V2 on 2026-09-22: 89 of 731 tasks dropped, 529 statements rewritten, plus a HARD-51 subset. The board has not been re-run on V2."
+          ]
+        },
+        {
+          "id": "terminal-bench-4",
+          "name": "Terminal-Bench 4.0",
+          "metric": "% of 330 trials passed (66 tasks x 5)",
+          "sourceId": "tb-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Opus 5.5 (Claude Code, max)",
+              "model": "Opus 5.5",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 64.85,
+              "ci95": 3.11,
+              "trials": 330,
+              "date": "2026-09-22"
+            },
+            {
+              "rank": 2,
+              "system": "Sonnet 5.5 (Claude Code, max)",
+              "model": "Sonnet 5.5",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 61.82,
+              "ci95": 2.94,
+              "trials": 330,
+              "date": "2026-09-28"
+            },
+            {
+              "rank": 3,
+              "system": "GPT-6 Astra (Codex, max)",
+              "model": "GPT-6 Astra",
+              "agent": "Codex",
+              "reasoningEffort": "max",
+              "score": 58.18,
+              "ci95": 2.79,
+              "trials": 330,
+              "date": "2026-09-03"
+            },
+            {
+              "rank": 3,
+              "system": "GPT-6.1 Sol (Codex, max)",
+              "model": "GPT-6.1 Sol",
+              "agent": "Codex",
+              "reasoningEffort": "max",
+              "score": 58.18,
+              "ci95": 3.11,
+              "trials": 330,
+              "date": "2026-09-29"
+            },
+            {
+              "rank": 5,
+              "system": "Fable 5.1 (Claude Code, max)",
+              "model": "Fable 5.1",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 57.88,
+              "ci95": 3.76,
+              "trials": 330,
+              "date": "2026-09-01"
+            }
+          ],
+          "caveats": [
+            "4.0 (2026-08-28) removed 8 tasks, two of them for saturation, fixed 19, and set a flat 8-hour agent timeout.",
+            "Terminal-Bench is now a continuous benchmark with semantic versions; scores are comparable only within a version."
+          ]
+        },
+        {
+          "id": "frontiercode-main",
+          "name": "FrontierCode 1.1 Main (Cognition)",
+          "metric": "score: weighted rubric, 0 if any blocker fails",
+          "sourceId": "frontiercode-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Opus 5.5",
+              "reasoningEffort": "medium",
+              "score": 54.6,
+              "passRate": 59.6,
+              "date": "2026-09-22",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 2,
+              "system": "Fable 5",
+              "reasoningEffort": "xhigh",
+              "score": 53.5,
+              "passRate": 58.9,
+              "date": "2026-07-17",
+              "dateMeaning": "leaderboard launch; present from launch"
+            },
+            {
+              "rank": 3,
+              "system": "Opus 5",
+              "reasoningEffort": "medium",
+              "score": 53.4,
+              "passRate": 58.9,
+              "date": "2026-07-24",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 4,
+              "system": "GPT-6 Astra",
+              "reasoningEffort": "max",
+              "score": 53.3,
+              "passRate": 58.8,
+              "date": "2026-09-03",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 5,
+              "system": "Sonnet 5.5",
+              "reasoningEffort": "xhigh",
+              "score": 52.1,
+              "passRate": 57.2,
+              "date": "2026-09-28",
+              "dateMeaning": "changelog: model added"
+            }
+          ],
+          "caveats": [
+            "Tasks are private ('we don't currently plan to release the tasks publicly'); only one example task is shown on the page.",
+            "Run by Cognition, which also ships its own models (SWE-2 is on the board).",
+            "1.1 (2026-07-07) zeroes runs flagged for consulting solution-bearing sources and deprecates the Diamond subset."
+          ]
+        },
+        {
+          "id": "metr-time-horizon",
+          "name": "METR 50% time horizon (TH 1.1)",
+          "metric": "minutes of expert human time at 50% predicted success",
+          "sourceId": "metr-th",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Claude Mythos Preview (early)",
+              "metrKey": "claude_mythos_preview_early_inspect",
+              "score": 1044.8,
+              "ciLow": 508.9,
+              "ciHigh": 3304.3,
+              "date": "2026-04-07",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 2,
+              "system": "Claude Opus 4.6",
+              "metrKey": "claude_opus_4_6_inspect",
+              "score": 718.8,
+              "ciLow": 316.7,
+              "ciHigh": 3633.8,
+              "date": "2026-02-05",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 3,
+              "system": "Gemini 3.1 Pro",
+              "metrKey": "gemini_3_1_pro",
+              "score": 384.1,
+              "ciLow": 233.5,
+              "ciHigh": 694.8,
+              "date": "2026-02-19",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 4,
+              "system": "GPT-5.2",
+              "metrKey": "gpt_5_2",
+              "score": 352.2,
+              "ciLow": 198.1,
+              "ciHigh": 815.2,
+              "date": "2025-12-11",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 5,
+              "system": "GPT-5.3-Codex",
+              "metrKey": "gpt_5_3_codex",
+              "score": 349.5,
+              "ciLow": 194.9,
+              "ciHigh": 816.4,
+              "date": "2026-02-05",
+              "dateMeaning": "model release date"
+            }
+          ],
+          "caveats": [
+            "The page has not been updated since 2026-09-08 and says it is no longer actively updated.",
+            "METR states that measurements above 16 hours (960 minutes) are unreliable with the current task suite; the top entry exceeds that.",
+            "Confidence intervals are wide: Claude Opus 4.6 spans 316.7 to 3633.8 minutes."
+          ]
+        }
+      ]
+    },
+    "frontierOverTime": {
+      "description": "How the frontier moved. Only points read from a fetched source.",
+      "series": [
+        {
+          "id": "metr-p50-sota",
+          "name": "METR 50% time horizon, models flagged is_sota in TH 1.1",
+          "unit": "minutes",
+          "xField": "releaseDate",
+          "sourceId": "metr-th",
+          "points": [
+            {
+              "model": "GPT-2",
+              "metrKey": "gpt2",
+              "releaseDate": "2019-02-14",
+              "p50Minutes": 0.1,
+              "ciLow": 0.0,
+              "ciHigh": 0.1
+            },
+            {
+              "model": "davinci-002",
+              "metrKey": "davinci_002",
+              "releaseDate": "2020-05-28",
+              "p50Minutes": 0.1,
+              "ciLow": 0.1,
+              "ciHigh": 0.2
+            },
+            {
+              "model": "GPT-3.5 Turbo Instruct",
+              "metrKey": "gpt_3_5_turbo_instruct",
+              "releaseDate": "2022-03-15",
+              "p50Minutes": 0.6,
+              "ciLow": 0.3,
+              "ciHigh": 1.1
+            },
+            {
+              "model": "GPT-4",
+              "metrKey": "gpt_4",
+              "releaseDate": "2023-03-14",
+              "p50Minutes": 4.0,
+              "ciLow": 1.9,
+              "ciHigh": 8.0
+            },
+            {
+              "model": "GPT-4 (1106)",
+              "metrKey": "gpt_4_1106_inspect",
+              "releaseDate": "2023-11-06",
+              "p50Minutes": 4.0,
+              "ciLow": 1.9,
+              "ciHigh": 8.4
+            },
+            {
+              "model": "GPT-4o",
+              "metrKey": "gpt_4o_inspect",
+              "releaseDate": "2024-05-13",
+              "p50Minutes": 7.0,
+              "ciLow": 4.0,
+              "ciHigh": 12.9
+            },
+            {
+              "model": "Claude 3.5 Sonnet (June 2024)",
+              "metrKey": "claude_3_5_sonnet_20240620_inspect",
+              "releaseDate": "2024-06-20",
+              "p50Minutes": 11.4,
+              "ciLow": 5.5,
+              "ciHigh": 22.4
+            },
+            {
+              "model": "o1-preview",
+              "metrKey": "o1_preview",
+              "releaseDate": "2024-09-12",
+              "p50Minutes": 20.3,
+              "ciLow": 11.7,
+              "ciHigh": 33.4
+            },
+            {
+              "model": "Claude 3.5 Sonnet (October 2024)",
+              "metrKey": "claude_3_5_sonnet_20241022_inspect",
+              "releaseDate": "2024-10-22",
+              "p50Minutes": 20.5,
+              "ciLow": 10.1,
+              "ciHigh": 40.8
+            },
+            {
+              "model": "o1",
+              "metrKey": "o1_inspect",
+              "releaseDate": "2024-12-05",
+              "p50Minutes": 38.8,
+              "ciLow": 21.2,
+              "ciHigh": 65.0
+            },
+            {
+              "model": "Claude 3.7 Sonnet",
+              "metrKey": "claude_3_7_sonnet_inspect",
+              "releaseDate": "2025-02-24",
+              "p50Minutes": 60.4,
+              "ciLow": 33.0,
+              "ciHigh": 104.2
+            },
+            {
+              "model": "o3",
+              "metrKey": "o3_inspect",
+              "releaseDate": "2025-04-16",
+              "p50Minutes": 119.7,
+              "ciLow": 74.6,
+              "ciHigh": 190.9
+            },
+            {
+              "model": "GPT-5",
+              "metrKey": "gpt_5_2025_08_07_inspect",
+              "releaseDate": "2025-08-07",
+              "p50Minutes": 203.0,
+              "ciLow": 112.6,
+              "ciHigh": 405.6
+            },
+            {
+              "model": "Gemini 3 Pro",
+              "metrKey": "gemini_3_pro",
+              "releaseDate": "2025-11-18",
+              "p50Minutes": 224.3,
+              "ciLow": 139.6,
+              "ciHigh": 379.2
+            },
+            {
+              "model": "Claude Opus 4.5",
+              "metrKey": "claude_opus_4_5_inspect",
+              "releaseDate": "2025-11-24",
+              "p50Minutes": 293.0,
+              "ciLow": 161.7,
+              "ciHigh": 623.7
+            },
+            {
+              "model": "GPT-5.2",
+              "metrKey": "gpt_5_2",
+              "releaseDate": "2025-12-11",
+              "p50Minutes": 352.2,
+              "ciLow": 198.1,
+              "ciHigh": 815.2
+            },
+            {
+              "model": "Claude Opus 4.6",
+              "metrKey": "claude_opus_4_6_inspect",
+              "releaseDate": "2026-02-05",
+              "p50Minutes": 718.8,
+              "ciLow": 316.7,
+              "ciHigh": 3633.8
+            },
+            {
+              "model": "Claude Mythos Preview (early)",
+              "metrKey": "claude_mythos_preview_early_inspect",
+              "releaseDate": "2026-04-07",
+              "p50Minutes": 1044.8,
+              "ciLow": 508.9,
+              "ciHigh": 3304.3
+            }
+          ],
+          "doublingTimeDays": {
+            "fromIncluding2023": {
+              "ci_high": 158.012,
+              "ci_low": 104.428,
+              "point_estimate": 128.744
+            },
+            "allTimeStitched": {
+              "point_estimate": 187.778
+            }
+          },
+          "caveats": [
+            "Frozen since 2026-09-08; no 2026 H2 models.",
+            "Last point (Claude Mythos Preview, early) is above the 16-hour reliability limit METR states."
+          ]
+        },
+        {
+          "id": "swev-record",
+          "name": "SWE-bench Verified board record, by submission date",
+          "unit": "% resolved",
+          "xField": "date",
+          "sourceId": "swebench-leaderboard",
+          "points": [
+            {
+              "date": "2023-10-10",
+              "score": 4.4,
+              "system": "RAG + Claude 2"
+            },
+            {
+              "date": "2024-04-02",
+              "score": 22.4,
+              "system": "SWE-agent + GPT 4 (1106)"
+            },
+            {
+              "date": "2024-05-09",
+              "score": 25.6,
+              "system": "Amazon Q Developer Agent (v20240430-dev)"
+            },
+            {
+              "date": "2024-06-12",
+              "score": 32.6,
+              "system": "MASAI + GPT 4o (2024-06-12)"
+            },
+            {
+              "date": "2024-06-17",
+              "score": 37.0,
+              "system": "Factory Code Droid"
+            },
+            {
+              "date": "2024-06-28",
+              "score": 38.4,
+              "system": "AutoCodeRover (v20240620) + GPT 4o (2024-05-13)"
+            },
+            {
+              "date": "2024-07-21",
+              "score": 38.8,
+              "system": "Amazon Q Developer Agent (v20240719-dev)"
+            },
+            {
+              "date": "2024-08-20",
+              "score": 40.6,
+              "system": "Honeycomb"
+            },
+            {
+              "date": "2024-08-24",
+              "score": 45.2,
+              "system": "Gru(2024-08-24)"
+            },
+            {
+              "date": "2024-09-24",
+              "score": 45.4,
+              "system": "Solver (2024-09-12)"
+            },
+            {
+              "date": "2024-10-22",
+              "score": 49.0,
+              "system": "Tools + Claude 3.5 Sonnet (2024-10-22)"
+            },
+            {
+              "date": "2024-10-28",
+              "score": 50.0,
+              "system": "Solver (2024-10-28)"
+            },
+            {
+              "date": "2024-10-29",
+              "score": 53.0,
+              "system": "OpenHands + CodeAct v2.1 (claude-3-5-sonnet-20241022)"
+            },
+            {
+              "date": "2024-11-08",
+              "score": 54.2,
+              "system": "devlo"
+            },
+            {
+              "date": "2024-12-02",
+              "score": 55.0,
+              "system": "Amazon Q Developer Agent (v20241202-dev)"
+            },
+            {
+              "date": "2024-12-08",
+              "score": 57.0,
+              "system": "Gru(2024-12-08)"
+            },
+            {
+              "date": "2024-12-13",
+              "score": 58.2,
+              "system": "devlo"
+            },
+            {
+              "date": "2024-12-21",
+              "score": 62.2,
+              "system": "CodeStory Midwit Agent + swe-search"
+            },
+            {
+              "date": "2025-01-10",
+              "score": 62.8,
+              "system": "Blackbox AI Agent"
+            },
+            {
+              "date": "2025-01-17",
+              "score": 64.6,
+              "system": "W&B Programmer O1 crosscheck5"
+            },
+            {
+              "date": "2025-03-16",
+              "score": 65.4,
+              "system": "Augment Agent v0"
+            },
+            {
+              "date": "2025-04-15",
+              "score": 65.8,
+              "system": "OpenHands"
+            },
+            {
+              "date": "2025-04-30",
+              "score": 70.0,
+              "system": "Zencoder (2025-04-30)"
+            },
+            {
+              "date": "2025-05-15",
+              "score": 70.4,
+              "system": "Refact.ai Agent"
+            },
+            {
+              "date": "2025-05-19",
+              "score": 70.6,
+              "system": "TRAE"
+            },
+            {
+              "date": "2025-05-22",
+              "score": 73.2,
+              "system": "Tools + Claude 4 Opus (2025-05-22)"
+            },
+            {
+              "date": "2025-06-03",
+              "score": 74.4,
+              "system": "Refact.ai Agent + Claude 4 Sonnet + o4-mini"
+            },
+            {
+              "date": "2025-06-12",
+              "score": 75.2,
+              "system": "TRAE + Claude Sonnet 4 + Opus 4 + Sonnet 3.7 + Gemini 2.5 Pro"
+            },
+            {
+              "date": "2025-08-04",
+              "score": 76.8,
+              "system": "EPAM AI/Run Developer Agent v20250719 + Claude 4 Sonnet"
+            },
+            {
+              "date": "2025-09-28",
+              "score": 78.8,
+              "system": "TRAE + Doubao-Seed-Code"
+            },
+            {
+              "date": "2025-12-05",
+              "score": 79.2,
+              "system": "Sonar Foundation Agent + Claude 4.5 Opus"
+            }
+          ],
+          "caveats": [
+            "Dates are the board's submission dates; the 2023 point is a later evaluation of an older system.",
+            "No new record since 2025-12-05; frontier labs stopped submitting."
+          ]
+        },
+        {
+          "id": "terminal-bench-versions",
+          "name": "Top Terminal-Bench score at each version's release",
+          "unit": "% passed",
+          "xField": "date",
+          "sourceId": "tb3-blog",
+          "points": [
+            {
+              "version": "2.1",
+              "date": "2026-07-30",
+              "dateMeaning": "date of the TB 3.0 post that reports it; 2.1 itself was released 2026-05-06",
+              "score": 83.8,
+              "system": "Fable 5 (Claude Code)",
+              "sourceId": "tb3-blog",
+              "note": "Highest of the models plotted in the TB 3.0 post's 2.1-vs-3.0 comparison; GPT-5.6 Sol has no 2.1 bar there."
+            },
+            {
+              "version": "3.0",
+              "date": "2026-07-30",
+              "dateMeaning": "release post",
+              "score": 34.4,
+              "system": "GPT-5.6 Sol (Codex)",
+              "sourceId": "tb3-blog"
+            },
+            {
+              "version": "4.0",
+              "date": "2026-09-22",
+              "dateMeaning": "leaderboard entry date; 4.0 was released 2026-08-28",
+              "score": 64.85,
+              "system": "Opus 5.5 (Claude Code, max)",
+              "sourceId": "tb-leaderboard"
+            }
+          ],
+          "caveats": [
+            "Each version is a different task set; the drop from 2.1 to 3.0 is a new, harder benchmark."
+          ]
+        }
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "taskId": "swev-flask-blueprint-name",
+      "order": 1,
+      "benchmark": "SWE-bench Verified",
+      "title": "Reject empty Blueprint names in Flask",
+      "statementUrl": "https://github.com/pallets/flask/issues/5010",
+      "statementNote": "Read the issue body only; the issue links to the fixing PR.",
+      "repo": "pallets/flask",
+      "baseCommit": "7ee9ceb71e868944a46e1ff00b506772a53a4f1d",
+      "openLocally": "git init flask-task && cd flask-task && git remote add origin https://github.com/pallets/flask.git && git fetch --depth 1 origin 7ee9ceb71e868944a46e1ff00b506772a53a4f1d && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "pallets__flask-5014",
+        "humanTimeKind": "annotator bucket",
+        "difficultyLabel": "<15 min fix",
+        "humanMinutesLow": 0,
+        "humanMinutesHigh": 15,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-bench Verified 'difficulty' field: annotators estimated how long a developer would take to decide upon and implement the solution (OpenAI, 2024). The post does not say how the three annotators' difficulty labels were combined.",
+        "referencePatch": {
+          "linesAdded": 3,
+          "linesRemoved": 0,
+          "filesChanged": 1
+        },
+        "failToPassTests": 1,
+        "agentPassCount": 15,
+        "agentAttempts": 15,
+        "agentResultsKind": "SWE-bench/experiments per-instance results, one attempt per run",
+        "agentResultsNote": "15 runs: twelve mini-SWE-agent runs (v2.0.0 of 2026-02-17 for Claude 4.5 Haiku high, Claude 4.5 Opus high, Claude 4.5 Sonnet high, Claude 4.6 Opus, DeepSeek V3.2 high, Gemini 3 Flash high, GLM 5 high, GPT 5 mini, GPT 5.2 high, Kimi K2.5 high and MiniMax M2.5 high; v2.4.2 of 2026-09-01 for Gemini 3.5 Flash) and the board's top three (Sonar Foundation Agent + Claude 4.5 Opus, live-SWE-agent + Claude 4.5 Opus, TRAE + Doubao-Seed-Code). Each run's resolved count divided by 500 matches its headline score. Excluded: Gemini 3 Pro (per_instance_details.json marks all 500 unresolved against a 69.6% headline) and GPT 5.2 Codex (file returns 404). An instance absent from the Gemini 3.5 Flash file produced no patch and counts as unresolved.",
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "swev-pylint-type-hints",
+      "order": 2,
+      "benchmark": "SWE-bench Verified",
+      "title": "Show type hints in pyreverse UML diagrams",
+      "statementUrl": "https://github.com/pylint-dev/pylint/issues/1548",
+      "statementNote": "Read the issue body only; later comments and the linked PR discuss the fix.",
+      "repo": "pylint-dev/pylint",
+      "baseCommit": "99589b08de8c5a2c6cc61e13a37420a868c80599",
+      "openLocally": "git init pylint-task && cd pylint-task && git remote add origin https://github.com/pylint-dev/pylint.git && git fetch --depth 1 origin 99589b08de8c5a2c6cc61e13a37420a868c80599 && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "pylint-dev__pylint-4551",
+        "humanTimeKind": "annotator bucket",
+        "difficultyLabel": "1-4 hours",
+        "humanMinutesLow": 60,
+        "humanMinutesHigh": 240,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-bench Verified 'difficulty' field (OpenAI, 2024).",
+        "referencePatch": {
+          "linesAdded": 99,
+          "linesRemoved": 27,
+          "filesChanged": 4
+        },
+        "failToPassTests": 10,
+        "agentPassCount": 0,
+        "agentAttempts": 15,
+        "agentResultsKind": "SWE-bench/experiments per-instance results, one attempt per run",
+        "agentResultsNote": "15 runs: twelve mini-SWE-agent runs (v2.0.0 of 2026-02-17 for Claude 4.5 Haiku high, Claude 4.5 Opus high, Claude 4.5 Sonnet high, Claude 4.6 Opus, DeepSeek V3.2 high, Gemini 3 Flash high, GLM 5 high, GPT 5 mini, GPT 5.2 high, Kimi K2.5 high and MiniMax M2.5 high; v2.4.2 of 2026-09-01 for Gemini 3.5 Flash) and the board's top three (Sonar Foundation Agent + Claude 4.5 Opus, live-SWE-agent + Claude 4.5 Opus, TRAE + Doubao-Seed-Code). Each run's resolved count divided by 500 matches its headline score. Excluded: Gemini 3 Pro (per_instance_details.json marks all 500 unresolved against a 69.6% headline) and GPT 5.2 Codex (file returns 404). An instance absent from the Gemini 3.5 Flash file produced no patch and counts as unresolved.",
+        "knownSpecIssue": "OpenAI's February 2026 audit uses this task as its example of a narrow test: the tests import a helper named get_annotation from pylint.pyreverse.utils, a name the issue never mentions, so many valid fixes fail with ImportError."
+      }
+    },
+    {
+      "taskId": "tb4-bun-sourcemaps",
+      "order": 3,
+      "benchmark": "Terminal-Bench 4.0",
+      "title": "Stop a Bun release pipeline leaking private source through source maps",
+      "statementUrl": "https://github.com/harbor-framework/terminal-bench/blob/v4.0.0/tasks/bun-sourcemap-leak/instruction.md",
+      "statementNote": "Open instruction.md and environment/ only. README.md and task.toml in the same folder state the expert time; solution/ and tests/ hold the answer.",
+      "repo": "harbor-framework/terminal-bench",
+      "baseCommit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "openLocally": "git clone --depth 1 --branch v4.0.0 --filter=blob:none --sparse https://github.com/harbor-framework/terminal-bench.git tb4 && cd tb4 && git sparse-checkout set --no-cone /tasks/bun-sourcemap-leak/instruction.md /tasks/bun-sourcemap-leak/environment/",
+      "groundTruth": {
+        "upstreamId": "terminal-bench/bun-sourcemap-leak",
+        "humanTimeKind": "task author's expert estimate",
+        "humanMinutesLow": 90,
+        "humanMinutesHigh": 90,
+        "humanMinutesPoint": 90,
+        "humanTimeSource": "task.toml expert_time_estimate_hours = 1.5 (Terminal-Bench 4.0 records only an expert estimate; Terminal-Bench 2.0 also had a junior estimate).",
+        "category": "Software / Systems",
+        "referencePatch": null,
+        "agentPassCount": 0,
+        "agentAttempts": 10,
+        "agentResultsKind": "Terminal-Bench 4.0 leaderboard trials, 5 per model",
+        "agentRuns": [
+          {
+            "system": "Opus 5.5 (Claude Code, max)",
+            "passes": 0,
+            "attempts": 5,
+            "sourceId": "harbor-job-opus55"
+          },
+          {
+            "system": "GPT-6.1 Sol (Codex, max)",
+            "passes": 0,
+            "attempts": 5,
+            "sourceId": "harbor-job-gpt61sol"
+          }
+        ],
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "tb4-archive-clone",
+      "order": 4,
+      "benchmark": "Terminal-Bench 4.0",
+      "title": "Clone an error-correcting archive tool by black-box probing",
+      "statementUrl": "https://github.com/harbor-framework/terminal-bench/blob/v4.0.0/tasks/rs-archive-clone/instruction.md",
+      "statementNote": "Open instruction.md and environment/ only. README.md and task.toml in the same folder state the expert time; solution/ and tests/ hold the answer.",
+      "repo": "harbor-framework/terminal-bench",
+      "baseCommit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "openLocally": "git clone --depth 1 --branch v4.0.0 --filter=blob:none --sparse https://github.com/harbor-framework/terminal-bench.git tb4 && cd tb4 && git sparse-checkout set --no-cone /tasks/rs-archive-clone/instruction.md /tasks/rs-archive-clone/environment/",
+      "groundTruth": {
+        "upstreamId": "terminal-bench/rs-archive-clone",
+        "humanTimeKind": "task author's expert estimate",
+        "humanMinutesLow": 960,
+        "humanMinutesHigh": 960,
+        "humanMinutesPoint": 960,
+        "humanTimeSource": "task.toml expert_time_estimate_hours = 16.",
+        "category": "Software / Algorithms",
+        "referencePatch": null,
+        "agentPassCount": 10,
+        "agentAttempts": 10,
+        "agentResultsKind": "Terminal-Bench 4.0 leaderboard trials, 5 per model",
+        "agentRuns": [
+          {
+            "system": "Opus 5.5 (Claude Code, max)",
+            "passes": 5,
+            "attempts": 5,
+            "sourceId": "harbor-job-opus55"
+          },
+          {
+            "system": "GPT-6.1 Sol (Codex, max)",
+            "passes": 5,
+            "attempts": 5,
+            "sourceId": "harbor-job-gpt61sol"
+          }
+        ],
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "pro-ansible-human-to-bytes",
+      "order": 5,
+      "benchmark": "SWE-Bench Pro V2",
+      "title": "Make Ansible's human_to_bytes reject malformed sizes",
+      "statementUrl": "https://github.com/scaleapi/SWE-bench_Pro-os/blob/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-d62496fe416623e88b90139dc7917080cb04ce70-v0f01c69f1e2528b935359cfe578530722bca2c59/instruction.md",
+      "statementNote": "Open instruction.md only; solution/ in the same folder holds the gold patch. The upstream fix is public, so ask the agent not to search for it.",
+      "repo": "ansible/ansible",
+      "baseCommit": "df29852f3a48160e1a60635692c202531dd8b14a",
+      "openLocally": "git init ansible-task && cd ansible-task && git remote add origin https://github.com/ansible/ansible.git && git fetch --depth 1 origin df29852f3a48160e1a60635692c202531dd8b14a && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "instance_ansible__ansible-d62496fe416623e88b90139dc7917080cb04ce70-v0f01c69f1e2528b935359cfe578530722bca2c59",
+        "humanTimeKind": "none published",
+        "humanMinutesLow": null,
+        "humanMinutesHigh": null,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-Bench Pro publishes no per-task human time. The paper describes the benchmark's tasks as ones that 'may require hours to days for a professional software engineer'.",
+        "referencePatch": {
+          "linesAdded": 31,
+          "linesRemoved": 4,
+          "filesChanged": 3,
+          "note": "Code change is lib/ansible/module_utils/common/text/formatters.py (+20 -4); the rest is a changelog fragment (+2) and filter docs (+9)."
+        },
+        "failToPassTests": 22,
+        "passToPassTests": 92,
+        "hard51": true,
+        "issueSpecificity": [
+          "minor_bug",
+          "data_bug",
+          "edge_case_bug"
+        ],
+        "agentPassCount": null,
+        "agentAttempts": null,
+        "agentResultsKind": "HARD-51 membership",
+        "agentResultsNote": "In HARD-51: failed by at least two of five model families (Claude Opus 5, GLM-5.3, Kimi-K3, Inkling, Gemini 3.8 Flash) under Scale's locked V2 protocol.",
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "pro-flipt-skip-existing",
+      "order": 6,
+      "benchmark": "SWE-Bench Pro V2",
+      "title": "Let Flipt import skip flags and segments that already exist",
+      "statementUrl": "https://github.com/scaleapi/SWE-bench_Pro-os/blob/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_flipt-io__flipt-dae029cba7cdb98dfb1a6b416c00d324241e6063/instruction.md",
+      "statementNote": "Open instruction.md only; solution/ in the same folder holds the gold patch. The upstream fix is public, so ask the agent not to search for it.",
+      "repo": "flipt-io/flipt",
+      "baseCommit": "879520526664656ad9f93925cd0b1f2220c0c3f2",
+      "openLocally": "git init flipt-task && cd flipt-task && git remote add origin https://github.com/flipt-io/flipt.git && git fetch --depth 1 origin 879520526664656ad9f93925cd0b1f2220c0c3f2 && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "instance_flipt-io__flipt-dae029cba7cdb98dfb1a6b416c00d324241e6063",
+        "humanTimeKind": "none published",
+        "humanMinutesLow": null,
+        "humanMinutesHigh": null,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-Bench Pro publishes no per-task human time.",
+        "referencePatch": {
+          "linesAdded": 90,
+          "linesRemoved": 3,
+          "filesChanged": 2,
+          "note": "cmd/flipt/import.go (+9 -2), internal/ext/importer.go (+81 -1)."
+        },
+        "failToPassTests": 2,
+        "passToPassTests": 0,
+        "hard51": false,
+        "issueSpecificity": [
+          "core_feat",
+          "dev_ops_enh"
+        ],
+        "agentPassCount": null,
+        "agentAttempts": null,
+        "agentResultsKind": "HARD-51 membership",
+        "agentResultsNote": "Not in HARD-51. HARD-51 holds the tasks that at least two of five model families failed under the locked protocol, minus three later judged ambiguous, so this label alone does not say how many families solved it.",
+        "knownSpecIssue": null
+      }
+    }
+  ],
+  "pairing": {
+    "rule": "Pair p (1-based) takes task order ((p-1) mod 6)+1 in round 1 and ((p+2) mod 6)+1 in round 2.",
+    "rounds": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "note": "Each pair sees two benchmarks; with 6k pairs every task gets 2k estimates."
+  },
+  "logSchema": {
+    "estimate": {
+      "taskId": "string, course task id from tasks[].taskId",
+      "estimateMinutes": "number > 0: minutes an experienced engineer, new to this repository, would need without AI help to reach passing tests",
+      "complexity": "integer 1-5 (anchors in notes/benchmark-activity.md)",
+      "specQuality": "integer 1-5 (anchors in notes/benchmark-activity.md)",
+      "reason": "string, one line, at most 200 characters",
+      "pairId": "string, stable within the session",
+      "submittedAt": "ISO 8601 UTC timestamp",
+      "revealed": "boolean: true if this task's ground truth was visible to the pair when they submitted; analyses drop these rows"
+    },
+    "groundTruthFields": [
+      "taskId",
+      "groundTruth.upstreamId",
+      "groundTruth.humanTimeKind",
+      "groundTruth.humanMinutesLow",
+      "groundTruth.humanMinutesHigh",
+      "groundTruth.humanMinutesPoint",
+      "groundTruth.referencePatch",
+      "groundTruth.agentPassCount",
+      "groundTruth.agentAttempts",
+      "groundTruth.hard51",
+      "groundTruth.knownSpecIssue"
+    ]
+  }
+}
+</script>
+<script>
+/* ==========================================================================
+   Benchmark estimation activity (Week 1 live session). Reads the embedded
+   #bench-data, draws the charts, and stores estimates through
+   window.AgenticProgress (addEstimate, revealEstimate; not week-specific).
+   It reads and writes only elements inside #bench-activity. Ground truth is
+   read from the data only when a task is revealed; nothing about it is in
+   the DOM before that.
+   ========================================================================== */
+(function () {
+  "use strict";
+  // progress.js and site.js load at the end of <body>, after this block, so
+  // start on DOMContentLoaded, once window.AgenticProgress exists.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+  function boot() {
+  var doc = document;
+  var SCOPE = doc.getElementById("bench-activity");
+  if (!SCOPE) return;
+  function $(sel) { return SCOPE.querySelector(sel); }
+  function $$(sel) { return SCOPE.querySelectorAll(sel); }
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var DATA = null;
+  try { DATA = JSON.parse(doc.getElementById("bench-data").textContent); } catch (e) { DATA = null; }
+
+  /* ---------- progress store (feature-detected, memory fallback) ---------- */
+  var P = window.AgenticProgress || (function () {
+    var st = { learner: { track: "claude" }, items: {}, outcomes: {}, estimates: [] }, ls = [];
+    function fire() { ls.forEach(function (f) { try { f({ type: "change", kind: "local" }); } catch (e) {} }); }
+    function now() { return new Date().toISOString(); }
+    return {
+      memoryOnly: true,
+      get: function () { return JSON.parse(JSON.stringify(st)); },
+      registerWeek: function () {},
+      setTrack: function (t) { st.learner.track = t; fire(); },
+      markItem: function (w, id, o) { o = o || {}; var k = "w" + w + ":" + id, p = st.items[k] || {}; var r = { status: o.status || p.status || "done" }; if (o.minutesSpent !== undefined) r.minutesSpent = Number(o.minutesSpent); else if (p.minutesSpent !== undefined) r.minutesSpent = p.minutesSpent; st.items[k] = r; fire(); },
+      setOutcome: function (w, id, c) { var k = "w" + w; st.outcomes[k] = st.outcomes[k] || {}; st.outcomes[k][id] = { checked: !!c, at: now() }; fire(); },
+      addEstimate: function (e) { for (var i = 0; i < st.estimates.length; i++) if (st.estimates[i].taskId === e.taskId) { if (st.estimates[i].revealedAt) return false; st.estimates.splice(i, 1); break; } var c = JSON.parse(JSON.stringify(e)); c.submittedAt = now(); c.revealedAt = null; st.estimates.push(c); fire(); return true; },
+      revealEstimate: function (id) { var hit = false; st.estimates.forEach(function (e) { if (e.taskId === id && !e.revealedAt) { e.revealedAt = now(); hit = true; } }); if (hit) fire(); return hit; },
+      on: function (n, f) { ls.push(f); return function () {}; }
+    };
+  })();
+
+  var live = $("[data-bench-live]");
+  function announce(msg) {
+    if (window.AgenticSite && typeof window.AgenticSite.announce === "function") { window.AgenticSite.announce(msg); return; }
+    if (!live) return;
+    live.textContent = "";
+    setTimeout(function () { live.textContent = msg; }, 60);
+  }
+
+  /* ---------- DOM helpers (text only, never innerHTML with data) ---------- */
+  function el(tag, attrs, kids) {
+    var n = doc.createElement(tag);
+    setAttrs(n, attrs);
+    append(n, kids);
+    return n;
+  }
+  function sv(tag, attrs, kids) {
+    var n = doc.createElementNS(SVGNS, tag);
+    setAttrs(n, attrs);
+    append(n, kids);
+    return n;
+  }
+  function setAttrs(n, attrs) {
+    if (!attrs) return;
+    Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === "class") n.setAttribute("class", v);
+      else if (k === "text") n.textContent = v;
+      else n.setAttribute(k, v === true ? "" : String(v));
+    });
+  }
+  function append(n, kids) {
+    (kids || []).forEach(function (c) {
+      if (c === null || c === undefined || c === false) return;
+      n.appendChild(typeof c === "string" ? doc.createTextNode(c) : c);
+    });
+  }
+  /* Text with `code` spans, built as nodes. */
+  function rich(text) {
+    var out = [];
+    String(text).split("`").forEach(function (part, i) {
+      if (!part) return;
+      out.push(i % 2 ? el("code", { text: part }) : part);
+    });
+    return out;
+  }
+  function extLink(href, label, cls) {
+    return el("a", { href: href, target: "_blank", rel: "noopener noreferrer", class: cls || null }, [label, el("span", { class: "sr-only", text: " (opens in a new tab)" })]);
+  }
+  function linkRow(href, verb, title, meta) {
+    var a = el("a", { class: "link-row", href: href, target: "_blank", rel: "noopener noreferrer" }, [
+      el("span", { class: "link-row__text" }, [
+        el("span", { class: "link-row__verb", text: verb }), " ",
+        el("span", { class: "link-row__title", text: title }),
+        meta ? el("span", { class: "link-row__meta", text: meta }) : null,
+        el("span", { class: "sr-only", text: " (opens in a new tab)" })
+      ])
+    ]);
+    var s = sv("svg", { class: "arrow arrow--ext", viewBox: "0 0 12 12", "aria-hidden": "true", focusable: "false" }, [
+      sv("path", { d: "M1 11L11 1M11 1H4M11 1V8", fill: "none", stroke: "currentColor", "stroke-width": "1.3", "stroke-linecap": "round", "stroke-linejoin": "round" })
+    ]);
+    a.appendChild(s);
+    return a;
+  }
+
+  /* ---------- formatting ---------- */
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function fmtDate(iso) { var p = String(iso).split("-"); return parseInt(p[2], 10) + " " + MONTHS[parseInt(p[1], 10) - 1] + " " + p[0]; }
+  function fmtMonth(iso) { var p = String(iso).split("-"); return MONTHS[parseInt(p[1], 10) - 1] + " " + p[0]; }
+  function group(s) { var parts = s.split("."); parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); return parts.join("."); }
+  function fx(v, d) { return group(Number(v).toFixed(d)); }
+  function fmtMin(m) {
+    m = Number(m);
+    if (!isFinite(m)) return "";
+    var r = Math.round(m * 10) / 10;
+    var s = group(String(r)) + " min";
+    if (m >= 60) {
+      var h = Math.floor(m / 60), rest = Math.round(m - h * 60);
+      if (rest === 60) { h += 1; rest = 0; }
+      s += " (" + h + " h" + (rest ? " " + rest + " min" : "") + ")";
+    }
+    return s;
+  }
+  function ts(iso) { var d = new Date(iso); return isNaN(d) ? "" : d.getDate() + " " + MONTHS[d.getMonth()] + ", " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
+  function log10(v) { return Math.log(v) / Math.LN10; }
+  function sourceById(id) {
+    var list = (DATA && DATA.sources) || [];
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return null;
+  }
+
+  function state() { try { return P.get(); } catch (e) { return { items: {}, outcomes: {}, estimates: [] }; } }
+  function estimateOf(s, taskId) {
+    var list = s.estimates || [];
+    for (var i = 0; i < list.length; i++) if (list[i].taskId === taskId) return list[i];
+    return null;
+  }
+
+  /* ---------- copy buttons ---------- */
+  function addCopy(box, getText, label) {
+    var b = el("button", { type: "button", class: "bench-btn bench-btn--small bench-code__copy" }, ["Copy", el("span", { class: "sr-only", text: " " + (label || "") })]);
+    b.addEventListener("click", function () {
+      var text = getText();
+      function fallback() {
+        try {
+          var r = doc.createRange(), node = box.querySelector("pre, blockquote") || box;
+          r.selectNodeContents(node);
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          var ok = doc.execCommand && doc.execCommand("copy");
+          announce(ok ? "Copied." : "Copy is blocked here. The text is selected: press Ctrl+C or Cmd+C.");
+        } catch (err) { announce("Copy is blocked here. Select the text and copy it by hand."); }
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () { announce("Copied."); }, fallback);
+      } catch (err) { fallback(); }
+    });
+    box.appendChild(b);
+  }
+  var promptBox = $('[data-copy-src="prompt"]');
+  if (promptBox) addCopy(promptBox, function () { return promptBox.querySelector("[data-prompt]").textContent; }, "starter prompt");
+
+  /* ---------- session plan ---------- */
+  var WHO = {
+    room: { label: "Room", cls: "bench-sseg--room" },
+    fac: { label: "Facilitator", cls: "bench-sseg--fac" },
+    pairs: { label: "Pairs", cls: "bench-sseg--pairs" },
+    ind: { label: "Individuals", cls: "bench-sseg--ind" }
+  };
+  var PLAN = [
+    { min: 5, who: "ind", clock: "0:00 to 5:00", what: "Retrieval opener. Three closed-book questions on this week's courses and the best-practices reading, answered on paper, then compared." },
+    { min: 5, who: "room", clock: "5:00 to 10:00", what: "What we tried in the courses: what worked, and what did not." },
+    { min: 4, who: "fac", clock: "10:00 to 14:00", what: "Framing. Show the top-five chart and the frontier-over-time chart. Give the three caveats in one breath: Verified is retired, Pro's public set has broken tasks, and METR's page is frozen. Show FrontierCode's example task for what maintainer-style grading looks like." },
+    { min: 2, who: "fac", clock: "14:00 to 16:00", what: "Pairs and rules. Each pair opens its round-1 card. The agent may read and run code but must not edit files, search the web, or open `README.md`, `task.toml`, `solution/`, `tests/` or the linked pull request." },
+    { min: 9, who: "pairs", clock: "16:00 to 25:00", what: "Round 1 scoping. Run the setup command, give the agent the starter prompt, read its answer and probe it with follow-up questions." },
+    { min: 2, who: "pairs", clock: "25:00 to 27:00", what: "Round 1 submission: minutes, complexity, specification quality and a one-line reason." },
+    { min: 9, who: "pairs", clock: "27:00 to 36:00", what: "Round 2 scoping on the second card." },
+    { min: 2, who: "pairs", clock: "36:00 to 38:00", what: "Round 2 submission. Both estimates are saved before anyone reveals." },
+    { min: 3, who: "fac", clock: "38:00 to 41:00", what: "Reveal. Pairs reveal their two tasks; the facilitator shows every pair's estimate per task on a log axis against the ground truth, with the agents' results." },
+    { min: 4, who: "room", clock: "41:00 to 45:00", what: "How far off were we? For each task, read the class median against the ground truth and the spread across pairs. On Verified tasks, count the pairs inside the annotators' bucket." },
+    { min: 4, who: "room", clock: "45:00 to 49:00", what: "Why? The pairs furthest from the ground truth on each side explain what they assumed. Compare Tasks 5 and 6 on patch size against the pairs' complexity scores." },
+    { min: 4, who: "room", clock: "49:00 to 53:00", what: "Did human time predict agent success? Set the two Terminal-Bench tasks side by side on human time and agent results, then set what the reveal says about Task 2's tests beside the pairs' specification scores." },
+    { min: 5, who: "ind", clock: "53:00 to 58:00", what: "Exit question on the page." },
+    { min: 2, who: "fac", clock: "58:00 to 60:00", what: "Close." }
+  ];
+  function renderPlan() {
+    var track = $("[data-sbar]"), list = $("[data-plan]"), leg = $("[data-sbar-legend]");
+    if (!track || !list) return;
+    var total = PLAN.reduce(function (a, p) { return a + p.min; }, 0), byWho = {};
+    PLAN.forEach(function (p) {
+      byWho[p.who] = (byWho[p.who] || 0) + p.min;
+      var seg = el("span", { class: "bench-sseg " + WHO[p.who].cls + "" });
+      seg.style.flexBasis = "calc(" + (p.min / total * 100) + "% - 2px)";
+      track.appendChild(seg);
+      var sw = el("span", { class: "bench-legend__sw " + WHO[p.who].cls + "", "aria-hidden": "true" });
+      list.appendChild(el("li", null, [
+        el("span", { class: "bench-plan__time" }, [p.clock, el("br"), p.min + " min"]),
+        el("span", null, [
+          el("span", { class: "bench-plan__who" }, [sw, WHO[p.who].label]),
+          
+          " "
+        ].concat(rich(p.what)))
+      ]));
+    });
+    Object.keys(WHO).forEach(function (k) {
+      leg.appendChild(el("span", { class: "bench-legend__item" }, [
+        el("span", { class: "bench-legend__sw " + WHO[k].cls, "aria-hidden": "true" }),
+        WHO[k].label + " " + byWho[k] + " min"
+      ]));
+    });
+  }
+
+  /* ==========================================================================
+     Benchmark charts
+     ========================================================================== */
+  function warnIcon() {
+    return sv("svg", { viewBox: "0 0 12 12", "aria-hidden": "true", focusable: "false" }, [
+      sv("path", { d: "M6 1L11 10.5H1Z", fill: "none", stroke: "currentColor", "stroke-width": "1.3", "stroke-linejoin": "round" }),
+      sv("path", { d: "M6 4.5V7.2M6 8.6V8.7", fill: "none", stroke: "currentColor", "stroke-width": "1.3", "stroke-linecap": "round" })
+    ]);
+  }
+  function details(summaryText, content) {
+    return el("details", { class: "bench-details" }, [el("summary", { text: summaryText }), content]);
+  }
+  function table(caption, head, rows, numCols) {
+    numCols = numCols || [];
+    var t = el("table", { class: "bench-table" }, [
+      el("caption", { text: caption }),
+      el("thead", null, [el("tr", null, head.map(function (h) { return el("th", { scope: "col", text: h }); }))]),
+      el("tbody", null, rows.map(function (r) {
+        return el("tr", null, r.map(function (c, i) { return el("td", { class: numCols.indexOf(i) >= 0 ? "num" : null, text: c }); }));
+      }))
+    ]);
+    return el("div", { class: "bench-tablewrap", tabindex: "0", role: "region", "aria-label": caption }, [t]);
+  }
+  /* Rows of HTML labels with an inline SVG bar sized in percent of the track. */
+  function barRows(rows, scale) {
+    var ul = el("ul", { class: "bench-rows" });
+    rows.forEach(function (r) {
+      var pct = function (v) { return Math.max(0, Math.min(100, v / scale.max * 100)); };
+      var s = sv("svg", { class: "bench-row__svg", height: "20", "aria-hidden": "true", focusable: "false" });
+      scale.grid.forEach(function (g) { s.appendChild(sv("line", { class: "bench-grid-line", x1: pct(g) + "%", x2: pct(g) + "%", y1: 0, y2: 20 })); });
+      if (r.lo !== undefined && r.hi !== undefined) {
+        var lo = pct(r.lo), hi = pct(r.hi);
+        s.appendChild(sv("rect", { class: "bench-ci", x: lo + "%", width: Math.max(0.4, hi - lo) + "%", y: 1, height: 18, rx: 1 }));
+      }
+      var w = pct(r.value);
+      s.appendChild(sv("rect", { class: "bench-bar" + (r.accent ? " bench-bar--accent" : ""), x: 0, y: 4, width: w + "%", height: 12, rx: 2 }));
+      s.appendChild(sv("rect", { class: "bench-bar" + (r.accent ? " bench-bar--accent" : ""), x: 0, y: 4, width: Math.min(w, 2) + "%", height: 12 }));
+      s.appendChild(sv("line", { class: "bench-base-line", x1: 0, x2: 0, y1: 0, y2: 20 }));
+      if (scale.ref !== undefined) s.appendChild(sv("line", { class: "bench-ref-line", x1: pct(scale.ref) + "%", x2: pct(scale.ref) + "%", y1: 0, y2: 20 }));
+      ul.appendChild(el("li", { class: "bench-row" }, [
+        el("div", { class: "bench-row__label" }, [
+          r.rank !== undefined ? el("span", { class: "bench-row__rank", text: String(r.rank) }) : null,
+          el("span", { class: "bench-row__name", text: r.name }),
+          r.meta ? el("span", { class: "bench-row__meta", text: r.meta }) : null
+        ]),
+        el("div", { class: "bench-row__plot" }, [s, el("span", { class: "bench-row__val", text: r.valueText })])
+      ]));
+    });
+    var ax = sv("svg", { class: "bench-axis__svg", height: "16", "aria-hidden": "true", focusable: "false" });
+    scale.ticks.forEach(function (t, i) {
+      var p = t.v / scale.max * 100;
+      var anchor = p <= 0 ? "start" : (p >= 100 ? "end" : "middle");
+      ax.appendChild(sv("text", { class: "bench-tick", x: p + "%", y: 12, "text-anchor": anchor, text: t.label }));
+    });
+    var axis = el("div", { class: "bench-axis", "aria-hidden": "true" }, [ax, el("span", { class: "bench-axis__unit", text: scale.unit || "" })]);
+    return el("div", null, [ul, axis]);
+  }
+
+  var PCT_SCALE = { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "%" };
+  var PANEL_META = {
+    "swe-bench-verified": {
+      title: "SWE-bench Verified", tags: ["Saturated", "Contaminated", "Retired by OpenAI"],
+      newest: "Newest entry on the board: 26 Feb 2026.",
+      row: function (e) {
+        var att = /2\+/.test(e.attempts) ? "2+ attempts" : (/- 2$/.test(e.attempts) ? "2 attempts" : "1 attempt");
+        return { name: e.system, meta: fmtDate(e.date) + " · " + att, value: e.score, valueText: fx(e.score, 1) + "%" };
+      },
+      table: function (e) { return [String(e.rank), e.system, fx(e.score, 1), e.attempts.replace("Attempts - ", ""), fmtDate(e.date)]; },
+      head: ["Rank", "System", "% resolved", "Attempts", "Date"]
+    },
+    "swe-bench-pro-public": {
+      title: "SWE-Bench Pro, public set (v1, 731 tasks)", tags: ["About 30% of tasks broken", "Partial board"],
+      newest: "Newest entry: 9 Jul 2026. No GPT-6, Claude 5 series or Fable model is on this board.",
+      row: function (e) {
+        return { name: e.system.replace(/\*$/, ""), meta: e.harness + " · ± " + fx(e.ci95, 1) + " · added " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
+      },
+      table: function (e) { return [String(e.rank), e.system.replace(/\*$/, ""), e.harness, fx(e.score, 1), "± " + fx(e.ci95, 1), fmtDate(e.date)]; },
+      head: ["Rank", "Model", "Harness", "% resolved", "95% CI", "Added"]
+    },
+    "terminal-bench-4": {
+      title: "Terminal-Bench 4.0", tags: ["Compare within a version only"],
+      newest: "Board read 9 Oct 2026; best reasoning effort per model and agent.",
+      row: function (e) {
+        return { name: e.model + " in " + e.agent, meta: e.reasoningEffort + " effort · ± " + fx(e.ci95, 1) + " · " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
+      },
+      table: function (e) { return [String(e.rank), e.model, e.agent, e.reasoningEffort, fx(e.score, 1), "± " + fx(e.ci95, 1), fmtDate(e.date)]; },
+      head: ["Rank", "Model", "Agent", "Effort", "% passed", "95% CI", "Date"]
+    },
+    "frontiercode-main": {
+      title: "FrontierCode 1.1 Main (Cognition)", tags: ["Private tasks", "Vendor-run board"],
+      newest: "Dates from the board's changelog. Score is a rubric score out of 100, not a percentage.",
+      row: function (e) {
+        var when = /launch/.test(e.dateMeaning || "") ? "on the board since launch, " + fmtDate(e.date) : "added " + fmtDate(e.date);
+        return { name: e.system, meta: e.reasoningEffort + " effort · pass rate " + fx(e.passRate, 1) + "% · " + when, value: e.score, valueText: fx(e.score, 1) };
+      },
+      table: function (e) { return [String(e.rank), e.system, e.reasoningEffort, fx(e.score, 1), fx(e.passRate, 1), fmtDate(e.date)]; },
+      head: ["Rank", "Model", "Effort", "Score", "Pass rate %", "Date"],
+      scale: { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "score" }
+    },
+    "metr-time-horizon": {
+      title: "METR 50% time horizon (TH 1.1)", tags: ["Frozen since 8 Sep 2026", "Top entry above reliable range"],
+      newest: "Different unit: minutes, not percent. Grey band: 95% CI. Dashed line: 960 min (16 h), the longest horizon METR measures reliably.",
+      row: function (e) {
+        return { name: e.system, meta: "95% CI " + fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1) + " min · released " + fmtDate(e.date), value: e.score, lo: e.ciLow, hi: e.ciHigh, valueText: fx(e.score, 1) };
+      },
+      table: function (e) { return [String(e.rank), e.system, fx(e.score, 1), fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1), fmtDate(e.date)]; },
+      head: ["Rank", "Model", "p50 (min)", "95% CI (min)", "Released"],
+      scale: { max: 4000, grid: [2000], ref: 960, ticks: [{ v: 0, label: "0" }, { v: 2000, label: "2,000" }, { v: 4000, label: "4,000" }], unit: "min" }
+    }
+  };
+
+  function renderPanels() {
+    var host = $("[data-bench-panels]");
+    if (!host || !DATA) return;
+    DATA.charts.topScores.benchmarks.forEach(function (b) {
+      var m = PANEL_META[b.id];
+      if (!m) return;
+      var src = sourceById(b.sourceId);
+      var hid = "bp-" + b.id;
+      var panel = el("section", { class: "bench-panel", "aria-labelledby": hid }, [
+        el("h5", { class: "bench-panel__title", id: hid, text: m.title }),
+        el("p", { class: "bench-panel__metric", text: b.metric }),
+        el("p", { class: "bench-panel__src" }, [
+          "Read " + fmtDate(src && src.fetchedAt || DATA.fetchedAt) + " · ",
+          src ? extLink(src.url, "source") : null
+        ]),
+        el("p", { class: "bench-tags" }, [el("span", { class: "sr-only", text: "Caveats: " })].concat(m.tags.map(function (t, i) { return el("span", { class: "bench-tag" }, [warnIcon(), t + (i < m.tags.length - 1 ? "" : ""), el("span", { class: "sr-only", text: i < m.tags.length - 1 ? ";" : "." })]); }))),
+        barRows(b.entries.map(function (e) { var r = m.row(e); r.rank = e.rank; return r; }), m.scale || PCT_SCALE),
+        el("p", { class: "meta", style: "margin-top:6px", text: m.newest }),
+        el("ul", { class: "bench-notes", "aria-label": "Notes from the sources" }, b.caveats.map(function (c) { return el("li", { text: c }); })),
+        el("div", { class: "bench-panel__foot" }, [details("Show as table", table(m.title + ", read " + fmtDate(DATA.fetchedAt), m.head, b.entries.map(m.table)))])
+      ]);
+      host.appendChild(panel);
+    });
+    host.appendChild(el("section", { class: "bench-panel bench-panel--note", "aria-labelledby": "bp-note" }, [
+      el("h5", { class: "bench-panel__title", id: "bp-note", text: "Read these numbers with care" }),
+      el("p", { style: "margin-top:8px", text: "The bars rank AI systems on published boards. They are course material, not a target for you." }),
+      el("p", { text: "Some figures appear on no board: OpenAI reports 80.9% on Verified and 80.3% on the Pro public split. They stay in the notes and are never drawn as bars." }),
+      el("p", null, ["Passing tests is not the same as useful work. METR found that maintainers would not merge about half of the test-passing Verified patches it reviewed. ", extLink("https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/", "METR note, 10 Mar 2026")])
+    ]));
+  }
+
+  /* ---------- time charts (SVG at the container's pixel width) ---------- */
+  var TIME_RENDERERS = [];
+  function figShell(host, title, sub, caption) {
+    var plot = el("div", { class: "bench-fig__plot" });
+    var tip = el("div", { class: "bench-tip", hidden: true, "aria-hidden": "true" });
+    var frame = el("div", { class: "bench-fig__frame" }, [
+      el("p", { class: "bench-fig__title", text: title }),
+      sub ? el("p", { class: "bench-fig__sub", text: sub }) : null,
+      plot, tip
+    ]);
+    var fig = el("figure", { class: "bench-fig" }, [frame]);
+    if (caption) fig.appendChild(el("figcaption", null, caption));
+    host.appendChild(fig);
+    return { fig: fig, frame: frame, plot: plot, tip: tip };
+  }
+  function yearTicks(t0, t1, every) {
+    var out = [], y0 = new Date(t0).getUTCFullYear(), y1 = new Date(t1).getUTCFullYear();
+    for (var y = y0; y <= y1; y++) {
+      var t = Date.UTC(y, 0, 1);
+      if (t >= t0 && t <= t1 && (y - y0) % every === 0) out.push({ t: t, label: String(y) });
+    }
+    return out;
+  }
+  function utc(iso) { var p = iso.split("-"); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
+
+  function renderMetr() {
+    var host = $("[data-bench-metr]");
+    if (!host || !DATA) return;
+    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "metr-p50-sota"; })[0];
+    if (!series) return;
+    var pts = series.points;
+    var dt = series.doublingTimeDays.fromIncluding2023;
+    var src = sourceById(series.sourceId);
+    var shell = figShell(host, "METR 50% time horizon of the models METR flags as state of the art",
+      "Minutes of expert human time at which the model is predicted to succeed half the time, by release date. Log scale; whiskers are 95% CIs.",
+      [
+        "METR's data file gives a doubling time of " + fx(dt.point_estimate, 1) + " days for models from 2023 onwards (95% CI " + fx(dt.ci_low, 1) + " to " + fx(dt.ci_high, 1) + "), excluding points above 16 hours. No trend line is drawn here. ",
+        series.caveats.join(" "), " ",
+        src ? extLink(src.url, "METR time horizons") : null
+      ]);
+    var tableRows = pts.map(function (p) { return [p.model, fmtDate(p.releaseDate), fx(p.p50Minutes, 1), fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1)]; });
+    shell.fig.appendChild(details("Show as table", table("METR 50% time horizon, state-of-the-art models (TH 1.1)", ["Model", "Released", "p50 (min)", "95% CI (min)"], tableRows, [2, 3])));
+    var readout = el("p", { class: "sr-only", "aria-live": "polite" });
+    shell.frame.appendChild(readout);
+
+    var active = -1;
+    function draw() {
+      var W = shell.plot.clientWidth;
+      if (!W) return;
+      var narrow = W < 520;
+      var H = narrow ? 280 : 330;
+      var m = { l: 40, r: 12, t: 22, b: 30 };
+      var t0 = Date.UTC(2019, 0, 1), t1 = Date.UTC(2026, 11, 31);
+      var yLo = 0.05, yHi = 6000;
+      var pw = W - m.l - m.r, ph = H - m.t - m.b;
+      function X(t) { return m.l + (t - t0) / (t1 - t0) * pw; }
+      function Y(v) { var c = Math.max(v, yLo); return m.t + (1 - (log10(c) - log10(yLo)) / (log10(yHi) - log10(yLo))) * ph; }
+      var svg = sv("svg", { width: W, height: H, role: "img", tabindex: "0",
+        "aria-label": "METR 50% time horizon from GPT-2 in February 2019 at 0.1 minutes to Claude Mythos Preview in April 2026 at 1,044.8 minutes, on a log scale. Use the left and right arrow keys to step through the " + pts.length + " models; the table below lists every value." });
+      shell.plot.textContent = "";
+      shell.plot.appendChild(svg);
+      function clampLabel(t) {
+        try {
+          var bb = t.getBBox(), x = parseFloat(t.getAttribute("x"));
+          if (bb.x < 2) t.setAttribute("x", x + (2 - bb.x));
+          else if (bb.x + bb.width > W - 2) t.setAttribute("x", x - (bb.x + bb.width - (W - 2)));
+        } catch (e) {}
+      }
+      [0.1, 1, 10, 100].forEach(function (g) {
+        svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
+        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: group(String(g)) }));
+      });
+      svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: m.t - 10, "text-anchor": "start", text: "minutes" }));
+      svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: m.t + ph, y2: m.t + ph }));
+      yearTicks(t0, t1, narrow ? 2 : 1).forEach(function (yt) {
+        svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 8, "text-anchor": "middle", text: yt.label }));
+      });
+      svg.appendChild(sv("line", { class: "bench-ref-line", x1: m.l, x2: m.l + pw, y1: Y(960), y2: Y(960) }));
+      svg.appendChild(sv("text", { class: "bench-label bench-label--muted", x: m.l + 4, y: narrow ? Y(960) + 15 : Y(960) - 6, text: narrow ? "960 min: reliable limit" : "960 min (16 h): METR's reliable limit" }));
+      var dots = [];
+      pts.forEach(function (p, i) {
+        var x = X(utc(p.releaseDate));
+        var yTop = Y(p.ciHigh), yBot = Y(p.ciLow);
+        svg.appendChild(sv("line", { class: "bench-whisker", x1: x, x2: x, y1: yTop, y2: yBot }));
+        svg.appendChild(sv("line", { class: "bench-whisker", x1: x - 3, x2: x + 3, y1: yTop, y2: yTop }));
+        if (p.ciLow > yLo) svg.appendChild(sv("line", { class: "bench-whisker", x1: x - 3, x2: x + 3, y1: yBot, y2: yBot }));
+        var d = sv("circle", { class: "bench-dot" + (i === active ? " is-active" : ""), cx: x, cy: Y(p.p50Minutes), r: 4.5 });
+        dots.push({ x: x, y: Y(p.p50Minutes), node: d });
+      });
+      dots.forEach(function (d) { svg.appendChild(d.node); });
+      var labelIdx = narrow ? [0, pts.length - 1] : [0, 3, pts.length - 1];
+      labelIdx.forEach(function (i) {
+        var p = pts[i], d = dots[i], last = i === pts.length - 1, first = i === 0;
+        var pos = first ? { x: d.x - 4, y: d.y - 12, a: "start" } : last ? { x: d.x - 8, y: d.y - 10, a: "end" } : { x: d.x - 9, y: d.y + 4, a: "end" };
+        var lab = sv("text", { class: "bench-label", x: pos.x, y: pos.y, "text-anchor": pos.a, text: (narrow && last ? p.model.replace(/^Claude /, "") : p.model) + ", " + fx(p.p50Minutes, 1) + " min" });
+        svg.appendChild(lab);
+        clampLabel(lab);
+      });
+      var hit = sv("rect", { class: "bench-hit", x: m.l, y: 0, width: pw, height: H });
+      svg.appendChild(hit);
+      function show(i, fromKey) {
+        active = i;
+        dots.forEach(function (d, j) { d.node.setAttribute("class", "bench-dot" + (j === i ? " is-active" : "")); });
+        var p = pts[i], d = dots[i];
+        shell.tip.textContent = "";
+        append(shell.tip, [el("strong", { text: fx(p.p50Minutes, 1) + " min" }), p.model, el("br"), "Released " + fmtDate(p.releaseDate), el("br"), "95% CI " + fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1) + " min"]);
+        shell.tip.hidden = false;
+        var fr = shell.frame.getBoundingClientRect(), pr = shell.plot.getBoundingClientRect();
+        var left = pr.left - fr.left + d.x + 12, top = pr.top - fr.top + d.y - 20;
+        var tw = shell.tip.offsetWidth || 200;
+        if (left + tw > fr.width - 8) left = pr.left - fr.left + d.x - tw - 12;
+        shell.tip.style.left = Math.max(4, left) + "px";
+        shell.tip.style.top = Math.max(4, top) + "px";
+        if (fromKey) readout.textContent = p.model + ", released " + fmtDate(p.releaseDate) + ", " + fx(p.p50Minutes, 1) + " minutes, 95% CI " + fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1) + ".";
+      }
+      function hide() { active = -1; shell.tip.hidden = true; dots.forEach(function (d) { d.node.setAttribute("class", "bench-dot"); }); }
+      svg.addEventListener("pointermove", function (ev) {
+        var r = svg.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top, best = 0, bd = Infinity;
+        dots.forEach(function (d, j) { var dd = Math.pow(d.x - px, 2) + Math.pow((d.y - py) * 0.5, 2); if (dd < bd) { bd = dd; best = j; } });
+        show(best, false);
+      });
+      svg.addEventListener("pointerleave", hide);
+      svg.addEventListener("blur", hide);
+      svg.addEventListener("keydown", function (ev) {
+        var k = ev.key, i = active;
+        if (k === "ArrowRight" || k === "ArrowUp") i = Math.min(pts.length - 1, i + 1);
+        else if (k === "ArrowLeft" || k === "ArrowDown") i = Math.max(0, i < 0 ? 0 : i - 1);
+        else if (k === "Home") i = 0;
+        else if (k === "End") i = pts.length - 1;
+        else if (k === "Escape") { hide(); return; }
+        else return;
+        ev.preventDefault();
+        show(i, true);
+      });
+    }
+    TIME_RENDERERS.push(draw);
+    draw();
+  }
+
+  function renderSwev() {
+    var host = $("[data-bench-swev]");
+    if (!host || !DATA) return;
+    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "swev-record"; })[0];
+    if (!series) return;
+    var pts = series.points, first = pts[0], last = pts[pts.length - 1];
+    var src = sourceById(series.sourceId);
+    var shell = figShell(host, "SWE-bench Verified: board record by submission date", "% of 500 tasks resolved, from " + fx(first.score, 1) + "% (" + fmtMonth(first.date) + ") to " + fx(last.score, 1) + "% (" + fmtMonth(last.date) + "). Dotted: no new record up to the newest entry, 26 Feb 2026.",
+      [series.caveats.join(" "), " ", src ? extLink(src.url, "swebench.com") : null]);
+    shell.fig.appendChild(details("Show as table", table("SWE-bench Verified board records", ["Date", "% resolved", "System"], pts.map(function (p) { return [fmtDate(p.date), fx(p.score, 1), p.system]; }), [1])));
+    function draw() {
+      var W = shell.plot.clientWidth;
+      if (!W) return;
+      var H = 210, m = { l: 34, r: 12, t: 16, b: 28 };
+      var t0 = Date.UTC(2023, 8, 1), t1 = Date.UTC(2026, 3, 1);
+      var pw = W - m.l - m.r, ph = H - m.t - m.b;
+      function X(t) { return m.l + (t - t0) / (t1 - t0) * pw; }
+      function Y(v) { return m.t + (1 - v / 100) * ph; }
+      var svg = sv("svg", { width: W, height: H, role: "img", "aria-label": "SWE-bench Verified board record rising in steps from " + fx(first.score, 1) + "% in " + fmtMonth(first.date) + " to " + fx(last.score, 1) + "% in " + fmtMonth(last.date) + ", with no new record since." });
+      [25, 50, 75, 100].forEach(function (g) {
+        svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
+        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: g + "%" }));
+      });
+      svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: Y(0), y2: Y(0) }));
+      svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(0) + 4, "text-anchor": "end", text: "0" }));
+      yearTicks(t0, t1, 1).forEach(function (yt) { svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 8, "text-anchor": "middle", text: yt.label })); });
+      var d = "";
+      pts.forEach(function (p, i) {
+        var x = X(utc(p.date)), y = Y(p.score);
+        if (i === 0) d += "M" + x + " " + y;
+        else d += "H" + x + "V" + y;
+      });
+      svg.appendChild(sv("path", { class: "bench-line", d: d }));
+      var xl = X(utc(last.date)), xe = X(utc("2026-02-26"));
+      svg.appendChild(sv("path", { class: "bench-line bench-line--ext", d: "M" + xl + " " + Y(last.score) + "H" + xe }));
+      svg.appendChild(sv("circle", { class: "bench-dot", cx: X(utc(first.date)), cy: Y(first.score), r: 4.5 }));
+      svg.appendChild(sv("circle", { class: "bench-dot", cx: xl, cy: Y(last.score), r: 4.5 }));
+      svg.appendChild(sv("text", { class: "bench-label", x: X(utc(first.date)), y: Y(first.score) - 10, "text-anchor": "middle", text: fx(first.score, 1) + "%" }));
+      svg.appendChild(sv("text", { class: "bench-label", x: xl - 8, y: Y(last.score) - 10, "text-anchor": "end", text: fx(last.score, 1) + "%, " + fmtMonth(last.date) }));
+      shell.plot.textContent = "";
+      shell.plot.appendChild(svg);
+    }
+    TIME_RENDERERS.push(draw);
+    draw();
+  }
+
+  function renderTbVersions() {
+    var host = $("[data-bench-tbv]");
+    if (!host || !DATA) return;
+    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "terminal-bench-versions"; })[0];
+    if (!series) return;
+    var tb3 = sourceById("tb3-blog"), lb = sourceById("tb-leaderboard");
+    var host2 = el("figure", { class: "bench-fig" });
+    var frame = el("div", { class: "bench-fig__frame" }, [
+      el("p", { class: "bench-fig__title", text: "Terminal-Bench: top score at each version" }),
+      el("p", { class: "bench-fig__sub", text: "% of trials passed. Each version is a different task set, so the bars are not a trend." })
+    ]);
+    var rows = series.points.map(function (p) {
+      var meta = p.version === "2.1" ? "best of the models compared in the 3.0 post" : (p.version === "3.0" ? "3.0 release post" : "leaderboard, " + fmtDate(p.date));
+      return { name: "Version " + p.version + ": " + p.system, meta: meta, value: p.score, valueText: fx(p.score, 1) + "%" };
+    });
+    frame.appendChild(barRows(rows, PCT_SCALE));
+    host2.appendChild(frame);
+    host2.appendChild(el("figcaption", null, [series.caveats.join(" ") + " Version 4.0 removed eight tasks, two of them for saturation. ", tb3 ? extLink(tb3.url, "3.0 post") : null, " · ", lb ? extLink(lb.url, "leaderboard") : null]));
+    host2.appendChild(details("Show as table", table("Top Terminal-Bench score by version", ["Version", "System", "% passed", "Reported"], series.points.map(function (p) { return [p.version, p.system, fx(p.score, 1), p.dateMeaning]; }), [2])));
+    host.appendChild(host2);
+  }
+
+  /* ==========================================================================
+     Tasks, estimates and reveal
+     ========================================================================== */
+  var TEXT = {
+    "swev-flask-blueprint-name": {
+      short: "Flask blueprint names",
+      summary: "Flask accepts a Blueprint whose name is the empty string, and such blueprints misbehave later. The issue asks for a `ValueError` when one is created.",
+      look: "`src/flask/blueprints.py`, where `Blueprint.__init__` already rejects names containing a dot, and how `tests/test_blueprints.py` checks for raised errors.",
+      after: "Then paste the issue body into `TASK.md`.",
+      hard: ["The fix is a three-line guard next to an existing one. Annotators, pairs and agents should agree here, which makes it the calibration anchor for the other five."],
+      sources: ["swebench-experiments", "swebench-verified-hf", "openai-swev-intro"]
+    },
+    "swev-pylint-type-hints": {
+      short: "pyreverse type hints",
+      summary: "pyreverse, the UML diagram generator that ships with pylint, ignores PEP 484 annotations, so an attribute declared `a: str = None` appears in the class diagram without a type. The issue, opened in 2017, asks for the annotated type to appear.",
+      look: "The `pylint/pyreverse/` package, following how class attributes are collected and how the diagram writer labels them.",
+      after: "Then paste the issue body into `TASK.md`.",
+      hard: ["OpenAI's audit uses this task as its example of a narrow test. The hidden tests import a helper called `get_annotation` from `pylint.pyreverse.utils`, a name the issue never mentions, so a correct fix written under another name fails on import.",
+        "If you gave a low specification score, you were right for a reason you could not see. The zero says more about the grader than about the agents, and flaws of this kind led OpenAI to stop reporting the benchmark."],
+      sources: ["swebench-experiments", "swebench-verified-hf", "openai-swev-retire"]
+    },
+    "tb4-bun-sourcemaps": {
+      short: "Bun source maps",
+      summary: "A small Bun and TypeScript app has a release script whose bundles and source maps expose private server code, secret constants and local file paths. The task is to rewrite the release step so that shipped artefacts follow a visibility policy file: public client stack traces must still map back to public sources, and everything private must be removed or redacted, using Bun's built-in APIs only.",
+      look: "`environment/scripts/release.ts`, `environment/visibility.json` and the six numbered requirements in `instruction.md`, then what a source map file contains.",
+      after: "This checks out the statement and the app and leaves out the files that hold the answer and the expert time.",
+      hard: ["90 minutes for a specialist and out of reach for both leading agents. The task README attributes the difficulty to judgement across release engineering and application security: maps mix public and private modules, and the verifier reruns the release on variant projects with the files reclassified, so a fix tuned to the example's file names fails."],
+      sources: ["tb-repo", "harbor-job-opus55", "harbor-job-gpt61sol"]
+    },
+    "tb4-archive-clone": {
+      short: "Archive tool clone",
+      summary: "The environment holds a stripped binary for an archive tool that layers Reed-Solomon error correction over GF(256), CRC-32 checks and six data-transform modes. The task is a readable single-file clone that matches the binary exactly on every command, including output, error messages, exit codes, file modes and malformed or corrupted inputs, worked out by running the binary without disassembling it.",
+      look: "`instruction.md` and `environment/data/examples/` with its README. The binaries are Linux builds, so on macOS the agent can read them as files but cannot run them.",
+      after: "This checks out the statement and the app and leaves out the files that hold the answer and the expert time.",
+      hard: ["The longest human task in the set and a clean pass for both agents. The README says each layer would be simple to implement from a full specification and places the difficulty in byte-exact recovery by probing, which the reference solution notes \"takes hours for capable agents\". Systematic experiments run many times over suit an agent, so this task and Task 3 sit at opposite corners of the human-time and agent-success plot."],
+      sources: ["tb-repo", "harbor-job-opus55", "harbor-job-gpt61sol"]
+    },
+    "pro-ansible-human-to-bytes": {
+      short: "Ansible human_to_bytes",
+      summary: "Ansible's `human_to_bytes` filter converts size strings such as `10 MB` into byte counts, and it also returns numbers for malformed input: trailing words, near-miss units, digits from other scripts and leading whitespace. The task is to make it raise `ValueError`, with a specified message for each class of bad input.",
+      look: "`lib/ansible/module_utils/common/text/formatters.py`, the existing unit tests for `human_to_bytes`, and how Python's string and integer functions treat digits outside ASCII.",
+      extra: "curl -sL https://raw.githubusercontent.com/scaleapi/SWE-bench_Pro-os/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-d62496fe416623e88b90139dc7917080cb04ce70-v0f01c69f1e2528b935359cfe578530722bca2c59/instruction.md -o TASK.md",
+      after: "The second command saves the statement as `TASK.md`.",
+      hard: ["The smallest code change of the six, and one of Scale's 51 hardest tasks. The statement is precise, and the 22 fail-to-pass tests probe unusual characters and exact error messages, so a fix that handles the listed examples can still miss a class of input. Set your complexity score beside the patch size."],
+      sources: ["scale-swepro-repo", "swepro-paper"]
+    },
+    "pro-flipt-skip-existing": {
+      short: "Flipt skip existing",
+      summary: "Flipt, a feature-flag server written in Go, refuses an import file when some of its flags or segments already exist. The task adds a `skipExisting` option to the importer and a `--skip-existing` command-line flag, so that only new items, together with their rules, variants and rollouts, are created.",
+      look: "`internal/ext/importer.go`, `cmd/flipt/import.go` and the `Creator` interface, then the requirements list, which is far longer than the one-sentence problem statement.",
+      extra: "curl -sL https://raw.githubusercontent.com/scaleapi/SWE-bench_Pro-os/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_flipt-io__flipt-dae029cba7cdb98dfb1a6b416c00d324241e6063/instruction.md -o TASK.md",
+      after: "The second command saves the statement as `TASK.md`.",
+      hard: ["Nearly three times the lines of Task 5's patch and outside the hard subset. The one-line problem is backed by a requirements brief naming the method signature, the list calls and the command-line flag; V2 revised its statements so that every graded assertion traces to a sentence in the text. Two tests grade it and none guard against regressions, so a pass here says little about the rest of the importer."],
+      sources: ["scale-swepro-repo"]
+    }
+  };
+  var COMPLEXITY = [
+    "One location; the change is obvious once found (a guard clause, a constant).",
+    "One module and a few related edits; existing code or tests show the pattern.",
+    "Several files, or one subtle piece of logic; running the code is needed to be confident.",
+    "A cross-cutting change or an unfamiliar domain (protocols, encodings, build pipelines) with several interacting parts and a test plan of its own.",
+    "Days of expert work: many interacting components, reverse engineering, or correctness that is hard to establish at all."
+  ];
+  var SPEC = [
+    "The goal is unclear; reasonable readers would build incompatible things.",
+    "The goal is clear, but acceptance criteria are missing; a reasonable fix could be judged wrong.",
+    "The goal and main behaviour are stated; edge cases and interfaces are left to judgement.",
+    "Behaviour, edge cases and interfaces are mostly stated; few judgement calls remain.",
+    "Precise to the level of names, signatures, error messages and examples; two engineers would produce interchangeable fixes."
+  ];
+
+  var TASKS = DATA ? DATA.tasks.slice().sort(function (a, b) { return a.order - b.order; }) : [];
+  var UI = {};          // taskId -> {tab, panel, form fields, ...}
+  var pairNumber = null;
+
+  function stateIcon(kind) {
+    var s = sv("svg", { class: "est-state est-state--" + kind, viewBox: "0 0 12 12", "aria-hidden": "true", focusable: "false" }, [sv("circle", { cx: 6, cy: 6, r: 5 })]);
+    if (kind === "saved") s.appendChild(sv("path", { class: "est-state__half", d: "M6 1A5 5 0 0 1 6 11Z" }));
+    return s;
+  }
+  function commandLines(cmd) {
+    return cmd.split(" && ").map(function (part, i, arr) { return (i ? "  " : "") + part + (i < arr.length - 1 ? " &&" : ""); }).join("\n");
+  }
+
+  function buildTabs() {
+    var tabs = $("[data-tabs]"), panels = $("[data-panels]");
+    if (!tabs || !panels) return;
+    TASKS.forEach(function (t, idx) {
+      var n = t.order, txt = TEXT[t.taskId] || {};
+      var tab = el("button", { type: "button", role: "tab", id: "bench-tab-" + n, class: "est-tab", "aria-selected": "false", "aria-controls": "bench-panel-" + n, tabindex: "-1" }, [
+        el("span", { class: "est-tab__top" }, [
+          el("span", { class: "est-tab__num", text: "Task " + n }),
+          el("span", { class: "est-tab__bench", text: t.benchmark }),
+          el("span", { class: "est-tab__round", hidden: true, "data-round": "" })
+        ]),
+        el("span", { class: "est-tab__id", text: t.taskId }),
+        el("span", { class: "est-tab__status", "data-status": "" }, [stateIcon("todo"), "Not started"])
+      ]);
+      tab.addEventListener("click", function () { select(n, true); });
+      tab.addEventListener("keydown", onTabKey);
+      tabs.appendChild(tab);
+
+      var panel = el("div", { role: "tabpanel", id: "bench-panel-" + n, class: "est-panel", "aria-labelledby": "bench-tab-" + n, tabindex: "0", hidden: true });
+      panel.appendChild(buildCard(t, txt));
+      panels.appendChild(panel);
+      UI[t.taskId].tab = tab;
+      UI[t.taskId].panel = panel;
+    });
+  }
+  function onTabKey(ev) {
+    var n = parseInt(ev.currentTarget.id.replace("bench-tab-", ""), 10), k = ev.key, next = n;
+    if (k === "ArrowRight" || k === "ArrowDown") next = n === TASKS.length ? 1 : n + 1;
+    else if (k === "ArrowLeft" || k === "ArrowUp") next = n === 1 ? TASKS.length : n - 1;
+    else if (k === "Home") next = 1;
+    else if (k === "End") next = TASKS.length;
+    else return;
+    ev.preventDefault();
+    select(next, true);
+    $("#bench-tab-" + next).focus();
+  }
+  function select(n, user) {
+    TASKS.forEach(function (t) {
+      var on = t.order === n, u = UI[t.taskId];
+      u.tab.setAttribute("aria-selected", on ? "true" : "false");
+      u.tab.tabIndex = on ? 0 : -1;
+      u.panel.hidden = !on;
+    });
+    if (user) { try { history.replaceState(null, "", "#bench-task-" + n); } catch (e) {} }
+  }
+
+  function buildCard(t, txt) {
+    var n = t.order, id = t.taskId;
+    var u = UI[id] = { task: t };
+    var card = el("article", { class: "est-card", "aria-labelledby": "est-title-" + n });
+    card.appendChild(el("div", { class: "est-card__label" }, [el("span", { class: "label label--ink", text: "Task " + n + " · " + t.benchmark })]));
+    card.appendChild(el("h5", { class: "est-card__title", id: "est-title-" + n, text: t.title }));
+    card.appendChild(el("p", { class: "est-card__id" }, ["Course ID ", el("code", { text: id }), " · repository " + t.repo]));
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "The task" }), el("p", null, rich(txt.summary || ""))]));
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "What to look at first" }), el("p", null, rich(txt.look || ""))]));
+    var copyText = t.openLocally + (txt.extra ? "\n" + txt.extra : "");
+    var shown = commandLines(t.openLocally) + (txt.extra ? "\n" + txt.extra : "");
+    var codeBox = el("div", { class: "bench-code" }, [el("pre", null, [el("code", { text: shown })])]);
+    addCopy(codeBox, function () { return copyText; }, "setup commands for Task " + n);
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "Open it locally" }), codeBox, el("p", { class: "est-hint", style: "margin-top:6px" }, rich(txt.after || ""))]));
+    card.appendChild(el("div", { class: "est-card__block" }, [
+      el("h6", { text: "Statement" }),
+      linkRow(t.statementUrl, "Read", t.statementUrl.indexOf("/issues/") > 0 ? "The issue on GitHub" : "instruction.md on GitHub", t.statementNote)
+    ]));
+    card.appendChild(buildForm(t, u));
+    u.reveal = el("section", { class: "est-reveal", "aria-labelledby": "est-rev-h-" + n, hidden: true });
+    card.appendChild(u.reveal);
+    return card;
+  }
+
+  function scaleField(name, legend, sub, anchors, u, key) {
+    var fs = el("fieldset", { class: "est-scale", "aria-describedby": name + "-err" }, [el("legend", null, [legend, el("span", { text: sub })])]);
+    var opts = el("div", { class: "est-scale__opts" });
+    anchors.forEach(function (a, i) {
+      var inp = el("input", { type: "radio", name: name, value: String(i + 1) });
+      opts.appendChild(el("label", { class: "est-opt" }, [inp, el("span", { class: "est-opt__n", "aria-hidden": "true", text: String(i + 1) }), el("span", { class: "est-opt__t" }, [el("span", { class: "sr-only", text: (i + 1) + ": " }), a])]));
+    });
+    fs.appendChild(opts);
+    var err = el("p", { class: "est-err", id: name + "-err", hidden: true });
+    fs.appendChild(err);
+    u[key] = fs; u[key + "Err"] = err;
+    return fs;
+  }
+
+  function buildForm(t, u) {
+    var n = t.order;
+    var form = el("form", { class: "est-form", novalidate: true, "aria-labelledby": "est-form-h-" + n });
+    form.appendChild(el("h6", { class: "est-form__h", id: "est-form-h-" + n, text: "Your pair's estimate" }));
+    form.appendChild(el("p", { class: "est-form__intro", text: "Save it once your ten minutes are up. You can change it until you reveal the answer." }));
+
+    var minId = "est-min-" + n;
+    u.min = el("input", { type: "number", id: minId, min: "1", step: "any", inputmode: "decimal", "aria-describedby": minId + "-as " + minId + "-err" });
+    u.minAs = el("span", { class: "est-min__as", id: minId + "-as" });
+    u.minErr = el("p", { class: "est-err", id: minId + "-err", hidden: true });
+    form.appendChild(el("div", { class: "est-field" }, [
+      el("label", { for: minId, text: "How many minutes would an experienced engineer, new to this repository, need without AI help to reach a solution that passes the task's tests?" }),
+      el("div", { class: "est-min" }, [u.min, el("span", { class: "est-min__unit", text: "minutes" }), u.minAs]),
+      u.minErr
+    ]));
+    form.appendChild(scaleField("cx-" + n, "Complexity", "How much a solver must understand and hold in mind at once.", COMPLEXITY, u, "cx"));
+    form.appendChild(scaleField("sq-" + n, "Specification quality", "How completely the statement fixes what \"done\" means.", SPEC, u, "sq"));
+
+    var rId = "est-reason-" + n;
+    u.reason = el("input", { type: "text", id: rId, maxlength: "200", autocomplete: "off", "aria-describedby": rId + "-count" });
+    u.reasonCount = el("p", { class: "est-hint", id: rId + "-count", text: "0 of 200 characters" });
+    form.appendChild(el("div", { class: "est-field est-reason" }, [el("label", { for: rId, text: "One-line reason" }), u.reason, u.reasonCount]));
+
+    var pId = "est-pair-" + n;
+    u.pair = el("input", { type: "text", id: pId, maxlength: "40", autocomplete: "off", "aria-describedby": pId + "-hint" });
+    form.appendChild(el("div", { class: "est-field est-pairid" }, [el("label", { for: pId, text: "Pair ID" }), u.pair, el("p", { class: "est-hint", id: pId + "-hint", text: "The number the facilitator gave your pair. Leave it blank if you are working alone." })]));
+
+    u.save = el("button", { type: "submit", class: "bench-btn bench-btn--primary", text: "Save estimate" });
+    u.revealBtn = el("button", { type: "button", class: "bench-btn", "aria-expanded": "false", "aria-controls": "est-confirm-" + n, "aria-describedby": "est-wait-" + n, text: "Reveal the answer" });
+    u.status = el("p", { class: "est-status" });
+    u.locked = el("p", { class: "est-locked", hidden: true });
+    form.appendChild(el("div", { class: "est-actions" }, [u.save, u.revealBtn, u.status, u.locked]));
+    u.wait = el("p", { class: "est-hint est-wait", id: "est-wait-" + n, text: "In the session, wait for the facilitator's reveal after both rounds are saved. Revealing locks this estimate." });
+    form.appendChild(u.wait);
+
+    var go = el("button", { type: "button", class: "bench-btn bench-btn--primary", text: "Reveal and lock" });
+    var cancel = el("button", { type: "button", class: "bench-linkbtn", text: "Cancel" });
+    u.confirm = el("div", { class: "est-confirm", id: "est-confirm-" + n, role: "group", "aria-labelledby": "est-confirm-t-" + n, hidden: true }, [
+      el("p", { id: "est-confirm-t-" + n, text: "Revealing shows the published answer for Task " + n + " and locks your estimate: you cannot change it afterwards." }),
+      el("div", { class: "est-confirm__btns" }, [go, cancel])
+    ]);
+    form.appendChild(u.confirm);
+
+    u.min.addEventListener("input", function () { u.editing = true; updateMinAs(u); updateDirty(u); });
+    u.reason.addEventListener("input", function () { u.editing = true; u.reasonCount.textContent = u.reason.value.length + " of 200 characters"; updateDirty(u); });
+    u.pair.addEventListener("input", function () { u.editing = true; updateDirty(u); });
+    form.addEventListener("change", function (e) { if (e.target && e.target.type === "radio") { u.editing = true; updateDirty(u); } });
+    form.addEventListener("submit", function (e) { e.preventDefault(); save(t, u); });
+    u.revealBtn.addEventListener("click", function () {
+      if (isDirty(u)) { u.status.textContent = "Save your changes first: the reveal locks what is saved."; announce(u.status.textContent); return; }
+      var open = u.confirm.hidden;
+      u.confirm.hidden = !open;
+      u.revealBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) go.focus();
+    });
+    cancel.addEventListener("click", function () { u.confirm.hidden = true; u.revealBtn.setAttribute("aria-expanded", "false"); u.revealBtn.focus(); });
+    u.confirm.addEventListener("keydown", function (e) { if (e.key === "Escape") cancel.click(); });
+    go.addEventListener("click", function () { reveal(t, u); });
+    return form;
+  }
+
+  function radioVal(fs) { var c = fs.querySelector("input:checked"); return c ? parseInt(c.value, 10) : null; }
+  function setRadio(fs, v) { var r = fs.querySelectorAll("input"); for (var i = 0; i < r.length; i++) r[i].checked = String(v) === r[i].value; }
+  function updateMinAs(u) {
+    var v = Number(u.min.value);
+    u.minAs.textContent = u.min.value.trim() !== "" && isFinite(v) && v >= 60 ? "= " + fmtMin(v).replace(/^.* min \(/, "").replace(/\)$/, "") : "";
+  }
+  function formValues(u) {
+    return { minutes: u.min.value.trim(), cx: radioVal(u.cx), sq: radioVal(u.sq), reason: u.reason.value.trim(), pair: u.pair.value.trim() };
+  }
+  function isDirty(u) {
+    var e = estimateOf(state(), u.task.taskId);
+    if (!e) return false;
+    var f = formValues(u);
+    return Number(f.minutes) !== e.estimateMinutes || f.cx !== e.complexity || f.sq !== e.specQuality || f.reason !== (e.reason || "") || f.pair !== (e.pairId || "");
+  }
+  function updateDirty(u) {
+    var e = estimateOf(state(), u.task.taskId);
+    if (e && !e.revealedAt) u.status.textContent = isDirty(u) ? "Unsaved changes." : "Saved " + ts(e.submittedAt) + ".";
+  }
+
+  function save(t, u) {
+    var f = formValues(u), bad = null;
+    var mins = Number(f.minutes);
+    var minOk = f.minutes !== "" && isFinite(mins) && mins > 0;
+    u.minErr.hidden = minOk; u.minErr.textContent = minOk ? "" : "Enter a number of minutes greater than 0.";
+    u.min.setAttribute("aria-invalid", minOk ? "false" : "true");
+    u.cxErr.hidden = !!f.cx; u.cxErr.textContent = f.cx ? "" : "Choose a complexity from 1 to 5.";
+    u.sqErr.hidden = !!f.sq; u.sqErr.textContent = f.sq ? "" : "Choose a specification quality from 1 to 5.";
+    if (!minOk) bad = u.min; else if (!f.cx) bad = u.cx.querySelector("input"); else if (!f.sq) bad = u.sq.querySelector("input");
+    if (bad) { bad.focus(); announce("The estimate was not saved. " + (!minOk ? u.minErr.textContent : (!f.cx ? u.cxErr.textContent : u.sqErr.textContent))); return; }
+    var ok = P.addEstimate({ taskId: t.taskId, estimateMinutes: mins, complexity: f.cx, specQuality: f.sq, reason: f.reason.slice(0, 200), pairId: f.pair });
+    if (!ok) { syncTask(t); announce("This task was already revealed, so the estimate is locked."); return; }
+    if (f.pair) rememberPair(f.pair);
+    u.editing = false;
+    syncTask(t);
+    announce("Estimate for Task " + t.order + " saved. You can change it until you reveal.");
+  }
+
+  function reveal(t, u) {
+    var ok = P.revealEstimate(t.taskId);
+    u.confirm.hidden = true;
+    u.revealBtn.setAttribute("aria-expanded", "false");
+    syncTask(t);
+    renderCalibration();
+    if (ok || estimateOf(state(), t.taskId)) {
+      var h = u.reveal.querySelector(".est-reveal__h");
+      if (h) h.focus();
+      announce("Task " + t.order + " revealed. Your estimate is locked.");
+    }
+  }
+
+  /* Bring one task's form, tab and reveal in line with the stored record. */
+  function syncTask(t) {
+    var u = UI[t.taskId], e = estimateOf(state(), t.taskId);
+    if (!u) return;
+    var revealed = !!(e && e.revealedAt);
+    var sig = e ? e.submittedAt + "|" + (e.revealedAt || "") : "";
+    if (e && u.filled !== sig && (revealed || !u.editing)) {
+      u.filled = sig;
+      u.editing = false;
+      {
+        u.min.value = e.estimateMinutes;
+        setRadio(u.cx, e.complexity);
+        setRadio(u.sq, e.specQuality);
+        u.reason.value = e.reason || "";
+        u.pair.value = e.pairId || "";
+        u.reasonCount.textContent = u.reason.value.length + " of 200 characters";
+        updateMinAs(u);
+      }
+    } else if (!e && pairNumber && !u.pair.value) {
+      u.pair.value = String(pairNumber);
+    }
+    var inputs = u.panel.querySelectorAll(".est-form input");
+    for (var i = 0; i < inputs.length; i++) inputs[i].disabled = revealed;
+    u.save.hidden = revealed;
+    u.revealBtn.hidden = revealed;
+    u.revealBtn.disabled = !e;
+    u.wait.textContent = e ? "In the session, wait for the facilitator's reveal after both rounds are saved. Revealing locks this estimate." : "Save an estimate to unlock the reveal. In the session, wait for the facilitator's reveal after both rounds are saved.";
+    u.locked.hidden = !revealed;
+    u.wait.hidden = revealed;
+    if (revealed) {
+      u.locked.textContent = "";
+      append(u.locked, [lockIcon(), "Locked: saved " + ts(e.submittedAt) + ", revealed " + ts(e.revealedAt)]);
+      u.status.textContent = "";
+    } else if (e) {
+      u.status.textContent = isDirty(u) ? "Unsaved changes." : "Saved " + ts(e.submittedAt) + ".";
+    } else {
+      u.status.textContent = "Not saved yet.";
+    }
+    // tab status
+    var st = u.tab.querySelector("[data-status]");
+    st.textContent = "";
+    if (revealed) append(st, [stateIcon("revealed"), "Revealed"]);
+    else if (e) append(st, [stateIcon("saved"), "Estimate saved"]);
+    else append(st, [stateIcon("todo"), "Not started"]);
+    // reveal panel: built only once the record says revealed
+    if (revealed && !u.reveal.firstChild) buildReveal(t, u, e);
+    if (revealed) u.reveal.hidden = false;
+  }
+  function lockIcon() {
+    return sv("svg", { viewBox: "0 0 12 12", width: 12, height: 12, "aria-hidden": "true", focusable: "false" }, [
+      sv("rect", { x: 2, y: 5.5, width: 8, height: 5.5, rx: 1, fill: "currentColor" }),
+      sv("path", { d: "M4 5.5V4A2 2 0 0 1 8 4V5.5", fill: "none", stroke: "currentColor", "stroke-width": "1.3" })
+    ]);
+  }
+
+  /* ---------- ground truth helpers (called only for revealed tasks) ---------- */
+  function truthOf(t) { return t.groundTruth; }
+  function hasTime(g) { return g && g.humanMinutesHigh !== null && g.humanMinutesHigh !== undefined; }
+  function truthText(g) {
+    if (g.humanTimeKind === "annotator bucket") {
+      return { big: g.humanMinutesLow === 0 ? "Under " + g.humanMinutesHigh + " min" : g.humanMinutesLow + " to " + g.humanMinutesHigh + " min", kind: "Annotator bucket \"" + g.difficultyLabel + "\"" };
+    }
+    if (g.humanTimeKind === "task author's expert estimate") {
+      return { big: fmtMin(g.humanMinutesPoint), kind: "The task author's expert estimate" };
+    }
+    return { big: "None published", kind: "SWE-Bench Pro publishes no per-task human time" };
+  }
+  /* The md's comparison rule: point -> log2(est / point); bucket -> inside, else log2 distance to the nearer bound. */
+  function compare(g, est) {
+    if (g.humanTimeKind === "task author's expert estimate") {
+      var l = Math.log(est / g.humanMinutesPoint) / Math.LN2;
+      return { log2: l, text: fx(est / g.humanMinutesPoint, 2).replace(/\.?0+$/, "") + "× the author's estimate (log₂ " + (l >= 0 ? "+" : "−") + fx(Math.abs(l), 2) + ")" };
+    }
+    if (g.humanTimeKind === "annotator bucket") {
+      if (est >= g.humanMinutesLow && est <= g.humanMinutesHigh) return { log2: 0, text: "Inside the annotators' bucket" };
+      if (est > g.humanMinutesHigh) { var a = Math.log(est / g.humanMinutesHigh) / Math.LN2; return { log2: a, text: "Above the bucket: log₂ +" + fx(a, 2) + " from its upper bound (" + g.humanMinutesHigh + " min)" }; }
+      var b = Math.log(est / g.humanMinutesLow) / Math.LN2;
+      return { log2: b, text: "Below the bucket: log₂ −" + fx(Math.abs(b), 2) + " from its lower bound (" + g.humanMinutesLow + " min)" };
+    }
+    return null;
+  }
+
+  function buildReveal(t, u, e) {
+    var n = t.order, g = truthOf(t), txt = TEXT[t.taskId] || {};
+    var box = u.reveal;
+    box.appendChild(el("h6", { class: "est-reveal__h", id: "est-rev-h-" + n, tabindex: "-1", text: "The answer for Task " + n }));
+    var tt = truthText(g);
+    var dl = el("dl", { class: "est-facts" });
+    function fact(label, kids) { dl.appendChild(el("div", { class: "est-fact" }, [el("dt", { text: label }), el("dd", null, kids)])); }
+    fact("Human time", [el("span", { class: "est-fact__big", text: tt.big }), hasTime(g) ? tt.kind + ". " + g.humanTimeSource : g.humanTimeSource]);
+    fact("Your estimate", [el("span", { class: "est-fact__big", text: fmtMin(e.estimateMinutes) }),
+      "Complexity " + e.complexity + " of 5, specification " + e.specQuality + " of 5." + (e.reason ? " Reason: " + e.reason : ""),
+      hasTime(g) ? el("br") : null, hasTime(g) ? compare(g, e.estimateMinutes).text + "." : null]);
+    // agents
+    var agentKids = [];
+    if (g.agentRuns && g.agentRuns.length) {
+      var runs = el("div", { class: "est-runs" });
+      g.agentRuns.forEach(function (r) { runs.appendChild(el("div", null, [el("span", { class: "est-run__name", text: r.system + ": " + r.passes + " of " + r.attempts + " trials passed" }), cells(r.passes, r.attempts)])); });
+      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts }), runs);
+    } else if (g.agentAttempts) {
+      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts + " runs resolved it" }), cells(g.agentPassCount, g.agentAttempts),
+        "One attempt per run, from the SWE-bench experiments repository: eleven mini-SWE-agent runs from 17 February 2026, one Gemini 3.5 Flash run from 1 September 2026, and the board's top three.");
+    } else {
+      agentKids.push(el("span", { class: "est-fact__big", text: g.hard51 ? "In HARD-51" : "Outside HARD-51" }), g.agentResultsNote);
+    }
+    fact("Frontier agents", agentKids);
+    var patch = g.referencePatch;
+    var tests = [];
+    if (g.failToPassTests !== undefined) tests.push(g.failToPassTests + " fail-to-pass test" + (g.failToPassTests === 1 ? "" : "s"));
+    if (g.passToPassTests !== undefined) tests.push(g.passToPassTests + " pass-to-pass");
+    fact("Reference solution", patch
+      ? [el("span", { class: "est-fact__big", text: "+" + patch.linesAdded + " −" + patch.linesRemoved + ", " + patch.filesChanged + " file" + (patch.filesChanged === 1 ? "" : "s") }), (patch.note ? patch.note + " " : "") + (tests.length ? tests.join(", ") + "." : "")]
+      : [el("span", { class: "est-fact__big", text: "Solution script only" }), "Terminal-Bench ships a reference solution script, not a patch. Category: " + (g.category || "not given") + "."]);
+    box.appendChild(dl);
+    if (hasTime(g)) {
+      box.appendChild(stripChart([{ t: t, e: e }], true));
+    }
+    var hard = el("div", { class: "est-hard" }, [el("p", { class: "label", text: "What made it hard" })]);
+    (txt.hard || []).forEach(function (p) { hard.appendChild(el("p", null, rich(p))); });
+    box.appendChild(hard);
+    var srcs = el("p", { class: "est-sources" }, ["Upstream ID ", el("code", { text: g.upstreamId }), ". Sources: "]);
+    (txt.sources || []).forEach(function (sid, i) {
+      var s = sourceById(sid);
+      if (!s) return;
+      if (i) srcs.appendChild(doc.createTextNode(" · "));
+      srcs.appendChild(extLink(s.url, s.title));
+    });
+    box.appendChild(srcs);
+  }
+  function cells(pass, total) {
+    var wrap = el("span", { class: "est-cells", "aria-hidden": "true" });
+    for (var i = 0; i < total; i++) wrap.appendChild(el("span", { class: "est-cell" + (i < pass ? " est-cell--pass" : "") }));
+    return wrap;
+  }
+
+  /* ---------- strip chart: log minutes, ground truth vs your estimate ---------- */
+  function stripChart(rows, inline) {
+    var vals = [];
+    rows.forEach(function (r) { var g = r.t.groundTruth; vals.push(r.e.estimateMinutes, g.humanMinutesHigh); if (g.humanMinutesLow) vals.push(g.humanMinutesLow); });
+    var lo = Math.min(1, Math.pow(10, Math.floor(log10(Math.min.apply(null, vals.filter(function (v) { return v > 0; }))))));
+    var hi = Math.max(10000, Math.pow(10, Math.ceil(log10(Math.max.apply(null, vals)))));
+    function pct(v) { return (log10(Math.max(v, lo)) - log10(lo)) / (log10(hi) - log10(lo)) * 100; }
+    var ticks = [];
+    for (var d = lo; d <= hi * 1.0001; d *= 10) ticks.push(d);
+    var wrap = el("div", { class: "est-cal" + (inline ? " est-cal--inline" : "") });
+    var hasBand = rows.some(function (r) { return r.t.groundTruth.humanTimeKind === "annotator bucket"; });
+    var hasTick = rows.some(function (r) { return r.t.groundTruth.humanTimeKind !== "annotator bucket"; });
+    var legend = el("div", { class: "bench-legend", "aria-hidden": "true" }, [
+      hasBand ? el("span", { class: "bench-legend__item" }, [legendSvg("band"), "Annotators' bucket"]) : null,
+      hasTick ? el("span", { class: "bench-legend__item" }, [legendSvg("tick"), "Task author's estimate"]) : null,
+      el("span", { class: "bench-legend__item" }, [legendSvg("dot"), "Your estimate"])
+    ]);
+    wrap.appendChild(legend);
+    var list = el("ul", { class: "est-cal__rows" });
+    rows.forEach(function (r) {
+      var g = r.t.groundTruth, est = r.e.estimateMinutes, c = compare(g, est);
+      var s = sv("svg", { class: "est-cal__svg", height: "28", "aria-hidden": "true", focusable: "false" });
+      ticks.forEach(function (tk) { s.appendChild(sv("line", { class: "bench-grid-line", x1: pct(tk) + "%", x2: pct(tk) + "%", y1: 0, y2: 28 })); });
+      if (g.humanTimeKind === "annotator bucket") {
+        var x0 = pct(g.humanMinutesLow || lo), x1 = pct(g.humanMinutesHigh);
+        s.appendChild(sv("rect", { class: "est-band", x: x0 + "%", width: (x1 - x0) + "%", y: 4, height: 20 }));
+        s.appendChild(sv("line", { class: "est-band-edge", x1: x1 + "%", x2: x1 + "%", y1: 4, y2: 24 }));
+        if (g.humanMinutesLow) s.appendChild(sv("line", { class: "est-band-edge", x1: x0 + "%", x2: x0 + "%", y1: 4, y2: 24 }));
+      } else {
+        var xp = pct(g.humanMinutesPoint);
+        s.appendChild(sv("line", { class: "est-truth", x1: xp + "%", x2: xp + "%", y1: 2, y2: 26 }));
+      }
+      s.appendChild(sv("circle", { class: "est-you", cx: pct(est) + "%", cy: 14, r: 6.5 }));
+      var tt = truthText(g);
+      list.appendChild(el("li", null, [
+        el("p", { class: "est-cal__label" }, [el("b", { text: "Task " + r.t.order + " · " + (TEXT[r.t.taskId] || {}).short }),
+          el("span", { class: "est-cal__meta", text: "You: " + fmtMin(est) + " · published: " + tt.big.toLowerCase() + " · " + c.text })]),
+        s
+      ]));
+    });
+    wrap.appendChild(list);
+    var ax = sv("svg", { class: "est-cal__svg est-cal__axis", height: "16", "aria-hidden": "true", focusable: "false" });
+    ticks.forEach(function (tk) {
+      var p = pct(tk);
+      var k = Math.round(log10(tk) - log10(lo));
+      ax.appendChild(sv("text", { class: "bench-tick" + (k % 2 && p < 100 ? " est-tick--minor" : ""), x: p + "%", y: 12, "text-anchor": p <= 0 ? "start" : (p >= 100 ? "end" : "middle"), text: group(String(tk)) }));
+    });
+    wrap.appendChild(ax);
+    wrap.appendChild(el("p", { class: "est-hint", text: "Minutes, log scale. 60 min is 1 hour; 960 min is 16 hours." }));
+    return wrap;
+  }
+  function legendSvg(kind) {
+    var s = sv("svg", { class: "est-legend-svg", viewBox: "0 0 22 14", "aria-hidden": "true", focusable: "false" });
+    if (kind === "band") { s.appendChild(sv("rect", { class: "est-band", x: 1, y: 1, width: 20, height: 12 })); s.appendChild(sv("line", { class: "est-band-edge", x1: 21, x2: 21, y1: 1, y2: 13 })); s.appendChild(sv("line", { class: "est-band-edge", x1: 1, x2: 1, y1: 1, y2: 13 })); }
+    if (kind === "tick") s.appendChild(sv("line", { class: "est-truth", x1: 11, x2: 11, y1: 0, y2: 14 }));
+    if (kind === "dot") s.appendChild(sv("circle", { class: "est-you", cx: 11, cy: 7, r: 5.5 }));
+    return s;
+  }
+
+  function renderCalibration() {
+    var host = $("[data-cal]");
+    if (!host) return;
+    var wasOpen = !!host.querySelector("details[open]");
+    host.textContent = "";
+    var s = state();
+    var rows = TASKS.map(function (t) { return { t: t, e: estimateOf(s, t.taskId) }; })
+      .filter(function (r) { return r.e && r.e.revealedAt && hasTime(r.t.groundTruth) && r.e.estimateMinutes > 0; });
+    if (!rows.length) {
+      host.appendChild(el("div", { class: "est-cal" }, [el("p", { class: "est-cal__empty", text: "Nothing to plot yet. Reveal a task with a published human time (Tasks 1 to 4) and it appears here, beside the published answer." })]));
+      return;
+    }
+    var fig = el("figure", { class: "bench-fig", style: "margin-top:0" });
+    var chart = stripChart(rows, false);
+    chart.setAttribute("role", "group");
+    chart.setAttribute("aria-label", "Your revealed estimates against the published human time, log scale: " + rows.map(function (r) { return "Task " + r.t.order + ", " + compare(r.t.groundTruth, r.e.estimateMinutes).text; }).join("; ") + ".");
+    fig.appendChild(chart);
+    fig.appendChild(details("Show as table", table("Your revealed estimates against the published human time", ["Task", "Your estimate (min)", "Published", "Kind", "Comparison"],
+      rows.map(function (r) { var g = r.t.groundTruth, tt = truthText(g); return ["Task " + r.t.order + ": " + r.t.taskId, fx(r.e.estimateMinutes, r.e.estimateMinutes % 1 ? 1 : 0), tt.big, g.humanTimeKind, compare(g, r.e.estimateMinutes).text]; }), [1])));
+    if (wasOpen) fig.querySelector("details").open = true;
+    host.appendChild(fig);
+  }
+
+  /* ---------- pair finder ---------- */
+  var PAIR_KEY = "agentic-se:v2:bench-pair";
+  function rememberPair(v) { try { localStorage.setItem(PAIR_KEY, String(v)); } catch (e) {} }
+  function readPair() { try { return localStorage.getItem(PAIR_KEY); } catch (e) { return null; } }
+  function renderPair(p, focusTab) {
+    var out = $("#bench-pair-out");
+    TASKS.forEach(function (t) { var r = UI[t.taskId].tab.querySelector("[data-round]"); r.hidden = true; r.textContent = ""; });
+    if (!p || p < 1 || Math.floor(p) !== p) { pairNumber = null; out.textContent = p ? "Enter a whole number from 1." : ""; return; }
+    pairNumber = p;
+    var r1 = ((p - 1) % 6) + 1, r2 = ((p + 2) % 6) + 1;
+    var t1 = TASKS[r1 - 1], t2 = TASKS[r2 - 1];
+    out.textContent = "Round 1: Task " + r1 + " (" + t1.benchmark + "). Round 2: Task " + r2 + " (" + t2.benchmark + ").";
+    [[t1, "Round 1"], [t2, "Round 2"]].forEach(function (x) { var r = UI[x[0].taskId].tab.querySelector("[data-round]"); r.hidden = false; r.textContent = x[1]; });
+    TASKS.forEach(function (t) { var u = UI[t.taskId]; if (!estimateOf(state(), t.taskId) && !u.pair.value) u.pair.value = String(p); });
+    if (focusTab) select(r1, false);
+  }
+
+  /* ---------- wiring ---------- */
+  function syncAll() {
+    TASKS.forEach(syncTask);
+    renderCalibration();
+  }
+
+  renderPlan();
+  renderPanels();
+  renderMetr();
+  renderSwev();
+  renderTbVersions();
+  if (TASKS.length) {
+    buildTabs();
+    var hashN = /^#bench-task-([1-6])$/.exec(location.hash || "");
+    var stored = readPair(), pn = stored && /^\d+$/.test(stored) ? parseInt(stored, 10) : null;
+    var pairInput = $("#bench-pair-num");
+    if (pn) { pairInput.value = pn; renderPair(pn, false); }
+    select(hashN ? parseInt(hashN[1], 10) : (pn ? ((pn - 1) % 6) + 1 : 1), false);
+    pairInput.addEventListener("input", function () {
+      var v = pairInput.value.trim();
+      var num = v === "" ? null : Number(v);
+      renderPair(num, true);
+      if (num && num >= 1 && Math.floor(num) === num) rememberPair(num);
+    });
+  }
+  syncAll();
+  try { P.on("change", function () { syncAll(); }); } catch (e) {}
+
+  var rt = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { TIME_RENDERERS.forEach(function (f) { f(); }); }, 120);
+  });
+  if (P.memoryOnly) announce("Progress cannot be saved in this browser. Export before you leave.");
+  }
+})();
+</script>
+
+    <p style="margin-top:24px">
+      <a class="btn" href="slides/session1.html" target="_blank" rel="noopener noreferrer">Open slides<span class="sr-only"> (opens in a new tab)</span>
+        <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </p>
+  </section>
+
+  <!-- 9. Deliverable and rubric: none this week. -->
+
+  <!-- 10. Footer: previous and next week -->
+  <nav class="pager" aria-label="Previous and next week">
+    <a href="week-0.html">
+      <span class="pager__dir"><svg class="arrow arrow--back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M11 6H1M1 6L5.5 1.5M1 6L5.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Previous · Week 0</span>
+      <span class="pager__title">Getting Started</span>
+    </a>
+    <a href="week-2.html">
+      <span class="pager__dir">Next · Week 2<svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="pager__title">Adapting a Coding Agent</span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

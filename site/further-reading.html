@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Further Reading · Agentic SE Course</title>
+<meta name="description" content="Selected deployment reports, architecture pieces, evaluation methodology, and research on agent-first software engineering.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+  <header class="week-head">
+    <h1 class="week-head__title">Further Reading</h1>
+    <p class="lede">Selected deployment reports, architecture pieces, evaluation methodology, and recent research on agent-first software engineering. None of this is required for the course. It is here for the participant who wants to go deeper. The annotations describe what each piece claims. Read them critically.</p>
+  </header>
+  <!-- Deployment Reports -->
+  <section class="section" aria-labelledby="deployment-reports-h">
+    <h2 id="deployment-reports-h" class="h-section">Deployment Reports</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Stripe Engineering</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Minions: Stripe&#x27;s One-Shot End-to-End Coding Agents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Stripe describes Minions, an internal system of unattended coding agents that produces over 1,000 merged pull requests per week. The authors argue that generic agents underperform on large, mature codebases and report that observed gains came primarily from integration with internal tooling (homegrown libraries, Sorbet types, Stripe-specific developer tools), combined with deterministic guardrails such as linting and selective CI.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Stripe Engineering</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents-part-2" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Minions, Part 2: The Infrastructure Behind Stripe&#x27;s Coding Agents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Technical companion to Part 1. The authors describe the infrastructure supporting Minions: isolated and parallelizable execution via Stripe&#x27;s existing &quot;devbox&quot; cloud developer environments; a &quot;blueprint&quot; orchestration pattern combining deterministic code nodes with agent loops; and Toolshed, a centralized MCP server exposing roughly 500 internal tools. They report that infrastructure originally built for human developer productivity transferred largely unchanged to agent productivity.</p>
+      </article>    </div>
+  </section>
+  <!-- Harness Architecture -->
+  <section class="section" aria-labelledby="harness-architecture-h">
+    <h2 id="harness-architecture-h" class="h-section">Harness Architecture</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic · Apr 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Scaling Managed Agents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Anthropic argues that harnesses encode assumptions that become obsolete as underlying models improve, and propose an operating-systems-inspired decomposition of the agent runtime: the brain (model plus harness), the hands (sandboxes and tools), and the session (an event log), each communicating through narrow and stable interfaces. Reported results include a 60% reduction in time-to-first-token at p50, improved fault tolerance, and a security boundary in which credentials no longer flow into sandboxes executing untrusted code.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic · Mar 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Harness Design for Long-Running Application Development</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Rajasekaran presents a multi-agent architecture for building full applications with Claude Code. The system separates generation from evaluation, motivated by the observation that single agents tend to assess their own output favorably, and relies on structured context handoffs rather than compaction to preserve coherence across long tasks. A three-agent planner / generator / evaluator configuration negotiates &quot;sprint contracts&quot; before implementation, with the evaluator using Playwright to test functionality end-to-end. The full harness produces measurably more functional applications than solo generation at roughly 20x the token cost.</p>
+      </article>    </div>
+  </section>
+  <!-- Evaluation & Iteration -->
+  <section class="section" aria-labelledby="evaluation-iteration-h">
+    <h2 id="evaluation-iteration-h" class="h-section">Evaluation &amp; Iteration</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic · Feb 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.anthropic.com/engineering/infrastructure-noise" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Infrastructure Noise in Agentic Coding Evals</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">The authors run Terminal-Bench 2.0 across six resource configurations (CPU, RAM, enforcement strictness) and report a 6-point gap between the most and least resourced setups, comparable in magnitude to the margin between top leaderboard entries. They find that up to roughly 3x the benchmark&#x27;s specified resources, additional allocation fixes infrastructure failures without altering task difficulty; beyond that threshold, additional resources begin to enable models to solve previously unsolvable problems. The authors recommend evals specify both guaranteed allocation and hard kill thresholds separately, and caution that benchmark differences below approximately 3 points should be interpreted carefully absent documented infrastructure matching.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">LangChain · Mar 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://blog.langchain.com/evaluating-skills/" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Evaluating Skills</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">LangChain proposes a four-step evaluation protocol for skills (the dynamically loaded instruction packages used by coding agents such as Claude Code): define target tasks, baseline without the skill, run with the skill enabled, compare. The protocol relies on isolated Docker environments, constrained tasks with measurable outcomes, and trace-level observability for post-hoc analysis of agent decisions. The authors report an 82% improvement in success rate on their benchmark tasks when the skill under test was enabled.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">LangChain · Mar 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://blog.langchain.com/how-we-build-evals-for-deep-agents/" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">How We Build Evals for Deep Agents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">LangChain describes the evaluation methodology used for their Deep Agents work. They argue that the quantity of evaluations does not mechanically translate to agent quality, and advocate for targeted tests tied to observed production behavior. The eval set draws from three sources (dogfooding feedback, adapted external benchmarks, and hand-written unit tests), grouped by capability category such as file operations or tool use. Beyond correctness, they track efficiency metrics (step ratio, tool call ratio, solve rate) and compare agent trajectories against a hand-defined ideal trajectory to distinguish correct reasoning from successful workarounds.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">LangChain · Apr 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://blog.langchain.com/continual-learning-for-ai-agents/" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Continual Learning for AI Agents</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">LangChain proposes a three-layer decomposition of where learning can occur in an agent system: the model itself, the operational harness (code and built-in instructions), and the external context (skills and configurable instructions). Each layer is treated as an independent surface for improvement, with execution traces as the shared substrate for extracting signal. The framing is presented as a vocabulary for deciding where to invest (at the model, at the harness, or at the context) when an agent underperforms.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">LangChain · Apr 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://blog.langchain.com/better-harness-a-recipe-for-harness-hill-climbing-with-evals/" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Better Harness: A Recipe for Harness Hill-Climbing with Evals</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">The authors treat eval results as the training signal for harness modifications (prompt edits, tool changes, instruction rewrites) without updating model weights. Their four-stage pipeline sources and categorizes evals, splits them into optimization and holdout sets, autonomously diagnoses failures and proposes harness modifications, and validates proposed changes against regressions. They report improvements on holdout sets for both Claude Sonnet 4.6 and GLM-5, with discovered modifications (e.g. &quot;use reasonable defaults&quot; added to a prompt, sharper tool descriptions) generalizing to unseen examples.</p>
+      </article>    </div>
+  </section>
+  <!-- Research -->
+  <section class="section" aria-labelledby="research-h">
+    <h2 id="research-h" class="h-section">Research</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Lee et al. · arXiv · Mar 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://arxiv.org/abs/2603.28052" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Meta-Harness: End-to-End Optimization of Model Harnesses</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Lee et al. introduce Meta-Harness, an outer-loop system that searches over harness code for LLM applications. The agentic proposer has filesystem access to the source code, scores, and execution traces of all prior candidates, avoiding the aggressive feedback compression that the authors argue limits existing text optimizers in this setting. Reported results: +7.7 points over a state-of-the-art context management system on online text classification at 4x fewer context tokens; +4.7 points on average across five held-out models on 200 IMO-level retrieval-augmented math problems; and improved performance over hand-engineered baselines on TerminalBench-2 for agentic coding.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Zhang et al. · arXiv · Mar 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://arxiv.org/abs/2603.19461" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Hyperagents: Self-Referential Agents with Metacognitive Self-Modification</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Zhang et al. introduce hyperagents, self-referential agents that integrate a task agent and a meta agent into a single editable program in which the meta-level modification procedure is itself editable. The construction generalizes the Darwin Gödel Machine beyond coding-specific self-improvement: because the meta-level is no longer assumed to be aligned with any particular task domain, self-modification skill can in principle improve on arbitrary computable tasks. The authors report that DGM-Hyperagents outperforms prior self-improving systems across several domains and develops meta-level capabilities (persistent memory, performance tracking) that transfer across runs.</p>
+      </article>    </div>
+  </section>
+  <!-- Moved from the course in October 2026 -->
+  <section class="section" aria-labelledby="moved-october-2026-h">
+    <h2 id="moved-october-2026-h" class="h-section">Moved from the course in October 2026</h2>
+    <div style="display:flex;flex-direction:column;gap:16px">      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">OpenAI · Apr 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://openai.com/index/open-source-codex-orchestration-symphony/" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">An open-source spec for orchestration: Symphony</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">OpenAI specifies Symphony, an open-source protocol for orchestrating multi-agent Codex workflows.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Ryan Lopopolo · AI Engineer Europe · Apr 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.youtube.com/watch?v=am_oeAoUhew" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Harness Engineering: How to Build Software When Humans Steer, Agents Execute</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Lopopolo presents harness engineering patterns for dividing work between human steering and agent execution.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">dollspace-gay · Feb 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://gist.github.com/dollspace-gay/d8d3bc3ecf4188df049d7a4726bb2a00" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Verified Spec-Driven Development</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">The author proposes verified spec-driven development, structuring software implementation around explicit specifications and verification checks.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic · Claude Code documentation</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://code.claude.com/docs/en/agent-teams" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Orchestrate teams of Claude Code sessions</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Anthropic documents experimental support for orchestrating teams of Claude Code sessions across tasks.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Dru Knox · AI Engineer · Oct 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.youtube.com/watch?v=X6l4lpA0_NY" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Harness Engineering: How to Build a Software Factory</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Knox discusses harness engineering principles for constructing an automated software factory.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Fiona Fung · Claude blog · Jun 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://claude.com/resources/articles/running-an-ai-native-engineering-org" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Running an AI-native engineering org</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Fung describes operational practices and team structures for managing an engineering organisation built around AI coding tools.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic news · Jun 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Introducing Claude Tag</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Anthropic announces Claude Tag, a feature for routing and tagging agent-assisted workflows.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">OpenAI · Sep 2026</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Introducing the Agents API</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">OpenAI announces the Agents API for building and deploying agent workflows.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">Anthropic · Claude Code documentation</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://code.claude.com/docs/en/agents" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Run agents in parallel</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">Anthropic documents how to run multiple Claude Code agent sessions concurrently on independent tasks.</p>
+      </article>      <article class="card" style="max-width:680px">
+        <div class="card__label"><span class="meta">gemini-cli-extensions · GitHub</span></div>
+        <h3 class="h-card">
+          <a class="link-row" href="https://github.com/gemini-cli-extensions/conductor" target="_blank" rel="noopener noreferrer" style="padding:0;border:none;background:none">
+            <span class="link-row__text"><span class="link-row__title">Conductor Plugin</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </h3>
+        <p style="margin-top:10px">The repository documentation describes Conductor, a plugin for orchestrating workflows across AI coding agents.</p>
+      </article>    </div>
+  </section></main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html" aria-current="page">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>
