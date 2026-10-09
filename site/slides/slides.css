@@ -432,7 +432,7 @@ p, li {
 @media (max-width: 1100px) {
   .stat-row { grid-template-columns: repeat(3, 1fr); }
   .flow { grid-template-columns: 1fr; }
-  .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .flow-arrow { justify-self: center; transform: rotate(90deg); padding: 4px 0; }
 }
 
 /* ----- Layer stack (3 large boxes + arrows for top-level architectures) ----- */
@@ -557,9 +557,11 @@ p, li {
   font-size: 12px;
 }
 
-@media (max-width: 1100px) {
+/* Three columns fit down to about 860 px; below that the boxes stack.
+   The arrow is centred so its rotation stays between the boxes. */
+@media (max-width: 860px) {
   .layer-stack { grid-template-columns: 1fr; }
-  .layer-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .layer-arrow { justify-self: center; transform: rotate(90deg); padding: 4px 0; }
 }
 
 /* ----- Anchors ----- */
@@ -795,3 +797,10 @@ body.toc-open {
 .loop__edge { fill: none; stroke: var(--text); stroke-width: 1.5; }
 .loop__edge--return { stroke-dasharray: 6 4; }
 .loop__head { fill: var(--text); }
+
+/* Short screens (1024 x 768 projectors): move content up, clear of the
+   fixed nav, and tighten list items. */
+@media (max-height: 800px) {
+  .slide { padding-top: 36px; padding-bottom: 76px; }
+  .item { padding-top: 10px; padding-bottom: 10px; }
+}

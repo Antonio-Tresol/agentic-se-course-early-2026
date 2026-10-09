@@ -257,14 +257,26 @@ def load_truth(path, field, bucket_field, mids):
     else:
         tasks = data
     out = {}
+    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool)
     for t in tasks if isinstance(tasks, list) else []:
-        if not isinstance(t, dict) or "id" not in t:
+        tid = t.get("taskId", t.get("id")) if isinstance(t, dict) else None
+        if not tid:
             continue
-        v = t.get(field)
-        if not isinstance(v, (int, float)) and bucket_field in t:
+        # benchmarks.json keeps human time under groundTruth: a point estimate
+        # (Terminal-Bench) or an annotator bucket with low and high bounds
+        # (SWE-bench Verified), for which we take the midpoint.
+        g = t["groundTruth"] if isinstance(t.get("groundTruth"), dict) else {}
+        v = t.get(field, g.get(field))
+        if not num(v):
+            v = g.get("humanMinutesPoint")
+        if not num(v):
+            lo, hi = g.get("humanMinutesLow"), g.get("humanMinutesHigh")
+            if num(lo) and num(hi) and hi > 0:
+                v = (lo + hi) / 2
+        if not num(v) and bucket_field in t:
             v = bucket_midpoint(t[bucket_field], mids)
-        if isinstance(v, (int, float)) and v > 0:
-            out[t["id"]] = float(v)
+        if num(v) and v > 0:
+            out[tid] = float(v)
     if not out:
         warn("ground truth file has no usable '%s' or '%s' values" % (field, bucket_field))
     return out
@@ -493,6 +505,8 @@ def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes
             lg = [x[ex["log10_median_over_truth"]] for x in er if x[ex["log10_median_over_truth"]] != ""]
             if lg:
                 lines.append("Across %d tasks with ground truth, the median log10 ratio of estimate to truth is %s (%sx)." % (len(lg), r(st.median(lg), 2), r(10 ** st.median(lg), 2)))
+            else:
+                lines.append("None of the estimated tasks has a human-time ground truth in the supplied file.")
         else:
             lines.append("No ground truth supplied; pass --truth to compute estimate error.")
         lines.append(agent_line(er, ex))
@@ -555,8 +569,9 @@ def main():
     ap.add_argument("paths", nargs="+", help="folders or .json files")
     ap.add_argument("--out", default="results", help="output folder (default: results)")
     ap.add_argument("--show-aliases", action="store_true", help="include aliases in learners.csv")
-    ap.add_argument("--truth", help="benchmarks.json with ground-truth minutes per task id; its tasks[].groundTruth "
-                                    "agentPassCount and agentAttempts also give the published agent pass counts")
+    ap.add_argument("--truth", help="benchmarks.json: human minutes per task from tasks[].groundTruth (humanMinutesPoint, "
+                                    "or the midpoint of humanMinutesLow and humanMinutesHigh), and the published agent pass "
+                                    "counts from agentPassCount and agentAttempts")
     ap.add_argument("--truth-field", default="truthMinutes", help="numeric ground-truth field (default truthMinutes)")
     ap.add_argument("--bucket-field", default="bucket", help="bucket field used if the numeric field is absent")
     ap.add_argument("--bucket-midpoints", help='JSON map of bucket label to minutes, e.g. \'{"S": 30}\'')
