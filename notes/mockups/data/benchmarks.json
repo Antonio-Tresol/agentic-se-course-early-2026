@@ -1,0 +1,1199 @@
+{
+  "fetchedAt": "2026-10-09",
+  "description": "Chart data and task cards for the Week 0 benchmark-estimation activity (notes/benchmark-activity.md).",
+  "sources": [
+    {
+      "id": "swebench-leaderboard",
+      "title": "SWE-bench leaderboards (Verified board), data/leaderboards.json",
+      "url": "https://www.swebench.com/",
+      "dataUrl": "https://raw.githubusercontent.com/SWE-bench/swe-bench.github.io/master/data/leaderboards.json",
+      "bibKey": "swebench2026leaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "File last changed 2026-09-01; newest Verified entry dated 2026-02-26."
+    },
+    {
+      "id": "swebench-experiments",
+      "title": "SWE-bench/experiments, evaluation/verified per-instance results",
+      "url": "https://github.com/SWE-bench/experiments/tree/main/evaluation/verified",
+      "bibKey": "swebench2026experiments",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "swebench-verified-hf",
+      "title": "princeton-nlp/SWE-bench_Verified dataset (difficulty field)",
+      "url": "https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified",
+      "revision": "c104f840cc67f8b6eec6f759ebc8b2693d585d4a",
+      "bibKey": "princeton2025swebenchverifiedhf",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-swev-intro",
+      "title": "Introducing SWE-bench Verified (OpenAI, 13 August 2024)",
+      "url": "https://openai.com/index/introducing-swe-bench-verified/",
+      "bibKey": "openai2024swebenchverified",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-swev-retire",
+      "title": "Why we no longer evaluate SWE-bench Verified (OpenAI, 23 February 2026)",
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
+      "bibKey": "openai2026noswebenchverified",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "openai-signal-noise",
+      "title": "Separating signal from noise in coding evaluations (OpenAI, 8 July 2026)",
+      "url": "https://openai.com/index/separating-signal-from-noise-coding-evaluations/",
+      "bibKey": "openai2026signalnoise",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "scale-swepro-leaderboard",
+      "title": "SWE-Bench Pro leaderboard (Scale), public and private sets",
+      "url": "https://labs.scale.com/leaderboard/swe_bench_pro",
+      "bibKey": "scale2026sweproleaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "Requested as scale.com/leaderboard/swe_bench_pro_public, which redirects here. Entries are the v1 (731-task) public set."
+    },
+    {
+      "id": "scale-swepro-v2",
+      "title": "ScaleAI/SWE-bench_Pro dataset card, V2 (2026-09-22)",
+      "url": "https://huggingface.co/datasets/ScaleAI/SWE-bench_Pro",
+      "revision": "2d52cb3df914a3fcf80c7f66738b3a88ae37fc50",
+      "bibKey": "scale2026sweprov2",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "scale-swepro-repo",
+      "title": "scaleapi/SWE-bench_Pro-os, v2/README.md and v2/hard51_ids.txt",
+      "url": "https://github.com/scaleapi/SWE-bench_Pro-os/tree/66f92766bba642462d4bbe5479e83f91f9211862/v2",
+      "bibKey": "scale2026sweprov2",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "swepro-paper",
+      "title": "SWE-Bench Pro paper (Deng et al., arXiv:2509.16941)",
+      "url": "https://arxiv.org/abs/2509.16941",
+      "bibKey": "deng2025swebenchpro",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb-leaderboard",
+      "title": "Terminal-Bench 4.0 leaderboard (tbench.ai, embedded Harbor Hub data)",
+      "url": "https://www.tbench.ai/",
+      "bibKey": "tbench2026leaderboard",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb4-blog",
+      "title": "Terminal-Bench 4.0 announcement (28 August 2026)",
+      "url": "https://www.tbench.ai/news/terminal-bench-4-0",
+      "bibKey": "tbench2026tb4",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb3-blog",
+      "title": "Terminal-Bench 3.0 announcement (30 July 2026)",
+      "url": "https://www.tbench.ai/news/terminal-bench-3-0",
+      "bibKey": "tbench2026tb3",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "tb-repo",
+      "title": "harbor-framework/terminal-bench at tag v4.0.0 (task.toml, README.md, instruction.md)",
+      "url": "https://github.com/harbor-framework/terminal-bench/tree/v4.0.0",
+      "commit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "bibKey": "tbench2026repo",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "harbor-job-opus55",
+      "title": "Harbor Hub job for the Opus 5.5 / Claude Code (max) TB 4.0 leaderboard entry",
+      "url": "https://hub.harborframework.com/jobs/bfd722a4-4c18-5a00-a874-c70b646870b8",
+      "bibKey": "harbor2026jobopus55",
+      "fetchedAt": "2026-10-09",
+      "note": "330 trials read from the Trials tab; 214 rewards of 1.00, matching the leaderboard's 64.85%."
+    },
+    {
+      "id": "harbor-job-gpt61sol",
+      "title": "Harbor Hub job for the GPT-6.1 Sol / Codex (max) TB 4.0 leaderboard entry",
+      "url": "https://hub.harborframework.com/jobs/3837153f-6673-539d-b3e2-99a6edd3c5db",
+      "bibKey": "harbor2026jobgpt61sol",
+      "fetchedAt": "2026-10-09",
+      "note": "330 trials; 192 rewards of 1.00, matching the leaderboard's 58.18%."
+    },
+    {
+      "id": "metr-th",
+      "title": "Task-Completion Time Horizons of Frontier AI Models (METR), TH 1.1 raw data",
+      "url": "https://metr.org/time-horizons/",
+      "dataUrl": "https://metr.org/assets/benchmark_results_1_1.yaml",
+      "bibKey": "metr2026timehorizons",
+      "fetchedAt": "2026-10-09",
+      "note": "Page last updated 8 September 2026 and marked as no longer actively updated."
+    },
+    {
+      "id": "metr-paper",
+      "title": "Measuring AI Ability to Complete Long Software Tasks (Kwa et al., arXiv:2503.14499)",
+      "url": "https://arxiv.org/abs/2503.14499",
+      "bibKey": "kwa2025timehorizon",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "frontiercode-blog",
+      "title": "Introducing FrontierCode (Cognition, 8 June 2026)",
+      "url": "https://cognition.com/blog/frontier-code",
+      "bibKey": "cognition2026frontiercode",
+      "fetchedAt": "2026-10-09"
+    },
+    {
+      "id": "frontiercode-leaderboard",
+      "title": "FrontierCode leaderboard (Cognition), FrontierCode 1.1 Main",
+      "url": "https://cognition.com/frontiercode",
+      "bibKey": "cognition2026frontiercodeleaderboard",
+      "fetchedAt": "2026-10-09",
+      "note": "Rendered client-side; table and changelog read through a browser on 2026-10-09."
+    },
+    {
+      "id": "metr-mergeability",
+      "title": "Many SWE-bench-Passing PRs Would Not Be Merged into Main (METR note, 10 March 2026)",
+      "url": "https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/",
+      "bibKey": "metr2026mergeability",
+      "fetchedAt": "2026-10-09"
+    }
+  ],
+  "charts": {
+    "topScores": {
+      "description": "Current top results per benchmark, as published on each board on 2026-10-09.",
+      "selectionRules": [
+        "Take the board's own ranking metric; ties share a rank.",
+        "SWE-bench Verified: keep every entry whose score equals or exceeds the fifth-highest score (three entries tie at 76.8), earliest date first within a tie. 'attempts' repeats the board's tag; entries marked 2 or 2+ used more than one attempt.",
+        "Terminal-Bench 4.0: keep the best reasoning effort per (model, agent) pair, then the top five pairs. Rank 5 (57.88%) is shared with other efforts of GPT-6 Astra and Fable 5.1 that were removed as duplicates.",
+        "SWE-Bench Pro: the Scale board's public-set ranking, which predates the 642-task V2 release of 2026-09-22 and so scores the 731-task v1 set. 'date' is the entry's createdAt on the board.",
+        "FrontierCode: the 1.1 Main table, best reasoning effort per model, ranked by score. 'date' comes from the leaderboard changelog.",
+        "METR: 50% time horizon in minutes from TH 1.1 raw data; 'date' is the model release date in that file.",
+        "Vendor-reported scores that no board lists (for example OpenAI's 80.9% on Verified and 80.3% on the Pro public set) are in 'caveats', never in 'entries'."
+      ],
+      "benchmarks": [
+        {
+          "id": "swe-bench-verified",
+          "name": "SWE-bench Verified",
+          "metric": "% of 500 tasks resolved",
+          "sourceId": "swebench-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Sonar Foundation Agent + Claude 4.5 Opus",
+              "model": "Claude 4.5 Opus",
+              "score": 79.2,
+              "date": "2025-12-05",
+              "attempts": "Attempts - 1",
+              "folder": "20251205_sonar-foundation-agent_claude-opus-4-5"
+            },
+            {
+              "rank": 1,
+              "system": "live-SWE-agent + Claude 4.5 Opus medium (20251101)",
+              "model": "Claude 4.5 Opus",
+              "score": 79.2,
+              "date": "2025-12-15",
+              "attempts": "Attempts - 1",
+              "folder": "20251215_livesweagent_claude-opus-4-5"
+            },
+            {
+              "rank": 3,
+              "system": "TRAE + Doubao-Seed-Code",
+              "model": "Doubao-Seed-Code",
+              "score": 78.8,
+              "date": "2025-09-28",
+              "attempts": "Attempts - 2+",
+              "folder": "20250928_trae_doubao_seed_code"
+            },
+            {
+              "rank": 4,
+              "system": "live-SWE-agent + Gemini 3 Pro Preview (2025-11-18)",
+              "model": "Gemini 3 Pro Preview",
+              "score": 77.4,
+              "date": "2025-11-20",
+              "attempts": "Attempts - 1",
+              "folder": "20251120_livesweagent_gemini-3-pro-preview"
+            },
+            {
+              "rank": 5,
+              "system": "EPAM AI/Run Developer Agent v20250719 + Claude 4 Sonnet",
+              "model": "Claude 4 Sonnet",
+              "score": 76.8,
+              "date": "2025-08-04",
+              "attempts": "Attempts - 2+",
+              "folder": "20250804_epam-ai-run-claude-4-sonnet"
+            },
+            {
+              "rank": 5,
+              "system": "Atlassian Rovo Dev (2025-09-02)",
+              "model": "Multiple",
+              "score": 76.8,
+              "date": "2025-09-02",
+              "attempts": "Attempts - 2",
+              "folder": "20250902_atlassian-rovo-dev"
+            },
+            {
+              "rank": 5,
+              "system": "Claude 4.5 Opus (high)",
+              "model": "Claude 4.5 Opus",
+              "score": 76.8,
+              "date": "2026-02-17",
+              "attempts": "Attempts - 1",
+              "folder": "20260217_mini-v2.0.0_claude-4-5-opus-high"
+            }
+          ],
+          "caveats": [
+            "Newest entry on the board is dated 2026-02-26; the board stopped receiving frontier submissions.",
+            "OpenAI stopped reporting Verified on 2026-02-23, citing contamination and flawed tests, after state-of-the-art progress from 74.9% to 80.9% in six months (vendor-reported, not on this board).",
+            "OpenAI audited 138 tasks that o3 did not consistently solve and found 59.4% had material test or description issues.",
+            "METR found that roughly half of test-passing Verified PRs from mid-2024 to late-2025 agents would not be merged by maintainers."
+          ]
+        },
+        {
+          "id": "swe-bench-pro-public",
+          "name": "SWE-Bench Pro (Scale, public set, v1)",
+          "metric": "% resolved",
+          "sourceId": "scale-swepro-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Muse Spark 1.1*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 61.5,
+              "ci95": 3.1,
+              "date": "2026-07-09"
+            },
+            {
+              "rank": 2,
+              "system": "gpt-5.4 (xHigh)*",
+              "harness": "mini-swe-agent",
+              "company": "openai",
+              "score": 59.1,
+              "ci95": 3.56,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 3,
+              "system": "Muse Spark*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 55.0,
+              "ci95": 3.6,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 4,
+              "system": "claude-opus-4-6 (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "anthropic",
+              "score": 51.9,
+              "ci95": 3.61,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 5,
+              "system": "gemini-3.1-pro (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "google",
+              "score": 46.1,
+              "ci95": 3.6,
+              "date": "2026-04-08"
+            }
+          ],
+          "privateSetTop5": [
+            {
+              "rank": 1,
+              "system": "Muse Spark 1.1*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 51.5,
+              "ci95": 5.5,
+              "date": "2026-07-09"
+            },
+            {
+              "rank": 2,
+              "system": "claude-opus-4-6 (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "anthropic",
+              "score": 47.1,
+              "ci95": 6.07,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 3,
+              "system": "Muse Spark*",
+              "harness": "mini-swe-agent",
+              "company": "meta",
+              "score": 44.7,
+              "ci95": 6.05,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 4,
+              "system": "gpt-5.4(xHigh)*",
+              "harness": "mini-swe-agent",
+              "company": "openai",
+              "score": 43.4,
+              "ci95": 6.03,
+              "date": "2026-04-08"
+            },
+            {
+              "rank": 5,
+              "system": "gemini-3.1-pro (thinking)*",
+              "harness": "mini-swe-agent",
+              "company": "google",
+              "score": 32.2,
+              "ci95": 5.69,
+              "date": "2026-04-08"
+            }
+          ],
+          "caveats": [
+            "* in the model name means the run used the mini-swe-agent harness, per the board's legend.",
+            "OpenAI (2026-07-08) estimated that about 30% of the public tasks are broken (human review flagged 249, 34.1%) and retracted its recommendation of SWE-Bench Pro. OpenAI also wrote that frontier models improved from 23.3% to 80.3% on the public split in eight months, a figure absent from Scale's board.",
+            "Scale released V2 on 2026-09-22: 89 of 731 tasks dropped, 529 statements rewritten, plus a HARD-51 subset. The board has not been re-run on V2."
+          ]
+        },
+        {
+          "id": "terminal-bench-4",
+          "name": "Terminal-Bench 4.0",
+          "metric": "% of 330 trials passed (66 tasks x 5)",
+          "sourceId": "tb-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Opus 5.5 (Claude Code, max)",
+              "model": "Opus 5.5",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 64.85,
+              "ci95": 3.11,
+              "trials": 330,
+              "date": "2026-09-22"
+            },
+            {
+              "rank": 2,
+              "system": "Sonnet 5.5 (Claude Code, max)",
+              "model": "Sonnet 5.5",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 61.82,
+              "ci95": 2.94,
+              "trials": 330,
+              "date": "2026-09-28"
+            },
+            {
+              "rank": 3,
+              "system": "GPT-6 Astra (Codex, max)",
+              "model": "GPT-6 Astra",
+              "agent": "Codex",
+              "reasoningEffort": "max",
+              "score": 58.18,
+              "ci95": 2.79,
+              "trials": 330,
+              "date": "2026-09-03"
+            },
+            {
+              "rank": 3,
+              "system": "GPT-6.1 Sol (Codex, max)",
+              "model": "GPT-6.1 Sol",
+              "agent": "Codex",
+              "reasoningEffort": "max",
+              "score": 58.18,
+              "ci95": 3.11,
+              "trials": 330,
+              "date": "2026-09-29"
+            },
+            {
+              "rank": 5,
+              "system": "Fable 5.1 (Claude Code, max)",
+              "model": "Fable 5.1",
+              "agent": "Claude Code",
+              "reasoningEffort": "max",
+              "score": 57.88,
+              "ci95": 3.76,
+              "trials": 330,
+              "date": "2026-09-01"
+            }
+          ],
+          "caveats": [
+            "4.0 (2026-08-28) removed 8 tasks, two of them for saturation, fixed 19, and set a flat 8-hour agent timeout.",
+            "Terminal-Bench is now a continuous benchmark with semantic versions; scores are comparable only within a version."
+          ]
+        },
+        {
+          "id": "frontiercode-main",
+          "name": "FrontierCode 1.1 Main (Cognition)",
+          "metric": "score: weighted rubric, 0 if any blocker fails",
+          "sourceId": "frontiercode-leaderboard",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Opus 5.5",
+              "reasoningEffort": "medium",
+              "score": 54.6,
+              "passRate": 59.6,
+              "date": "2026-09-22",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 2,
+              "system": "Fable 5",
+              "reasoningEffort": "xhigh",
+              "score": 53.5,
+              "passRate": 58.9,
+              "date": "2026-07-17",
+              "dateMeaning": "leaderboard launch; present from launch"
+            },
+            {
+              "rank": 3,
+              "system": "Opus 5",
+              "reasoningEffort": "medium",
+              "score": 53.4,
+              "passRate": 58.9,
+              "date": "2026-07-24",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 4,
+              "system": "GPT-6 Astra",
+              "reasoningEffort": "max",
+              "score": 53.3,
+              "passRate": 58.8,
+              "date": "2026-09-03",
+              "dateMeaning": "changelog: model added"
+            },
+            {
+              "rank": 5,
+              "system": "Sonnet 5.5",
+              "reasoningEffort": "xhigh",
+              "score": 52.1,
+              "passRate": 57.2,
+              "date": "2026-09-28",
+              "dateMeaning": "changelog: model added"
+            }
+          ],
+          "caveats": [
+            "Tasks are private ('we don't currently plan to release the tasks publicly'); only one example task is shown on the page.",
+            "Run by Cognition, which also ships its own models (SWE-2 is on the board).",
+            "1.1 (2026-07-07) zeroes runs flagged for consulting solution-bearing sources and deprecates the Diamond subset."
+          ]
+        },
+        {
+          "id": "metr-time-horizon",
+          "name": "METR 50% time horizon (TH 1.1)",
+          "metric": "minutes of expert human time at 50% predicted success",
+          "sourceId": "metr-th",
+          "entries": [
+            {
+              "rank": 1,
+              "system": "Claude Mythos Preview (early)",
+              "metrKey": "claude_mythos_preview_early_inspect",
+              "score": 1044.8,
+              "ciLow": 508.9,
+              "ciHigh": 3304.3,
+              "date": "2026-04-07",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 2,
+              "system": "Claude Opus 4.6",
+              "metrKey": "claude_opus_4_6_inspect",
+              "score": 718.8,
+              "ciLow": 316.7,
+              "ciHigh": 3633.8,
+              "date": "2026-02-05",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 3,
+              "system": "Gemini 3.1 Pro",
+              "metrKey": "gemini_3_1_pro",
+              "score": 384.1,
+              "ciLow": 233.5,
+              "ciHigh": 694.8,
+              "date": "2026-02-19",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 4,
+              "system": "GPT-5.2",
+              "metrKey": "gpt_5_2",
+              "score": 352.2,
+              "ciLow": 198.1,
+              "ciHigh": 815.2,
+              "date": "2025-12-11",
+              "dateMeaning": "model release date"
+            },
+            {
+              "rank": 5,
+              "system": "GPT-5.3-Codex",
+              "metrKey": "gpt_5_3_codex",
+              "score": 349.5,
+              "ciLow": 194.9,
+              "ciHigh": 816.4,
+              "date": "2026-02-05",
+              "dateMeaning": "model release date"
+            }
+          ],
+          "caveats": [
+            "The page has not been updated since 2026-09-08 and says it is no longer actively updated.",
+            "METR states that measurements above 16 hours (960 minutes) are unreliable with the current task suite; the top entry exceeds that.",
+            "Confidence intervals are wide: Claude Opus 4.6 spans 316.7 to 3633.8 minutes."
+          ]
+        }
+      ]
+    },
+    "frontierOverTime": {
+      "description": "How the frontier moved. Only points read from a fetched source.",
+      "series": [
+        {
+          "id": "metr-p50-sota",
+          "name": "METR 50% time horizon, models flagged is_sota in TH 1.1",
+          "unit": "minutes",
+          "xField": "releaseDate",
+          "sourceId": "metr-th",
+          "points": [
+            {
+              "model": "GPT-2",
+              "metrKey": "gpt2",
+              "releaseDate": "2019-02-14",
+              "p50Minutes": 0.1,
+              "ciLow": 0.0,
+              "ciHigh": 0.1
+            },
+            {
+              "model": "davinci-002",
+              "metrKey": "davinci_002",
+              "releaseDate": "2020-05-28",
+              "p50Minutes": 0.1,
+              "ciLow": 0.1,
+              "ciHigh": 0.2
+            },
+            {
+              "model": "GPT-3.5 Turbo Instruct",
+              "metrKey": "gpt_3_5_turbo_instruct",
+              "releaseDate": "2022-03-15",
+              "p50Minutes": 0.6,
+              "ciLow": 0.3,
+              "ciHigh": 1.1
+            },
+            {
+              "model": "GPT-4",
+              "metrKey": "gpt_4",
+              "releaseDate": "2023-03-14",
+              "p50Minutes": 4.0,
+              "ciLow": 1.9,
+              "ciHigh": 8.0
+            },
+            {
+              "model": "GPT-4 (1106)",
+              "metrKey": "gpt_4_1106_inspect",
+              "releaseDate": "2023-11-06",
+              "p50Minutes": 4.0,
+              "ciLow": 1.9,
+              "ciHigh": 8.4
+            },
+            {
+              "model": "GPT-4o",
+              "metrKey": "gpt_4o_inspect",
+              "releaseDate": "2024-05-13",
+              "p50Minutes": 7.0,
+              "ciLow": 4.0,
+              "ciHigh": 12.9
+            },
+            {
+              "model": "Claude 3.5 Sonnet (June 2024)",
+              "metrKey": "claude_3_5_sonnet_20240620_inspect",
+              "releaseDate": "2024-06-20",
+              "p50Minutes": 11.4,
+              "ciLow": 5.5,
+              "ciHigh": 22.4
+            },
+            {
+              "model": "o1-preview",
+              "metrKey": "o1_preview",
+              "releaseDate": "2024-09-12",
+              "p50Minutes": 20.3,
+              "ciLow": 11.7,
+              "ciHigh": 33.4
+            },
+            {
+              "model": "Claude 3.5 Sonnet (October 2024)",
+              "metrKey": "claude_3_5_sonnet_20241022_inspect",
+              "releaseDate": "2024-10-22",
+              "p50Minutes": 20.5,
+              "ciLow": 10.1,
+              "ciHigh": 40.8
+            },
+            {
+              "model": "o1",
+              "metrKey": "o1_inspect",
+              "releaseDate": "2024-12-05",
+              "p50Minutes": 38.8,
+              "ciLow": 21.2,
+              "ciHigh": 65.0
+            },
+            {
+              "model": "Claude 3.7 Sonnet",
+              "metrKey": "claude_3_7_sonnet_inspect",
+              "releaseDate": "2025-02-24",
+              "p50Minutes": 60.4,
+              "ciLow": 33.0,
+              "ciHigh": 104.2
+            },
+            {
+              "model": "o3",
+              "metrKey": "o3_inspect",
+              "releaseDate": "2025-04-16",
+              "p50Minutes": 119.7,
+              "ciLow": 74.6,
+              "ciHigh": 190.9
+            },
+            {
+              "model": "GPT-5",
+              "metrKey": "gpt_5_2025_08_07_inspect",
+              "releaseDate": "2025-08-07",
+              "p50Minutes": 203.0,
+              "ciLow": 112.6,
+              "ciHigh": 405.6
+            },
+            {
+              "model": "Gemini 3 Pro",
+              "metrKey": "gemini_3_pro",
+              "releaseDate": "2025-11-18",
+              "p50Minutes": 224.3,
+              "ciLow": 139.6,
+              "ciHigh": 379.2
+            },
+            {
+              "model": "Claude Opus 4.5",
+              "metrKey": "claude_opus_4_5_inspect",
+              "releaseDate": "2025-11-24",
+              "p50Minutes": 293.0,
+              "ciLow": 161.7,
+              "ciHigh": 623.7
+            },
+            {
+              "model": "GPT-5.2",
+              "metrKey": "gpt_5_2",
+              "releaseDate": "2025-12-11",
+              "p50Minutes": 352.2,
+              "ciLow": 198.1,
+              "ciHigh": 815.2
+            },
+            {
+              "model": "Claude Opus 4.6",
+              "metrKey": "claude_opus_4_6_inspect",
+              "releaseDate": "2026-02-05",
+              "p50Minutes": 718.8,
+              "ciLow": 316.7,
+              "ciHigh": 3633.8
+            },
+            {
+              "model": "Claude Mythos Preview (early)",
+              "metrKey": "claude_mythos_preview_early_inspect",
+              "releaseDate": "2026-04-07",
+              "p50Minutes": 1044.8,
+              "ciLow": 508.9,
+              "ciHigh": 3304.3
+            }
+          ],
+          "doublingTimeDays": {
+            "fromIncluding2023": {
+              "ci_high": 158.012,
+              "ci_low": 104.428,
+              "point_estimate": 128.744
+            },
+            "allTimeStitched": {
+              "point_estimate": 187.778
+            }
+          },
+          "caveats": [
+            "Frozen since 2026-09-08; no 2026 H2 models.",
+            "Last point (Claude Mythos Preview, early) is above the 16-hour reliability limit METR states."
+          ]
+        },
+        {
+          "id": "swev-record",
+          "name": "SWE-bench Verified board record, by submission date",
+          "unit": "% resolved",
+          "xField": "date",
+          "sourceId": "swebench-leaderboard",
+          "points": [
+            {
+              "date": "2023-10-10",
+              "score": 4.4,
+              "system": "RAG + Claude 2"
+            },
+            {
+              "date": "2024-04-02",
+              "score": 22.4,
+              "system": "SWE-agent + GPT 4 (1106)"
+            },
+            {
+              "date": "2024-05-09",
+              "score": 25.6,
+              "system": "Amazon Q Developer Agent (v20240430-dev)"
+            },
+            {
+              "date": "2024-06-12",
+              "score": 32.6,
+              "system": "MASAI + GPT 4o (2024-06-12)"
+            },
+            {
+              "date": "2024-06-17",
+              "score": 37.0,
+              "system": "Factory Code Droid"
+            },
+            {
+              "date": "2024-06-28",
+              "score": 38.4,
+              "system": "AutoCodeRover (v20240620) + GPT 4o (2024-05-13)"
+            },
+            {
+              "date": "2024-07-21",
+              "score": 38.8,
+              "system": "Amazon Q Developer Agent (v20240719-dev)"
+            },
+            {
+              "date": "2024-08-20",
+              "score": 40.6,
+              "system": "Honeycomb"
+            },
+            {
+              "date": "2024-08-24",
+              "score": 45.2,
+              "system": "Gru(2024-08-24)"
+            },
+            {
+              "date": "2024-09-24",
+              "score": 45.4,
+              "system": "Solver (2024-09-12)"
+            },
+            {
+              "date": "2024-10-22",
+              "score": 49.0,
+              "system": "Tools + Claude 3.5 Sonnet (2024-10-22)"
+            },
+            {
+              "date": "2024-10-28",
+              "score": 50.0,
+              "system": "Solver (2024-10-28)"
+            },
+            {
+              "date": "2024-10-29",
+              "score": 53.0,
+              "system": "OpenHands + CodeAct v2.1 (claude-3-5-sonnet-20241022)"
+            },
+            {
+              "date": "2024-11-08",
+              "score": 54.2,
+              "system": "devlo"
+            },
+            {
+              "date": "2024-12-02",
+              "score": 55.0,
+              "system": "Amazon Q Developer Agent (v20241202-dev)"
+            },
+            {
+              "date": "2024-12-08",
+              "score": 57.0,
+              "system": "Gru(2024-12-08)"
+            },
+            {
+              "date": "2024-12-13",
+              "score": 58.2,
+              "system": "devlo"
+            },
+            {
+              "date": "2024-12-21",
+              "score": 62.2,
+              "system": "CodeStory Midwit Agent + swe-search"
+            },
+            {
+              "date": "2025-01-10",
+              "score": 62.8,
+              "system": "Blackbox AI Agent"
+            },
+            {
+              "date": "2025-01-17",
+              "score": 64.6,
+              "system": "W&B Programmer O1 crosscheck5"
+            },
+            {
+              "date": "2025-03-16",
+              "score": 65.4,
+              "system": "Augment Agent v0"
+            },
+            {
+              "date": "2025-04-15",
+              "score": 65.8,
+              "system": "OpenHands"
+            },
+            {
+              "date": "2025-04-30",
+              "score": 70.0,
+              "system": "Zencoder (2025-04-30)"
+            },
+            {
+              "date": "2025-05-15",
+              "score": 70.4,
+              "system": "Refact.ai Agent"
+            },
+            {
+              "date": "2025-05-19",
+              "score": 70.6,
+              "system": "TRAE"
+            },
+            {
+              "date": "2025-05-22",
+              "score": 73.2,
+              "system": "Tools + Claude 4 Opus (2025-05-22)"
+            },
+            {
+              "date": "2025-06-03",
+              "score": 74.4,
+              "system": "Refact.ai Agent + Claude 4 Sonnet + o4-mini"
+            },
+            {
+              "date": "2025-06-12",
+              "score": 75.2,
+              "system": "TRAE + Claude Sonnet 4 + Opus 4 + Sonnet 3.7 + Gemini 2.5 Pro"
+            },
+            {
+              "date": "2025-08-04",
+              "score": 76.8,
+              "system": "EPAM AI/Run Developer Agent v20250719 + Claude 4 Sonnet"
+            },
+            {
+              "date": "2025-09-28",
+              "score": 78.8,
+              "system": "TRAE + Doubao-Seed-Code"
+            },
+            {
+              "date": "2025-12-05",
+              "score": 79.2,
+              "system": "Sonar Foundation Agent + Claude 4.5 Opus"
+            }
+          ],
+          "caveats": [
+            "Dates are the board's submission dates; the 2023 point is a later evaluation of an older system.",
+            "No new record since 2025-12-05; frontier labs stopped submitting."
+          ]
+        },
+        {
+          "id": "terminal-bench-versions",
+          "name": "Top Terminal-Bench score at each version's release",
+          "unit": "% passed",
+          "xField": "date",
+          "sourceId": "tb3-blog",
+          "points": [
+            {
+              "version": "2.1",
+              "date": "2026-07-30",
+              "dateMeaning": "date of the TB 3.0 post that reports it; 2.1 itself was released 2026-05-06",
+              "score": 83.8,
+              "system": "Fable 5 (Claude Code)",
+              "sourceId": "tb3-blog",
+              "note": "Highest of the models plotted in the TB 3.0 post's 2.1-vs-3.0 comparison; GPT-5.6 Sol has no 2.1 bar there."
+            },
+            {
+              "version": "3.0",
+              "date": "2026-07-30",
+              "dateMeaning": "release post",
+              "score": 34.4,
+              "system": "GPT-5.6 Sol (Codex)",
+              "sourceId": "tb3-blog"
+            },
+            {
+              "version": "4.0",
+              "date": "2026-09-22",
+              "dateMeaning": "leaderboard entry date; 4.0 was released 2026-08-28",
+              "score": 64.85,
+              "system": "Opus 5.5 (Claude Code, max)",
+              "sourceId": "tb-leaderboard"
+            }
+          ],
+          "caveats": [
+            "Each version is a different task set; the drop from 2.1 to 3.0 is a new, harder benchmark."
+          ]
+        }
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "taskId": "swev-flask-blueprint-name",
+      "order": 1,
+      "benchmark": "SWE-bench Verified",
+      "title": "Reject empty Blueprint names in Flask",
+      "statementUrl": "https://github.com/pallets/flask/issues/5010",
+      "statementNote": "Read the issue body only; the issue links to the fixing PR.",
+      "repo": "pallets/flask",
+      "baseCommit": "7ee9ceb71e868944a46e1ff00b506772a53a4f1d",
+      "openLocally": "git init flask-task && cd flask-task && git remote add origin https://github.com/pallets/flask.git && git fetch --depth 1 origin 7ee9ceb71e868944a46e1ff00b506772a53a4f1d && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "pallets__flask-5014",
+        "humanTimeKind": "annotator bucket",
+        "difficultyLabel": "<15 min fix",
+        "humanMinutesLow": 0,
+        "humanMinutesHigh": 15,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-bench Verified 'difficulty' field: annotators estimated how long a developer would take to decide upon and implement the solution (OpenAI, 2024). The post does not say how the three annotators' difficulty labels were combined.",
+        "referencePatch": {
+          "linesAdded": 3,
+          "linesRemoved": 0,
+          "filesChanged": 1
+        },
+        "failToPassTests": 1,
+        "agentPassCount": 15,
+        "agentAttempts": 15,
+        "agentResultsKind": "SWE-bench/experiments per-instance results, one attempt per run",
+        "agentResultsNote": "15 runs: twelve mini-SWE-agent runs (v2.0.0 of 2026-02-17 for Claude 4.5 Haiku high, Claude 4.5 Opus high, Claude 4.5 Sonnet high, Claude 4.6 Opus, DeepSeek V3.2 high, Gemini 3 Flash high, GLM 5 high, GPT 5 mini, GPT 5.2 high, Kimi K2.5 high and MiniMax M2.5 high; v2.4.2 of 2026-09-01 for Gemini 3.5 Flash) and the board's top three (Sonar Foundation Agent + Claude 4.5 Opus, live-SWE-agent + Claude 4.5 Opus, TRAE + Doubao-Seed-Code). Each run's resolved count divided by 500 matches its headline score. Excluded: Gemini 3 Pro (per_instance_details.json marks all 500 unresolved against a 69.6% headline) and GPT 5.2 Codex (file returns 404). An instance absent from the Gemini 3.5 Flash file produced no patch and counts as unresolved.",
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "swev-pylint-type-hints",
+      "order": 2,
+      "benchmark": "SWE-bench Verified",
+      "title": "Show type hints in pyreverse UML diagrams",
+      "statementUrl": "https://github.com/pylint-dev/pylint/issues/1548",
+      "statementNote": "Read the issue body only; later comments and the linked PR discuss the fix.",
+      "repo": "pylint-dev/pylint",
+      "baseCommit": "99589b08de8c5a2c6cc61e13a37420a868c80599",
+      "openLocally": "git init pylint-task && cd pylint-task && git remote add origin https://github.com/pylint-dev/pylint.git && git fetch --depth 1 origin 99589b08de8c5a2c6cc61e13a37420a868c80599 && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "pylint-dev__pylint-4551",
+        "humanTimeKind": "annotator bucket",
+        "difficultyLabel": "1-4 hours",
+        "humanMinutesLow": 60,
+        "humanMinutesHigh": 240,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-bench Verified 'difficulty' field (OpenAI, 2024).",
+        "referencePatch": {
+          "linesAdded": 99,
+          "linesRemoved": 27,
+          "filesChanged": 4
+        },
+        "failToPassTests": 10,
+        "agentPassCount": 0,
+        "agentAttempts": 15,
+        "agentResultsKind": "SWE-bench/experiments per-instance results, one attempt per run",
+        "agentResultsNote": "15 runs: twelve mini-SWE-agent runs (v2.0.0 of 2026-02-17 for Claude 4.5 Haiku high, Claude 4.5 Opus high, Claude 4.5 Sonnet high, Claude 4.6 Opus, DeepSeek V3.2 high, Gemini 3 Flash high, GLM 5 high, GPT 5 mini, GPT 5.2 high, Kimi K2.5 high and MiniMax M2.5 high; v2.4.2 of 2026-09-01 for Gemini 3.5 Flash) and the board's top three (Sonar Foundation Agent + Claude 4.5 Opus, live-SWE-agent + Claude 4.5 Opus, TRAE + Doubao-Seed-Code). Each run's resolved count divided by 500 matches its headline score. Excluded: Gemini 3 Pro (per_instance_details.json marks all 500 unresolved against a 69.6% headline) and GPT 5.2 Codex (file returns 404). An instance absent from the Gemini 3.5 Flash file produced no patch and counts as unresolved.",
+        "knownSpecIssue": "OpenAI's February 2026 audit uses this task as its example of a narrow test: the tests import a helper named get_annotation from pylint.pyreverse.utils, a name the issue never mentions, so many valid fixes fail with ImportError."
+      }
+    },
+    {
+      "taskId": "tb4-bun-sourcemaps",
+      "order": 3,
+      "benchmark": "Terminal-Bench 4.0",
+      "title": "Stop a Bun release pipeline leaking private source through source maps",
+      "statementUrl": "https://github.com/harbor-framework/terminal-bench/blob/v4.0.0/tasks/bun-sourcemap-leak/instruction.md",
+      "statementNote": "Open instruction.md and environment/ only. README.md and task.toml in the same folder state the expert time; solution/ and tests/ hold the answer.",
+      "repo": "harbor-framework/terminal-bench",
+      "baseCommit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "openLocally": "git clone --depth 1 --branch v4.0.0 --filter=blob:none --sparse https://github.com/harbor-framework/terminal-bench.git tb4 && cd tb4 && git sparse-checkout set --no-cone /tasks/bun-sourcemap-leak/instruction.md /tasks/bun-sourcemap-leak/environment/",
+      "groundTruth": {
+        "upstreamId": "terminal-bench/bun-sourcemap-leak",
+        "humanTimeKind": "task author's expert estimate",
+        "humanMinutesLow": 90,
+        "humanMinutesHigh": 90,
+        "humanMinutesPoint": 90,
+        "humanTimeSource": "task.toml expert_time_estimate_hours = 1.5 (Terminal-Bench 4.0 records only an expert estimate; Terminal-Bench 2.0 also had a junior estimate).",
+        "category": "Software / Systems",
+        "referencePatch": null,
+        "agentPassCount": 0,
+        "agentAttempts": 10,
+        "agentResultsKind": "Terminal-Bench 4.0 leaderboard trials, 5 per model",
+        "agentRuns": [
+          {
+            "system": "Opus 5.5 (Claude Code, max)",
+            "passes": 0,
+            "attempts": 5,
+            "sourceId": "harbor-job-opus55"
+          },
+          {
+            "system": "GPT-6.1 Sol (Codex, max)",
+            "passes": 0,
+            "attempts": 5,
+            "sourceId": "harbor-job-gpt61sol"
+          }
+        ],
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "tb4-archive-clone",
+      "order": 4,
+      "benchmark": "Terminal-Bench 4.0",
+      "title": "Clone an error-correcting archive tool by black-box probing",
+      "statementUrl": "https://github.com/harbor-framework/terminal-bench/blob/v4.0.0/tasks/rs-archive-clone/instruction.md",
+      "statementNote": "Open instruction.md and environment/ only. README.md and task.toml in the same folder state the expert time; solution/ and tests/ hold the answer.",
+      "repo": "harbor-framework/terminal-bench",
+      "baseCommit": "452bf305c6daa62fc59061d22133a7cbc7c1572e",
+      "openLocally": "git clone --depth 1 --branch v4.0.0 --filter=blob:none --sparse https://github.com/harbor-framework/terminal-bench.git tb4 && cd tb4 && git sparse-checkout set --no-cone /tasks/rs-archive-clone/instruction.md /tasks/rs-archive-clone/environment/",
+      "groundTruth": {
+        "upstreamId": "terminal-bench/rs-archive-clone",
+        "humanTimeKind": "task author's expert estimate",
+        "humanMinutesLow": 960,
+        "humanMinutesHigh": 960,
+        "humanMinutesPoint": 960,
+        "humanTimeSource": "task.toml expert_time_estimate_hours = 16.",
+        "category": "Software / Algorithms",
+        "referencePatch": null,
+        "agentPassCount": 10,
+        "agentAttempts": 10,
+        "agentResultsKind": "Terminal-Bench 4.0 leaderboard trials, 5 per model",
+        "agentRuns": [
+          {
+            "system": "Opus 5.5 (Claude Code, max)",
+            "passes": 5,
+            "attempts": 5,
+            "sourceId": "harbor-job-opus55"
+          },
+          {
+            "system": "GPT-6.1 Sol (Codex, max)",
+            "passes": 5,
+            "attempts": 5,
+            "sourceId": "harbor-job-gpt61sol"
+          }
+        ],
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "pro-ansible-human-to-bytes",
+      "order": 5,
+      "benchmark": "SWE-Bench Pro V2",
+      "title": "Make Ansible's human_to_bytes reject malformed sizes",
+      "statementUrl": "https://github.com/scaleapi/SWE-bench_Pro-os/blob/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_ansible__ansible-d62496fe416623e88b90139dc7917080cb04ce70-v0f01c69f1e2528b935359cfe578530722bca2c59/instruction.md",
+      "statementNote": "Open instruction.md only; solution/ in the same folder holds the gold patch. The upstream fix is public, so ask the agent not to search for it.",
+      "repo": "ansible/ansible",
+      "baseCommit": "df29852f3a48160e1a60635692c202531dd8b14a",
+      "openLocally": "git init ansible-task && cd ansible-task && git remote add origin https://github.com/ansible/ansible.git && git fetch --depth 1 origin df29852f3a48160e1a60635692c202531dd8b14a && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "instance_ansible__ansible-d62496fe416623e88b90139dc7917080cb04ce70-v0f01c69f1e2528b935359cfe578530722bca2c59",
+        "humanTimeKind": "none published",
+        "humanMinutesLow": null,
+        "humanMinutesHigh": null,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-Bench Pro publishes no per-task human time. The paper describes the benchmark's tasks as ones that 'may require hours to days for a professional software engineer'.",
+        "referencePatch": {
+          "linesAdded": 31,
+          "linesRemoved": 4,
+          "filesChanged": 3,
+          "note": "Code change is lib/ansible/module_utils/common/text/formatters.py (+20 -4); the rest is a changelog fragment (+2) and filter docs (+9)."
+        },
+        "failToPassTests": 22,
+        "passToPassTests": 92,
+        "hard51": true,
+        "issueSpecificity": [
+          "minor_bug",
+          "data_bug",
+          "edge_case_bug"
+        ],
+        "agentPassCount": null,
+        "agentAttempts": null,
+        "agentResultsKind": "HARD-51 membership",
+        "agentResultsNote": "In HARD-51: failed by at least two of five model families (Claude Opus 5, GLM-5.3, Kimi-K3, Inkling, Gemini 3.8 Flash) under Scale's locked V2 protocol.",
+        "knownSpecIssue": null
+      }
+    },
+    {
+      "taskId": "pro-flipt-skip-existing",
+      "order": 6,
+      "benchmark": "SWE-Bench Pro V2",
+      "title": "Let Flipt import skip flags and segments that already exist",
+      "statementUrl": "https://github.com/scaleapi/SWE-bench_Pro-os/blob/66f92766bba642462d4bbe5479e83f91f9211862/v2/tasks/instance_flipt-io__flipt-dae029cba7cdb98dfb1a6b416c00d324241e6063/instruction.md",
+      "statementNote": "Open instruction.md only; solution/ in the same folder holds the gold patch. The upstream fix is public, so ask the agent not to search for it.",
+      "repo": "flipt-io/flipt",
+      "baseCommit": "879520526664656ad9f93925cd0b1f2220c0c3f2",
+      "openLocally": "git init flipt-task && cd flipt-task && git remote add origin https://github.com/flipt-io/flipt.git && git fetch --depth 1 origin 879520526664656ad9f93925cd0b1f2220c0c3f2 && git checkout FETCH_HEAD",
+      "groundTruth": {
+        "upstreamId": "instance_flipt-io__flipt-dae029cba7cdb98dfb1a6b416c00d324241e6063",
+        "humanTimeKind": "none published",
+        "humanMinutesLow": null,
+        "humanMinutesHigh": null,
+        "humanMinutesPoint": null,
+        "humanTimeSource": "SWE-Bench Pro publishes no per-task human time.",
+        "referencePatch": {
+          "linesAdded": 90,
+          "linesRemoved": 3,
+          "filesChanged": 2,
+          "note": "cmd/flipt/import.go (+9 -2), internal/ext/importer.go (+81 -1)."
+        },
+        "failToPassTests": 2,
+        "passToPassTests": 0,
+        "hard51": false,
+        "issueSpecificity": [
+          "core_feat",
+          "dev_ops_enh"
+        ],
+        "agentPassCount": null,
+        "agentAttempts": null,
+        "agentResultsKind": "HARD-51 membership",
+        "agentResultsNote": "Not in HARD-51. HARD-51 holds the tasks that at least two of five model families failed under the locked protocol, minus three later judged ambiguous, so this label alone does not say how many families solved it.",
+        "knownSpecIssue": null
+      }
+    }
+  ],
+  "pairing": {
+    "rule": "Pair p (1-based) takes task order ((p-1) mod 6)+1 in round 1 and ((p+2) mod 6)+1 in round 2.",
+    "rounds": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        6,
+        3
+      ]
+    ],
+    "note": "Each pair sees two benchmarks; with 6k pairs every task gets 2k estimates."
+  },
+  "logSchema": {
+    "estimate": {
+      "taskId": "string, course task id from tasks[].taskId",
+      "estimateMinutes": "number > 0: minutes an experienced engineer, new to this repository, would need without AI help to reach passing tests",
+      "complexity": "integer 1-5 (anchors in notes/benchmark-activity.md)",
+      "specQuality": "integer 1-5 (anchors in notes/benchmark-activity.md)",
+      "reason": "string, one line, at most 200 characters",
+      "pairId": "string, stable within the session",
+      "submittedAt": "ISO 8601 UTC timestamp",
+      "revealed": "boolean: true if this task's ground truth was visible to the pair when they submitted; analyses drop these rows"
+    },
+    "groundTruthFields": [
+      "taskId",
+      "groundTruth.upstreamId",
+      "groundTruth.humanTimeKind",
+      "groundTruth.humanMinutesLow",
+      "groundTruth.humanMinutesHigh",
+      "groundTruth.humanMinutesPoint",
+      "groundTruth.referencePatch",
+      "groundTruth.agentPassCount",
+      "groundTruth.agentAttempts",
+      "groundTruth.hard51",
+      "groundTruth.knownSpecIssue"
+    ]
+  }
+}

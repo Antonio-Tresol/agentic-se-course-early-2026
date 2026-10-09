@@ -1,0 +1,417 @@
+{
+  "schema": "agentic-se-progress",
+  "schemaVersion": 1,
+  "exportedAt": "2026-09-15T19:01:04.989Z",
+  "appVersion": "mockup-2026-10-SYNTHETIC",
+  "userAgentFamily": "chrome",
+  "learner": {
+    "id": "L-synthetic-05",
+    "alias": "SYNTHETIC-05",
+    "cohort": "early-2026",
+    "track": "codex",
+    "createdAt": "2026-09-14T12:00:00.000Z"
+  },
+  "items": {
+    "w1:pw-1": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-14T14:10:17.467Z",
+      "minutesSpent": 18,
+      "estimateMinutes": 20
+    },
+    "w1:pw-3": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-14T18:05:43.215Z",
+      "minutesSpent": 41,
+      "estimateMinutes": 35
+    },
+    "w1:pw-4": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-15T01:02:10.795Z",
+      "minutesSpent": 42,
+      "estimateMinutes": 25
+    },
+    "w1:pw-5": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-15T08:27:44.593Z",
+      "minutesSpent": 35,
+      "estimateMinutes": 30
+    },
+    "w1:pw-6": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-15T16:16:04.989Z",
+      "minutesSpent": 19,
+      "estimateMinutes": 15
+    }
+  },
+  "quizzes": {
+    "w1": [
+      {
+        "attemptId": "A-0b6f479470515bfc",
+        "startedAt": "2026-09-15T17:16:04.989Z",
+        "submittedAt": "2026-09-15T17:21:04.989Z",
+        "answers": [
+          {
+            "qid": "q1",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 2,
+            "revealedAt": "2026-09-15T17:17:04.989Z",
+            "selfScore": 1
+          },
+          {
+            "qid": "q2",
+            "type": "mcq",
+            "response": 3,
+            "confidence": 3,
+            "revealedAt": "2026-09-15T17:18:04.989Z",
+            "correct": false
+          },
+          {
+            "qid": "q3",
+            "type": "mcq",
+            "response": 2,
+            "confidence": 3,
+            "revealedAt": "2026-09-15T17:19:04.989Z",
+            "correct": false
+          },
+          {
+            "qid": "q4",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-15T17:20:04.989Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q5",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 3,
+            "revealedAt": "2026-09-15T17:21:04.989Z",
+            "correct": true
+          }
+        ],
+        "score": {
+          "auto": 1,
+          "autoMax": 3,
+          "self": 3,
+          "selfMax": 4
+        }
+      },
+      {
+        "attemptId": "A-d747cdea26cecaee",
+        "startedAt": "2026-09-15T18:21:04.989Z",
+        "submittedAt": "2026-09-15T18:26:04.989Z",
+        "answers": [
+          {
+            "qid": "q1",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-15T18:22:04.989Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q2",
+            "type": "mcq",
+            "response": 2,
+            "confidence": 4,
+            "revealedAt": "2026-09-15T18:23:04.989Z",
+            "correct": true
+          },
+          {
+            "qid": "q3",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 3,
+            "revealedAt": "2026-09-15T18:24:04.989Z",
+            "correct": true
+          },
+          {
+            "qid": "q4",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 2,
+            "revealedAt": "2026-09-15T18:25:04.989Z",
+            "selfScore": 0
+          },
+          {
+            "qid": "q5",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 3,
+            "revealedAt": "2026-09-15T18:26:04.989Z",
+            "correct": true
+          }
+        ],
+        "score": {
+          "auto": 3,
+          "autoMax": 3,
+          "self": 2,
+          "selfMax": 4
+        }
+      }
+    ]
+  },
+  "estimates": [
+    {
+      "taskId": "bm-01",
+      "estimateMinutes": 108,
+      "complexity": 4,
+      "specQuality": 3,
+      "reason": "synthetic",
+      "pairId": "pair-bm-01",
+      "submittedAt": "2026-09-14T12:03:00.000Z",
+      "revealedAt": "2026-09-14T12:03:00.000Z"
+    },
+    {
+      "taskId": "bm-02",
+      "estimateMinutes": 122,
+      "complexity": 4,
+      "specQuality": 2,
+      "reason": "synthetic",
+      "pairId": "pair-bm-02",
+      "submittedAt": "2026-09-14T12:06:00.000Z",
+      "revealedAt": "2026-09-14T12:06:00.000Z"
+    },
+    {
+      "taskId": "bm-03",
+      "estimateMinutes": 530,
+      "complexity": 5,
+      "specQuality": 3,
+      "reason": "synthetic",
+      "pairId": "pair-bm-03",
+      "submittedAt": "2026-09-14T12:09:00.000Z",
+      "revealedAt": "2026-09-14T12:09:00.000Z"
+    },
+    {
+      "taskId": "bm-04",
+      "estimateMinutes": 46,
+      "complexity": 4,
+      "specQuality": 3,
+      "reason": "synthetic",
+      "pairId": "pair-bm-04",
+      "submittedAt": "2026-09-14T12:12:00.000Z",
+      "revealedAt": "2026-09-14T12:12:00.000Z"
+    }
+  ],
+  "deliverables": {},
+  "events": [
+    {
+      "t": "2026-09-14T12:00:00.000Z",
+      "type": "track",
+      "ref": "codex"
+    },
+    {
+      "t": "2026-09-14T12:00:00.000Z",
+      "type": "alias",
+      "ref": ""
+    },
+    {
+      "t": "2026-09-14T12:03:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-01"
+    },
+    {
+      "t": "2026-09-14T12:03:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-01"
+    },
+    {
+      "t": "2026-09-14T12:06:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-02"
+    },
+    {
+      "t": "2026-09-14T12:06:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-02"
+    },
+    {
+      "t": "2026-09-14T12:09:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-03"
+    },
+    {
+      "t": "2026-09-14T12:09:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-03"
+    },
+    {
+      "t": "2026-09-14T12:12:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-04"
+    },
+    {
+      "t": "2026-09-14T12:12:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-04"
+    },
+    {
+      "t": "2026-09-14T14:10:17.467Z",
+      "type": "item:done",
+      "ref": "w1:pw-1"
+    },
+    {
+      "t": "2026-09-14T18:05:43.215Z",
+      "type": "item:done",
+      "ref": "w1:pw-3"
+    },
+    {
+      "t": "2026-09-15T01:02:10.795Z",
+      "type": "item:done",
+      "ref": "w1:pw-4"
+    },
+    {
+      "t": "2026-09-15T08:27:44.593Z",
+      "type": "item:done",
+      "ref": "w1:pw-5"
+    },
+    {
+      "t": "2026-09-15T16:16:04.989Z",
+      "type": "item:done",
+      "ref": "w1:pw-6"
+    },
+    {
+      "t": "2026-09-15T17:16:04.989Z",
+      "type": "quiz:start",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-15T17:17:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T17:17:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T17:18:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q2"
+    },
+    {
+      "t": "2026-09-15T17:19:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q3"
+    },
+    {
+      "t": "2026-09-15T17:20:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T17:20:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T17:21:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q5"
+    },
+    {
+      "t": "2026-09-15T17:21:04.989Z",
+      "type": "quiz:submit",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-15T18:21:04.989Z",
+      "type": "quiz:start",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-15T18:22:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T18:22:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T18:23:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q2"
+    },
+    {
+      "t": "2026-09-15T18:24:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q3"
+    },
+    {
+      "t": "2026-09-15T18:25:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T18:25:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T18:26:04.989Z",
+      "type": "quiz:answer",
+      "ref": "w1:q5"
+    },
+    {
+      "t": "2026-09-15T18:26:04.989Z",
+      "type": "quiz:submit",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-15T18:31:04.989Z",
+      "type": "outcome:check",
+      "ref": "w1:o1"
+    },
+    {
+      "t": "2026-09-15T18:36:04.989Z",
+      "type": "outcome:check",
+      "ref": "w1:o2"
+    },
+    {
+      "t": "2026-09-15T18:41:04.989Z",
+      "type": "outcome:check",
+      "ref": "w1:o3"
+    },
+    {
+      "t": "2026-09-15T18:46:04.989Z",
+      "type": "outcome:check",
+      "ref": "w1:o4"
+    },
+    {
+      "t": "2026-09-15T18:51:04.989Z",
+      "type": "outcome:uncheck",
+      "ref": "w1:o4"
+    }
+  ],
+  "outcomes": {
+    "w1": {
+      "o1": {
+        "checked": true,
+        "at": "2026-09-15T18:31:04.989Z"
+      },
+      "o2": {
+        "checked": true,
+        "at": "2026-09-15T18:36:04.989Z"
+      },
+      "o3": {
+        "checked": true,
+        "at": "2026-09-15T18:41:04.989Z"
+      },
+      "o4": {
+        "checked": false,
+        "at": "2026-09-15T18:51:04.989Z"
+      }
+    }
+  },
+  "stageLogs": {}
+}

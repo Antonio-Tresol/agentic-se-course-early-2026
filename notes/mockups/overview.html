@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic SE Course</title>
+<meta name="description" content="v2 mockup of the course overview (#/).">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mockup.css">
+<script>
+/* Pre-paint: track, theme and gallery annotations. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  if (q && q.get("annotate") === "1") d.classList.add("show-ann");
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the course map</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="overview.html" aria-current="page">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" role="link" aria-disabled="true"><span class="sr-only">Week </span>2<span class="sr-only"> (no page yet)</span></a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="fade-in">
+  <header class="wrap hero" data-ann="1">
+    <h1 class="hero__title">Agentic SE Course</h1>
+    <p class="hero__lede">A six-week course on working with coding agents: use one, adapt it, take it into complex codebases, then design repositories where teams of agents do the work.</p>
+  </header>
+
+  <!-- Course map (visual-design.md 3.1): the course as a picture before any text -->
+  <section class="wrap cmap-section" aria-labelledby="map-h">
+    <div class="cmap-bar">
+      <div>
+        <h2 id="map-h" class="label label--ink" style="margin-bottom:8px">Your course, week by week</h2>
+        <fieldset class="track-switch" data-ann="3" data-announce-course
+          data-announce-claude="Showing the Claude Code track."
+          data-announce-codex="Showing the Codex track.">
+          <legend class="track-switch__legend">Track</legend>
+          <div class="track-switch__opts">
+            <input type="radio" name="track" id="track-claude" value="claude" checked>
+            <label for="track-claude">Claude Code</label>
+            <input type="radio" name="track" id="track-codex" value="codex">
+            <label for="track-codex">Codex</label>
+          </div>
+        </fieldset>
+      </div>
+      <section class="card next-card" aria-labelledby="next-h" data-ann="2">
+        <div class="next-card__top">
+          <h3 id="next-h" class="label label--ink">Next session</h3>
+          <span class="tag tag--sample" data-calendar-tag hidden>Sample calendar</span>
+        </div>
+        <div data-next-session data-calendar-panel="cal-add"></div>
+        <div id="cal-add" class="cal-add" hidden data-calendar-drop data-calendar-hide-when-loaded></div>
+      </section>
+    </div>
+    <div data-course-map data-ann="5"></div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="weeks-h">
+    <div class="weeks__head">
+      <h2 id="weeks-h" class="h-section">Weeks</h2>
+      <a class="meta" href="progress.html">Your progress is saved in this browser only</a>
+    </div>
+
+    <ol class="week-list" data-ann="4">
+      <li class="week-row" id="week-0">
+        <span class="week-row__label">Week 0</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="week-0.html">Getting Started</a></h3>
+          <p class="week-row__summary">Meet the cohort, watch a live demo and install your coding agent.</p>
+          <p class="week-row__meta"><span class="meta">Pre-work minutes not measured yet</span><span class="meta" data-week-progress="0" hidden></span></p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+
+      <li class="week-row" id="week-1">
+        <span class="week-row__label">Week 1</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="week-1.html">One Coding Agent</a></h3>
+          <p class="week-row__summary">Install a coding agent, take two structured courses, then estimate real benchmark tasks in pairs in the session.</p>
+          <p class="week-row__meta"><span class="meta">Pre-work <span data-track="claude">172 min</span><span data-track="codex">185 min</span></span><span class="meta" data-week-progress="1" hidden></span></p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+
+      <li class="week-row" id="week-2">
+        <span class="week-row__label">Week 2</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="#week-2">Adapting a Coding Agent</a></h3>
+          <p class="week-row__summary">Encode your team's knowledge as skills, connect tools over MCP and manage context deliberately.</p>
+          <p class="week-row__meta"><span class="meta">Pre-work <span data-track="claude">189 min</span><span data-track="codex">204 min</span></span><span class="meta">No page yet</span></p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+
+      <li class="week-row" id="week-3">
+        <span class="week-row__label">Week 3</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="week-3.html">One change through the whole loop</a></h3>
+          <p class="week-row__summary">Take one lanorme issue from triage to pull request by hand, timing every stage.</p>
+          <p class="week-row__meta">
+            <span class="meta" data-ann="7">Pre-work <span data-track="claude">140.5 min</span><span data-track="codex">120.4 min</span>, activity included</span>
+            <span class="meta" data-week-progress="3" hidden></span>
+            <span class="tag tag--deliverable" data-ann="6">Deliverable</span>
+          </p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+
+      <li class="week-row" id="week-4">
+        <span class="week-row__label">Week 4</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="week-4.html">From harness to factory</a></h3>
+          <p class="week-row__summary">Design the automated loop for your fork: stages, gates, an observer and a measurement plan.</p>
+          <p class="week-row__meta">
+            <span class="meta">Pre-work 146.7 min, activity included</span>
+            <span class="meta" data-week-progress="4" hidden></span>
+            <span class="tag tag--deliverable">Deliverable</span>
+          </p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+
+      <li class="week-row" id="week-5">
+        <span class="week-row__label">Week 5</span>
+        <div class="week-row__body">
+          <h3 class="week-row__title"><a href="week-5.html">A minimal factory, measured</a></h3>
+          <p class="week-row__summary">Optional capstone: build that loop on your fork and measure each merged change against your Week 3 baseline.</p>
+          <p class="week-row__meta">
+            <span class="meta">No new readings · 6 to 8 h build</span>
+            <span class="tag tag--optional">Optional</span>
+            <span class="tag tag--deliverable">Deliverable</span>
+          </p>
+        </div>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap about" aria-labelledby="about-h" data-ann="8">
+    <h2 id="about-h" class="h-section">About the course</h2>
+    <div class="prose">
+      <p>Coding agents are already exceeding human throughput for many software engineering tasks. As model capabilities continue to improve, agents will increasingly be the primary producers of code. The engineering challenge shifts: the bottleneck moves from writing code to ensuring that agent-produced code is correct, tested, coherent, and merge-ready, with as little human steering as possible.</p>
+      <p>This course prepares you for that shift. You start by using a coding agent. Then you customise it. Then you take one real change through the whole delivery loop by hand and time it. Then you design the loop an agent factory would run, weighing the claims made for factories against their critics. In the optional capstone, you build a small factory on the same repository and measure it against your own baseline.</p>
+      <p>Each week you complete pre-work on your own (courses, readings, videos) and then we meet for one hour to discuss, ask questions, and work on something together. Tick items off on each week's page; <a href="progress.html">My progress</a> keeps the record in this browser and exports it as a file for the course owner at the end.</p>
+      <p>We use <a href="https://claude.com/product/claude-code" target="_blank" rel="noopener noreferrer">Claude Code<span class="sr-only"> (opens in a new tab)</span></a> as our primary coding agent. If you work in Codex, choose the Codex track above: every Claude Code reading has an OpenAI equivalent on that track. The principles also transfer to other agents such as Copilot CLI and OpenCode.</p>
+    </div>
+    <p class="badge-note">On Claude Academy, Claude Code 101, Claude Code in Action and Introduction to Model Context Protocol award a completion badge. OpenAI Academy courses award a badge once you pass the course assessment with at least 80%.</p>
+    <p class="disclaimer" data-ann="10">This curriculum was developed in March-April 2026 and last reviewed in August 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More" data-ann="9">
+      <ul class="site-footer__links">
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/" target="_blank" rel="noopener noreferrer">Resources<span class="sr-only"> (v1 bibliography, opens in a new tab)</span></a></li>
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/#/further-reading" target="_blank" rel="noopener noreferrer">Further Reading<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="facilitator-week-4.html">Facilitator</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Early 2026 edition · v2 mockup</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script type="application/json" id="calendar-sample">
+{
+  "schema": "agentic-se-calendar",
+  "schemaVersion": 1,
+  "note": "SAMPLE calendar for the mockups. Invented dates, times and places; replace with your cohort's own file.",
+  "cohort": "sample-cohort",
+  "timezone": "Europe/London",
+  "sessions": [
+    { "week": 0, "date": "2026-09-24", "time": "18:00", "place": "Room 2.14, Main Building (sample)" },
+    { "week": 1, "date": "2026-10-01", "time": "18:00", "place": "Room 2.14, Main Building (sample)" },
+    { "week": 2, "date": "2026-10-08", "time": "18:00", "place": "Room 2.14, Main Building (sample)" },
+    { "week": 3, "date": "2026-10-15", "time": "18:00", "place": "https://example.invalid/sample-meeting" },
+    { "week": 4, "date": "2026-10-22", "time": "18:00", "place": "Room 2.14, Main Building (sample)" },
+    { "week": 5, "date": "2026-10-29", "time": "17:30", "place": "Main hall (sample)" }
+  ]
+}
+</script>
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

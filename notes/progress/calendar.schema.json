@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antonio-tresol.github.io/agentic-se-course-early-2026/calendar.schema.json",
+  "title": "Agentic SE cohort calendar",
+  "description": "The session dates for one cohort. The course owner publishes one file per cohort; learners load it once into their browser. Sessions are optional per week: a week without an entry shows no date. Times are shown as written, with the timezone label, and are never converted.",
+  "type": "object",
+  "required": ["schema", "schemaVersion", "cohort", "sessions"],
+  "properties": {
+    "schema": {
+      "const": "agentic-se-calendar",
+      "description": "File type marker."
+    },
+    "schemaVersion": {
+      "const": 1,
+      "description": "Version of this format. A reader refuses any other number."
+    },
+    "cohort": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "\\S",
+      "description": "Name of the cohort, for example early-2026. Copied into learner.cohort in progress exports."
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional. Free text for the owner, ignored by readers (the sample file uses it to say it is a sample)."
+    },
+    "timezone": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "Optional. Label for the times, usually an IANA name such as Europe/London. Shown next to each time; no conversion is done."
+    },
+    "sessions": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One entry per live session. Each week appears at most once (the reader rejects duplicates).",
+      "items": { "$ref": "#/$defs/session" }
+    }
+  },
+  "$defs": {
+    "session": {
+      "type": "object",
+      "required": ["week", "date"],
+      "properties": {
+        "week": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "Course week, 0 to 5."
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "Calendar date of the session, YYYY-MM-DD. The reader also checks that the date exists."
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Optional. Start time, 24-hour HH:MM, in the calendar's timezone."
+        },
+        "place": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Optional. Room, address or meeting link, as text or a URL."
+        }
+      }
+    }
+  }
+}

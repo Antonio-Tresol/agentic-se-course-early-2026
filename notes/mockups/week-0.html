@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 0: Getting Started · Agentic SE Course</title>
+<meta name="description" content="v2 mockup of the Week 0 page (#/week/0): prerequisites, install, and the first session.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mockup.css">
+<link rel="stylesheet" href="week0.css">
+<script>
+/* Track, theme and annotations before first paint (same rule as the other mockup pages). */
+(function () {
+  var root = document.documentElement, q = null, t = null, th = null;
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  if (q && (q.get("track") === "codex" || q.get("track") === "claude")) {
+    t = q.get("track");
+    try { localStorage.setItem("agentic-se-track", t); } catch (e) {}
+  } else {
+    try { t = localStorage.getItem("agentic-se-track"); } catch (e) {}
+  }
+  if (t === "codex") root.classList.add("track-codex");
+  th = q && q.get("theme");
+  if (th === "dark" || th === "light") root.setAttribute("data-theme", th);
+  if (q && q.get("annotate") === "1") root.classList.add("show-ann");
+})();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="overview.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html" aria-current="page"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" role="link" aria-disabled="true"><span class="sr-only">Week </span>2<span class="sr-only"> (no page yet)</span></a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page">
+
+  <!-- 1. Hero -->
+  <div class="week-head">
+    <p class="label week-head__label">Week 0</p>
+    <h1 class="week-head__title">Getting Started</h1>
+    <p class="lede">Meet the cohort, review the AI Fluency foundations, watch a live demo, and leave with your coding agent installed and running. Next week you put it to work on tasks from the hardest software-engineering benchmarks.</p>
+    <div class="week-head__meta">
+      <fieldset class="track-switch"
+        data-announce-claude="Showing the Claude Code track. The install steps are for Claude Code."
+        data-announce-codex="Showing the Codex track. The install steps are for Codex.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+      <dl class="facts">
+        <div>
+          <dt>Pre-work</dt>
+          <dd>2 courses, not measured yet</dd>
+        </div>
+        <div data-session-fact="0" data-label="Session" data-format="short" hidden></div>
+        <div>
+          <dt>Length</dt>
+          <dd>60 min</dd>
+        </div>
+      </dl>
+    </div>
+
+    <section class="w0-budget" aria-labelledby="budget-h">
+      <div class="w0-budget__row">
+        <h2 id="budget-h" class="label">This week</h2>
+        <span class="meta" data-w0-done>0 of 3 core items done</span>
+      </div>
+      <p class="w0-stat" data-w0-left>3 items left</p>
+      <ul class="w0-cells" aria-label="Core items this week">
+        <li><a class="w0-cell" href="#pw-ai-fluency" data-cell="pw-ai-fluency">
+          <span class="w0-cell__bar" aria-hidden="true"></span>
+          <span class="w0-cell__name">AI Fluency</span>
+          <span class="w0-cell__state"><span class="kind kind--course"><span class="glyph glyph--course" aria-hidden="true"></span>Course</span> <span data-cell-state>To do</span></span>
+        </a></li>
+        <li><a class="w0-cell" href="#pw-ai-capabilities" data-cell="pw-ai-capabilities">
+          <span class="w0-cell__bar" aria-hidden="true"></span>
+          <span class="w0-cell__name">AI Capabilities</span>
+          <span class="w0-cell__state"><span class="kind kind--course"><span class="glyph glyph--course" aria-hidden="true"></span>Course</span> <span data-cell-state>To do</span></span>
+        </a></li>
+        <li data-track="claude"><a class="w0-cell w0-cell--practice" href="#install" data-cell="pw-install-claude">
+          <span class="w0-cell__bar" aria-hidden="true"></span>
+          <span class="w0-cell__name">Install Claude Code</span>
+          <span class="w0-cell__state"><span class="kind kind--practice"><span class="glyph glyph--practice" aria-hidden="true"></span>Practice</span> <span data-cell-state>To do</span></span>
+        </a></li>
+        <li data-track="codex"><a class="w0-cell w0-cell--practice" href="#install" data-cell="pw-install-codex">
+          <span class="w0-cell__bar" aria-hidden="true"></span>
+          <span class="w0-cell__name">Install Codex</span>
+          <span class="w0-cell__state"><span class="kind kind--practice"><span class="glyph glyph--practice" aria-hidden="true"></span>Practice</span> <span data-cell-state>To do</span></span>
+        </a></li>
+      </ul>
+      <p class="meta w0-budget__note">The two courses come before the session; the install happens in it, or earlier if you can. Course times are not measured yet, so each cell is one item, not a share of your time. A filled cell is done; an outlined cell is still to do.</p>
+    </section>
+  </div>
+
+  <!-- 2. Outcomes -->
+  <section class="section" id="outcomes" aria-labelledby="outcomes-h">
+    <div class="oc">
+      <div class="oc__head">
+        <h2 id="outcomes-h" class="h-section">Outcomes <span class="tag tag--draft">Draft</span></h2>
+        <span class="oc__count" data-progress-outcome-count="0">0 of 4 ticked</span>
+      </div>
+      <p class="outcomes-intro">By the end of this week you can:</p>
+      <p class="meta oc__hint">Tick "I can do this" yourself once you can; nothing ticks it for you. Ticks stay in this browser.</p>
+      <ol class="oc__list">
+        <li class="oc__item"><p class="oc__text">Install Claude Code or Codex, log in, and give it a first task in a repository: ask it to explain the code or make a small change.</p>
+          <div class="oc__ctl"><label class="check"><input type="checkbox" data-progress-outcome="w0:o1"> I can do this<span class="sr-only">: install and run an agent</span></label><a href="#install">Install</a></div></li>
+        <li class="oc__item"><p class="oc__text">Name the four Ds of the AI Fluency framework (delegation, description, discernment, diligence) and give an example of each from working with a coding agent.</p>
+          <div class="oc__ctl"><label class="check"><input type="checkbox" data-progress-outcome="w0:o2"> I can do this<span class="sr-only">: name the four Ds</span></label><a href="#pw-ai-fluency">AI Fluency course</a></div></li>
+        <li class="oc__item"><p class="oc__text">Name two things a model brings to coding work and two ways it fails, such as a knowledge cutoff or a confident wrong answer, and say how you would check for each failure.</p>
+          <div class="oc__ctl"><label class="check"><input type="checkbox" data-progress-outcome="w0:o3"> I can do this<span class="sr-only">: name strengths and failure modes</span></label><a href="#pw-ai-capabilities">AI Capabilities course</a></div></li>
+        <li class="oc__item"><p class="oc__text">Say what each of the next five weeks asks of you, and choose the track, Claude Code or Codex, that you will follow.</p>
+          <div class="oc__ctl"><label class="check"><input type="checkbox" data-progress-outcome="w0:o4"> I can do this<span class="sr-only">: describe the course and choose a track</span></label><a href="overview.html">Course overview</a></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3. Prerequisites as pre-work -->
+  <section class="section" id="prework" aria-labelledby="prework-h">
+    <h2 id="prework-h" class="h-section">Pre-work</h2>
+    <p class="section-intro">Both courses are required on both tracks. The session does not repeat them, and Week 1 opens with a question on the four Ds. Tick each item when you finish it; your ticks stay in this browser.</p>
+    <ol class="pw-list">
+      <li class="pw-row pw-row--tracked" id="pw-ai-fluency">
+        <label class="pw-done"><input type="checkbox" data-progress-item="w0:pw-ai-fluency" data-kind="course" data-title="AI Fluency: Framework &amp; Foundations"><span class="pw-done__text">Done</span><span class="sr-only">: AI Fluency: Framework &amp; Foundations</span></label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw" aria-hidden="true"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">not measured</span>
+              <span class="tag tag--core">Required, both tracks</span>
+            </span>
+            <span class="took" data-progress-took="w0:pw-ai-fluency" hidden><label for="took-ai-fluency">Took<span class="sr-only"> how many minutes (optional)</span></label><input class="field field--num" id="took-ai-fluency" type="number" min="0" step="1" inputmode="numeric" data-progress-minutes="w0:pw-ai-fluency"><span class="meta">min</span></span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/ai-fluency-framework-foundations" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">AI Fluency: Framework &amp; Foundations</span><span class="link-row__meta">Anthropic · Claude Academy · Mar 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding question</span> <span class="tag tag--draft">Draft</span></p>
+            <ul class="gq__list">
+              <li>What are the four Ds, and which one covers checking an agent's output before you rely on it?</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="pw-row pw-row--tracked" id="pw-ai-capabilities">
+        <label class="pw-done"><input type="checkbox" data-progress-item="w0:pw-ai-capabilities" data-kind="course" data-title="AI Capabilities and Limitations"><span class="pw-done__text">Done</span><span class="sr-only">: AI Capabilities and Limitations</span></label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw" aria-hidden="true"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">not measured</span>
+              <span class="tag tag--core">Required, both tracks</span>
+            </span>
+            <span class="took" data-progress-took="w0:pw-ai-capabilities" hidden><label for="took-ai-capabilities">Took<span class="sr-only"> how many minutes (optional)</span></label><input class="field field--num" id="took-ai-capabilities" type="number" min="0" step="1" inputmode="numeric" data-progress-minutes="w0:pw-ai-capabilities"><span class="meta">min</span></span>
+          </div>
+          <a class="link-row" href="https://academy.claude.com/courses/ai-capabilities-and-limitations" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">AI Capabilities and Limitations</span><span class="link-row__meta">Anthropic · Claude Academy · Apr 2026</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="gq">
+            <p class="gq__label"><span class="label">Guiding question</span> <span class="tag tag--draft">Draft</span></p>
+            <ul class="gq__list">
+              <li>Which model failure mode would mislead you most if you took an agent's answer about a task at face value, and how would you check for it?</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <h3 class="w0-h3 w0-optional-h">Optional extra</h3>
+    <ol class="pw-list">
+      <li class="pw-row pw-row--tracked" id="pw-ai-foundations-openai">
+        <label class="pw-done"><input type="checkbox" data-progress-item="w0:pw-ai-foundations-openai" data-kind="course" data-tier="optional" data-minutes="70" data-title="AI Foundations (OpenAI)"><span class="pw-done__text">Done</span><span class="sr-only">: AI Foundations, OpenAI Academy</span></label>
+        <div class="pw-row__main">
+          <div class="pw-row__head">
+            <span class="pw-row__badges">
+              <span class="kind kind--course"><span class="kind__sw" aria-hidden="true"></span><span class="glyph glyph--course" aria-hidden="true"></span>Course</span>
+              <span class="pw-row__time">~70 min</span>
+              <span class="tag tag--optional">Optional</span>
+            </span>
+            <span class="took" data-progress-took="w0:pw-ai-foundations-openai" hidden><label for="took-ai-foundations-openai">Took<span class="sr-only"> how many minutes (optional)</span></label><input class="field field--num" id="took-ai-foundations-openai" type="number" min="0" step="1" inputmode="numeric" data-progress-minutes="w0:pw-ai-foundations-openai"><span class="meta">min</span></span>
+          </div>
+          <a class="link-row" href="https://academy.openai.com/public/courses/ai-foundations-dnq5w" target="_blank" rel="noopener noreferrer">
+            <span class="link-row__text"><span class="link-row__verb">Complete</span> <span class="link-row__title">AI Foundations</span><span class="link-row__meta">OpenAI Academy · an extra; it does not replace AI Fluency</span><span class="sr-only"> (opens in a new tab)</span></span>
+            <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 4. Install -->
+  <section class="section" id="install" aria-labelledby="install-h">
+    <h2 id="install-h" class="h-section">Install your agent</h2>
+    <p class="section-intro">We install together in the session. If you can, install before it, so the session time goes to your first task. You need a terminal (macOS, Linux or WSL), git, a GitHub account and the account you will use with your agent.</p>
+
+    <div class="w0-install" data-track="claude">
+      <div class="w0-row__top">
+        <span class="kind kind--practice"><span class="kind__sw" aria-hidden="true"></span><span class="glyph glyph--practice" aria-hidden="true"></span>Practice</span>
+        <span class="tag tag--core">Required</span>
+      </div>
+      <h3 class="w0-h3">Install Claude Code</h3>
+      <p class="w0-code__label">macOS, Linux or WSL</p>
+      <div class="w0-code"><pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre></div>
+      <p class="w0-code__label">Windows PowerShell</p>
+      <div class="w0-code"><pre><code>irm https://claude.ai/install.ps1 | iex</code></pre></div>
+      <p class="w0-code__label">Homebrew</p>
+      <div class="w0-code"><pre><code>brew install --cask claude-code</code></pre></div>
+      <p class="w0-code__label">Run it in any repository, and log in on first use</p>
+      <div class="w0-code"><pre><code>cd your-project &amp;&amp; claude</code></pre></div>
+      <a class="link-row" href="https://code.claude.com/docs" target="_blank" rel="noopener noreferrer" style="margin-top:12px">
+        <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Claude Code documentation</span><span class="link-row__meta">Anthropic · setup, quickstart and reference</span><span class="sr-only"> (opens in a new tab)</span></span>
+        <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p style="margin-top:14px"><label class="check"><input type="checkbox" data-progress-item="w0:pw-install-claude" data-kind="practice" data-title="Install Claude Code"> Done: I installed Claude Code and ran it once</label></p>
+    </div>
+
+    <div class="w0-install" data-track="codex">
+      <div class="w0-row__top">
+        <span class="kind kind--practice"><span class="kind__sw" aria-hidden="true"></span><span class="glyph glyph--practice" aria-hidden="true"></span>Practice</span>
+        <span class="tag tag--core">Required</span>
+      </div>
+      <h3 class="w0-h3">Install Codex</h3>
+      <p class="w0-p">Follow the install steps in the Codex documentation, then run Codex in any repository and sign in on first use.</p>
+      <a class="link-row" href="https://learn.chatgpt.com/docs" target="_blank" rel="noopener noreferrer" style="margin-top:8px">
+        <span class="link-row__text"><span class="link-row__verb">Read</span> <span class="link-row__title">Codex documentation</span><span class="link-row__meta">OpenAI · documentation home</span><span class="sr-only"> (opens in a new tab)</span></span>
+        <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="note">This links the documentation home: the course has not yet verified a Codex install or quickstart page, so no install commands are shown here.</p>
+      <p style="margin-top:14px"><label class="check"><input type="checkbox" data-progress-item="w0:pw-install-codex" data-kind="practice" data-title="Install Codex"> Done: I installed Codex and ran it once</label></p>
+    </div>
+  </section>
+
+  <!-- 5. Live session -->
+  <section class="section" id="session" aria-labelledby="session-h">
+    <h2 id="session-h" class="h-section">Live session</h2>
+    <dl class="facts" style="margin-bottom:14px">
+      <div data-session-fact="0" hidden></div>
+      <div><dt>Length</dt><dd>60 min</dd></div>
+    </dl>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:8px">
+      <h3 class="w0-h3" style="margin:0">Plan for the hour</h3>
+      <span class="tag tag--draft">Draft</span>
+    </div>
+    <div class="planbar" aria-hidden="true">
+      <span class="planbar__seg" style="--m:10">10</span>
+      <span class="planbar__seg" style="--m:10">10</span>
+      <span class="planbar__seg" style="--m:20">20</span>
+      <span class="planbar__seg" style="--m:10">10</span>
+      <span class="planbar__seg" style="--m:10">10</span>
+    </div>
+    <div class="planbar__axis meta" aria-hidden="true"><span>0</span><span>60 min</span></div>
+    <ol class="plan">
+      <li><span class="plan__min">10 min</span><span>Introductions: your name, what you work on, your experience with AI coding tools so far, and the account you will use with your agent.</span></li>
+      <li><span class="plan__min">10 min</span><span>AI Fluency recap: what fluent use looks like, the three modes of working with AI, what models bring and where they fail, and the 4D framework.</span></li>
+      <li><span class="plan__min">20 min</span><span>Installation: install, log in and run a first command, with help for anyone who gets stuck.</span></li>
+      <li><span class="plan__min">10 min</span><span>Live demo: open a terminal, pick a project, and ask the agent to explore the codebase or fix a small issue.</span></li>
+      <li><span class="plan__min">10 min</span><span>The road ahead: what Weeks 1 to 5 cover, and the Week 1 pre-work.</span></li>
+    </ol>
+    <p style="margin-top:20px">
+      <a class="btn" href="https://antonio-tresol.github.io/agentic-se-course-early-2026/slides/session0.html" target="_blank" rel="noopener noreferrer">Open slides<span class="sr-only"> (opens in a new tab)</span>
+        <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </p>
+  </section>
+
+  <!-- 6. Teaser: Week 1 activity -->
+  <section class="section" id="next" aria-labelledby="next-h">
+    <article class="card card--activity w0-teaser">
+      <div class="card__label"><span class="label label--ink">Week 1 live session · in pairs</span></div>
+      <h2 id="next-h" class="h-card">Next week: estimate real benchmark tasks with your agent</h2>
+      <p>Bring the agent you install today. In pairs, you look at the latest numbers on the hardest public software-engineering benchmarks, then give your agent ten minutes to scope a real task from one of them. You estimate how long it would take an experienced engineer, how complex it is and how well specified, and only then see the published answers.</p>
+      <div class="w0-teaser__stats">
+        <div class="w0-teaser__stat"><span class="w0-teaser__num">6</span><span class="w0-teaser__lbl">real tasks</span></div>
+        <div class="w0-teaser__stat"><span class="w0-teaser__num">3</span><span class="w0-teaser__lbl">benchmarks</span></div>
+        <div class="w0-teaser__stat"><span class="w0-teaser__num">2</span><span class="w0-teaser__lbl">tasks per pair</span></div>
+      </div>
+      <a class="link-row" href="week-1.html#bench-activity">
+        <span class="link-row__text"><span class="link-row__verb">See</span> <span class="link-row__title">the Week 1 activity</span><span class="link-row__meta">Week 1 · One Coding Agent</span></span>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </article>
+  </section>
+
+  <!-- 7. Footer: previous and next -->
+  <nav class="pager" aria-label="Previous and next">
+    <a href="overview.html">
+      <span class="pager__dir"><svg class="arrow arrow--back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M11 6H1M1 6L5.5 1.5M1 6L5.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Previous · Overview</span>
+      <span class="pager__title">All six weeks</span>
+    </a>
+    <a href="week-1.html">
+      <span class="pager__dir">Next · Week 1<svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="pager__title">One Coding Agent</span>
+    </a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/" target="_blank" rel="noopener noreferrer">Resources<span class="sr-only"> (v1 bibliography, opens in a new tab)</span></a></li>
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/#/further-reading" target="_blank" rel="noopener noreferrer">Further Reading<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="facilitator-week-4.html">Facilitator</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Early 2026 edition · v2 mockup · progress is saved in this browser only</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+<div class="sr-only" aria-live="polite" data-w0-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+<script>
+/* ==========================================================================
+   Week 0 page logic: the hero's item cells, copy buttons on the install
+   commands, and fallbacks for when site.js is absent (track switch, ticks,
+   took minutes, outcomes). With site.js present, site.js handles the
+   data-progress-* attributes and the track switch.
+   ========================================================================== */
+(function () {
+  "use strict";
+  var doc = document, root = doc.documentElement, WEEK = 0;
+  var P = window.AgenticProgress || null;
+  var SITE = window.AgenticSite || null;
+  var ITEMS = [
+    { id: "pw-ai-fluency", track: "both" },
+    { id: "pw-ai-capabilities", track: "both" },
+    { id: "pw-install-claude", track: "claude" },
+    { id: "pw-install-codex", track: "codex" }
+  ];
+  if (P) { try { P.registerWeek(WEEK, ITEMS, ["o1", "o2", "o3", "o4"]); } catch (e) {} }
+
+  var live = doc.querySelector("[data-w0-live]");
+  function announce(msg) {
+    if (SITE && typeof SITE.announce === "function") { SITE.announce(msg); return; }
+    if (!live) return;
+    live.textContent = "";
+    setTimeout(function () { live.textContent = msg; }, 60);
+  }
+  function state() { try { return P ? P.get() : { items: {}, outcomes: {} }; } catch (e) { return { items: {}, outcomes: {} }; } }
+  function pageTrack() { return root.classList.contains("track-codex") ? "codex" : "claude"; }
+  function refOf(v) { var m = /^w(\d+):(.+)$/.exec(v || ""); return m ? { week: parseInt(m[1], 10), id: m[2] } : null; }
+
+  /* Hero cells: one per core item on the current track. */
+  function renderHero() {
+    var s = state(), track = pageTrack(), done = 0, total = 0;
+    ITEMS.forEach(function (it) {
+      var r = (s.items || {})["w" + WEEK + ":" + it.id], isDone = !!(r && r.status === "done");
+      if (it.track === "both" || it.track === track) { total++; if (isDone) done++; }
+      var cell = doc.querySelector('[data-cell="' + it.id + '"]');
+      if (!cell) return;
+      cell.classList.toggle("is-done", isDone);
+      var st = cell.querySelector("[data-cell-state]");
+      if (!st) return;
+      st.textContent = "";
+      if (isDone) {
+        var g = doc.createElement("span");
+        g.className = "glyph glyph--check"; g.setAttribute("aria-hidden", "true");
+        st.appendChild(g); st.appendChild(doc.createTextNode(" Done"));
+      } else st.textContent = "To do";
+    });
+    var left = total - done;
+    var leftEl = doc.querySelector("[data-w0-left]");
+    if (leftEl) leftEl.textContent = left === 0 ? "Ready for Week 1" : left + (left === 1 ? " item left" : " items left");
+    var doneEl = doc.querySelector("[data-w0-done]");
+    if (doneEl) doneEl.textContent = done + " of " + total + " core items done";
+  }
+
+  /* Copy buttons on the install commands. */
+  var codes = doc.querySelectorAll(".w0-install .w0-code");
+  for (var i = 0; i < codes.length; i++) (function (box) {
+    var b = doc.createElement("button");
+    b.type = "button"; b.className = "w0-copy"; b.textContent = "Copy";
+    var sr = doc.createElement("span"); sr.className = "sr-only"; sr.textContent = " command"; b.appendChild(sr);
+    b.addEventListener("click", function () {
+      var text = box.querySelector("code").textContent;
+      function fallback() {
+        try {
+          var r = doc.createRange(); r.selectNodeContents(box.querySelector("pre"));
+          var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          var ok = doc.execCommand && doc.execCommand("copy");
+          announce(ok ? "Copied." : "Copy is blocked here. The command is selected: press Ctrl+C or Cmd+C.");
+        } catch (err) { announce("Copy is blocked here. Select the command and copy it by hand."); }
+      }
+      try { navigator.clipboard.writeText(text).then(function () { announce("Copied."); }, fallback); } catch (err) { fallback(); }
+    });
+    box.appendChild(b);
+  })(codes[i]);
+
+  /* Fallbacks when site.js is not loaded. */
+  if (!SITE) {
+    var KEY = "agentic-se-track", tl = doc.querySelector("[data-track-live]"), sw = doc.querySelector(".track-switch");
+    var applyTrack = function (track, say) {
+      root.classList.toggle("track-codex", track === "codex");
+      var radios = doc.querySelectorAll('input[name="track"]');
+      for (var k = 0; k < radios.length; k++) radios[k].checked = radios[k].value === track;
+      if (say && tl && sw) tl.textContent = sw.getAttribute("data-announce-" + track) || "";
+    };
+    applyTrack(pageTrack(), false);
+    if (P) { try { if (P.get().learner.track !== pageTrack()) P.setTrack(pageTrack()); } catch (e) {} }
+    var syncTicks = function () {
+      var s = state(), els, k;
+      els = doc.querySelectorAll("[data-progress-item]");
+      for (k = 0; k < els.length; k++) {
+        var r = (s.items || {})[els[k].getAttribute("data-progress-item")];
+        els[k].checked = !!(r && r.status === "done");
+        var row = els[k].closest(".pw-row"); if (row) row.classList.toggle("is-done", els[k].checked);
+      }
+      els = doc.querySelectorAll("[data-progress-took]");
+      for (k = 0; k < els.length; k++) { var rt = (s.items || {})[els[k].getAttribute("data-progress-took")]; els[k].hidden = !(rt && rt.status === "done"); }
+      els = doc.querySelectorAll("[data-progress-minutes]");
+      for (k = 0; k < els.length; k++) {
+        if (doc.activeElement === els[k]) continue;
+        var rm = (s.items || {})[els[k].getAttribute("data-progress-minutes")];
+        els[k].value = rm && typeof rm.minutesSpent === "number" ? String(rm.minutesSpent) : "";
+      }
+      var can = !!(P && typeof P.setOutcome === "function"), oc = ((s.outcomes || {})["w" + WEEK]) || {}, n = 0;
+      els = doc.querySelectorAll("[data-progress-outcome]");
+      for (k = 0; k < els.length; k++) {
+        var ref = refOf(els[k].getAttribute("data-progress-outcome")), ro = ref ? oc[ref.id] : null;
+        els[k].checked = !!(ro && ro.checked); els[k].disabled = !can; if (els[k].checked) n++;
+        var li = els[k].closest(".oc__item"); if (li) li.classList.toggle("is-checked", els[k].checked);
+      }
+      var cnt = doc.querySelector('[data-progress-outcome-count="0"]');
+      if (cnt) cnt.textContent = n + " of " + els.length + " ticked";
+    };
+    doc.addEventListener("change", function (e) {
+      var t = e.target, ref;
+      if (!t || !t.getAttribute) return;
+      if (t.name === "track") {
+        try { localStorage.setItem(KEY, t.value); } catch (err) {}
+        try { var u = new URL(location.href); u.searchParams.set("track", t.value); history.replaceState(null, "", u.toString()); } catch (err) {}
+        applyTrack(t.value, true);
+        if (P) { try { if (P.get().learner.track !== t.value) P.setTrack(t.value); } catch (err) {} }
+        renderHero();
+        return;
+      }
+      if (!P) return;
+      if (t.hasAttribute("data-progress-item")) {
+        ref = refOf(t.getAttribute("data-progress-item"));
+        if (ref) { P.markItem(ref.week, ref.id, { status: t.checked ? "done" : "todo" }); announce(t.checked ? "Marked done." : "Marked as to do."); }
+      } else if (t.hasAttribute("data-progress-minutes")) {
+        ref = refOf(t.getAttribute("data-progress-minutes"));
+        var v = String(t.value).trim();
+        if (!ref || v === "" || !isFinite(Number(v)) || Number(v) < 0) return;
+        P.markItem(ref.week, ref.id, { status: "done", minutesSpent: Number(v) });
+        announce("Saved " + Number(v) + " minutes.");
+      } else if (t.hasAttribute("data-progress-outcome") && typeof P.setOutcome === "function") {
+        ref = refOf(t.getAttribute("data-progress-outcome"));
+        if (ref) { P.setOutcome(ref.week, ref.id, t.checked); announce(t.checked ? "Outcome ticked." : "Outcome unticked."); }
+      }
+    });
+    window.addEventListener("storage", function (e) {
+      if (e.key === KEY && (e.newValue === "codex" || e.newValue === "claude")) { applyTrack(e.newValue, false); renderHero(); }
+    });
+    syncTicks();
+    if (P) P.on("change", function () { syncTicks(); renderHero(); });
+  } else {
+    if (typeof SITE.onRender === "function") SITE.onRender(function () { renderHero(); });
+    if (P) P.on("change", function () { renderHero(); });
+  }
+  renderHero();
+})();
+</script>
+</body>
+</html>

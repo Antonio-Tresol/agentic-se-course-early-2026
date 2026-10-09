@@ -1,0 +1,168 @@
+{
+  "schema": "agentic-se-progress",
+  "schemaVersion": 1,
+  "exportedAt": "2026-09-15T08:24:40.754Z",
+  "appVersion": "mockup-2026-10-SYNTHETIC",
+  "userAgentFamily": "chrome",
+  "learner": {
+    "id": "L-synthetic-04",
+    "alias": "SYNTHETIC-04",
+    "cohort": "early-2026",
+    "track": "codex",
+    "createdAt": "2026-09-14T11:00:00.000Z"
+  },
+  "items": {
+    "w1:pw-1": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-14T16:56:09.764Z",
+      "minutesSpent": 28,
+      "estimateMinutes": 20
+    },
+    "w1:pw-3": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-15T00:54:30.190Z",
+      "minutesSpent": 22,
+      "estimateMinutes": 35
+    },
+    "w1:pw-6": {
+      "status": "done",
+      "track": "codex",
+      "doneAt": "2026-09-15T07:09:40.754Z",
+      "minutesSpent": 20,
+      "estimateMinutes": 15
+    }
+  },
+  "quizzes": {
+    "w1": [
+      {
+        "attemptId": "A-a10e552cf96bc896",
+        "startedAt": "2026-09-15T08:09:40.754Z",
+        "submittedAt": "2026-09-15T08:14:40.754Z",
+        "answers": [
+          {
+            "qid": "q1",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-15T08:10:40.754Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q2",
+            "type": "mcq",
+            "response": 3,
+            "confidence": 1,
+            "revealedAt": "2026-09-15T08:11:40.754Z",
+            "correct": false
+          },
+          {
+            "qid": "q3",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 2,
+            "revealedAt": "2026-09-15T08:12:40.754Z",
+            "correct": true
+          },
+          {
+            "qid": "q4",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-15T08:13:40.754Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q5",
+            "type": "mcq",
+            "response": 2,
+            "confidence": 2,
+            "revealedAt": "2026-09-15T08:14:40.754Z",
+            "correct": false
+          }
+        ],
+        "score": {
+          "auto": 1,
+          "autoMax": 3,
+          "self": 4,
+          "selfMax": 4
+        }
+      }
+    ]
+  },
+  "estimates": [],
+  "deliverables": {},
+  "events": [
+    {
+      "t": "2026-09-14T11:00:00.000Z",
+      "type": "track",
+      "ref": "codex"
+    },
+    {
+      "t": "2026-09-14T11:00:00.000Z",
+      "type": "alias",
+      "ref": ""
+    },
+    {
+      "t": "2026-09-14T16:56:09.764Z",
+      "type": "item:done",
+      "ref": "w1:pw-1"
+    },
+    {
+      "t": "2026-09-15T00:54:30.190Z",
+      "type": "item:done",
+      "ref": "w1:pw-3"
+    },
+    {
+      "t": "2026-09-15T07:09:40.754Z",
+      "type": "item:done",
+      "ref": "w1:pw-6"
+    },
+    {
+      "t": "2026-09-15T08:09:40.754Z",
+      "type": "quiz:start",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-15T08:10:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T08:10:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-15T08:11:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q2"
+    },
+    {
+      "t": "2026-09-15T08:12:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q3"
+    },
+    {
+      "t": "2026-09-15T08:13:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T08:13:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-15T08:14:40.754Z",
+      "type": "quiz:answer",
+      "ref": "w1:q5"
+    },
+    {
+      "t": "2026-09-15T08:14:40.754Z",
+      "type": "quiz:submit",
+      "ref": "w1"
+    }
+  ]
+}

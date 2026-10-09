@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v2 Mockup Gallery</title>
+<meta name="description" content="Owner's gallery of the v2 course-site mockups at desktop and phone widths, with annotations tied to notes/design.md.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mockup.css">
+<style>
+  .g-wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter); }
+  .g-head { padding-top: 40px; padding-bottom: 28px; }
+  .g-head h1 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em;
+    font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 6px 0 14px;
+  }
+  .g-head .lede { max-width: 760px; }
+  .g-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 20px; }
+  .g-toc { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 18px; }
+  .g-toc a { display: inline-flex; align-items: center; min-height: 32px; font-family: var(--font-mono); font-size: 13px; }
+
+  .g-item { padding: 36px 0 40px; border-top: 1px solid var(--border); }
+  .g-item__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 8px; }
+  .g-item__head h2 { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+  .g-caption { font-size: 15px; line-height: 1.65; color: var(--body); max-width: 860px; margin-bottom: 8px; }
+  .g-links { display: flex; flex-wrap: wrap; gap: 2px 18px; margin-bottom: 18px; }
+  .g-links a { display: inline-flex; align-items: center; min-height: 32px; font-family: var(--font-mono); font-size: var(--meta); }
+
+  .g-pair { display: grid; grid-template-columns: minmax(0, 1fr) 377px; gap: 28px; align-items: start; }
+  @media (max-width: 1080px) { .g-pair { grid-template-columns: minmax(0, 1fr); } }
+  .g-frame { min-width: 0; }
+  .g-frame figcaption { margin-bottom: 8px; }
+  .g-viewport {
+    overflow: hidden; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: 0 1px 14px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+  }
+  .g-frame--phone .g-viewport { border-radius: 22px; }
+  .g-viewport iframe { display: block; border: 0; transform-origin: 0 0; background: var(--page); }
+
+  .g-notes { margin-top: 22px; display: grid; gap: 10px; max-width: 900px; }
+  .g-notes li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; font-size: 15px; line-height: 1.6; color: var(--body); }
+  .g-notes li::before {
+    content: attr(data-n);
+    width: 22px; height: 22px; border-radius: 11px;
+    background: var(--text); color: var(--page);
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    line-height: 22px; text-align: center; margin-top: 1px;
+  }
+  .g-notes strong { font-family: var(--font-display); font-weight: 600; color: var(--text); }
+  .g-notes .cite { font-family: var(--font-mono); font-size: var(--meta); color: var(--muted); }
+
+  .g-placeholder {
+    border: 2px dashed var(--border); border-radius: 10px;
+    padding: 22px 24px; margin-top: 8px;
+  }
+  .g-placeholder p { font-size: 15px; line-height: 1.7; color: var(--body); max-width: 820px; }
+  .g-placeholder p + p { margin-top: 10px; }
+  @media (max-width: 639.98px) {
+    .g-placeholder { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#overview">Skip to the mockups</a>
+
+<header class="g-wrap g-head">
+  <p class="label">notes/mockups · v2 design review · 9 October 2026</p>
+  <h1>Agentic SE Course v2: mockups</h1>
+  <p class="lede">High-fidelity static mockups of the v2 site specified in <code>notes/design.md</code>, built on the v1 typefaces, column, greys and accent, with v1's real course titles and links. Each page is shown live at desktop width (1280 px, scaled to fit) and phone width (375 px). Scroll inside a frame, flip the track switch, tick items off, take the self-check or log an estimate: progress is saved in your browser and shows up on My progress. Session dates appear only after a cohort calendar is loaded. Pages follow your light or dark setting.</p>
+  <div class="g-controls">
+    <button type="button" class="btn btn--small" id="ann-toggle" aria-pressed="false">Show annotations</button>
+    <span class="meta">Numbered markers on the frames map to the decision lists under each page.</span>
+  </div>
+  <nav class="g-toc" aria-label="Mockups">
+    <a href="#overview">Overview</a>
+    <a href="#week-0">Week 0</a>
+    <a href="#week-1">Week 1</a>
+    <a href="#check">Week 1 self-check</a>
+    <a href="#progress">My progress</a>
+    <a href="#week-3">Week 3</a>
+    <a href="#week-4">Week 4</a>
+    <a href="#week-5">Week 5</a>
+    <a href="#facilitator">Facilitator run-sheet</a>
+    <a href="#not-mocked">Not mocked</a>
+  </nav>
+</header>
+
+<main class="g-wrap">
+
+  <!-- Overview -->
+  <section class="g-item" id="overview" aria-labelledby="overview-h">
+    <div class="g-item__head">
+      <h2 id="overview-h">Overview</h2>
+      <span class="meta">#/ · overview.html</span>
+    </div>
+    <p class="g-caption">Implements design.md §2 "The overview" and the sitemap, §3 "Track switch", and §4 "Tokens that carry over", "Contrast", "Type, links and headings" and "Responsive rules" (the compact phone hero, with the longer pitch below the week list). The Weeks 3 to 5 rows follow curriculum-v2-second-half.md Part 4.</p>
+    <p class="g-links">
+      <a href="overview.html">Open overview.html</a>
+      <a href="overview.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="overview.html" title="Overview mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="overview.html" title="Overview mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="1"><span><strong>Course map first.</strong> The page opens with a picture of the course: planned minutes per week as columns on one axis, filled as you tick items off, with Week 5 drawn as a dashed 6 to 8 h range. The pitch moves below the weeks. <span class="cite">visual-design §3.1; cleveland1984; heer2010; mayer2020</span></span></li>
+      <li data-n="2"><span><strong>Next session, only with a calendar.</strong> There is no backend: the card and session dates appear after a learner loads the cohort's <code>calendar.json</code>, which is saved in their browser. Without one, "You are here" is the first week with unticked core items. <span class="cite">nielsen1994; notes/progress/README.md</span></span></li>
+      <li data-n="3"><span><strong>Track switch.</strong> Both tool names stay visible. The choice persists in localStorage and <code>?track=codex</code>, and a polite live region announces it. Native radios give arrow-key behaviour; segments are 32 px tall. <span class="cite">§3 Track switch; w3c2024wcag22 SC 4.1.3, 2.5.8</span></span></li>
+      <li data-n="4"><span><strong>Weeks at a glance</strong> under the map: label, title, one-line summary, minutes done against planned, and markers. h2 "Weeks", h3 per week; the whole row is the target. <span class="cite">§2 The overview; w3c2024wcag22 SC 1.3.1</span></span></li>
+      <li data-n="5"><span><strong>Pre-work total per week</strong>, following the track: 172 or 184 min for Week 1, 189 or 204 for Week 2, 140.5 or 120.4 for Week 3. Measured minutes replace "~N min" except in Weeks 0 and 5. <span class="cite">kember2004; brysbaert2019</span></span></li>
+      <li data-n="6"><span><strong>Deliverable marker</strong> on Weeks 3 to 5, so the work is visible before a learner opens the week. <span class="cite">§2 The overview; norman2013</span></span></li>
+      <li data-n="7"><span><strong>Second-half rows</strong> follow curriculum-v2-second-half.md Part 4: new titles and summaries, totals with the activity included (140.5 and 146.7 min) and "6 to 8 h build" for the capstone. The "Under revision" tags are gone, and the next-session card links Week 3. <span class="cite">curriculum Part 4; kember2004</span></span></li>
+      <li data-n="8"><span><strong>Below the list:</strong> the longer pitch, the Claude Code and Codex note, the badge note and the currency disclaimer. <span class="cite">§4 Responsive rules</span></span></li>
+      <li data-n="9"><span><strong>Footer links</strong> to Resources, Further Reading and Facilitator. Learner pages reach the facilitator layer from the footer only. <span class="cite">§2 The facilitator layer</span></span></li>
+      <li data-n="10"><span><strong>Tokens.</strong> Metadata at 12 px in #6B6B6B (4.85:1 on the page, 4.68:1 on card hover); links underlined by default. <span class="cite">w3c2024wcag22 SC 1.4.3; norman2013</span></span></li>
+    </ol>
+  </section>
+
+  <section class="g-item" id="week-0" aria-labelledby="week0-h">
+    <div class="g-item__head">
+      <h2 id="week0-h">Week 0: Getting Started</h2>
+      <span class="meta">#/week/0 · week-0.html</span>
+    </div>
+    <p class="g-caption">Setup only: the two Claude Academy prerequisites as pre-work on both tracks, a track-switched install block, the plan for the first session (introductions, live demo, installation, overview) and a teaser for the Week 1 benchmark activity.</p>
+    <p class="g-links">
+      <a href="week-0.html">Open week-0.html</a>
+      <a href="week-0.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-0.html" title="Week 0: Getting Started mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-0.html" title="Week 0: Getting Started mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="56"><span><strong>Prerequisites become pre-work.</strong> AI Fluency and AI Capabilities and Limitations are required on both tracks, because the Week 0 session reviews the 4D framework; OpenAI's AI Foundations is an optional extra. <span class="cite">§2 The overview; biggs1996</span></span></li>
+      <li data-n="57"><span><strong>Install, by track.</strong> One block per agent behind the track switch; the session plan runs install live. <span class="cite">§3 Track switch</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Week 1 -->
+  <section class="g-item" id="week-1" aria-labelledby="week1-h">
+    <div class="g-item__head">
+      <h2 id="week1-h">Week 1: One Coding Agent</h2>
+      <span class="meta">#/week/1 · week-1.html</span>
+    </div>
+    <p class="g-caption">Implements design.md §3 "Week page anatomy" in order: header, outcomes, time budget, core pre-work, self-check, live session and footer. Week 1 has no optional pre-work, pre-work activity or deliverable, so those sections do not render. Also §3 "Outcomes" (Week 1 copy verbatim), "Guiding questions" and "Track switch", and §4 "Responsive rules" (no hero; a one-line header and week links) and "Motion and targets".</p>
+    <p class="g-links">
+      <a href="week-1.html">Open week-1.html</a>
+      <a href="week-1.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-1.html" title="Week 1 mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-1.html" title="Week 1 mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="11"><span><strong>One-line header and week links</strong>, no hero. The current week carries <code>aria-current</code> and the orange bar; each link is a 32 px target. Week 2 has no page yet, so it renders as a disabled link: dashed, muted, not focusable, and announced as "(no page yet)". <span class="cite">§4 Responsive rules; nielsen1994</span></span></li>
+      <li data-n="12"><span><strong>Week header:</strong> label, title, track switch, pre-work total and session date. <span class="cite">§3 anatomy row 1; nielsen1994</span></span></li>
+      <li data-n="13"><span><strong>Outcomes:</strong> constructive alignment. Four observable "you can" statements, each mapped to a course, Session 1 or the live activity. <span class="cite">biggs1996</span></span></li>
+      <li data-n="14"><span><strong>Week hero.</strong> The time budget is one bar segmented per item, coloured by kind with a glyph and a word (course, reading, video, practice), filling as items are ticked; it counts honestly from zero. Outcomes are a checklist. <span class="cite">visual-design §3.2; cleveland1984; okabe2008; kivetz2006</span></span></li>
+      <li data-n="15"><span><strong>Pre-work rows</strong> with a done checkbox and an "it took ~N min" input. The minutes learners log come back in their export and calibrate the course's time budgets. <span class="cite">kember2004; brysbaert2019</span></span></li>
+      <li data-n="16"><span><strong>Guiding questions above the link</strong>, so they are read before the item starts. Drafted from the course descriptions and the Best Practices page; the Codex questions rest on v1's one-line notes, because the OpenAI Academy pages render client-side. <span class="cite">carpenter2017</span></span></li>
+      <li data-n="17"><span><strong>Codex equivalents.</strong> On the Codex track, OpenAI's "Best practices" and "Custom instructions with AGENTS.md" replace Best Practices for Claude Code; the live activity works with either agent. <span class="cite">§3 Track switch; openai-codexbestpractices; openai-codexagentsmd</span></span></li>
+      <li data-n="18"><span><strong>Self-check link</strong> under the pre-work, before the session. <span class="cite">roediger2006; agarwal2021; dunlosky2013</span></span></li>
+      <li data-n="19"><span><strong>Retrieval opener</strong>, five minutes on paper, with one question from an earlier week. Draft questions for the run-sheet: name the three phases of the agentic loop; name one thing that belongs in CLAUDE.md and one that does not; (Week 0) name the four Ds of the 4D framework. <span class="cite">dunlosky2013; vanalten2019</span></span></li>
+      <li data-n="20"><span><strong>Live activity: estimate real benchmark tasks</strong>, replacing v1's nanobot exercise. Current boards (SWE-bench Verified, SWE-Bench Pro, Terminal-Bench 4.0, FrontierCode, METR time horizons) with their caveats, six task cards, an estimation form per card saved to your progress, reveal and lock, then a log-scale chart of your estimates against published human times. One 60-minute plan, drawn as a timeline by who is working, folds in the retrieval opener and course debrief. <span class="cite">crouch2004; buehler1994; jimenez2024swebench; tbench2026leaderboard; metr2026timehorizons; chi2014</span></span></li>
+      <li data-n="21"><span><strong>Estimate before you look.</strong> Each card asks for human minutes, complexity and specification quality before the reveal; the reveal locks the estimate. Ground truth sits in the page source, so the activity runs on trust. <span class="cite">crouch2004; buehler1994</span></span></li>
+      <li data-n="22"><span><strong>Open slides</strong> follows the brief. design.md §2 moves decks to the facilitator layer and §3 links a session handout from this section instead: the owner should pick one. <span class="cite">§2 The facilitator layer; §5 Slides</span></span></li>
+      <li data-n="23"><span><strong>Previous and next week.</strong> Weeks without a mockup link to their overview row for now. <span class="cite">§3 anatomy row 10</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Self-check -->
+  <section class="g-item" id="check" aria-labelledby="check-h">
+    <div class="g-item__head">
+      <h2 id="check-h">Week 1 self-check</h2>
+      <span class="meta">#/week/1/check · week-1-check.html</span>
+    </div>
+    <p class="g-caption">Implements design.md §3 "Self-check": five retrieval questions answered from memory, with the answer and its source shown after each attempt. Questions are drafted from the Best Practices page and the two course descriptions. Interactive with plain JavaScript; nothing is stored. Also §4 "Type, links and headings" (h1 page, h2 per question) and "Motion and targets".</p>
+    <p class="g-links"><a href="week-1-check.html">Open week-1-check.html</a></p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-1-check.html" title="Week 1 self-check mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-1-check.html" title="Week 1 self-check mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="24"><span><strong>Answer from memory first</strong>, then open the answer: testing beats restudying. <span class="cite">roediger2006; agarwal2021</span></span></li>
+      <li data-n="25"><span><strong>Confidence before the reveal.</strong> Each question asks how sure you are (guess to certain) before the answer opens; confident errors are flagged gently, since they are the ones most worth correcting. <span class="cite">butterfield2001; metcalfe2017</span></span></li>
+      <li data-n="26"><span><strong>Feedback with a source.</strong> Choice questions state the pick in words and tag the right option with text, not colour alone; every answer links the section it comes from. <span class="cite">hattie2007; w3c2024wcag22 SC 1.4.1</span></span></li>
+      <li data-n="27"><span><strong>Saved in this browser:</strong> every try, with answers, confidence and self-scores, goes to My progress and into the export. No account, no server. <span class="cite">notes/progress/README.md</span></span></li>
+    </ol>
+  </section>
+
+  <section class="g-item" id="progress" aria-labelledby="progress-h">
+    <div class="g-item__head">
+      <h2 id="progress-h">My progress</h2>
+      <span class="meta">#/progress · progress.html</span>
+    </div>
+    <p class="g-caption">The learner's own record, drawn from what they ticked, logged and answered on the week pages: minutes done against planned by week, self-check scores and a confidence calibration chart, logged minutes against the page estimates, the benchmark estimates, the cohort calendar, and export, import and reset.</p>
+    <p class="g-links">
+      <a href="progress.html">Open progress.html</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="progress.html" title="My progress mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="progress.html" title="My progress mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="58"><span><strong>Bars on one scale</strong> for completion by week and for minutes logged against estimates; every chart has a "Show as table" alternative. <span class="cite">cleveland1984; heer2010; w3cwaicomplex</span></span></li>
+      <li data-n="59"><span><strong>Calibration:</strong> choice questions right at each confidence level, so learners see whether "certain" means right. <span class="cite">butterfield2001; metcalfe2017</span></span></li>
+      <li data-n="60"><span><strong>Export for the course owner.</strong> Download JSON on the real site; inside this artifact downloads are blocked, so Copy JSON and a read-only JSON box are the fallback. The file carries no name unless the learner types an alias. <span class="cite">notes/progress/README.md</span></span></li>
+      <li data-n="61"><span><strong>Import and reset.</strong> Merge or replace from a file or pasted JSON, with validation errors shown; clearing progress asks for confirmation in the page. <span class="cite">w3c2024wcag22 SC 3.3.4</span></span></li>
+      <li data-n="62"><span><strong>No comparisons between learners:</strong> no streaks, points or cohort leaderboards. <span class="cite">matcha2020; jivet2017</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Week 3 -->
+  <section class="g-item" id="week-3" aria-labelledby="week3-h">
+    <div class="g-item__head">
+      <h2 id="week3-h">Week 3: One change through the whole loop</h2>
+      <span class="meta">#/week/3 · week-3.html</span>
+    </div>
+    <p class="g-caption">Implements curriculum-v2-second-half.md Part 4, "Week 3: One change through the whole loop": outcomes, the pre-work table with minutes and core or optional status, guiding questions with chapters, the activity, the live-session plan with ICAP modes, the deliverable and the rubric. Laid out in the design.md §3 "Week page anatomy" order, with §3 "Pre-work activity and worked example" (a disclosure closed by default), "Time budget", "Core and optional pre-work" and "Track switch".</p>
+    <p class="g-links">
+      <a href="week-3.html">Open week-3.html</a>
+      <a href="week-3.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-3.html" title="Week 3 mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-3.html" title="Week 3 mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="28"><span><strong>Week header</strong> with the new title, a sample session date and the measured total, 140.5 min with the activity included. The Codex total is 120.4 min, because its AGENTS.md and long-running-work pages are shorter than their Claude Code counterparts. <span class="cite">curriculum Part 4; kember2004; brysbaert2019</span></span></li>
+      <li data-n="29"><span><strong>Outcomes</strong> verbatim from the curriculum; each maps to the activity, the stage log or a rubric row. <span class="cite">biggs1996</span></span></li>
+      <li data-n="30"><span><strong>Chapter links</strong> under the guiding questions, built as <code>&amp;t=</code> links from the curriculum's timestamps. Each is a 24 px target with its own accessible name ("No Vibes Allowed from 2:52"). <span class="cite">guo2014; mayer2020; w3c2024wcag22 SC 2.5.8</span></span></li>
+      <li data-n="31"><span><strong>Worked example log</strong> drawn as a timeline of human minutes per stage, with cost as a second encoding; the table stays as its text alternative inside a disclosure closed by default. Below it, <strong>your stage log</strong>: a form that saves each stage (minutes, tokens, cost, intervention, cause, failed run) to your progress and draws your own timeline. <span class="cite">kirschner2006; sweller2019; kalyuga2003; visual-design §3.7</span></span></li>
+      <li data-n="32"><span><strong>Activity card</strong> with the five steps verbatim and the fork rules. On the Codex track the logging line swaps <code>/usage</code> for <code>codex exec --json</code>; Codex has its own <code>/goal</code> for step 3 and <code>/review</code> for step 4. Rows 03 and 04 and optional row 03 swap to the Codex AGENTS.md, long-running-work and subagents pages; subagents is a partial match for dynamic workflows. <span class="cite">cc-costs; openai-codexexec; lanorme2026repo</span></span></li>
+      <li data-n="33"><span><strong>Self-check link</strong> kept in the anatomy. The Week 3 check is not mocked yet, so the link goes nowhere. <span class="cite">roediger2006; agarwal2021</span></span></li>
+      <li data-n="34"><span><strong>Retrieval opener</strong> with the application question that replaces the Effective Context Engineering re-read. <span class="cite">dunlosky2013; vanalten2019; rajasekaran2025context</span></span></li>
+      <li data-n="35"><span><strong>Plan with ICAP modes</strong> as plain tags beside each block; minute ranges from the curriculum shown as durations, as on Week 1. <span class="cite">chi2014</span></span></li>
+      <li data-n="36"><span><strong>Rubric</strong> laid out as where am I going, how am I going and where to next, four rows verbatim, with a self-assessment instruction; it stacks below 640 px. <span class="cite">hattie2007</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Week 4 -->
+  <section class="g-item" id="week-4" aria-labelledby="week4-h">
+    <div class="g-item__head">
+      <h2 id="week4-h">Week 4: From harness to factory</h2>
+      <span class="meta">#/week/4 · week-4.html</span>
+    </div>
+    <p class="g-caption">Implements curriculum-v2-second-half.md Part 4, "Week 4: From harness to factory": outcomes, the core and optional tables (OpenAI Harness Engineering marked "not measured"), guiding questions with chapter links, the factory design document, the live-session plan and the five-row rubric. Laid out in the design.md §3 "Week page anatomy" order, with §3 "Guiding questions" (talk timestamps) and "Pre-work activity and worked example" (guidance fades: a loop diagram instead of a worked example).</p>
+    <p class="g-links">
+      <a href="week-4.html">Open week-4.html</a>
+      <a href="week-4.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-4.html" title="Week 4 mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-4.html" title="Week 4 mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="37"><span><strong>Core pre-work:</strong> Lloyd's thesis, Horthy's counter, Bender's systems view and seven named plays from the playbook. <span class="cite">lloyd2026factory; horthy2026factoriesfail; bender2026tipping; claxton2026playbook</span></span></li>
+      <li data-n="38"><span><strong>Chapter links</strong> on every talk the curriculum gives timestamps for: Lloyd, Horthy, Uber, Cooke and uReview. <span class="cite">guo2014; mayer2020</span></span></li>
+      <li data-n="39"><span><strong>Not measured.</strong> The OpenAI post refuses automated fetches, so its row carries a tag instead of minutes and the optional total says so. <span class="cite">lopopolo2026harness; kember2004</span></span></li>
+      <li data-n="40"><span><strong>Factory loop diagram</strong>, inline SVG with a title and a description listing every stage. Human checkpoints are dark boxes carrying the word HUMAN, so the distinction does not rest on colour; text renders at 12 px or more at 320 px. Fills and strokes use the colour tokens, but mockup.css has no dark theme yet. The caption credits Lloyd and the playbook. <span class="cite">lloyd2026factory; claxton2026playbook; w3c2024wcag22 SC 1.1.1, 1.4.1, 1.4.11</span></span></li>
+      <li data-n="41"><span><strong>Guidance fades:</strong> the diagram stands in for Week 3's worked example, and the design document card lists its five parts. The automation-feature line follows the track switch. <span class="cite">kalyuga2003; sweller2019</span></span></li>
+      <li data-n="42"><span><strong>Debate, design review and failure walk</strong> in the plan, each with its mode. <span class="cite">chi2014; lloyd2026factory; horthy2026factoriesfail; clinton2026secure</span></span></li>
+      <li data-n="43"><span><strong>Five-row rubric</strong> for the factory design document, which replaces the Harness Design Document. <span class="cite">hattie2007; biggs1996</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Week 5 -->
+  <section class="g-item" id="week-5" aria-labelledby="week5-h">
+    <div class="g-item__head">
+      <h2 id="week5-h">Capstone (optional): A minimal factory, measured</h2>
+      <span class="meta">#/week/5 · week-5.html</span>
+    </div>
+    <p class="g-caption">Implements curriculum-v2-second-half.md Part 4, "Week 5 (optional capstone): A minimal factory, measured": outcomes, "no new readings" with the reference pages, the stage table, the success criterion, demo day and the rubric, plus a sample per-change report. design.md §3 "Week page anatomy" notes that Week 5 has no pre-work, so it has no self-check; §3 "Track switch" here toggles the stage table's Claude Code and Codex columns.</p>
+    <p class="g-links">
+      <a href="week-5.html">Open week-5.html</a>
+      <a href="week-5.html?track=codex">Open on the Codex track</a>
+    </p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="week-5.html" title="Week 5 capstone mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="week-5.html" title="Week 5 capstone mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="44"><span><strong>Stage table</strong> with one feature column per track; the switch hides the other column's header and cells. Codex cells name Codex features: <code>codex-action</code> for review with <code>@codex review</code> as an upgrade, and the observer's skill path left open, because Codex loads skills from <code>.agents/skills</code> and <code>--add-dir</code> does not load them. <span class="cite">§3 Track switch; cc-ghactions; openai-codexaction</span></span></li>
+      <li data-n="45"><span><strong>No new readings:</strong> the reference docs follow the track, and oz-for-oss shows on both as the model observer. <span class="cite">cc-headless; cc-routines; cc-parallel; openai-codexexec; warp2026ozfoross</span></span></li>
+      <li data-n="46"><span><strong>Success criterion</strong> as five checkable conditions; the secret line follows the track. <span class="cite">curriculum Part 4; cc-ghactions</span></span></li>
+      <li data-n="47"><span><strong>Per-change report as bars:</strong> factory against the Week 3 baseline for human minutes and cost, failed runs marked, with the sample table in a disclosure. <strong>Your report</strong> draws the same bars from your own Week 3 and Week 5 stage logs. <span class="cite">lloyd2026factory; cooke2026notfactory; cleveland1984</span></span></li>
+      <li data-n="48"><span><strong>Demo day plan and rubric</strong>, with modes and the four rows verbatim. <span class="cite">chi2014; hattie2007</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Facilitator run-sheet -->
+  <section class="g-item" id="facilitator" aria-labelledby="fac-h">
+    <div class="g-item__head">
+      <h2 id="fac-h">Facilitator run-sheet, Week 4</h2>
+      <span class="meta">#/facilitator/week/4 · facilitator-week-4.html</span>
+    </div>
+    <p class="g-caption">Implements design.md §2 "The facilitator layer" (a "Facilitator notes" band, one run-sheet per session, reached from the learner footer), §3 "Track switch" (the run-sheet keeps both tracks side by side) and §5 "Slides" (a deck placeholder held to the 45-word median). Content from curriculum-v2-second-half.md Part 4, "Week 4: From harness to factory" (the live-session plan and opener), Part 2 (debate evidence and Clinton's incident), and Parts 3, 5 and 6 (fork rules, issue pool, example log, the maintainer question). The facilitator index, facilitator.html, is not built.</p>
+    <p class="g-links"><a href="facilitator-week-4.html">Open facilitator-week-4.html</a></p>
+    <div class="g-pair">
+      <figure class="g-frame" data-w="1280" data-h="860">
+        <figcaption class="label">Desktop · 1280 px, scaled</figcaption>
+        <div class="g-viewport"><iframe src="facilitator-week-4.html" title="Week 4 run-sheet mockup at 1280 pixels wide"></iframe></div>
+      </figure>
+      <figure class="g-frame g-frame--phone" data-w="375" data-h="720">
+        <figcaption class="label">Phone · 375 px</figcaption>
+        <div class="g-viewport"><iframe src="facilitator-week-4.html" title="Week 4 run-sheet mockup at 375 pixels wide"></iframe></div>
+      </figure>
+    </div>
+    <ol class="g-notes" hidden>
+      <li data-n="49"><span><strong>Facilitator notes band</strong>, a labelled aside under the top bar in the label style, white on #262626 (15.1:1). It labels the layer and restricts nothing. <span class="cite">§2 The facilitator layer; w3c2024wcag22 SC 1.4.3</span></span></li>
+      <li data-n="50"><span><strong>Minute-by-minute plan</strong> with ICAP modes and the facilitator's moves in grey. <span class="cite">chi2014</span></span></li>
+      <li data-n="51"><span><strong>Opener with a key:</strong> the curriculum's two questions plus one from Week 3. The Lloyd and Horthy answers were checked against the talk transcripts on ai.engineer. <span class="cite">roediger2006; dunlosky2013; lloyd2026factory; horthy2026factoriesfail; cc-goal</span></span></li>
+      <li data-n="52"><span><strong>Debate set-up:</strong> assigned halves, each position in two sentences, evidence prompts from the core readings, with optional sources as extras, and Bender's question as the close. <span class="cite">lloyd2026factory; horthy2026factoriesfail; bender2026tipping; medisetty2026uber; bond2026ureview; cooke2026notfactory</span></span></li>
+      <li data-n="53"><span><strong>Failure-walk script:</strong> Clinton's agent-to-agent incident, paraphrased, then a check of each design's identities and write limits. <span class="cite">clinton2026secure</span></span></li>
+      <li data-n="54"><span><strong>Preparation checklist:</strong> the issue pool, the example log, the fork rules, the maintainer question and the debate halves. Checkboxes store nothing. <span class="cite">curriculum Parts 3 and 6; cc-ghactions</span></span></li>
+      <li data-n="55"><span><strong>Pairing across tools:</strong> both tracks side by side for mixed threes, since learner pages show one track at a time. <span class="cite">§3 Track switch</span></span></li>
+    </ol>
+  </section>
+
+  <!-- Not mocked -->
+  <section class="g-item" id="not-mocked" aria-labelledby="nm-h">
+    <div class="g-item__head">
+      <h2 id="nm-h">Not mocked</h2>
+    </div>
+    <div class="g-placeholder">
+      <p><strong>Resources</strong> (<code>#/resources</code>) moves v1's collapsed bibliography to its own page. <strong>Week 2</strong> is not mocked; its v1 skill-building sprint used the nanobot codebase, which left the course with the Week 1 change, so it needs a new codebase or activity. <strong>Further Reading</strong> (<code>#/further-reading</code>) keeps its v1 route and content. In the mockups, the Resources and Further Reading footer links point at the live v1 site. Week 2 has no page yet: the week nav shows it disabled, and the pagers lead to its overview row. The Week 3 and Week 4 self-checks and the facilitator index (<code>facilitator.html</code>) are not mocked.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var frames = [].slice.call(document.querySelectorAll(".g-frame"));
+  var toggle = document.getElementById("ann-toggle");
+  var on = false;
+
+  function fit() {
+    frames.forEach(function (f) {
+      var w = +f.getAttribute("data-w"), h = +f.getAttribute("data-h");
+      var vp = f.querySelector(".g-viewport"), ifr = vp.querySelector("iframe");
+      var avail = Math.max(0, f.clientWidth - 2);
+      var s = Math.min(1, avail / w);
+      ifr.style.width = w + "px";
+      ifr.style.height = h + "px";
+      ifr.style.transform = "scale(" + s + ")";
+      vp.style.width = (w * s + 2) + "px";
+      vp.style.height = (h * s + 2) + "px";
+      f._scale = s || 1;
+    });
+  }
+
+  function post(f) {
+    try {
+      f.querySelector("iframe").contentWindow.postMessage(
+        { type: "mockup-annotations", on: on, scale: Math.min(2.2, 1 / f._scale) }, "*");
+    } catch (e) {}
+  }
+
+  fit();
+  window.addEventListener("resize", fit);
+  frames.forEach(function (f) {
+    f.querySelector("iframe").addEventListener("load", function () { post(f); });
+  });
+
+  toggle.addEventListener("click", function () {
+    on = !on;
+    toggle.setAttribute("aria-pressed", String(on));
+    [].forEach.call(document.querySelectorAll(".g-notes"), function (n) { n.hidden = !on; });
+    frames.forEach(post);
+  });
+})();
+</script>
+</body>
+</html>

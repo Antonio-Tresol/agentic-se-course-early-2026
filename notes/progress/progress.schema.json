@@ -1,0 +1,510 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antonio-tresol.github.io/agentic-se-course/progress.schema.json",
+  "title": "Agentic SE course progress export",
+  "description": "A learner's progress file, downloaded from the course site and sent to the course owner. Version 1.",
+  "type": "object",
+  "required": [
+    "schema",
+    "schemaVersion",
+    "exportedAt",
+    "learner",
+    "items",
+    "quizzes",
+    "estimates",
+    "deliverables"
+  ],
+  "properties": {
+    "schema": {
+      "const": "agentic-se-progress",
+      "description": "Fixed identifier of this file type."
+    },
+    "schemaVersion": {
+      "const": 1,
+      "description": "Integer schema version. Bumped only for breaking changes."
+    },
+    "exportedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the file was exported (ISO 8601, UTC)."
+    },
+    "appVersion": {
+      "type": "string",
+      "description": "Build of the site that wrote the file, for example mockup-2026-10."
+    },
+    "userAgentFamily": {
+      "enum": [
+        "chrome",
+        "firefox",
+        "safari",
+        "edge",
+        "other"
+      ],
+      "description": "Coarse browser family only; never the full user agent string."
+    },
+    "learner": {
+      "type": "object",
+      "description": "Who the file belongs to. Contains no name or email unless the learner typed one as an alias.",
+      "required": [
+        "id",
+        "track",
+        "createdAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Random identifier created in the browser on first use. Used to de-duplicate files from the same learner."
+        },
+        "alias": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "Optional label chosen by the learner. Empty if not set."
+        },
+        "cohort": {
+          "type": "string",
+          "default": "early-2026",
+          "description": "Course run the learner belongs to. Set to the cohort name of a loaded cohort calendar (see calendar.schema.json); the calendar itself is not exported."
+        },
+        "track": {
+          "enum": [
+            "claude",
+            "codex"
+          ],
+          "description": "Tool track the learner follows."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the local record was first created."
+        }
+      }
+    },
+    "items": {
+      "type": "object",
+      "description": "Pre-work and activity items, keyed by w{week}:{itemId}, for example w1:pw-3.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+:.+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "todo",
+              "done",
+              "skipped"
+            ],
+            "description": "Current state of the item."
+          },
+          "doneAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the item was marked done. Absent unless status is done."
+          },
+          "minutesSpent": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Self-reported minutes the item took. Optional."
+          },
+          "estimateMinutes": {
+            "type": "number",
+            "minimum": 0,
+            "description": "The page's time estimate for the item when it was marked. Compared with minutesSpent to calibrate budgets."
+          },
+          "track": {
+            "enum": [
+              "claude",
+              "codex"
+            ],
+            "description": "Track the learner was on when the item was marked."
+          }
+        }
+      }
+    },
+    "quizzes": {
+      "type": "object",
+      "description": "Self-check attempts, keyed by w{week}.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+$"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "description": "All attempts for that week, oldest first.",
+        "items": {
+          "$ref": "#/$defs/attempt"
+        }
+      }
+    },
+    "estimates": {
+      "type": "array",
+      "description": "Week 0 benchmark activity: the learner's effort estimates for reference tasks, one per task.",
+      "items": {
+        "type": "object",
+        "required": [
+          "taskId",
+          "estimateMinutes"
+        ],
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "description": "Identifier of the benchmark task (matches an id in benchmarks.json)."
+          },
+          "estimateMinutes": {
+            "type": "number",
+            "minimum": 0,
+            "description": "The learner's estimate of the human minutes the task needs."
+          },
+          "complexity": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Perceived complexity, 1 (trivial) to 5 (very complex)."
+          },
+          "specQuality": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Perceived quality of the task specification, 1 (vague) to 5 (precise)."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Free-text reasoning for the estimate."
+          },
+          "pairId": {
+            "type": "string",
+            "description": "Identifier linking two estimates of paired tasks, if the activity pairs them."
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the estimate was recorded."
+          },
+          "revealedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the learner saw the ground truth. The estimate is locked from then on."
+          }
+        }
+      }
+    },
+    "deliverables": {
+      "type": "object",
+      "description": "Weekly deliverable records, keyed by w{week}.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Link to the learner's deliverable (repository, gist, document)."
+          },
+          "note": {
+            "type": "string",
+            "description": "Free-text note from the learner."
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the record was last saved."
+          },
+          "rubricSelf": {
+            "type": "object",
+            "description": "Self-assessment against the rubric: row id mapped to a level.",
+            "additionalProperties": {
+              "enum": [
+                "developing",
+                "secure"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 500,
+      "description": "Compact append-only log of actions, capped at the latest 500, for timing analysis.",
+      "items": {
+        "type": "object",
+        "required": [
+          "t",
+          "type"
+        ],
+        "properties": {
+          "t": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the action happened."
+          },
+          "type": {
+            "type": "string",
+            "description": "Action kind, for example item:done, quiz:submit, estimate:add."
+          },
+          "ref": {
+            "type": "string",
+            "description": "What the action referred to, for example w1:pw-3."
+          }
+        }
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "description": "Optional. The learner's 'I can do this' ticks on each week's outcomes checklist, keyed by w{week} and then by outcome id. Added without a version change; readers that do not know the field ignore it.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Outcome id (for example o1) mapped to its latest state.",
+        "additionalProperties": {
+          "type": "object",
+          "required": [
+            "checked",
+            "at"
+          ],
+          "properties": {
+            "checked": {
+              "type": "boolean",
+              "description": "True while the learner ticks the outcome. An unticked outcome is kept with false so that a merge can tell which side is newer."
+            },
+            "at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the box was last changed. The later value wins when two files are merged."
+            }
+          }
+        }
+      }
+    },
+    "stageLogs": {
+      "type": "object",
+      "description": "Optional. The learner's stage logs: the Week 3 hand-run loop and the Week 5 per-change report, keyed by w{week}. Each value lists entries in the order they were logged. Added without a version change.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+$"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "description": "Stage log entries for that week.",
+        "items": {
+          "$ref": "#/$defs/stageLogEntry"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "attempt": {
+      "type": "object",
+      "description": "One run through a week's self-check.",
+      "required": [
+        "attemptId",
+        "startedAt",
+        "answers"
+      ],
+      "properties": {
+        "attemptId": {
+          "type": "string",
+          "description": "Random identifier of the attempt; used to merge files without duplicates."
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the attempt began."
+        },
+        "submittedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "description": "When the attempt was submitted. Null if abandoned."
+        },
+        "answers": {
+          "type": "array",
+          "description": "One entry per answered question.",
+          "items": {
+            "type": "object",
+            "required": [
+              "qid",
+              "type"
+            ],
+            "properties": {
+              "qid": {
+                "type": "string",
+                "description": "Question identifier within the week, for example q2."
+              },
+              "type": {
+                "enum": [
+                  "mcq",
+                  "short"
+                ],
+                "description": "Multiple choice or short answer."
+              },
+              "response": {
+                "type": [
+                  "integer",
+                  "string",
+                  "null"
+                ],
+                "description": "Zero-based choice index for mcq, free text for short."
+              },
+              "correct": {
+                "type": "boolean",
+                "description": "mcq only: whether the choice matched the page's answer key."
+              },
+              "selfScore": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2,
+                "description": "short only: learner's score after reveal (0 missed, 1 partly, 2 matched)."
+              },
+              "confidence": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 4,
+                "description": "Confidence recorded before the answer was revealed, 1 (guess) to 4 (certain)."
+              },
+              "revealedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When the learner opened the answer."
+              }
+            }
+          }
+        },
+        "score": {
+          "type": "object",
+          "description": "Totals for the attempt.",
+          "properties": {
+            "auto": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Correct mcq answers."
+            },
+            "autoMax": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of mcq questions in the key."
+            },
+            "self": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Sum of short-answer self-scores."
+            },
+            "selfMax": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum possible self-score (2 per short question)."
+            }
+          }
+        }
+      }
+    },
+    "stageLogEntry": {
+      "type": "object",
+      "description": "One stage of one change: what the human spent, what the agent cost, what context it was given and where a person had to step in.",
+      "required": [
+        "id",
+        "change",
+        "stage",
+        "at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Random identifier of the entry. Merges match on it and keep the entry with the later 'at'."
+        },
+        "change": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Label of the issue or change the stage belongs to, for example 'issue 4'."
+        },
+        "stage": {
+          "enum": [
+            "triage",
+            "spec",
+            "implement",
+            "review",
+            "pr",
+            "other"
+          ],
+          "description": "Which stage of the loop this entry records."
+        },
+        "humanMinutes": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Minutes of human attention spent in this stage. Null if not recorded."
+        },
+        "tokens": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Tokens the agent used in this stage, as reported by the tool. Null if not recorded or cleared by the learner."
+        },
+        "costUsd": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Cost of the stage in US dollars, as reported by the tool. Null if not recorded or cleared by the learner."
+        },
+        "contextGiven": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Free text: what context the agent was given (files, spec, rules)."
+        },
+        "intervention": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Free text: what the human had to correct or redirect. Empty if nothing."
+        },
+        "cause": {
+          "enum": [
+            "missing-context",
+            "wrong-design",
+            "taste",
+            "none",
+            null
+          ],
+          "description": "Why an intervention was needed: the agent lacked context, chose the wrong design, or differed on taste. 'none' means no intervention; null means not classified."
+        },
+        "judgement": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Free text: the human judgement this stage needed, in the learner's words."
+        },
+        "failed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Optional. True when this stage was a failed run (the agent run did not produce a usable result). Its minutes and cost still count in the totals. Absent means false; entries written before this field existed stay valid."
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the entry was last saved. The later value wins when two files are merged."
+        }
+      }
+    }
+  }
+}

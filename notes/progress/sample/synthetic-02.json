@@ -1,0 +1,307 @@
+{
+  "schema": "agentic-se-progress",
+  "schemaVersion": 1,
+  "exportedAt": "2026-09-14T18:39:04.696Z",
+  "appVersion": "mockup-2026-10-SYNTHETIC",
+  "userAgentFamily": "chrome",
+  "learner": {
+    "id": "L-synthetic-02",
+    "alias": "SYNTHETIC-02",
+    "cohort": "early-2026",
+    "track": "claude",
+    "createdAt": "2026-09-14T09:00:00.000Z"
+  },
+  "items": {
+    "w1:pw-2": {
+      "status": "done",
+      "track": "claude",
+      "doneAt": "2026-09-14T10:47:09.353Z",
+      "minutesSpent": 44,
+      "estimateMinutes": 35
+    },
+    "w1:pw-4": {
+      "status": "done",
+      "track": "claude",
+      "doneAt": "2026-09-14T13:43:16.424Z",
+      "minutesSpent": 35,
+      "estimateMinutes": 25
+    },
+    "w1:pw-6": {
+      "status": "done",
+      "track": "claude",
+      "doneAt": "2026-09-14T16:19:04.696Z",
+      "minutesSpent": 13,
+      "estimateMinutes": 15
+    }
+  },
+  "quizzes": {
+    "w1": [
+      {
+        "attemptId": "A-208a5c24c703d26c",
+        "startedAt": "2026-09-14T17:19:04.696Z",
+        "submittedAt": "2026-09-14T17:24:04.696Z",
+        "answers": [
+          {
+            "qid": "q1",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-14T17:20:04.696Z",
+            "selfScore": 0
+          },
+          {
+            "qid": "q2",
+            "type": "mcq",
+            "response": 3,
+            "confidence": 3,
+            "revealedAt": "2026-09-14T17:21:04.696Z",
+            "correct": false
+          },
+          {
+            "qid": "q3",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 2,
+            "revealedAt": "2026-09-14T17:22:04.696Z",
+            "correct": true
+          },
+          {
+            "qid": "q4",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-14T17:23:04.696Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q5",
+            "type": "mcq",
+            "response": 2,
+            "confidence": 3,
+            "revealedAt": "2026-09-14T17:24:04.696Z",
+            "correct": false
+          }
+        ],
+        "score": {
+          "auto": 1,
+          "autoMax": 3,
+          "self": 2,
+          "selfMax": 4
+        }
+      },
+      {
+        "attemptId": "A-7d0a8c5c257c11a8",
+        "startedAt": "2026-09-14T18:24:04.696Z",
+        "submittedAt": "2026-09-14T18:29:04.696Z",
+        "answers": [
+          {
+            "qid": "q1",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-14T18:25:04.696Z",
+            "selfScore": 2
+          },
+          {
+            "qid": "q2",
+            "type": "mcq",
+            "response": 2,
+            "confidence": 2,
+            "revealedAt": "2026-09-14T18:26:04.696Z",
+            "correct": true
+          },
+          {
+            "qid": "q3",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 4,
+            "revealedAt": "2026-09-14T18:27:04.696Z",
+            "correct": true
+          },
+          {
+            "qid": "q4",
+            "type": "short",
+            "response": "synthetic answer",
+            "confidence": 3,
+            "revealedAt": "2026-09-14T18:28:04.696Z",
+            "selfScore": 1
+          },
+          {
+            "qid": "q5",
+            "type": "mcq",
+            "response": 1,
+            "confidence": 3,
+            "revealedAt": "2026-09-14T18:29:04.696Z",
+            "correct": true
+          }
+        ],
+        "score": {
+          "auto": 3,
+          "autoMax": 3,
+          "self": 3,
+          "selfMax": 4
+        }
+      }
+    ]
+  },
+  "estimates": [
+    {
+      "taskId": "bm-01",
+      "estimateMinutes": 33,
+      "complexity": 5,
+      "specQuality": 1,
+      "reason": "synthetic",
+      "pairId": "pair-bm-01",
+      "submittedAt": "2026-09-14T09:03:00.000Z",
+      "revealedAt": "2026-09-14T09:03:00.000Z"
+    },
+    {
+      "taskId": "bm-02",
+      "estimateMinutes": 267,
+      "complexity": 5,
+      "specQuality": 3,
+      "reason": "synthetic",
+      "pairId": "pair-bm-02",
+      "submittedAt": "2026-09-14T09:06:00.000Z",
+      "revealedAt": "2026-09-14T09:06:00.000Z"
+    }
+  ],
+  "deliverables": {},
+  "events": [
+    {
+      "t": "2026-09-14T09:00:00.000Z",
+      "type": "track",
+      "ref": "claude"
+    },
+    {
+      "t": "2026-09-14T09:00:00.000Z",
+      "type": "alias",
+      "ref": ""
+    },
+    {
+      "t": "2026-09-14T09:03:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-01"
+    },
+    {
+      "t": "2026-09-14T09:03:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-01"
+    },
+    {
+      "t": "2026-09-14T09:06:00.000Z",
+      "type": "estimate:add",
+      "ref": "bm-02"
+    },
+    {
+      "t": "2026-09-14T09:06:00.000Z",
+      "type": "estimate:reveal",
+      "ref": "bm-02"
+    },
+    {
+      "t": "2026-09-14T10:47:09.353Z",
+      "type": "item:done",
+      "ref": "w1:pw-2"
+    },
+    {
+      "t": "2026-09-14T13:43:16.424Z",
+      "type": "item:done",
+      "ref": "w1:pw-4"
+    },
+    {
+      "t": "2026-09-14T16:19:04.696Z",
+      "type": "item:done",
+      "ref": "w1:pw-6"
+    },
+    {
+      "t": "2026-09-14T17:19:04.696Z",
+      "type": "quiz:start",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-14T17:20:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-14T17:20:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-14T17:21:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q2"
+    },
+    {
+      "t": "2026-09-14T17:22:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q3"
+    },
+    {
+      "t": "2026-09-14T17:23:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-14T17:23:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-14T17:24:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q5"
+    },
+    {
+      "t": "2026-09-14T17:24:04.696Z",
+      "type": "quiz:submit",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-14T18:24:04.696Z",
+      "type": "quiz:start",
+      "ref": "w1"
+    },
+    {
+      "t": "2026-09-14T18:25:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-14T18:25:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q1"
+    },
+    {
+      "t": "2026-09-14T18:26:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q2"
+    },
+    {
+      "t": "2026-09-14T18:27:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q3"
+    },
+    {
+      "t": "2026-09-14T18:28:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-14T18:28:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q4"
+    },
+    {
+      "t": "2026-09-14T18:29:04.696Z",
+      "type": "quiz:answer",
+      "ref": "w1:q5"
+    },
+    {
+      "t": "2026-09-14T18:29:04.696Z",
+      "type": "quiz:submit",
+      "ref": "w1"
+    }
+  ]
+}

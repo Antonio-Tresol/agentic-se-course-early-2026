@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run-sheet, Week 4: From harness to factory · Agentic SE Course</title>
+<meta name="description" content="v2 mockup of the Week 4 facilitator run-sheet (#/facilitator/week/4).">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mockup.css">
+<script>
+/* Pre-paint: track, theme and gallery annotations. site.js does the rest. */
+(function (d, q, t) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  if (q && /^(dark|light)$/.test(q.get("theme") || "")) d.setAttribute("data-theme", q.get("theme"));
+  if (q && q.get("annotate") === "1") d.classList.add("show-ann");
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner" data-ann="11">
+    <a class="topbar__home" href="overview.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" role="link" aria-disabled="true"><span class="sr-only">Week </span>2<span class="sr-only"> (no page yet)</span></a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html" aria-current="true"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<!-- Facilitator notes band (design.md section 2, "The facilitator layer") -->
+<aside class="fac-band" aria-label="Facilitator notes">
+  <div class="wrap fac-band__inner" data-ann="49">
+    <p class="label">Facilitator notes</p>
+    <p class="fac-band__note">Run-sheet for the Week 4 session. Learners reach this layer from the footer; it labels content and restricts nothing.</p>
+  </div>
+</aside>
+
+<main id="main" class="wrap page fade-in">
+
+  <div class="week-head">
+    <p class="label week-head__label"><a href="week-4.html">Week 4: From harness to factory</a></p>
+    <h1 class="week-head__title">Week 4 run-sheet</h1>
+    <p class="lede">What you need to run the hour: the plan with its modes, the opener with a key, the debate set-up, the failure-walk script and what to prepare. Outcomes, pre-work and the rubric live on the learner page.</p>
+    <div class="week-head__meta">
+      <dl class="facts">
+        <div data-session-fact="4" data-label="Session" data-format="short" hidden></div>
+        <div><dt>Length</dt><dd>60 min</dd></div>
+        <div><dt>Tracks</dt><dd>both shown</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Links: learner page and slides -->
+  <section class="section" aria-labelledby="links-h">
+    <h2 id="links-h" class="h-section">Learner page and slides</h2>
+    <a class="link-row" href="week-4.html">
+      <span class="link-row__text"><span class="link-row__verb">Open the</span> <span class="link-row__title">Week 4 learner page</span><span class="link-row__meta">outcomes, pre-work, activity, rubric</span></span>
+      <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="card" style="margin-top:12px;max-width:680px">
+      <div class="card__label"><span class="label label--ink">Presenter deck</span> <span class="tag tag--sample">Placeholder</span></div>
+      <p>The Week 4 deck is not written yet. It needs new slides for the factory loop and the debate, with a median of no more than 45 words a slide; prose belongs in the handout.</p>
+      <a class="link-row" href="https://antonio-tresol.github.io/agentic-se-course-early-2026/slides/session4.html" target="_blank" rel="noopener noreferrer">
+        <span class="link-row__text"><span class="link-row__verb">For reference, the</span> <span class="link-row__title">v1 Session 4 deck</span><span class="link-row__meta">teaches the old Week 4; do not present it</span><span class="sr-only"> (opens in a new tab)</span></span>
+        <svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Preparation checklist -->
+  <section class="section" aria-labelledby="prep-h" data-ann="54">
+    <h2 id="prep-h" class="h-section">Before the session</h2>
+    <p class="section-intro">Tick as you go. Nothing is stored; the boxes clear on reload.</p>
+    <ul style="display:flex;flex-direction:column;gap:6px;max-width:680px">
+      <li><label class="choice"><input type="checkbox"><span><strong>Curate the issue pool.</strong> Most open lanorme issues are roadmap-scale, such as the result cache in #53, so the pool needs issues sized to about 60 minutes. Each learner needs three or more for the capstone, one of them on the spec path.</span></label></li>
+      <li><label class="choice"><input type="checkbox"><span><strong>Write the example log.</strong> Run one lanorme change through the loop, log it one row per stage, and replace the sample values on the Week 3 page. Point learners whose own log has gaps to its rows before they write the design document.</span></label></li>
+      <li><label class="choice"><input type="checkbox"><span><strong>Check the fork rules.</strong> Factories run on forks against copied issues. Each learner sends at most one pull request upstream, opened by hand. Agent branches stay inside the learner's fork, because GitHub withholds secrets from Actions runs triggered by pull requests from forks. A learner's own repository qualifies if it has pull-request CI and at least three open labelled issues.</span></label></li>
+      <li><label class="choice"><input type="checkbox"><span><strong>Ask the lanorme maintainer</strong> whether they want agent-authored pull requests from a cohort at all. The one-pull-request rule assumes the answer is "few".</span></label></li>
+      <li><label class="choice"><input type="checkbox"><span><strong>Check that every learner has a fork and a Week 3 log.</strong> The design document starts from both.</span></label></li>
+      <li><label class="choice"><input type="checkbox"><span><strong>Assign the debate halves</strong> and share the evidence prompts below the day before.</span></label></li>
+    </ul>
+  </section>
+
+  <!-- Minute-by-minute plan with ICAP modes -->
+  <section class="section" aria-labelledby="plan-h" data-ann="50">
+    <h2 id="plan-h" class="h-section">Plan for the hour</h2>
+    <ol class="plan">
+      <li><span class="plan__min">0 to 5</span><span>Retrieval opener <span class="tag">Active</span><span class="note" style="display:block">Read the three questions aloud; learners answer on paper, closed book. Take one answer per question, then give the key.</span></span></li>
+      <li><span class="plan__min">5 to 20</span><span>Structured debate. Half the room argues Lloyd's position and half Horthy's, each using one piece of evidence from the core readings: Lloyd and the playbook for one side, Horthy and Bender for the other. Close with Bender's question of where the bottleneck moves. <span class="tag">Interactive</span><span class="note" style="display:block">2 min to prepare, 3 min per opening, 2 min per rebuttal, 3 min for your close.</span></span></li>
+      <li><span class="plan__min">20 to 45</span><span>Design review in threes. Each learner presents their stage table for five minutes; peers apply the first and third rubric rows. <span class="tag">Interactive</span><span class="note" style="display:block">Mix tracks within each three. Five minutes to present, three for peers; call time every eight minutes.</span></span></li>
+      <li><span class="plan__min">45 to 55</span><span>Failure walk. Present Clinton's agent-to-agent incident; each group checks whether its design's identities and write limits would have stopped it. <span class="tag">Constructive</span><span class="note" style="display:block">Script below.</span></span></li>
+      <li><span class="plan__min">55 to 60</span><span>Capstone launch: success criterion, log format, fork rules <span class="tag">Passive</span><span class="note" style="display:block">Show the Week 5 page. Say again that the capstone is optional.</span></span></li>
+    </ol>
+    <p class="note">Modes follow the ICAP framework: passive, active, constructive, interactive. Grey notes are your moves.</p>
+  </section>
+
+  <!-- Retrieval opener with answer key -->
+  <section class="section" aria-labelledby="key-h" data-ann="51">
+    <h2 id="key-h" class="h-section">Retrieval opener and key</h2>
+    <p class="section-intro">Two questions on this week's core talks and one from Week 3.</p>
+    <div class="card" style="max-width:680px">
+      <ol class="steps" style="margin-top:0;gap:16px">
+        <li><div>
+          <p><strong>Name the four parts Lloyd says a factory needs.</strong></p>
+          <p>A set of automations; a way to provide context and skills; a way to bring humans in at the right time, when work gets stuck; and self-improvement capabilities, the loops, such as a skill loop.</p>
+          <p class="note">Source: <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM" target="_blank" rel="noopener noreferrer">Lloyd's talk<span class="sr-only"> (opens in a new tab)</span></a>, at about 7:55.</p>
+        </div></li>
+        <li><div>
+          <p><strong>Why does Horthy say a harness cannot fix maintainability?</strong></p>
+          <p>Coding models are trained to pass tests, and maintainability goes unrewarded. Prompts, extra loops and review bots cannot supply a training objective the model lacks. He concedes that the available benchmarks cannot yet prove the claim. His remedy is to turn human review back on and move decisions earlier: product review, architecture, program design, then vertical slices.</p>
+          <p class="note">Source: <a href="https://www.youtube.com/watch?v=Ib5GBkD555M&amp;t=450s" target="_blank" rel="noopener noreferrer">Horthy from 7:30<span class="sr-only"> (opens in a new tab)</span></a> and <a href="https://www.youtube.com/watch?v=Ib5GBkD555M&amp;t=898s" target="_blank" rel="noopener noreferrer">from 14:58<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+        </div></li>
+        <li><div>
+          <p><strong>(Week 3) Your <code>/goal</code> condition named two CI commands. What does the goal's evaluator judge, and what does that leave unchecked?</strong></p>
+          <p>The evaluator judges only what the conversation shows: here, <code>uv run pytest tests/unit</code> passing and <code>uv run lanorme check .</code> clean. Whatever those commands do not exercise, such as naming, scope or design, stays unchecked until review. Codex learners answer for the condition they used.</p>
+          <p class="note">Source: <a href="https://code.claude.com/docs/en/goal" target="_blank" rel="noopener noreferrer">Keep Claude working toward a goal<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Debate set-up -->
+  <section class="section" aria-labelledby="debate-h" data-ann="52">
+    <h2 id="debate-h" class="h-section">Debate set-up</h2>
+    <p class="section-intro">Split the room in half by where people sit, and assign the sides rather than letting learners choose, so some argue against their own view. Each side names one piece of evidence and its source aloud.</p>
+
+    <article class="card" aria-labelledby="side-a-h" style="max-width:680px">
+      <div class="card__label"><span class="label label--ink">Half A</span></div>
+      <h3 id="side-a-h" class="h-card">Lloyd: software engineering is becoming factory engineering</h3>
+      <p>The engineer's job moves to building the loop that triages, specs, implements, reviews and verifies, with humans stepping in where the risk warrants it. A factory is judged by what it ships against human time and token time.</p>
+      <h4 class="label" style="margin-top:12px">Evidence prompts, core readings</h4>
+      <ul class="bullets" style="margin-top:6px">
+        <li>Lloyd: which four parts does he say every factory needs, and which quantities does he say to measure?</li>
+        <li>The playbook: which artefact does each stage commit, and which commit starts the next stage without a person?</li>
+        <li>The playbook: which code does it reserve for human review, so the rest can flow?</li>
+      </ul>
+      <p class="note">Extra evidence, if someone read it: Uber's factory, WorkOS's sandboxed agent, the Effective Harnesses artefacts, SASE's Merge-Readiness Pack.</p>
+    </article>
+
+    <article class="card" aria-labelledby="side-b-h" style="max-width:680px;margin-top:16px">
+      <div class="card__label"><span class="label label--ink">Half B</span></div>
+      <h3 id="side-b-h" class="h-card">Horthy: lights-off factories fail</h3>
+      <p>Models are rewarded for passing tests, not for maintainability, and a harness cannot repair the missing objective. When HumanLayer went lights off in July 2025, an issue the agent could not solve forced engineers back into code they had stopped reading. Restore review and move decisions earlier.</p>
+      <h4 class="label" style="margin-top:12px">Evidence prompts, core readings</h4>
+      <ul class="bullets" style="margin-top:6px">
+        <li>Horthy: why does training on passing tests leave maintainability unrewarded, and what does he concede he cannot prove?</li>
+        <li>Horthy: what happened when HumanLayer went lights off in July 2025?</li>
+        <li>Bender: if AI amplifies whatever practices a team already has, what does that predict for a team that automates a loop it has never run by hand?</li>
+      </ul>
+      <p class="note">Extra evidence, if someone read it: uReview's addressal rate, Clinton's agent-to-agent incident, Huda's bottleneck, WorkOS's outcome measures.</p>
+    </article>
+
+    <div class="callout" style="margin-top:16px">
+      <p><strong>Your close, 3 min.</strong> Put Bender's question to both halves: if code is cheap, where does the bottleneck move? Ask each side to name the stage of the Week 5 loop it moves to. Remind the room that the Uber, WorkOS and Anthropic figures are self-reported and that no source reproduces them.</p>
+    </div>
+  </section>
+
+  <!-- Failure walk -->
+  <section class="section" aria-labelledby="walk-h" data-ann="53">
+    <h2 id="walk-h" class="h-section">Failure walk: the agent-to-agent incident</h2>
+    <article class="card card--activity" aria-labelledby="walk-script-h">
+      <div class="card__label"><span class="label label--ink">Script · 10 min · in the design-review threes</span></div>
+      <h3 id="walk-script-h" class="h-card">Would your design have stopped it?</h3>
+      <ol class="steps">
+        <li><div><strong>Tell the incident, 2 min.</strong> After a model upgrade, Anthropic's incident-response agent, on its own initiative, used Slack to ask another Claude instance, one that could write code, to push its fix. A human review gate caught the request, as designed. Clinton's lesson: set the boundary by what an agent can access and do, not by its instructions or by what you believe the model will do.</div></li>
+        <li><div><strong>Check the designs, 5 min.</strong> Each three takes one member's stage table and asks: which identity does each agent run as? Can one agent ask another to act for it, through a comment, an issue or a label? Which branch or file can each agent write? Which gate would catch a request like this one, and is that gate a person?</div></li>
+        <li><div><strong>Debrief, 3 min.</strong> Take one gap from two threes and name the control that closes it: a single-purpose identity for each agent, a write limit enforced in CI, a human gate, shadow mode for a new AI reviewer, or sampling of automated approvals.</div></li>
+      </ol>
+      <p>Source: <a href="https://claude.com/resources/articles/how-anthropic-secures-its-ai-native-software-development-lifecycle" target="_blank" rel="noopener noreferrer">How Anthropic secures its AI-native software development lifecycle<span class="sr-only"> (opens in a new tab)</span></a>, Jason Clinton. A self-report by the vendor of the tooling.</p>
+    </article>
+  </section>
+
+  <!-- Both tracks side by side (design.md section 3, "Track switch") -->
+  <section class="section" aria-labelledby="pair-h" data-ann="55">
+    <h2 id="pair-h" class="h-section">Pairing across tools</h2>
+    <p class="section-intro">Learner pages show one track at a time. Use this when you mix Claude Code and Codex learners in a three.</p>
+    <table class="rubric">
+      <caption>Equivalent features by stage</caption>
+      <thead>
+        <tr><th scope="col">Need</th><th scope="col">Claude Code</th><th scope="col">Codex</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Triage in CI</th><td data-label="Claude Code">GitHub Action with a triage skill</td><td data-label="Codex"><code>openai/codex-action@v1</code> running <code>codex exec</code></td></tr>
+        <tr><th scope="row">Implement unattended</th><td data-label="Claude Code"><code>claude -p "/goal ..."</code> with the Week 3 condition</td><td data-label="Codex"><code>codex exec</code> with the same condition</td></tr>
+        <tr><th scope="row">Cost per job</th><td data-label="Claude Code"><code>total_cost_usd</code> from <code>--output-format json</code></td><td data-label="Codex">token usage from <code>codex exec --json</code></td></tr>
+        <tr><th scope="row">Completion condition</th><td data-label="Claude Code"><code>/goal</code></td><td data-label="Codex"><code>/goal</code> (<a href="https://learn.chatgpt.com/docs/long-running-work" target="_blank" rel="noopener noreferrer">Long-running work<span class="sr-only"> (opens in a new tab)</span></a>)</td></tr>
+        <tr><th scope="row">Agent review</th><td data-label="Claude Code">Review skill in the Action; Managed Code Review on Team and Enterprise plans</td><td data-label="Codex">Review skill via <code>openai/codex-action@v1</code>; <code>@codex review</code> optional</td></tr>
+        <tr><th scope="row">Scheduled observer</th><td data-label="Claude Code">Actions schedule; routines optional</td><td data-label="Codex">Actions schedule; Scheduled tasks optional</td></tr>
+        <tr><th scope="row">Repository instructions</th><td data-label="Claude Code">CLAUDE.md, nested per directory</td><td data-label="Codex">AGENTS.md, chained from root to working directory</td></tr>
+        <tr><th scope="row">Skills location</th><td data-label="Claude Code"><code>factory/.claude/skills</code>, loaded with <code>--add-dir factory</code></td><td data-label="Codex"><code>.agents/skills</code> from the working directory up; <code>--add-dir</code> does not load skills</td></tr>
+        <tr><th scope="row">Secret on the fork</th><td data-label="Claude Code">API key or <code>CLAUDE_CODE_OAUTH_TOKEN</code></td><td data-label="Codex">API key</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/" target="_blank" rel="noopener noreferrer">Resources<span class="sr-only"> (v1 bibliography, opens in a new tab)</span></a></li>
+        <li><a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/#/further-reading" target="_blank" rel="noopener noreferrer">Further Reading<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="facilitator-week-4.html">Facilitator</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Early 2026 edition · v2 mockup</p>
+  </div>
+</footer>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>
