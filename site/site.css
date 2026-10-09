@@ -1562,11 +1562,17 @@ html.track-codex [data-track="claude"] { display: none !important; }
 .cmap__key--range { border: 1.5px dashed var(--text); }
 .cmap__frame { position: relative; padding-left: 64px; }
 .cmap__ytitle {
+  /* Vertical writing mode keeps the box in the 24px gutter left of the ticks;
+     rotate(180deg) makes the text read bottom to top. */
   position: absolute;
   left: 0;
-  top: calc(var(--plot-h) / 2);
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center center;
+  top: 0;
+  height: var(--plot-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   white-space: nowrap;
   font-family: var(--font-mono);
   font-size: var(--meta);

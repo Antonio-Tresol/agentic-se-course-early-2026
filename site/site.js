@@ -759,7 +759,7 @@
           '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done (filled as you tick items off)</span>' +
           '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range (Week 5: 6 to 8 h build)</span></div></div>' +
           '<div class="cmap__frame">' +
-          '<div class="cmap__ytitle axis-title axis-title--y">Planned minutes of pre-work</div>' +
+          '<div class="cmap__ytitle axis-title axis-title--y">Planned minutes</div>' +
           '<div class="cmap__yaxis" aria-hidden="true">' + SCALE_TICKS.map(function (t) {
             return '<span style="bottom:' + (t / SCALE_MAX * 100) + '%">' + t + "</span>";
           }).join("") + "</div>" +
@@ -767,7 +767,7 @@
             return '<span class="' + (t === 0 ? "is-base" : "") + '" style="bottom:' + (t / SCALE_MAX * 100) + '%"></span>';
           }).join("") + "</div>" +
           '<div class="cmap__xaxis-wrap"><div class="cmap__xaxis" aria-hidden="true"><span style="left:0">0</span><span style="left:50%">240</span><span style="left:100%">480</span></div>' +
-          '<div class="cmap__xaxis-title axis-title">Planned minutes of pre-work</div></div>' +
+          '<div class="cmap__xaxis-title axis-title">Planned minutes</div></div>' +
           '<ol class="cmap__weeks">' + views.map(function (v) {
             var w = v.w, s = v.s, tag = w.href ? "a" : "div";
             return '<li class="cmap__week' + (v.done ? " is-done" : "") + (v.current ? " is-current" : "") + (w.href ? "" : " is-nopage") +
