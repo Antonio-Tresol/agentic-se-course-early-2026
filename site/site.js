@@ -51,7 +51,9 @@
      [data-progress-budget="3"]  week hero: minutes left (28 px), the
          segmented time-budget bar coloured by kind (fill = done, outline =
          to do; widths are planned minutes), labels, key, the optional bar
-         and a "Show as table" disclosure. Attributes on the same element:
+         and a "Show as table" disclosure. A week whose core items have no
+         measured minutes (Week 0) gets one equal cell per item instead,
+         headed "N items left". Attributes on the same element:
          data-note="text under the bar". The "Session" date, time and
          timezone on the right come from the cohort calendar for that week
          and are left out when there is none.
@@ -627,11 +629,26 @@
     return '<span class="tb__seg k-' + it2.kind + (o.done ? " is-done" : "") + '" data-id="' + esc(it2.id) + '" style="--m:' +
       (it2.minutes || 1) + '" title="' + esc(it2.title + " · " + KINDS[it2.kind] + " · " + fmt(it2.minutes) + " min · " + (o.done ? "done" : "to do")) + '"></span>';
   }
+  // A week whose core minutes are not measured (Week 0) gets one equal cell
+  // per core item instead of a time bar: a cell is an item, never a share of
+  // time. Each cell links to the element whose id is the item id, if any.
+  function cellState(done) { return done ? glyph("check") + " Done" : "To do"; }
+  function cellHTML(o) {
+    var it2 = o.item, href = document.getElementById(it2.id) ? "#" + it2.id : null;
+    var inner = '<span class="tb__cell-bar" aria-hidden="true"></span>' +
+      '<span class="tb__cell-name">' + esc(it2.title) + "</span>" +
+      '<span class="tb__cell-state"><span class="kind kind--' + it2.kind + '">' + glyph(it2.kind) + KINDS[it2.kind] + "</span> " +
+      '<span data-tb-cell-state>' + cellState(o.done) + "</span></span>";
+    var attrs = ' class="tb__cell k-' + it2.kind + (o.done ? " is-done" : "") + '" data-id="' + esc(it2.id) + '"';
+    return "<li>" + (href ? "<a" + attrs + ' href="' + esc(href) + '">' + inner + "</a>" : "<span" + attrs + ">" + inner + "</span>") + "</li>";
+  }
   function budgetHTML(el, s) {
     var n = s.n, id = "tb-table-w" + n;
     var segs = s.items.filter(function (o) { return o.item.minutes !== null; });
+    var cells = s.planned === null && s.items.length ? s.items : [];
     var kinds = {};
     segs.forEach(function (o) { kinds[o.item.kind] = (kinds[o.item.kind] || 0) + o.item.minutes; });
+    cells.forEach(function (o) { kinds[o.item.kind] = (kinds[o.item.kind] || 0) + 1; });
     var cal = calendar(), sess = sessionOf(n, cal);
     var note = el.getAttribute("data-note");
     var html = '<div class="tb">' +
@@ -640,7 +657,9 @@
       '<span class="tb__of" data-tb-of></span></div>' +
       (sess ? '<span class="tb__aside">Session <strong>' + whenHTML(sess, cal, false) + "</strong>" + sampleTag(cal) + "</span>" : "") +
       "</div>" +
-      (segs.length ? '<figure class="tb__fig" role="img" data-tb-fig>' +
+      (cells.length ? '<ul class="tb__cells" style="--n:' + Math.min(cells.length, 4) + '" aria-label="Week ' + n + " core items, " + trackName(track) + ' track">' +
+      cells.map(cellHTML).join("") + "</ul>" :
+      segs.length ? '<figure class="tb__fig" role="img" data-tb-fig>' +
       '<div class="tb__bar">' + segs.map(function (o) { return segHTML(o); }).join("") + "</div>" +
       '<div class="tb__labels" aria-hidden="true">' + segs.map(function (o) {
         return '<span class="tb__label" style="--m:' + o.item.minutes + '">' + glyph(o.item.kind) + "<span>" + fmt(o.item.minutes) + "</span></span>";
@@ -654,7 +673,8 @@
         '<div class="tb__opt" aria-hidden="true" style="width:' + width.toFixed(2) + '%">' + opts.map(function (o) { return segHTML(o); }).join("") + "</div>";
     }
     html += '<div class="tb__key" role="group" aria-label="Key">' + KIND_ORDER.filter(function (k) { return kinds[k]; }).map(function (k) {
-      return '<span class="tb__key-item k-' + k + '"><span class="kind__sw"></span>' + glyph(k) + KINDS[k] + ' <span class="num">' + fmt(kinds[k]) + " min</span></span>";
+      return '<span class="tb__key-item k-' + k + '"><span class="kind__sw"></span>' + glyph(k) + KINDS[k] + ' <span class="num">' +
+        (cells.length ? kinds[k] + (kinds[k] === 1 ? " item" : " items") : fmt(kinds[k]) + " min") + "</span></span>";
     }).join("") + '<span class="tb__key-item"><span class="cmap__key cmap__key--done" style="background:var(--text)"></span>Filled: done</span>' +
       '<span class="tb__key-item"><span class="cmap__key cmap__key--plan"></span>Outline: to do</span></div>';
     if (note) html += '<p class="meta tb__note">' + esc(note) + "</p>";
@@ -684,13 +704,19 @@
           seg.classList.toggle("is-done", o.done);
           seg.title = o.item.title + " · " + KINDS[o.item.kind] + " · " + fmt(o.item.minutes) + " min · " + (o.done ? "done" : "to do");
         });
+        $$('.tb__cell[data-id="' + o.item.id + '"]', el).forEach(function (c) {
+          c.classList.toggle("is-done", o.done);
+          var cs = $("[data-tb-cell-state]", c);
+          if (cs && cs.getAttribute("data-done") !== String(o.done)) { cs.innerHTML = cellState(o.done); cs.setAttribute("data-done", String(o.done)); }
+        });
         var cell = $('[data-tb-status="' + o.item.id + '"]', el);
         if (cell) cell.textContent = o.done ? "Done" : "To do";
       });
-      var measured = s.planned !== null, fig = $("[data-tb-fig]", el);
-      $("[data-tb-left]", el).textContent = measured ? fmt(s.left) : s.doneCount + " of " + s.total;
-      $("[data-tb-unit]", el).textContent = measured ? "min left" : "items done";
-      $("[data-tb-of]", el).textContent = measured ? fmt(s.done) + " of " + fmt(s.planned) + " min done · " + s.doneCount + " of " + s.total + " items" : "minutes not measured yet";
+      var measured = s.planned !== null, fig = $("[data-tb-fig]", el), itemsLeft = s.total - s.doneCount;
+      $("[data-tb-left]", el).textContent = measured ? fmt(s.left) : String(itemsLeft);
+      $("[data-tb-unit]", el).textContent = measured ? "min left" : itemsLeft === 1 ? "item left" : "items left";
+      $("[data-tb-of]", el).textContent = measured ? fmt(s.done) + " of " + fmt(s.planned) + " min done · " + s.doneCount + " of " + s.total + " items" :
+        s.doneCount + " of " + s.total + " items done · minutes not measured yet";
       if (fig) fig.setAttribute("aria-label", "Week " + n + ", " + trackName(track) + " track: " + fmt(s.left) + " of " + fmt(s.planned) +
         " minutes left, " + s.doneCount + " of " + s.total + " items done.");
       fitLabels(el);

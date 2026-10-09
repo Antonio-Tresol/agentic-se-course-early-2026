@@ -95,6 +95,9 @@
             figure.tb__fig[role=img] > .tb__bar > .tb__seg.tb__seg--{kind}[.is-done]
             .tb__labels > .tb__label   (hidden with .is-clipped when too narrow)
             .tb__opt (thinner optional bar)  .tb__key > .tb__key-item
+            ul.tb__cells > li > a.tb__cell.k-{kind}[.is-done] (.tb__cell-bar,
+              .tb__cell-name, .tb__cell-state): replaces the figure when no
+              core minutes are measured; one equal cell per core item
             button[data-disclosure] + .table-scroll > table.data-table
      .oc                     outcome checklist: .oc__head (.label, count)
        ol.oc__list > li.oc__item > .oc__text + .oc__ctl (label.check + link)
@@ -975,6 +978,37 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
 .tb__key-item .num { color: var(--muted); }
 .tb__note { margin-top: 10px; }
 .tb__table { margin-top: 6px; }
+/* Unmeasured week (Week 0): one equal cell per core item, never a share of
+   time. Outline = to do, fill = done, in the item's kind colour. */
+.tb__cells { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 8px; }
+.tb__cells > li { min-width: 0; }
+.tb__cell { display: block; min-width: 0; padding-bottom: 2px; text-decoration: none; color: var(--text); }
+.tb__cell-bar {
+  display: block;
+  height: 16px;
+  border-radius: 2px;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--k);
+  transition: background-color var(--motion-slow) var(--ease-enter);
+}
+.tb__cell.is-done .tb__cell-bar { background-color: var(--k); }
+.tb__cell-name {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+a.tb__cell .tb__cell-name { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a.tb__cell:hover .tb__cell-name { text-decoration-thickness: 2px; }
+.tb__cell-state {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px;
+  margin-top: 2px;
+  font-family: var(--font-mono); font-size: var(--meta); color: var(--text);
+}
+.tb__cell-state .kind { letter-spacing: 0.04em; }
 
 /* ---------- Disclosure for data tables ---------- */
 .disclose {
@@ -2064,6 +2098,7 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   .week-head__meta { align-items: flex-start; }
   .whero { padding-top: 28px; }
   .whero__panel { padding: 18px 16px 16px; }
+  .tb__cells { gap: 6px; }
 
   .pw-row { grid-template-columns: minmax(0, 1fr); }
   .pw-row__aside { flex-direction: row; gap: 10px; margin-bottom: 6px; }
@@ -2175,8 +2210,8 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
 @media (forced-colors: active) {
   .glyph { forced-color-adjust: none; background-color: CanvasText; }
   .kind__sw { forced-color-adjust: none; background: CanvasText; }
-  .tb__seg, .scorebar__cell, .cmap__col, .hbars__plan, .planbar__seg { forced-color-adjust: none; border: 1px solid CanvasText; box-shadow: none; background: Canvas; }
-  .tb__seg.is-done, .scorebar__cell.is-full, .cmap__fill, .hbars__fill, .bullet__bar, .dots__mark--latest, .cmap__week.is-done .cmap__station { forced-color-adjust: none; background: Highlight; }
+  .tb__seg, .tb__cell-bar, .scorebar__cell, .cmap__col, .hbars__plan, .planbar__seg { forced-color-adjust: none; border: 1px solid CanvasText; box-shadow: none; background: Canvas; }
+  .tb__seg.is-done, .tb__cell.is-done .tb__cell-bar, .scorebar__cell.is-full, .cmap__fill, .hbars__fill, .bullet__bar, .dots__mark--latest, .cmap__week.is-done .cmap__station { forced-color-adjust: none; background: Highlight; }
   .scorebar__cell.is-half { forced-color-adjust: none; background: repeating-linear-gradient(135deg, Highlight 0 2px, Canvas 2px 5px); }
   .cmap__station, .dots__mark--best { forced-color-adjust: none; border: 1px solid CanvasText; }
   .bullet__tick { forced-color-adjust: none; background: CanvasText; }
@@ -2199,7 +2234,7 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   .disclose::before { transition: none; }
   .theme-switch__opts label { transition: none; }
   /* Only colour changes animate. */
-  .tb__seg, .scorebar__cell, .cmap__station { transition: background-color var(--motion-fast) linear; }
+  .tb__seg, .tb__cell-bar, .scorebar__cell, .cmap__station { transition: background-color var(--motion-fast) linear; }
   .cmap__fill, .hbars__fill, .bullet__bar { transition: none; }
 }
 @media (prefers-reduced-motion: no-preference) {

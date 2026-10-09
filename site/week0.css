@@ -1,50 +1,15 @@
 /* ==========================================================================
-   week0.css: Week 0 (Getting Started) page only. The hero's item cells, the
-   install code blocks with copy buttons, and the teaser card for the Week 1
-   activity. The benchmark activity itself lives in bench.css.
+   week0.css: Week 0 (Getting Started) page only. The install commands in
+   the "Install your agent" cards, each with a copy button. Everything else
+   on the page uses shared components from site.css, including the hero's
+   item cells (.tb__cells, rendered by site.js).
 
-   Loads after mockup.css. Colours are tokens from notes/visual-design.md
+   Loads after site.css. Colours are tokens from notes/visual-design.md
    section 4 with light fallbacks; this file defines no tokens, so the dark
-   theme comes from mockup.css. Class prefix: .w0-*.
+   theme comes from site.css. Class prefix: .w0-*.
    ========================================================================== */
 
-/* ---------- Hero: this week's core items as discrete cells ---------- */
-/* Course minutes are not measured, so cells are equal: one per item, never
-   a share of time (visual-design.md 3.1, "not measured"). */
-.w0-budget {
-  margin-top: 22px; padding: 16px 18px 14px;
-  background: var(--surface, #FFFFFF); border: 1px solid var(--border, #E5E5E5); border-radius: var(--radius, 8px);
-}
-.w0-budget__row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
-.w0-stat { font-family: var(--font-display); font-size: 28px; font-weight: 600; line-height: 1.2; color: var(--text, #0A0A0A); }
-.w0-cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
-.w0-cell { display: block; min-width: 0; text-decoration: none; padding-bottom: 2px; }
-.w0-cell__bar {
-  display: block; height: 16px; border-radius: 2px;
-  border: 1.5px solid var(--viz-course, #0072B2); background: transparent;
-  transition: background-color var(--motion-slow, 300ms) var(--ease-enter, ease-out);
-}
-.w0-cell--practice .w0-cell__bar { border-color: var(--viz-practice, #262626); }
-.w0-cell.is-done .w0-cell__bar { background: var(--viz-course, #0072B2); }
-.w0-cell--practice.is-done .w0-cell__bar { background: var(--viz-practice, #262626); }
-.w0-cell__name {
-  display: block; margin-top: 6px;
-  font-family: var(--font-display); font-size: 13px; line-height: 1.35; color: var(--text, #0A0A0A);
-  text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
-}
-.w0-cell__state { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font-family: var(--font-mono); font-size: var(--meta, 12px); color: var(--text, #0A0A0A); margin-top: 2px; }
-.w0-cell__state .kind { letter-spacing: 0.04em; }
-.w0-budget__note { margin-top: 10px; }
-
-/* ---------- Outcomes and pre-work use .oc and .pw-row--tracked ---------- */
-.oc .h-section { margin-bottom: 0; }
-.w0-row__top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 8px; }
-.w0-h3 { font-family: var(--font-display); font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--text, #0A0A0A); margin: 0 0 8px; }
-.w0-optional-h { margin-top: 28px; }
-.w0-p { font-size: 15px; line-height: 1.7; color: var(--body, #262626); max-width: 680px; }
-
 /* ---------- Install: code blocks with a copy button ---------- */
-.w0-install { }
 .w0-code { position: relative; margin-top: 6px; min-width: 0; max-width: 100%; }
 .w0-code pre {
   margin: 0; padding: 12px 14px; padding-right: 72px;
@@ -52,7 +17,12 @@
   font-family: var(--font-mono); font-size: 13px; line-height: 1.6; color: var(--text, #0A0A0A);
   white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; font-variant-ligatures: none;
 }
-.w0-code__label { font-family: var(--font-mono); font-size: var(--meta, 12px); color: var(--muted, #6B6B6B); margin-top: 12px; }
+/* Two classes, so .card p (15 px body text) does not override the label. */
+.w0-install .w0-code__label {
+  font-family: var(--font-mono); font-size: var(--meta, 12px); line-height: 1.6;
+  color: var(--muted, #6B6B6B); margin-top: 12px;
+}
+.w0-install .h-card + .w0-code__label { margin-top: 4px; }
 .w0-copy {
   position: absolute; top: 6px; right: 6px;
   display: inline-flex; align-items: center; min-height: 28px; padding: 3px 10px;
@@ -61,24 +31,9 @@
   font-family: var(--font-display); font-size: 12px; font-weight: 600; cursor: pointer;
 }
 .w0-copy:hover { background: var(--hover-card, #F0F0F0); }
-
-/* ---------- Teaser for the Week 1 activity ---------- */
-.w0-teaser { }
-.w0-teaser__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 14px 0 12px; }
-.w0-teaser__stat { padding: 10px 12px; border-radius: 6px; background: var(--page, #F4F4F4); }
-.w0-teaser__num { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.2; color: var(--text, #0A0A0A); }
-.w0-teaser__lbl { display: block; font-family: var(--font-mono); font-size: var(--meta, 12px); color: var(--body, #262626); line-height: 1.4; }
+.w0-install .link-row { margin-top: 12px; }
+.w0-bring { margin-top: 12px; }
 
 @media (max-width: 639.98px) {
-  .w0-stat { font-size: 24px; }
-  .w0-cells { gap: 6px; }
   .w0-code pre { padding-right: 14px; padding-top: 40px; }
-  .w0-teaser__num { font-size: 20px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .w0-cell__bar { transition: none; }
-}
-@media (forced-colors: active) {
-  .w0-cell__bar { border: 1px solid CanvasText; forced-color-adjust: none; }
-  .w0-cell.is-done .w0-cell__bar { background: Highlight; }
 }
