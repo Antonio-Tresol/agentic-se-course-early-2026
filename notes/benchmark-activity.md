@@ -1,5 +1,5 @@
 ---
-title: "Week 1 live activity: scoping frontier benchmark tasks with a coding agent"
+title: "Week 1 live activity: can you judge how much work an agent can complete on its own?"
 date: 2026-10-09
 bibliography: [references.bib, readings.bib]
 link-citations: true
@@ -189,7 +189,7 @@ Pairs are numbered from 1. Pair *p* takes task ((*p* − 1) mod 6) + 1 in round 
 | 0:00 to 5:00 | Facilitator | Framing. Show the top-five chart and the frontier-over-time chart. Give the three caveats in one breath: Verified is retired, Pro's public set has broken tasks, and METR's page is frozen. Show FrontierCode's example task for what maintainer-style grading looks like. |
 | 5:00 to 8:00 | Facilitator | Pairs and rules. Each pair opens its round-1 card. The agent may read and run code but must not edit files, search the web, or open `README.md`, `task.toml`, `solution/`, `tests/` or the linked pull request. |
 | 8:00 to 18:00 | Pairs | Round 1 scoping. Run the setup command, give the agent the starter prompt below, read its answer and probe it with follow-up questions. |
-| 18:00 to 20:00 | Pairs | Round 1 submission: minutes, complexity, specification quality and a one-line reason. |
+| 18:00 to 20:00 | Pairs | Round 1 submission: minutes, complexity, specification quality, the agent prediction and a one-line reason. |
 | 20:00 to 30:00 | Pairs | Round 2 scoping on the second card. |
 | 30:00 to 32:00 | Pairs | Round 2 submission. The page locks both estimates. |
 | 32:00 to 35:00 | Facilitator | Reveal. The page plots every pair's estimate per task on a log axis against the ground-truth band and shows the agents' results. |
@@ -223,9 +223,21 @@ Specification quality: how completely the statement fixes what "done" means.
 4. Behaviour, edge cases and interfaces are mostly stated; few judgement calls remain.
 5. Precise to the level of names, signatures, error messages and examples; two engineers would produce interchangeable fixes.
 
+### The agent prediction
+
+The activity asks one question: can you judge how much work an agent can complete on its own today? The three original numbers describe each task from a person's side, so the form for Tasks 1 to 4 adds one prediction: *"Of the N published agent runs on this task, how many passed?"* N is `groundTruth.agentAttempts`: 15 for the two Verified tasks and 10 for the two Terminal-Bench tasks. The answer is a whole number from 0 to N, saved with the other fields and locked by the same reveal.
+
+- **Why a count.** The published results are counts over runs, so a count scores directly against them. The page saves N with each estimate as `agentAttempts`, so the analysis can compare pass rates across tasks with 15 and 10 runs.
+- **Why before the reveal.** It follows the same prediction-then-demonstration design as the time estimate [@crouch2004]: a pair commits to a judgement of agent success, then sees the result.
+- **Why beside human time.** METR's time horizon reduces what an agent can do alone to the human minutes at which it succeeds half the time [@kwa2025timehorizon]. The prediction lets the discussion test that summary task by task. Task 4 needs 960 human minutes and passed 10 of 10 agent runs; Task 3 needs 90 minutes and passed 0 of 10; Task 2 is a 1 to 4 hour fix and passed 0 of 15; Task 1 is under 15 minutes and passed 15 of 15. These figures appear only in the reveal and the facilitator's slides, so the page itself does not spoil them.
+- **Tasks 5 and 6.** SWE-Bench Pro publishes HARD-51 membership and no per-task pass counts, so these cards show no prediction and say why. Nothing is estimated in their place.
+- **Time.** The prediction fits inside each round's two-minute submission. No block was added, and the session still runs 60 minutes.
+
+The reveal shows the pair's prediction beside the published count, and the calibration area plots predicted against published pass rate for every revealed task with agent results, with a table alternative.
+
 ### Exit question
 
-*"Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?"*
+*"Could you judge how much work an agent can complete on its own? Compare your agent predictions with the published results. Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?"*
 
 ## Learning rationale
 
@@ -247,6 +259,8 @@ The page logs one record per pair per task.
 | `specQuality` | integer 1 to 5 | Specification quality, using the anchors above |
 | `reason` | string, at most 200 characters | The pair's one-line reason |
 | `pairId` | string | Stable within the session |
+| `agentAttempts` | integer or null | Number of published agent runs, copied from `groundTruth.agentAttempts` when the estimate is saved; null for Tasks 5 and 6 |
+| `agentPassPredicted` | integer 0 to `agentAttempts`, or null | The pair's prediction of how many of those runs passed; null for Tasks 5 and 6 |
 | `submittedAt` | ISO 8601 UTC timestamp | Time of submission; the round follows from it |
 | `revealed` | boolean | True if this task's ground truth was visible to the pair when they submitted; the analysis drops these rows |
 

@@ -1,7 +1,8 @@
 /* ==========================================================================
    bench.css: the benchmark estimation activity (Week 1 live session).
    Small multiples of the top boards, the METR time chart, the minute plan,
-   six task cards, the estimate form, the reveal and the calibration chart.
+   six task cards, the estimate form, the reveal, the calibration chart and
+   the agent-prediction bars.
 
    Scope: every selector starts .bench-* or .est-*, so the block can move
    into any page that loads mockup.css. Loads after mockup.css. Colours are
@@ -371,6 +372,27 @@ text.axis-title {
   fill: var(--muted, #6B6B6B);
 }
 
+/* ---------- Agent prediction: form line, reveal line, paired bars ---------- */
+.bench-p--after { margin-top: 24px; }
+.est-noagent { font-size: 14px; line-height: 1.6; color: var(--body, #262626); }
+.est-fact__you { display: block; font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--text, #0A0A0A); margin: 2px 0 4px; }
+/* who | track | value. Font size fixed at 12px so the em columns match the axis
+   row and the axis title padding below. */
+.est-agent__row { display: grid; grid-template-columns: 6.4em minmax(0, 1fr) 3.6em; align-items: center; gap: 8px; font-size: 12px; margin-top: 4px; }
+.est-agent__who { font-family: var(--font-mono); font-size: 12px; color: var(--body, #262626); }
+.est-agent__val { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--text, #0A0A0A); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.est-agent__svg { display: block; width: 100%; overflow: visible; }
+.est-agent__you { fill: var(--orange, #C86E50); }
+.est-agent__pub { fill: var(--text, #0A0A0A); }
+.est-agent__sw--you { background: var(--orange, #C86E50); }
+.est-agent__sw--pub { background: var(--text, #0A0A0A); }
+.est-agent .est-cal__rows { gap: 14px; }
+.est-agent__axis { margin-top: 6px; }
+.est-agent__axis-title { font-size: 12px; padding-left: calc(6.4em + 8px); padding-right: calc(3.6em + 8px); box-sizing: border-box; }
+/* Narrow: the 25 and 75 labels hide (.est-tick--minor) and the title spans the
+   whole chart so it stays on one line. */
+@media (max-width: 479.98px) { .est-agent__axis-title { padding-left: 0; padding-right: 0; } }
+
 /* Reference list */
 .bench-refs { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
 .bench-refs li { font-size: 13px; line-height: 1.55; color: var(--body, #262626); padding-left: 1.6em; text-indent: -1.6em; overflow-wrap: anywhere; }
@@ -396,6 +418,9 @@ text.axis-title {
   .est-cell--pass, .bench-sseg--pairs, .bench-sseg--room { background: Highlight; }
   .bench-bar, .bench-dot { fill: CanvasText; }
   .bench-ci, .est-band { fill: GrayText; }
-  .est-you { fill: Highlight; }
+  .est-you, .est-agent__you { fill: Highlight; }
+  .est-agent__pub { fill: CanvasText; }
+  .est-agent__sw--you { background: Highlight; }
+  .est-agent__sw--pub { background: CanvasText; }
   .est-truth, .bench-ref-line, .bench-line { stroke: CanvasText; }
 }

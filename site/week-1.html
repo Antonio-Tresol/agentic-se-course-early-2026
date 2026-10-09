@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Week 1: One Coding Agent · Agentic SE Course</title>
-<meta name="description" content="Week 1: Foundations of Agentic Engineering. Benchmark estimation, agent capabilities, and single-agent workflows.">
+<meta name="description" content="Week 1: Foundations of Agentic Engineering. Judging how much work an agent can complete on its own, agent capabilities, and single-agent workflows.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,10 +115,10 @@
         </li>
         <li class="oc__item">
           <div>
-            <p class="oc__text" id="w1-o4-text">Scope a real task from a hard software-engineering benchmark with your agent, estimate its human time, complexity and specification quality, and compare your estimate with the published figure.</p>
+            <p class="oc__text" id="w1-o4-text">Judge how much work an agent can complete on its own: scope a real benchmark task with your agent, estimate its human time, complexity and specification quality, predict how many published agent runs passed, and compare with the published results.</p>
             <div class="oc__ctl">
               <label class="check"><input type="checkbox" data-progress-outcome="w1:o4" aria-describedby="w1-o4-text">I can do this</label>
-              <a href="#bench-activity">Live activity, benchmark estimates</a>
+              <a href="#bench-activity">Live activity, what an agent can do alone</a>
             </div>
           </div>
         </li>
@@ -387,7 +387,7 @@
       <div data-session-fact="1" hidden></div>
       <div><dt>Length</dt><dd>60 min</dd></div>
     </dl>
-    <p class="section-intro">We share briefly what worked in the courses and what did not. Then, in pairs, we estimate real benchmark tasks: scope each task with your agent, estimate its human time, complexity and specification quality, and compare your estimates with the published figures.</p>
+    <p class="section-intro">After a short debrief on what worked in the courses, pairs scope real benchmark tasks with their agent, estimate each task's human time, complexity and specification quality, predict how many published agent runs passed, then compare with the published results.</p>
 
     <div class="callout" role="group" aria-labelledby="opener-h" style="margin-top:20px">
       <h3 id="opener-h" class="h-card">Five-minute retrieval opener</h3>
@@ -398,8 +398,8 @@
 
     <section id="bench-activity" class="section" aria-labelledby="bench-activity-h">
   <div class="card__label"><span class="label label--ink">Live session activity · in pairs · 60 min</span></div>
-  <h3 id="bench-activity-h" class="bench-title">How hard are the hardest benchmarks?</h3>
-  <p class="bench-p">You installed your agent in Week 0 and have worked through this week's courses. In the session you point it at someone else's hardest problems. First look at the latest numbers on the hardest public software-engineering benchmarks, then open real tasks from them. In pairs, take ten minutes per task: use your coding agent to understand the task and its size, then estimate how long it would take, how complex it is and how well specified it is. Only then do you see the published answers.</p>
+  <h3 id="bench-activity-h" class="bench-title">Can you judge how much work an agent can complete on its own today?</h3>
+  <p class="bench-p">You installed your agent in Week 0 and have worked through this week's courses. In the session you point it at someone else's hardest problems and test your judgement of what agents can do without help. First look at the latest numbers on the hardest public software-engineering benchmarks, then open real tasks from them. In pairs, take ten minutes per task: use your coding agent to understand the task and its size, estimate how long it would take an experienced engineer, how complex it is and how well specified it is, and predict how many of the published agent runs on it passed. Only then do you see the published answers.</p>
 
   <noscript><p class="note">The charts, task cards and estimate forms need JavaScript. The same data is in data/benchmarks.json.</p></noscript>
 
@@ -461,21 +461,24 @@
     <h4 class="bench-h">Your estimates against the ground truth</h4>
     <p class="bench-p">Each revealed task with a published human time gets a row on a log scale, because the times run from under 15 minutes to 960. Terminal-Bench tasks compare with the task author's point estimate as log<sub>2</sub>(estimate ÷ point): +1 is twice as long, −1 half as long. SWE-bench Verified tasks count as inside the annotators' bucket, or else take the log<sub>2</sub> distance to the nearer bound.</p>
     <div data-cal></div>
-    <p class="note">SWE-Bench Pro publishes no per-task human time, so Tasks 5 and 6 never appear here. This page shows your own estimates only; the room's spread comes from the files the facilitator gathers.</p>
+    <p class="bench-p bench-p--after">Each revealed task with published agent results also gets a pair of bars: the share of runs you predicted would pass, and the share that did.</p>
+    <div data-cal-agent></div>
+    <p class="note">SWE-Bench Pro publishes no per-task human time or agent results, so Tasks 5 and 6 appear in neither chart. This page shows your own estimates only; the room's spread comes from the files the facilitator gathers.</p>
   </div>
 
   <div class="bench-sub" id="bench-exit">
     <h4 class="bench-h">Exit question</h4>
     <div class="callout">
-      <p>Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?</p>
+      <p>Could you judge how much work an agent can complete on its own? Compare your agent predictions with the published results. Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?</p>
     </div>
+    <p class="bench-p bench-p--after">METR's chart above reduces an agent's reach to one number: the human minutes at which it succeeds half the time. The discussion tests that number task by task, on the four tasks with published agent results.</p>
   </div>
 
   <div class="bench-sub" id="bench-why">
     <h4 class="bench-h">Why we estimate before we look</h4>
     <p class="bench-p">Prediction before the reveal carries most of the learning. Crouch and colleagues found that students who only watched a physics demonstration understood the underlying concepts no better than students who never saw it, while students who predicted the outcome first showed significantly greater understanding [<a href="#bench-ref-crouch2004">1</a>]. Asking questions before instruction has a related benefit: prequestions before segments of an educational video improved later test performance on both the prequestioned and the non-prequestioned material [<a href="#bench-ref-carpenter2017">2</a>]. The estimate form plays the part of the prediction and the reveal plays the demonstration, so the page locks each estimate before any ground truth appears.</p>
     <p class="bench-p">Calibration feedback follows the reveal. Hattie and Timperley conclude that feedback is among the strongest influences on learning, and that its type and the way it is given decide whether it helps [<a href="#bench-ref-hattie2007">3</a>]. In software estimation specifically, lessons-learned sessions on professionals' own estimates did not improve estimation accuracy, while feedback about other professionals' estimation performance produced more realistic uncertainty assessments than the same feedback about one's own [<a href="#bench-ref-jorgensen2009">4</a>]. The discussion therefore opens on the class distribution for each task, with every pair's estimate on one axis, before any pair examines its own error.</p>
-    <p class="bench-p">The wording of the estimate question draws on the planning fallacy: people underestimate their own task completion times, focusing on plans rather than past experience, while observers overestimate the completion times of others [<a href="#bench-ref-buehler1994">5</a>]. Asking about an experienced engineer new to the repository puts pairs in the observer's position and matches the ground-truth definitions. The activity also previews the idea behind METR's time horizon, which measures task difficulty by how long humans take [<a href="#bench-ref-kwa2025">6</a>]; the reveal lets you check whether human time and agent success point the same way on your two tasks.</p>
+    <p class="bench-p">The wording of the estimate question draws on the planning fallacy: people underestimate their own task completion times, focusing on plans rather than past experience, while observers overestimate the completion times of others [<a href="#bench-ref-buehler1994">5</a>]. Asking about an experienced engineer new to the repository puts pairs in the observer's position and matches the ground-truth definitions. The activity also previews the idea behind METR's time horizon, which measures task difficulty by how long humans take [<a href="#bench-ref-kwa2025">6</a>]; your agent prediction and the reveal let you check whether human time and agent success point the same way on your two tasks.</p>
     <ol class="bench-refs" aria-label="References">
       <li id="bench-ref-crouch2004">1. Crouch, C., Fagen, A. P., Callan, J. P. and Mazur, E. (2004). Classroom demonstrations: Learning tools or entertainment? <i>American Journal of Physics</i>, 72(6), 835 to 838. <a href="https://doi.org/10.1119/1.1707018">doi:10.1119/1.1707018</a></li>
       <li id="bench-ref-carpenter2017">2. Carpenter, S. K. and Toftness, A. R. (2017). The effect of prequestions on learning from video presentations. <i>Journal of Applied Research in Memory and Cognition</i>, 6(1), 104 to 109. <a href="https://doi.org/10.1016/j.jarmac.2016.07.014">doi:10.1016/j.jarmac.2016.07.014</a></li>
@@ -1669,6 +1672,8 @@
       "specQuality": "integer 1-5 (anchors in notes/benchmark-activity.md)",
       "reason": "string, one line, at most 200 characters",
       "pairId": "string, stable within the session",
+      "agentAttempts": "integer copied from groundTruth.agentAttempts when the estimate is saved, or null where none is published (Tasks 5 and 6)",
+      "agentPassPredicted": "integer 0 to agentAttempts: the pair's answer to 'Of the N published agent runs on this task, how many passed?', or null where agentAttempts is null",
       "submittedAt": "ISO 8601 UTC timestamp",
       "revealed": "boolean: true if this task's ground truth was visible to the pair when they submitted; analyses drop these rows"
     },
@@ -1694,8 +1699,11 @@
    #bench-data, draws the charts, and stores estimates through
    window.AgenticProgress (addEstimate, revealEstimate; not week-specific).
    It reads and writes only elements inside #bench-activity. Ground truth is
-   read from the data only when a task is revealed; nothing about it is in
-   the DOM before that.
+   read from the data only when a task is revealed, with one exception: the
+   agent-prediction question shows each task's run count
+   (groundTruth.agentAttempts) and where the runs come from
+   (agentResultsKind) before the reveal. Pass counts, times and patches are
+   not in the DOM before it.
    ========================================================================== */
 (function () {
   "use strict";
@@ -1862,16 +1870,16 @@
   var PLAN = [
     { min: 5, who: "ind", clock: "0:00 to 5:00", what: "Retrieval opener. Three closed-book questions on this week's courses and the best-practices reading, answered on paper, then compared." },
     { min: 5, who: "room", clock: "5:00 to 10:00", what: "What we tried in the courses: what worked, and what did not." },
-    { min: 4, who: "fac", clock: "10:00 to 14:00", what: "Framing. Show the top-five chart and the frontier-over-time chart. Give the three caveats in one breath: Verified is retired, Pro's public set has broken tasks, and METR's page is frozen. Show FrontierCode's example task for what maintainer-style grading looks like." },
+    { min: 4, who: "fac", clock: "10:00 to 14:00", what: "Framing. Put the session's question: can you judge how much work an agent can complete on its own today? Show the top-five chart and the frontier-over-time chart. Give the three caveats in one breath: Verified is retired, Pro's public set has broken tasks, and METR's page is frozen. Show FrontierCode's example task for what maintainer-style grading looks like." },
     { min: 2, who: "fac", clock: "14:00 to 16:00", what: "Pairs and rules. Each pair opens its round-1 card. The agent may read and run code but must not edit files, search the web, or open `README.md`, `task.toml`, `solution/`, `tests/` or the linked pull request." },
     { min: 9, who: "pairs", clock: "16:00 to 25:00", what: "Round 1 scoping. Run the setup command, give the agent the starter prompt, read its answer and probe it with follow-up questions." },
-    { min: 2, who: "pairs", clock: "25:00 to 27:00", what: "Round 1 submission: minutes, complexity, specification quality and a one-line reason." },
+    { min: 2, who: "pairs", clock: "25:00 to 27:00", what: "Round 1 submission: minutes, complexity, specification quality, the agent prediction and a one-line reason." },
     { min: 9, who: "pairs", clock: "27:00 to 36:00", what: "Round 2 scoping on the second card." },
     { min: 2, who: "pairs", clock: "36:00 to 38:00", what: "Round 2 submission. Both estimates are saved before anyone reveals." },
-    { min: 3, who: "fac", clock: "38:00 to 41:00", what: "Reveal. Pairs reveal their two tasks; the facilitator shows every pair's estimate per task on a log axis against the ground truth, with the agents' results." },
+    { min: 3, who: "fac", clock: "38:00 to 41:00", what: "Reveal. Pairs reveal their two tasks; the facilitator shows every pair's estimate per task on a log axis against the ground truth, with the agents' results beside the pairs' predictions." },
     { min: 4, who: "room", clock: "41:00 to 45:00", what: "How far off were we? For each task, read the class median against the ground truth and the spread across pairs. On Verified tasks, count the pairs inside the annotators' bucket." },
     { min: 4, who: "room", clock: "45:00 to 49:00", what: "Why? The pairs furthest from the ground truth on each side explain what they assumed. Compare Tasks 5 and 6 on patch size against the pairs' complexity scores." },
-    { min: 4, who: "room", clock: "49:00 to 53:00", what: "Did human time predict agent success? Set the two Terminal-Bench tasks side by side on human time and agent results, then set what the reveal says about Task 2's tests beside the pairs' specification scores." },
+    { min: 4, who: "room", clock: "49:00 to 53:00", what: "Could we judge what an agent can do alone? METR's time-horizon chart measures an agent's reach in human minutes; test that task by task. Set the two Terminal-Bench tasks side by side, then Tasks 1 and 2, on human time, agent results and the pairs' predictions. Then set what the reveal says about Task 2's tests beside the pairs' specification scores." },
     { min: 5, who: "ind", clock: "53:00 to 58:00", what: "Exit question on the page." },
     { min: 2, who: "fac", clock: "58:00 to 60:00", what: "Close." }
   ];
@@ -2444,6 +2452,25 @@
     form.appendChild(scaleField("cx-" + n, "Complexity", "How much a solver must understand and hold in mind at once.", COMPLEXITY, u, "cx"));
     form.appendChild(scaleField("sq-" + n, "Specification quality", "How completely the statement fixes what \"done\" means.", SPEC, u, "sq"));
 
+    // Agent prediction. Before the reveal it reads only the run count and the
+    // source of the runs, never the pass count.
+    var g0 = t.groundTruth || {};
+    u.attempts = typeof g0.agentAttempts === "number" && g0.agentAttempts > 0 ? g0.agentAttempts : null;
+    if (u.attempts) {
+      var aId = "est-agent-" + n;
+      u.agent = el("input", { type: "number", id: aId, min: "0", max: String(u.attempts), step: "1", inputmode: "numeric", "aria-describedby": aId + "-hint " + aId + "-err" });
+      u.agentErr = el("p", { class: "est-err", id: aId + "-err", hidden: true });
+      form.appendChild(el("div", { class: "est-field est-agent" }, [
+        el("label", { for: aId, text: "Of the " + u.attempts + " published agent runs on this task, how many passed?" }),
+        el("div", { class: "est-min" }, [u.agent, el("span", { class: "est-min__unit", text: "of " + u.attempts + " runs" })]),
+        el("p", { class: "est-hint", id: aId + "-hint", text: "A whole number from 0 to " + u.attempts + ". The runs: " + g0.agentResultsKind + "." }),
+        u.agentErr
+      ]));
+    } else {
+      u.agent = null;
+      form.appendChild(el("div", { class: "est-field" }, [el("p", { class: "est-noagent", text: "No per-task agent results are published for this benchmark, so this task has no agent prediction." })]));
+    }
+
     var rId = "est-reason-" + n;
     u.reason = el("input", { type: "text", id: rId, maxlength: "200", autocomplete: "off", "aria-describedby": rId + "-count" });
     u.reasonCount = el("p", { class: "est-hint", id: rId + "-count", text: "0 of 200 characters" });
@@ -2472,6 +2499,7 @@
     u.min.addEventListener("input", function () { u.editing = true; updateMinAs(u); updateDirty(u); });
     u.reason.addEventListener("input", function () { u.editing = true; u.reasonCount.textContent = u.reason.value.length + " of 200 characters"; updateDirty(u); });
     u.pair.addEventListener("input", function () { u.editing = true; updateDirty(u); });
+    if (u.agent) u.agent.addEventListener("input", function () { u.editing = true; updateDirty(u); });
     form.addEventListener("change", function (e) { if (e.target && e.target.type === "radio") { u.editing = true; updateDirty(u); } });
     form.addEventListener("submit", function (e) { e.preventDefault(); save(t, u); });
     u.revealBtn.addEventListener("click", function () {
@@ -2494,13 +2522,16 @@
     u.minAs.textContent = u.min.value.trim() !== "" && isFinite(v) && v >= 60 ? "= " + fmtMin(v).replace(/^.* min \(/, "").replace(/\)$/, "") : "";
   }
   function formValues(u) {
-    return { minutes: u.min.value.trim(), cx: radioVal(u.cx), sq: radioVal(u.sq), reason: u.reason.value.trim(), pair: u.pair.value.trim() };
+    return { minutes: u.min.value.trim(), cx: radioVal(u.cx), sq: radioVal(u.sq), reason: u.reason.value.trim(), pair: u.pair.value.trim(), agent: u.agent ? u.agent.value.trim() : "" };
   }
+  /* A blank field, null and a missing field (estimates saved before the prediction existed) all read as "". */
+  function agentText(v) { return v === null || v === undefined || v === "" ? "" : String(Number(v)); }
   function isDirty(u) {
     var e = estimateOf(state(), u.task.taskId);
     if (!e) return false;
     var f = formValues(u);
-    return Number(f.minutes) !== e.estimateMinutes || f.cx !== e.complexity || f.sq !== e.specQuality || f.reason !== (e.reason || "") || f.pair !== (e.pairId || "");
+    return Number(f.minutes) !== e.estimateMinutes || f.cx !== e.complexity || f.sq !== e.specQuality || f.reason !== (e.reason || "") || f.pair !== (e.pairId || "") ||
+      (!!u.agent && agentText(f.agent) !== agentText(e.agentPassPredicted));
   }
   function updateDirty(u) {
     var e = estimateOf(state(), u.task.taskId);
@@ -2515,9 +2546,17 @@
     u.min.setAttribute("aria-invalid", minOk ? "false" : "true");
     u.cxErr.hidden = !!f.cx; u.cxErr.textContent = f.cx ? "" : "Choose a complexity from 1 to 5.";
     u.sqErr.hidden = !!f.sq; u.sqErr.textContent = f.sq ? "" : "Choose a specification quality from 1 to 5.";
-    if (!minOk) bad = u.min; else if (!f.cx) bad = u.cx.querySelector("input"); else if (!f.sq) bad = u.sq.querySelector("input");
-    if (bad) { bad.focus(); announce("The estimate was not saved. " + (!minOk ? u.minErr.textContent : (!f.cx ? u.cxErr.textContent : u.sqErr.textContent))); return; }
-    var ok = P.addEstimate({ taskId: t.taskId, estimateMinutes: mins, complexity: f.cx, specQuality: f.sq, reason: f.reason.slice(0, 200), pairId: f.pair });
+    var agentVal = null, agentOk = true;
+    if (u.agent) {
+      agentVal = f.agent === "" ? NaN : Number(f.agent);
+      agentOk = isFinite(agentVal) && agentVal % 1 === 0 && agentVal >= 0 && agentVal <= u.attempts;
+      u.agentErr.hidden = agentOk; u.agentErr.textContent = agentOk ? "" : "Enter a whole number of runs from 0 to " + u.attempts + ".";
+      u.agent.setAttribute("aria-invalid", agentOk ? "false" : "true");
+    }
+    if (!minOk) bad = u.min; else if (!f.cx) bad = u.cx.querySelector("input"); else if (!f.sq) bad = u.sq.querySelector("input"); else if (!agentOk) bad = u.agent;
+    if (bad) { bad.focus(); announce("The estimate was not saved. " + (!minOk ? u.minErr.textContent : (!f.cx ? u.cxErr.textContent : (!f.sq ? u.sqErr.textContent : u.agentErr.textContent)))); return; }
+    var ok = P.addEstimate({ taskId: t.taskId, estimateMinutes: mins, complexity: f.cx, specQuality: f.sq, reason: f.reason.slice(0, 200), pairId: f.pair,
+      agentAttempts: u.attempts, agentPassPredicted: u.agent ? agentVal : null });
     if (!ok) { syncTask(t); announce("This task was already revealed, so the estimate is locked."); return; }
     if (f.pair) rememberPair(f.pair);
     u.editing = false;
@@ -2530,7 +2569,7 @@
     u.confirm.hidden = true;
     u.revealBtn.setAttribute("aria-expanded", "false");
     syncTask(t);
-    renderCalibration();
+    renderCharts();
     if (ok || estimateOf(state(), t.taskId)) {
       var h = u.reveal.querySelector(".est-reveal__h");
       if (h) h.focus();
@@ -2553,6 +2592,7 @@
         setRadio(u.sq, e.specQuality);
         u.reason.value = e.reason || "";
         u.pair.value = e.pairId || "";
+        if (u.agent) u.agent.value = agentText(e.agentPassPredicted);
         u.reasonCount.textContent = u.reason.value.length + " of 200 characters";
         updateMinAs(u);
       }
@@ -2633,12 +2673,15 @@
       hasTime(g) ? el("br") : null, hasTime(g) ? compare(g, e.estimateMinutes).text + "." : null]);
     // agents
     var agentKids = [];
+    var you = hasAgentTruth(g) ? el("span", { class: "est-fact__you", text: hasPrediction(e)
+      ? "Your prediction: " + e.agentPassPredicted + " of " + g.agentAttempts + "."
+      : "No agent prediction was saved with this estimate." }) : null;
     if (g.agentRuns && g.agentRuns.length) {
       var runs = el("div", { class: "est-runs" });
       g.agentRuns.forEach(function (r) { runs.appendChild(el("div", null, [el("span", { class: "est-run__name", text: r.system + ": " + r.passes + " of " + r.attempts + " trials passed" }), cells(r.passes, r.attempts)])); });
-      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts }), runs);
+      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts }), you, runs);
     } else if (g.agentAttempts) {
-      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts + " runs resolved it" }), cells(g.agentPassCount, g.agentAttempts),
+      agentKids.push(el("span", { class: "est-fact__big", text: g.agentPassCount + " of " + g.agentAttempts + " runs resolved it" }), you, cells(g.agentPassCount, g.agentAttempts),
         "One attempt per run, from the SWE-bench experiments repository: eleven mini-SWE-agent runs from 17 February 2026, one Gemini 3.5 Flash run from 1 September 2026, and the board's top three.");
     } else {
       agentKids.push(el("span", { class: "est-fact__big", text: g.hard51 ? "In HARD-51" : "Outside HARD-51" }), g.agentResultsNote);
@@ -2756,6 +2799,77 @@
     host.appendChild(fig);
   }
 
+  /* ---------- agent chart: predicted against published pass rate, 0 to 100% ---------- */
+  function hasAgentTruth(g) { return !!g && typeof g.agentAttempts === "number" && g.agentAttempts > 0 && typeof g.agentPassCount === "number"; }
+  function hasPrediction(e) { return !!e && typeof e.agentPassPredicted === "number"; }
+  function passRate(n, nRuns) { return n / nRuns * 100; }
+  function fmtRate(v) { return fx(v, v % 1 ? 1 : 0) + "%"; }
+  /* One labelled bar: who | track with the bar | value. Zero draws no bar, only the baseline. */
+  function agentBar(who, pct, cls) {
+    var s = sv("svg", { class: "est-agent__svg", height: "16", "aria-hidden": "true", focusable: "false" });
+    [25, 50, 75, 100].forEach(function (v) { s.appendChild(sv("line", { class: "bench-grid-line", x1: v + "%", x2: v + "%", y1: 0, y2: 16 })); });
+    if (pct > 0) {
+      s.appendChild(sv("rect", { class: cls, x: 0, y: 2, width: pct + "%", height: 12, rx: 2 }));
+      s.appendChild(sv("rect", { class: cls, x: 0, y: 2, width: Math.min(pct, 2) + "%", height: 12 }));
+    }
+    s.appendChild(sv("line", { class: "bench-base-line", x1: 0, x2: 0, y1: 0, y2: 16 }));
+    return el("div", { class: "est-agent__row" }, [el("span", { class: "est-agent__who", text: who }), s, el("span", { class: "est-agent__val", text: fmtRate(pct) })]);
+  }
+  function agentBars(rows) {
+    var wrap = el("div", { class: "est-cal est-agent" });
+    wrap.appendChild(el("div", { class: "bench-legend", "aria-hidden": "true" }, [
+      el("span", { class: "bench-legend__item" }, [el("span", { class: "bench-legend__sw est-agent__sw--you" }), "Your prediction"]),
+      el("span", { class: "bench-legend__item" }, [el("span", { class: "bench-legend__sw est-agent__sw--pub" }), "Published result"])
+    ]));
+    var list = el("ul", { class: "est-cal__rows" });
+    rows.forEach(function (r) {
+      var g = r.t.groundTruth, nRuns = g.agentAttempts;
+      list.appendChild(el("li", null, [
+        el("p", { class: "est-cal__label" }, [el("b", { text: "Task " + r.t.order + " · " + (TEXT[r.t.taskId] || {}).short }),
+          el("span", { class: "est-cal__meta", text: "You: " + r.e.agentPassPredicted + " of " + nRuns + " · published: " + g.agentPassCount + " of " + nRuns + " runs passed" })]),
+        agentBar("You", passRate(r.e.agentPassPredicted, nRuns), "est-agent__you"),
+        agentBar("Published", passRate(g.agentPassCount, nRuns), "est-agent__pub")
+      ]));
+    });
+    wrap.appendChild(list);
+    var ax = sv("svg", { class: "est-agent__svg", height: "16", "aria-hidden": "true", focusable: "false" });
+    [0, 25, 50, 75, 100].forEach(function (v) {
+      ax.appendChild(sv("text", { class: "bench-tick" + (v === 25 || v === 75 ? " est-tick--minor" : ""), x: v + "%", y: 12, "text-anchor": v === 0 ? "start" : (v === 100 ? "end" : "middle"), text: String(v) }));
+    });
+    wrap.appendChild(el("div", { class: "est-agent__row est-agent__axis", "aria-hidden": "true" }, [el("span"), ax, el("span")]));
+    wrap.appendChild(el("div", { class: "est-agent__axis-title axis-title axis-title--x", text: "Agent runs passed, percent" }));
+    return wrap;
+  }
+  function renderAgentCal() {
+    var host = $("[data-cal-agent]");
+    if (!host) return;
+    var wasOpen = !!host.querySelector("details[open]");
+    host.textContent = "";
+    var s = state();
+    var rows = TASKS.map(function (t) { return { t: t, e: estimateOf(s, t.taskId) }; })
+      .filter(function (r) { return r.e && r.e.revealedAt && hasAgentTruth(r.t.groundTruth) && hasPrediction(r.e); });
+    if (!rows.length) {
+      host.appendChild(el("div", { class: "est-cal" }, [el("p", { class: "est-cal__empty", text: "Nothing to plot yet. Reveal a task with published agent results (Tasks 1 to 4) and your prediction appears here, beside the share of runs that passed." })]));
+      return;
+    }
+    var fig = el("figure", { class: "bench-fig", style: "margin-top:0" });
+    var chart = agentBars(rows);
+    chart.setAttribute("role", "group");
+    chart.setAttribute("aria-label", "Your agent predictions against the published results, percent of runs passed: " + rows.map(function (r) {
+      var g = r.t.groundTruth;
+      return "Task " + r.t.order + ", you " + r.e.agentPassPredicted + " of " + g.agentAttempts + ", published " + g.agentPassCount + " of " + g.agentAttempts;
+    }).join("; ") + ".");
+    fig.appendChild(chart);
+    fig.appendChild(details("Show as table", table("Your agent predictions against the published results", ["Task", "Predicted passes", "Published passes", "Runs", "Predicted %", "Published %"],
+      rows.map(function (r) {
+        var g = r.t.groundTruth, nRuns = g.agentAttempts;
+        return ["Task " + r.t.order + ": " + r.t.taskId, String(r.e.agentPassPredicted), String(g.agentPassCount), String(nRuns), fmtRate(passRate(r.e.agentPassPredicted, nRuns)).replace("%", ""), fmtRate(passRate(g.agentPassCount, nRuns)).replace("%", "")];
+      }), [1, 2, 3, 4, 5])));
+    if (wasOpen) fig.querySelector("details").open = true;
+    host.appendChild(fig);
+  }
+  function renderCharts() { renderCalibration(); renderAgentCal(); }
+
   /* ---------- pair finder ---------- */
   var PAIR_KEY = "agentic-se:v2:bench-pair";
   function rememberPair(v) { try { localStorage.setItem(PAIR_KEY, String(v)); } catch (e) {} }
@@ -2776,7 +2890,7 @@
   /* ---------- wiring ---------- */
   function syncAll() {
     TASKS.forEach(syncTask);
-    renderCalibration();
+    renderCharts();
   }
 
   renderPlan();

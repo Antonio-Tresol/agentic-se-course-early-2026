@@ -141,13 +141,34 @@
     },
     "estimates": {
       "type": "array",
-      "description": "Week 0 benchmark activity: the learner's effort estimates for reference tasks, one per task.",
+      "description": "Week 1 benchmark activity: the learner's effort estimates for reference tasks, one per task.",
       "items": {
         "type": "object",
+        "description": "One estimate. additionalProperties is not set, so readers must ignore fields they do not know. agentPassPredicted and agentAttempts were added without a version change; estimates written before them lack both.",
         "required": [
           "taskId",
           "estimateMinutes"
         ],
+        "if": {
+          "required": [
+            "agentPassPredicted"
+          ],
+          "properties": {
+            "agentPassPredicted": {
+              "type": "integer"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "agentAttempts"
+          ],
+          "properties": {
+            "agentAttempts": {
+              "type": "integer"
+            }
+          }
+        },
         "properties": {
           "taskId": {
             "type": "string",
@@ -183,6 +204,22 @@
           "pairId": {
             "type": "string",
             "description": "Identifier linking two estimates of paired tasks, if the activity pairs them."
+          },
+          "agentAttempts": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "Optional. Number of published agent runs on the task, copied from the task data (groundTruth.agentAttempts) when the estimate is saved, so that a predicted count can be read as a pass rate. Null when the benchmark publishes no per-task agent results (SWE-Bench Pro). Absent in estimates saved before the field existed."
+          },
+          "agentPassPredicted": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "description": "Optional. The learner's answer to 'Of the N published agent runs on this task, how many passed?', a whole number from 0 to agentAttempts. Null when the task has no published agent results or no prediction was given; requires an integer agentAttempts. JSON Schema cannot compare two fields, so progress.js and analyse.py check the upper bound."
           },
           "submittedAt": {
             "type": "string",

@@ -15,3 +15,6 @@ screenshots/
 
 # Progress analysis output (may contain learner data)
 results/
+
+# Python bytecode
+__pycache__/

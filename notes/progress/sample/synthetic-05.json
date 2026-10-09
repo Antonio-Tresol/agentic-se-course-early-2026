@@ -1,7 +1,7 @@
 {
   "schema": "agentic-se-progress",
   "schemaVersion": 1,
-  "exportedAt": "2026-09-15T19:01:04.989Z",
+  "exportedAt": "2026-09-15T19:13:04.989Z",
   "appVersion": "mockup-2026-10-SYNTHETIC",
   "userAgentFamily": "chrome",
   "learner": {
@@ -166,6 +166,8 @@
       "specQuality": 3,
       "reason": "synthetic",
       "pairId": "pair-bm-01",
+      "agentAttempts": null,
+      "agentPassPredicted": null,
       "submittedAt": "2026-09-14T12:03:00.000Z",
       "revealedAt": "2026-09-14T12:03:00.000Z"
     },
@@ -176,6 +178,8 @@
       "specQuality": 2,
       "reason": "synthetic",
       "pairId": "pair-bm-02",
+      "agentAttempts": null,
+      "agentPassPredicted": null,
       "submittedAt": "2026-09-14T12:06:00.000Z",
       "revealedAt": "2026-09-14T12:06:00.000Z"
     },
@@ -186,6 +190,8 @@
       "specQuality": 3,
       "reason": "synthetic",
       "pairId": "pair-bm-03",
+      "agentAttempts": null,
+      "agentPassPredicted": null,
       "submittedAt": "2026-09-14T12:09:00.000Z",
       "revealedAt": "2026-09-14T12:09:00.000Z"
     },
@@ -196,8 +202,46 @@
       "specQuality": 3,
       "reason": "synthetic",
       "pairId": "pair-bm-04",
+      "agentAttempts": null,
+      "agentPassPredicted": null,
       "submittedAt": "2026-09-14T12:12:00.000Z",
       "revealedAt": "2026-09-14T12:12:00.000Z"
+    },
+    {
+      "taskId": "swev-flask-blueprint-name",
+      "estimateMinutes": 9,
+      "complexity": 2,
+      "specQuality": 2,
+      "reason": "synthetic",
+      "pairId": "pair-synthetic-5",
+      "agentAttempts": 15,
+      "agentPassPredicted": 8,
+      "submittedAt": "2026-09-15T18:55:04.989Z",
+      "revealedAt": "2026-09-15T18:55:04.989Z"
+    },
+    {
+      "taskId": "tb4-archive-clone",
+      "estimateMinutes": 1203,
+      "complexity": 2,
+      "specQuality": 3,
+      "reason": "synthetic",
+      "pairId": "pair-synthetic-5",
+      "agentAttempts": 10,
+      "agentPassPredicted": 7,
+      "submittedAt": "2026-09-15T18:59:04.989Z",
+      "revealedAt": "2026-09-15T18:59:04.989Z"
+    },
+    {
+      "taskId": "pro-flipt-skip-existing",
+      "estimateMinutes": 120,
+      "complexity": 1,
+      "specQuality": 4,
+      "reason": "synthetic",
+      "pairId": "pair-synthetic-5",
+      "agentAttempts": null,
+      "agentPassPredicted": null,
+      "submittedAt": "2026-09-15T19:03:04.989Z",
+      "revealedAt": "2026-09-15T19:03:04.989Z"
     }
   ],
   "deliverables": {},
@@ -391,6 +435,36 @@
       "t": "2026-09-15T18:51:04.989Z",
       "type": "outcome:uncheck",
       "ref": "w1:o4"
+    },
+    {
+      "t": "2026-09-15T18:55:04.989Z",
+      "type": "estimate:add",
+      "ref": "swev-flask-blueprint-name"
+    },
+    {
+      "t": "2026-09-15T18:55:04.989Z",
+      "type": "estimate:reveal",
+      "ref": "swev-flask-blueprint-name"
+    },
+    {
+      "t": "2026-09-15T18:59:04.989Z",
+      "type": "estimate:add",
+      "ref": "tb4-archive-clone"
+    },
+    {
+      "t": "2026-09-15T18:59:04.989Z",
+      "type": "estimate:reveal",
+      "ref": "tb4-archive-clone"
+    },
+    {
+      "t": "2026-09-15T19:03:04.989Z",
+      "type": "estimate:add",
+      "ref": "pro-flipt-skip-existing"
+    },
+    {
+      "t": "2026-09-15T19:03:04.989Z",
+      "type": "estimate:reveal",
+      "ref": "pro-flipt-skip-existing"
     }
   ],
   "outcomes": {

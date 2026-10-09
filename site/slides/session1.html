@@ -16,7 +16,7 @@
   <div class="slide-inner">
     <div class="slide-label"><a href="../week-1.html" class="title-link">Week 1 &middot; Session 1</a></div>
     <h1><a href="../week-1.html" class="title-link">One Coding Agent</a></h1>
-    <p class="subtitle" style="color: #D4D4D4;">Scoping real benchmark tasks with your coding agent, understanding the frontier, and testing calibration.</p>
+    <p class="subtitle" style="color: #D4D4D4;">Can you judge how much work an agent can complete on its own today? Scope real benchmark tasks with your agent, predict, then check against the published results.</p>
   </div>
 </div>
 
@@ -28,16 +28,16 @@
     <div class="grid-2" style="margin-top: 14px; gap: 5px 20px;">
       <div class="item"><span class="item-num">00&ndash;05</span><span class="item-text"><strong>Retrieval opener:</strong> three questions on paper.</span></div>
       <div class="item"><span class="item-num">05&ndash;10</span><span class="item-text"><strong>Course debrief:</strong> what worked, what failed.</span></div>
-      <div class="item"><span class="item-num">10&ndash;14</span><span class="item-text"><strong>Framing:</strong> frontier charts and caveats.</span></div>
+      <div class="item"><span class="item-num">10&ndash;14</span><span class="item-text"><strong>Framing:</strong> the question, charts, caveats.</span></div>
       <div class="item"><span class="item-num">14&ndash;16</span><span class="item-text"><strong>Pairs and rules:</strong> constraints and prompt.</span></div>
       <div class="item"><span class="item-num">16&ndash;25</span><span class="item-text"><strong>Round 1 scoping:</strong> setup and follow-ups.</span></div>
-      <div class="item"><span class="item-num">25&ndash;27</span><span class="item-text"><strong>Round 1 submission:</strong> minutes, scales, reason.</span></div>
+      <div class="item"><span class="item-num">25&ndash;27</span><span class="item-text"><strong>Round 1 submission:</strong> minutes, scales, prediction, reason.</span></div>
       <div class="item"><span class="item-num">27&ndash;36</span><span class="item-text"><strong>Round 2 scoping:</strong> second task card.</span></div>
       <div class="item"><span class="item-num">36&ndash;38</span><span class="item-text"><strong>Round 2 submission:</strong> both saved before reveal.</span></div>
-      <div class="item"><span class="item-num">38&ndash;41</span><span class="item-text"><strong>Reveal:</strong> estimates plotted vs ground truth.</span></div>
+      <div class="item"><span class="item-num">38&ndash;41</span><span class="item-text"><strong>Reveal:</strong> estimates and predictions vs truth.</span></div>
       <div class="item"><span class="item-num">41&ndash;45</span><span class="item-text"><strong>How far off:</strong> medians, spread, buckets.</span></div>
       <div class="item"><span class="item-num">45&ndash;49</span><span class="item-text"><strong>Why:</strong> furthest pairs; patch size vs complexity.</span></div>
-      <div class="item"><span class="item-num">49&ndash;53</span><span class="item-text"><strong>Predicting success:</strong> human time vs results.</span></div>
+      <div class="item"><span class="item-num">49&ndash;53</span><span class="item-text"><strong>Judging autonomy:</strong> METR, time, predictions.</span></div>
       <div class="item"><span class="item-num">53&ndash;58</span><span class="item-text"><strong>Exit question:</strong> individual reflection on page.</span></div>
       <div class="item"><span class="item-num">58&ndash;60</span><span class="item-text"><strong>Close:</strong> wrap-up and next steps.</span></div>
     </div>
@@ -81,6 +81,7 @@
   <div class="slide-inner">
     <div class="slide-label">10:00 to 14:00 &middot; Framing</div>
     <h2>Where the Frontier Stands</h2>
+    <p class="subtitle" style="margin-bottom: 12px;">Today's question: can you judge how much work an agent can complete on its own?</p>
     <div class="items">
       <div class="item"><span class="item-text"><strong>SWE-bench Verified</strong>: 79.2% record (Dec 2025). OpenAI stopped reporting in Feb 2026.</span></div>
       <div class="item"><span class="item-text"><strong>SWE-Bench Pro</strong>: Scale v1 tops at 61.5% (Muse Spark 1.1). V2 launched 22 Sep 2026.</span></div>
@@ -122,7 +123,7 @@
 <!-- 8: Scoping criteria -->
 <div class="slide" id="s7">
   <div class="slide-inner">
-    <div class="slide-label">Activity &middot; Question &amp; Scales</div>
+    <div class="slide-label">Activity &middot; Question, Scales &amp; Prediction</div>
     <h2>The Scoping Question</h2>
     <p class="subtitle" style="margin-bottom: 12px;">How many minutes would an experienced engineer, new to this repository, need without AI to pass the tests?</p>
     <div class="two-col" style="gap: 16px;">
@@ -135,6 +136,7 @@
         <p style="font-size: 13px;">1: Ambiguous or contradictory.<br/>3: Clear core, fuzzy edges.<br/>5: Exact behaviour and errors.</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 14px;">Then predict: of the N published agent runs on this task, how many passed? Tasks 1 to 4 only; SWE-Bench Pro publishes no per-task agent results.</p>
   </div>
 </div>
 
@@ -147,7 +149,7 @@
       <div class="item"><span class="item-num">1</span><span class="item-text">Open your pair's Round 1 card on the week page.</span></div>
       <div class="item"><span class="item-num">2</span><span class="item-text">Fetch base commit and create <code>TASK.md</code>.</span></div>
       <div class="item"><span class="item-num">3</span><span class="item-text">Run starter prompt with agent; probe its reasoning.</span></div>
-      <div class="item"><span class="item-num">4</span><span class="item-text">Submit: human minutes, complexity, specification, and rationale.</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text">Submit: human minutes, complexity, specification, agent prediction and rationale.</span></div>
     </div>
   </div>
 </div>
@@ -218,15 +220,16 @@
 <div class="slide" id="s13">
   <div class="slide-inner">
     <div class="slide-label">49:00 to 53:00 &middot; Interactive</div>
-    <h2>Did Human Time Predict Agent Success?</h2>
+    <h2>Could You Judge What an Agent Can Do Alone?</h2>
+    <p class="subtitle" style="margin-bottom: 12px;">METR's chart measures an agent's reach in human minutes. Test it task by task, against your predictions.</p>
     <div class="two-col" style="gap: 16px;">
       <div class="card card-accent">
         <h3>Task 3 vs Task 4</h3>
-        <p>Bun sourcemaps: 90 min human, 0/10 agent passes.<br/>Archive clone: 960 min human, 10/10 agent passes.<br/>Why do reverse-engineering tasks suit agents better than policy?</p>
+        <p>Bun sourcemaps: 90 min human, 0/10 agent passes.<br/>Archive clone: 960 min human (16 h), 10/10 agent passes.<br/>Why do reverse-engineering tasks suit agents better than policy?</p>
       </div>
       <div class="card card-accent">
-        <h3>Task 2: Pylint</h3>
-        <p>0 of 15 agent runs passed due to a hidden test importing <code>get_annotation</code>. Did your specification score catch that?</p>
+        <h3>Task 1 vs Task 2</h3>
+        <p>Flask: under 15 min human, 15/15 agent passes.<br/>Pylint: 1 to 4 h human, 0/15, with a hidden test importing <code>get_annotation</code>. Did your specification score catch that?</p>
       </div>
     </div>
   </div>
@@ -239,7 +242,7 @@
     <h2>Exit Question</h2>
     <p class="subtitle" style="max-width: 600px; margin: 0 auto 16px;">Answer individually on the Week 1 page:</p>
     <div class="quote" style="text-align: left; max-width: 600px; margin: 0 auto;">
-      <p>What surprised you most about the gap between human time and agent success across these tasks?</p>
+      <p>Could you judge how much work an agent can complete on its own? Compare your agent predictions with the published results. Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?</p>
     </div>
   </div>
 </div>

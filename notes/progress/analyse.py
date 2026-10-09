@@ -270,8 +270,39 @@ def load_truth(path, field, bucket_field, mids):
     return out
 
 
-def estimates_table(ls, truth):
-    per = defaultdict(lambda: {"est": [], "cx": [], "sq": []})
+def is_int(v):
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
+def load_agent_truth(path):
+    """Published agent pass counts per task, {task_id: (pass_count, attempts)}, read from the
+    benchmark data: tasks[].taskId (or id) with groundTruth.agentPassCount and agentAttempts,
+    as in benchmarks.json. Tasks without whole-number counts (SWE-Bench Pro) are left out."""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    tasks = data.get("tasks", []) if isinstance(data, dict) else data
+    if isinstance(tasks, dict):
+        tasks = [dict(v, id=v.get("id", k)) for k, v in tasks.items() if isinstance(v, dict)]
+    out = {}
+    for t in tasks if isinstance(tasks, list) else []:
+        if not isinstance(t, dict):
+            continue
+        tid = t.get("taskId", t.get("id"))
+        g = t["groundTruth"] if isinstance(t.get("groundTruth"), dict) else t
+        n, of = g.get("agentPassCount"), g.get("agentAttempts")
+        if tid and is_int(n) and is_int(of) and of > 0 and 0 <= n <= of:
+            out[tid] = (n, of)
+    return out
+
+
+def estimates_table(ls, truth, agent_truth=None):
+    """Per task. The agent columns come from the optional agentPassPredicted and agentAttempts
+    fields; files without them contribute nothing there. agent_pass_count and published_pass_rate
+    need --truth."""
+    agent_truth = agent_truth or {}
+    per = defaultdict(lambda: {"est": [], "cx": [], "sq": [], "att": [], "pred": []})
     for d in ls:
         for e in d["estimates"]:
             t = per[e.get("taskId")]
@@ -281,9 +312,16 @@ def estimates_table(ls, truth):
                 t["cx"].append(e["complexity"])
             if isinstance(e.get("specQuality"), (int, float)):
                 t["sq"].append(e["specQuality"])
+            att, pred = e.get("agentAttempts"), e.get("agentPassPredicted")
+            if is_int(att) and att > 0:
+                t["att"].append(att)
+                if is_int(pred) and 0 <= pred <= att:
+                    t["pred"].append((pred, att))
     header = ["task_id", "n", "median_estimate", "iqr", "median_complexity", "median_spec_quality"]
     if truth:
         header += ["truth_minutes", "log10_median_over_truth", "median_log10_ratio"]
+    header += ["n_agent_predictions", "agent_attempts", "median_agent_pass_predicted", "median_predicted_pass_rate",
+               "agent_pass_count", "published_pass_rate"]
     rows = []
     for tid, e in sorted(per.items(), key=lambda x: str(x[0])):
         row = [tid, len(e["est"]), med(e["est"]), r(iqr(e["est"]), 1), med(e["cx"]), med(e["sq"])]
@@ -293,6 +331,10 @@ def estimates_table(ls, truth):
                 row += [tr, r(math.log10(med(e["est"]) / tr)), r(med([math.log10(x / tr) for x in e["est"]]))]
             else:
                 row += [tr or "", "", ""]
+        pub = agent_truth.get(tid)
+        attempts = pub[1] if pub else (max(set(e["att"]), key=e["att"].count) if e["att"] else "")
+        row += [len(e["pred"]), attempts, med([p for p, _ in e["pred"]]), r(med([p / a for p, a in e["pred"]])),
+                pub[0] if pub else "", r(pub[0] / pub[1]) if pub else ""]
         rows.append(row)
     return header, rows
 
@@ -385,6 +427,22 @@ def certificates_table(ls):
 
 
 # ---------- summary ----------
+def agent_line(er, ex):
+    """One summary line on the agent predictions in the estimates table."""
+    pr = [x for x in er if x[ex["n_agent_predictions"]]]
+    if not pr:
+        return "No agent predictions recorded."
+    n = sum(x[ex["n_agent_predictions"]] for x in pr)
+    pub = [x for x in pr if x[ex["published_pass_rate"]] != ""]
+    if not pub:
+        return ("Agent predictions: %d on %d tasks; pass --truth with the benchmark data (tasks[].groundTruth.agentPassCount) "
+                "to compare them with the published pass counts." % (n, len(pr)))
+    gaps = [x[ex["median_predicted_pass_rate"]] - x[ex["published_pass_rate"]] for x in pub]
+    return ("Agent predictions: %d on %d tasks. On the %d with published pass counts, the median predicted pass rate minus "
+            "the published rate is %s (median over tasks; above 0 means learners expected more runs to pass)." % (
+                n, len(pr), len(pub), r(st.median(gaps), 2)))
+
+
 def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes=None, certificates=None):
     n = len(ls)
     by_track = defaultdict(int)
@@ -437,6 +495,7 @@ def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes
                 lines.append("Across %d tasks with ground truth, the median log10 ratio of estimate to truth is %s (%sx)." % (len(lg), r(st.median(lg), 2), r(10 ** st.median(lg), 2)))
         else:
             lines.append("No ground truth supplied; pass --truth to compute estimate error.")
+        lines.append(agent_line(er, ex))
     else:
         lines.append("No estimates recorded.")
     if stages is not None:
@@ -496,7 +555,8 @@ def main():
     ap.add_argument("paths", nargs="+", help="folders or .json files")
     ap.add_argument("--out", default="results", help="output folder (default: results)")
     ap.add_argument("--show-aliases", action="store_true", help="include aliases in learners.csv")
-    ap.add_argument("--truth", help="benchmarks.json with ground-truth minutes per task id")
+    ap.add_argument("--truth", help="benchmarks.json with ground-truth minutes per task id; its tasks[].groundTruth "
+                                    "agentPassCount and agentAttempts also give the published agent pass counts")
     ap.add_argument("--truth-field", default="truthMinutes", help="numeric ground-truth field (default truthMinutes)")
     ap.add_argument("--bucket-field", default="bucket", help="bucket field used if the numeric field is absent")
     ap.add_argument("--bucket-midpoints", help='JSON map of bucket label to minutes, e.g. \'{"S": 30}\'')
@@ -527,7 +587,8 @@ def main():
     lt = learners_table(ls, totals, a.show_aliases)
     it = items_table(ls)
     qt = questions_table(ls)
-    et = estimates_table(ls, truth)
+    agent_truth = load_agent_truth(a.truth) if a.truth and Path(a.truth).exists() else {}
+    et = estimates_table(ls, truth, agent_truth)
     st_t = stages_table(ls)
     ot = outcomes_table(ls)
     ct = certificates_table(ls)

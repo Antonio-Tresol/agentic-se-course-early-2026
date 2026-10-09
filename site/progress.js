@@ -15,7 +15,8 @@
              notes/progress/calendar.schema.json.
    SCHEMA    schemaVersion 1. See notes/progress/progress.schema.json.
              "outcomes" and "stageLogs" are optional, additive fields, so the
-             version did not change.
+             version did not change. So are the estimate fields
+             "agentPassPredicted" and "agentAttempts".
 
    API (all synchronous unless stated; "change" fires after every write)
      get()                       deep copy of the stored state
@@ -36,7 +37,14 @@
                                  {q2: 2, q3: 1, q1: "short"}: a number is the
                                  correct MCQ index; "short" (or {type:"short"})
                                  is a self-scored question. Returns the attempt.
-     addEstimate(entry)          Week 0 benchmark; ignored once revealed
+     addEstimate(entry)          Week 1 benchmark activity; ignored once
+                                 revealed. entry: {taskId, estimateMinutes,
+                                 complexity, specQuality, reason, pairId,
+                                 agentAttempts, agentPassPredicted}.
+                                 agentAttempts is the task's published run
+                                 count (null when none is published);
+                                 agentPassPredicted is the predicted number
+                                 of passing runs, 0 to agentAttempts, or null.
      revealEstimate(taskId)
      setOutcome(week, outcomeId, checked)   "I can do this" checkbox; stored
                                  even when unchecked so a merge can tell
@@ -92,6 +100,13 @@
   function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
   function num(v) { v = Number(v); return isFinite(v) ? v : null; }
   function clamp(v, lo, hi) { v = num(v); return v === null ? null : Math.min(hi, Math.max(lo, v)); }
+  // A whole number from lo to hi, or null for anything else (no rounding, no clamping).
+  function intIn(v, lo, hi) {
+    if (v === null || v === undefined || v === "" || typeof v === "boolean") return null;
+    v = Number(v);
+    return isFinite(v) && v % 1 === 0 && v >= lo && v <= hi ? v : null;
+  }
+  function isIntOrNull(v, lo, hi) { return v === null || (typeof v === "number" && intIn(v, lo, hi) === v); }
   function rid(prefix) {
     var s = "";
     try {
@@ -271,10 +286,14 @@
         break;
       }
     }
+    // Agent prediction: kept only as a whole number within the task's run count.
+    var attempts = intIn(e.agentAttempts, 1, 100000);
     list.push({
       taskId: e.taskId, estimateMinutes: num(e.estimateMinutes),
       complexity: clamp(e.complexity, 1, 5), specQuality: clamp(e.specQuality, 1, 5),
       reason: String(e.reason || "").slice(0, 2000), pairId: e.pairId || "",
+      agentAttempts: attempts,
+      agentPassPredicted: attempts === null ? null : intIn(e.agentPassPredicted, 0, attempts),
       submittedAt: nowISO(), revealedAt: null
     });
     commit("estimate:add", e.taskId);
@@ -598,7 +617,15 @@
       else d.quizzes[k].forEach(function (a) { if (!isObj(a) || !a.attemptId || !Array.isArray(a.answers)) errs.push("Bad attempt in " + k); });
     });
     if (!Array.isArray(d.estimates)) errs.push("estimates must be an array.");
-    else d.estimates.forEach(function (e) { if (!isObj(e) || !e.taskId) errs.push("Estimate without taskId."); });
+    else d.estimates.forEach(function (e) {
+      if (!isObj(e) || !e.taskId) { errs.push("Estimate without taskId."); return; }
+      // Optional agent prediction fields; files written before them stay valid.
+      var att = e.agentAttempts === undefined ? null : e.agentAttempts;
+      var pred = e.agentPassPredicted === undefined ? null : e.agentPassPredicted;
+      if (!isIntOrNull(att, 1, 100000)) errs.push("Estimate " + e.taskId + ": agentAttempts must be a whole number of at least 1, or null.");
+      else if (pred !== null && att === null) errs.push("Estimate " + e.taskId + ": agentPassPredicted needs agentAttempts.");
+      else if (att !== null && !isIntOrNull(pred, 0, att)) errs.push("Estimate " + e.taskId + ": agentPassPredicted must be a whole number from 0 to " + att + ", or null.");
+    });
     if (!isObj(d.deliverables)) errs.push("deliverables must be an object.");
     if (d.outcomes !== undefined) {
       if (!isObj(d.outcomes)) errs.push("outcomes must be an object.");

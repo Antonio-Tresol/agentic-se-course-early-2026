@@ -98,6 +98,75 @@ test("estimates: add, replace, reveal, lock", () => {
   assert.strictEqual(P.summary().totals.estimates, 1);
 });
 
+test("estimates: agent prediction kept only as a whole number within the run count", () => {
+  const { P } = load();
+  const add = (extra) => { P.addEstimate(Object.assign({ taskId: "t", estimateMinutes: 30, complexity: 2, specQuality: 4 }, extra)); return P.get().estimates[0]; };
+  let e = add({ agentAttempts: 15, agentPassPredicted: 12 });
+  assert.strictEqual(e.agentAttempts, 15); assert.strictEqual(e.agentPassPredicted, 12);
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: "0" }).agentPassPredicted, 0, "0 is a prediction, not a blank");
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: 15 }).agentPassPredicted, 15);
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: 16 }).agentPassPredicted, null, "above the run count");
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: -1 }).agentPassPredicted, null);
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: 2.5 }).agentPassPredicted, null, "not rounded");
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: true }).agentPassPredicted, null);
+  assert.strictEqual(add({ agentAttempts: 15, agentPassPredicted: "" }).agentPassPredicted, null);
+  e = add({ agentAttempts: null, agentPassPredicted: 3 });
+  assert.strictEqual(e.agentAttempts, null); assert.strictEqual(e.agentPassPredicted, null, "no runs, no prediction");
+  e = add({ agentAttempts: 0, agentPassPredicted: 0 });
+  assert.strictEqual(e.agentAttempts, null); assert.strictEqual(e.agentPassPredicted, null);
+  e = add({});
+  assert.strictEqual(e.agentAttempts, null); assert.strictEqual(e.agentPassPredicted, null, "callers that omit the fields get nulls");
+  P.addEstimate({ taskId: "t", estimateMinutes: 30, agentAttempts: 10, agentPassPredicted: 4 });
+  P.revealEstimate("t");
+  assert.strictEqual(P.addEstimate({ taskId: "t", estimateMinutes: 30, agentAttempts: 10, agentPassPredicted: 9 }), false);
+  assert.strictEqual(P.get().estimates[0].agentPassPredicted, 4, "locked once revealed");
+});
+
+test("export carries the agent prediction; import checks it", () => {
+  const { P } = load();
+  P.addEstimate({ taskId: "swev-flask-blueprint-name", estimateMinutes: 20, complexity: 1, specQuality: 4, agentAttempts: 15, agentPassPredicted: 12 });
+  P.addEstimate({ taskId: "pro-flipt-skip-existing", estimateMinutes: 120, complexity: 3, specQuality: 4, agentAttempts: null });
+  P.revealEstimate("swev-flask-blueprint-name");
+  const o = P.exportObject();
+  assert.strictEqual(o.schemaVersion, 1);
+  const [a, b] = o.estimates;
+  assert.strictEqual(a.agentAttempts, 15); assert.strictEqual(a.agentPassPredicted, 12);
+  assert.strictEqual(b.agentAttempts, null); assert.strictEqual(b.agentPassPredicted, null);
+  const t = load();
+  eq(t.P.importJSON(P.exportJSON(), { mode: "replace" }), { ok: true, errors: [] });
+  eq(t.P.get().estimates, o.estimates);
+  const bad = (mut) => { const c = JSON.parse(P.exportJSON()); mut(c.estimates[0]); return t.P.importJSON(JSON.stringify(c)); };
+  let r = bad(e => { e.agentPassPredicted = 16; });
+  assert.strictEqual(r.ok, false); assert.match(r.errors[0], /agentPassPredicted must be a whole number from 0 to 15/);
+  assert.strictEqual(bad(e => { e.agentPassPredicted = 2.5; }).ok, false);
+  assert.strictEqual(bad(e => { e.agentPassPredicted = "12"; }).ok, false);
+  assert.match(bad(e => { e.agentAttempts = null; }).errors[0], /needs agentAttempts/);
+  assert.match(bad(e => { delete e.agentAttempts; }).errors[0], /needs agentAttempts/);
+  assert.match(bad(e => { e.agentAttempts = 0; }).errors[0], /agentAttempts must be a whole number/);
+  assert.strictEqual(bad(e => { e.agentPassPredicted = null; }).ok, true, "a null prediction is allowed");
+});
+
+test("old exports without the agent fields still import and merge", () => {
+  const old = load();
+  old.P.addEstimate({ taskId: "tb4-archive-clone", estimateMinutes: 600, complexity: 5, specQuality: 3, reason: "r", pairId: "1" });
+  const legacy = old.P.exportObject();
+  legacy.estimates.forEach(e => { delete e.agentAttempts; delete e.agentPassPredicted; });
+  assert.ok(!("agentPassPredicted" in legacy.estimates[0]));
+  const t = load();
+  eq(t.P.importJSON(JSON.stringify(legacy), { mode: "replace" }), { ok: true, errors: [] });
+  const e = t.P.get().estimates[0];
+  assert.strictEqual(e.estimateMinutes, 600);
+  assert.ok(!("agentPassPredicted" in e) && !("agentAttempts" in e), "nothing invented on import");
+  tick(5);                                                   // a newer local copy with a prediction wins the merge
+  t.P.addEstimate({ taskId: "tb4-archive-clone", estimateMinutes: 480, complexity: 5, specQuality: 3, agentAttempts: 10, agentPassPredicted: 3 });
+  eq(t.P.importJSON(JSON.stringify(legacy), { mode: "merge" }), { ok: true, errors: [] });
+  assert.strictEqual(t.P.get().estimates.length, 1);
+  assert.strictEqual(t.P.get().estimates[0].agentPassPredicted, 3);
+  const fresh = load();                                      // and the legacy record merges into an empty store as is
+  eq(fresh.P.importJSON(JSON.stringify(legacy), { mode: "merge" }), { ok: true, errors: [] });
+  eq(fresh.P.get().estimates, legacy.estimates);
+});
+
 test("export shape, privacy, filename and download", () => {
   const { P, clicks } = load();
   P.setAlias("  Sam  ");
@@ -476,6 +545,20 @@ if (process.argv.includes("--samples")) {
         costUsd: Math.round((0.4 + rnd2() * 3) * 100) / 100, contextGiven: "synthetic", intervention: "", cause: "none", judgement: "synthetic", failed: change === "issue 9" });
     });
   }
+  // Week 1 agent predictions: two course tasks with published runs (15 and 10, as in the task data)
+  // and one SWE-Bench Pro task with none, so both fields are null. Their own generator again.
+  let seed3 = 11; const rnd3 = () => (seed3 = (seed3 * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  const PRED_TASKS = [["swev-flask-blueprint-name", 10, 15], ["tb4-archive-clone", 900, 10], ["pro-flipt-skip-existing", 120, null]];
+  function addPredictions(P, i) {
+    if (i !== 0 && i !== 4) return;                    // two samples carry the agent prediction fields
+    PRED_TASKS.forEach(([taskId, mins, attempts]) => {
+      tick(4);
+      P.addEstimate({ taskId, estimateMinutes: Math.round(mins * Math.exp((rnd3() - 0.4) * 1.2)), complexity: 1 + Math.floor(rnd3() * 5),
+        specQuality: 1 + Math.floor(rnd3() * 5), reason: "synthetic", pairId: "pair-synthetic-" + (i + 1),
+        agentAttempts: attempts, agentPassPredicted: attempts === null ? null : Math.floor(rnd3() * (attempts + 1)) });
+      P.revealEstimate(taskId);
+    });
+  }
   const dir = path.join(__dirname, "sample");
   fs.mkdirSync(dir, { recursive: true });
   profiles.forEach(([track, pace, weeks], i) => {
@@ -525,10 +608,12 @@ if (process.argv.includes("--samples")) {
       });
     }
     addOptional(P, i, track);
+    addPredictions(P, i);
     tick(10);
     const o = P.exportObject();
     o.learner.id = "L-synthetic-" + String(n).padStart(2, "0");
     o.appVersion = "mockup-2026-10-SYNTHETIC";
+    if (i !== 0 && i !== 4) o.estimates.forEach(e => { delete e.agentAttempts; delete e.agentPassPredicted; });   // estimates as saved before the fields
     if (i === 1 || i === 3) { delete o.outcomes; delete o.stageLogs; delete o.certificates; }   // older-style exports, to test the optional fields
     fs.writeFileSync(path.join(dir, "synthetic-" + String(n).padStart(2, "0") + ".json"), JSON.stringify(o, null, 2) + "\n");
   });
