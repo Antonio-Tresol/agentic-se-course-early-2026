@@ -1,7 +1,7 @@
 {
   "schema": "agentic-se-progress",
   "schemaVersion": 1,
-  "exportedAt": "2026-09-16T23:31:18.758Z",
+  "exportedAt": "2026-09-16T23:41:18.758Z",
   "appVersion": "mockup-2026-10-SYNTHETIC",
   "userAgentFamily": "chrome",
   "learner": {
@@ -79,7 +79,7 @@
   "quizzes": {
     "w1": [
       {
-        "attemptId": "A-d8d16cd74fa0f611",
+        "attemptId": "A-e168510a586642e6",
         "startedAt": "2026-09-16T21:06:18.758Z",
         "submittedAt": "2026-09-16T21:11:18.758Z",
         "answers": [
@@ -132,7 +132,7 @@
         }
       },
       {
-        "attemptId": "A-34cf2fa0b3587923",
+        "attemptId": "A-840f6cfb47d08e44",
         "startedAt": "2026-09-16T22:11:18.758Z",
         "submittedAt": "2026-09-16T22:16:18.758Z",
         "answers": [
@@ -432,85 +432,95 @@
     },
     {
       "t": "2026-09-16T22:21:18.758Z",
-      "type": "outcome:check",
-      "ref": "w1:o1"
+      "type": "certificate:set",
+      "ref": "w1:codex-get-started"
     },
     {
       "t": "2026-09-16T22:26:18.758Z",
-      "type": "outcome:check",
-      "ref": "w1:o3"
+      "type": "certificate:set",
+      "ref": "w1:codex-extend"
     },
     {
       "t": "2026-09-16T22:31:18.758Z",
       "type": "outcome:check",
-      "ref": "w1:o4"
+      "ref": "w1:o1"
     },
     {
       "t": "2026-09-16T22:36:18.758Z",
       "type": "outcome:check",
-      "ref": "w3:o2"
+      "ref": "w1:o3"
     },
     {
       "t": "2026-09-16T22:41:18.758Z",
       "type": "outcome:check",
+      "ref": "w1:o4"
+    },
+    {
+      "t": "2026-09-16T22:46:18.758Z",
+      "type": "outcome:check",
+      "ref": "w3:o2"
+    },
+    {
+      "t": "2026-09-16T22:51:18.758Z",
+      "type": "outcome:check",
       "ref": "w3:o3"
     },
     {
-      "t": "2026-09-16T22:49:18.758Z",
+      "t": "2026-09-16T22:59:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-0221f5ba546241c8"
+      "ref": "w3:S-a70c2fbe411bd660"
     },
     {
-      "t": "2026-09-16T22:57:18.758Z",
+      "t": "2026-09-16T23:07:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-40ed5252273bfbec"
+      "ref": "w3:S-16dd94daae1ebd61"
     },
     {
-      "t": "2026-09-16T23:05:18.758Z",
+      "t": "2026-09-16T23:15:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-bcc84075f253c291"
+      "ref": "w3:S-3ff1c7eb4c8fbf08"
     },
     {
-      "t": "2026-09-16T23:13:18.758Z",
+      "t": "2026-09-16T23:23:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-5a272f994e37e2bc"
+      "ref": "w3:S-167260d0f0cd29bb"
     },
     {
-      "t": "2026-09-16T23:21:18.758Z",
+      "t": "2026-09-16T23:31:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-db66e6ecd7442bd3"
+      "ref": "w3:S-205b1a90b918ad76"
     }
   ],
   "outcomes": {
     "w1": {
       "o1": {
         "checked": true,
-        "at": "2026-09-16T22:21:18.758Z"
+        "at": "2026-09-16T22:31:18.758Z"
       },
       "o3": {
         "checked": true,
-        "at": "2026-09-16T22:26:18.758Z"
+        "at": "2026-09-16T22:36:18.758Z"
       },
       "o4": {
         "checked": true,
-        "at": "2026-09-16T22:31:18.758Z"
+        "at": "2026-09-16T22:41:18.758Z"
       }
     },
     "w3": {
       "o2": {
         "checked": true,
-        "at": "2026-09-16T22:36:18.758Z"
+        "at": "2026-09-16T22:46:18.758Z"
       },
       "o3": {
         "checked": true,
-        "at": "2026-09-16T22:41:18.758Z"
+        "at": "2026-09-16T22:51:18.758Z"
       }
     }
   },
   "stageLogs": {
     "w3": [
       {
-        "id": "S-0221f5ba546241c8",
+        "id": "S-a70c2fbe411bd660",
         "change": "issue 4",
         "stage": "triage",
         "humanMinutes": 9,
@@ -521,10 +531,10 @@
         "cause": "none",
         "judgement": "",
         "failed": false,
-        "at": "2026-09-16T22:49:18.758Z"
+        "at": "2026-09-16T22:59:18.758Z"
       },
       {
-        "id": "S-40ed5252273bfbec",
+        "id": "S-16dd94daae1ebd61",
         "change": "issue 4",
         "stage": "spec",
         "humanMinutes": 24,
@@ -535,10 +545,10 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-16T22:57:18.758Z"
+        "at": "2026-09-16T23:07:18.758Z"
       },
       {
-        "id": "S-bcc84075f253c291",
+        "id": "S-3ff1c7eb4c8fbf08",
         "change": "issue 4",
         "stage": "implement",
         "humanMinutes": 16,
@@ -549,10 +559,10 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-16T23:05:18.758Z"
+        "at": "2026-09-16T23:15:18.758Z"
       },
       {
-        "id": "S-5a272f994e37e2bc",
+        "id": "S-167260d0f0cd29bb",
         "change": "issue 4",
         "stage": "review",
         "humanMinutes": 17,
@@ -563,10 +573,10 @@
         "cause": "none",
         "judgement": "",
         "failed": false,
-        "at": "2026-09-16T23:13:18.758Z"
+        "at": "2026-09-16T23:23:18.758Z"
       },
       {
-        "id": "S-db66e6ecd7442bd3",
+        "id": "S-205b1a90b918ad76",
         "change": "issue 4",
         "stage": "pr",
         "humanMinutes": 8,
@@ -577,8 +587,26 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-16T23:21:18.758Z"
+        "at": "2026-09-16T23:31:18.758Z"
       }
     ]
+  },
+  "certificates": {
+    "w1:codex-get-started": {
+      "course": "Get Started with Codex",
+      "platform": "OpenAI Academy",
+      "url": "https://credentials.example.org/badge/3",
+      "image": null,
+      "earnedOn": "2026-09-18",
+      "addedAt": "2026-09-16T22:21:18.758Z"
+    },
+    "w1:codex-extend": {
+      "course": "Extend Codex Workflows",
+      "platform": "OpenAI Academy",
+      "url": null,
+      "image": "data:image/jpeg;base64,/9j/4AAQSkZJRg==",
+      "earnedOn": "2026-09-22",
+      "addedAt": "2026-09-16T22:26:18.758Z"
+    }
   }
 }

@@ -304,6 +304,87 @@
           "$ref": "#/$defs/stageLogEntry"
         }
       }
+    },
+    "certificates": {
+      "type": "object",
+      "description": "Optional. Course completion certificates and badges saved by the learner, keyed by w{week}:{courseId}, for example w1:claude-code-101. Added without a version change.",
+      "propertyNames": {
+        "pattern": "^w[0-9]+:.+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "course",
+          "platform",
+          "url",
+          "image",
+          "earnedOn",
+          "addedAt"
+        ],
+        "properties": {
+          "course": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Name of the course, for example 'Claude Code 101'."
+          },
+          "platform": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Platform or issuer, for example 'Claude Academy' or 'OpenAI Academy'."
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^https://",
+            "description": "HTTPS credential or badge link, or null."
+          },
+          "image": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^data:image/jpeg;base64,",
+            "description": "Screenshot of the badge as a JPEG data URL, or null."
+          },
+          "earnedOn": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "When the certificate was earned (YYYY-MM-DD), or null."
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the certificate entry was saved locally (ISO 8601, UTC). Used to resolve conflicts when merging."
+          }
+        },
+        "anyOf": [
+          {
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          {
+            "properties": {
+              "image": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "image"
+            ]
+          }
+        ]
+      }
     }
   },
   "$defs": {

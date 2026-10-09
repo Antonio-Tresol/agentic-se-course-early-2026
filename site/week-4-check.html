@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 4 self-check · Agentic SE Course</title>
+<meta name="description" content="Week 4 self-check: retrieval questions and understanding checks on software factories, maintainability limits, and systemic amplification.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+/* Pre-paint: track and theme. site.js does the rest. */
+(function (d, q, t, m) {
+  try { q = new URLSearchParams(location.search); } catch (e) {}
+  t = q && q.get("track");
+  if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
+  if (!t) { try { t = JSON.parse(localStorage.getItem("agentic-se:v2:progress")).learner.track; } catch (e) {} }
+  if (t === "codex") d.classList.add("track-codex");
+  m = q && q.get("theme");
+  if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
+  if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the questions</a>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__home" href="index.html">Agentic SE Course</a>
+    <div class="topbar__right">
+      <nav class="week-nav" aria-label="Weeks">
+        <span class="week-nav__label" aria-hidden="true">Weeks</span>
+        <ul class="week-nav__list">
+          <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
+          <li><a class="week-nav__link" href="week-4.html" aria-current="true"><span class="sr-only">Week </span>4</a></li>
+          <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
+        </ul>
+      </nav>
+      <a class="topbar__progress" href="progress.html">My progress</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap page fade-in">
+  <div class="week-head">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+      <div>
+        <p class="label week-head__label"><a href="week-4.html">Week 4: From harness to factory</a></p>
+        <h1 class="week-head__title">Week 4 self-check</h1>
+      </div>
+      <fieldset class="track-switch"
+        data-announce-claude="Showing the Claude Code track."
+        data-announce-codex="Showing the Codex track.">
+        <legend class="track-switch__legend">Track</legend>
+        <div class="track-switch__opts">
+          <input type="radio" name="track" id="track-claude" value="claude" checked>
+          <label for="track-claude">Claude Code</label>
+          <input type="radio" name="track" id="track-codex" value="codex">
+          <label for="track-codex">Codex</label>
+        </div>
+      </fieldset>
+    </div>
+    <p class="lede">Five questions on this week's pre-work. Answer each from memory, say how sure you are, then check it: the effort of recalling is what makes the material stick. Reread only the part you missed.</p>
+    <p class="meta" style="margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px">
+      <span>About 10 minutes</span>
+      <span>Your answers are saved in this browser only, and leave it only when you export them.</span>
+    </p>
+    <div class="score-card">
+      <p class="label">This try</p>
+      <div data-quiz-score="4"></div>
+      <p class="score-card__key" aria-hidden="true">
+        <span><i class="scorebar__cell is-full"></i>Right</span>
+        <span><i class="scorebar__cell is-half"></i>Half</span>
+        <span><i class="scorebar__cell is-zero"></i>Missed</span>
+        <span><i class="scorebar__cell"></i>Not checked</span>
+      </p>
+    </div>
+  </div>
+
+  <form class="q-form" id="q-form" data-quiz="4" novalidate>
+    <ol class="q-list">
+
+      <!-- Q1: choice -->
+      <li class="q card" id="q1" data-qid="q1" data-answer="1">
+        <h2 class="label q__num">Question 1 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">According to Zach Lloyd in "Software Engineering Is Becoming Factory Engineering", what four essential components make up an effective software factory?</legend>
+          <label class="choice"><input type="radio" name="q1" value="0"><span>Compilers, cloud hosting, issue trackers, and pull requests</span></label>
+          <label class="choice"><input type="radio" name="q1" value="1"><span>Automations, context and skills, bringing humans in at the right time, and self-improvement loops</span></label>
+          <label class="choice"><input type="radio" name="q1" value="2"><span>Prompt templates, vector databases, web scrapers, and cron jobs</span></label>
+          <label class="choice"><input type="radio" name="q1" value="3"><span>Unit tests, linters, static analysers, and continuous deployment scripts</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="q1-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>Lloyd identifies four key components: automations to execute repetitive tasks, mechanisms to provide project context and skills, workflows that bring humans in at the right time when work is blocked, and self-improvement loops that refine skills over time.</p>
+          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=tUPPVhBBcoM&amp;t=475s" target="_blank" rel="noopener noreferrer">Zach Lloyd, "Software Engineering Is Becoming Factory Engineering"<span class="sr-only"> (opens in a new tab)</span></a>, at about 7:55. Also Session 4 facilitator key.</p>
+        </div>
+      </li>
+
+      <!-- Q2: choice -->
+      <li class="q card" id="q2" data-qid="q2" data-answer="0">
+        <h2 class="label q__num">Question 2 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">Why does Dex Horthy argue that adding more prompt guardrails or harness loops cannot solve the problem of declining software maintainability?</legend>
+          <label class="choice"><input type="radio" name="q2" value="0"><span>Foundation models are trained to pass tests, which rewards expedient fixes without penalising poor program design or eroded maintainability</span></label>
+          <label class="choice"><input type="radio" name="q2" value="1"><span>Code harnesses use too much CPU memory to run full test suites reliably</span></label>
+          <label class="choice"><input type="radio" name="q2" value="2"><span>Automated harnesses cannot parse git commit logs created by agents</span></label>
+          <label class="choice"><input type="radio" name="q2" value="3"><span>LLMs refuse to refactor existing code when comments are present</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="q2-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>Coding models are optimised to make tests pass, but test suites do not penalise tangled dependencies, code duplication, or bad program design. Adding harness loops around a model cannot compensate for an objective that the model's underlying training does not reward.</p>
+          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, at 11:21. Also Session 4 facilitator key.</p>
+        </div>
+      </li>
+
+      <!-- Q3: choice -->
+      <li class="q card" id="q3" data-qid="q3" data-answer="2">
+        <h2 class="label q__num">Question 3 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">In "Software engineering at the tipping point", why does Adam Bender argue that testing and maintenance costs will grow far faster than code volume when code generation increases tenfold?</legend>
+          <label class="choice"><input type="radio" name="q3" value="0"><span>Tests can only be executed sequentially on a single thread</span></label>
+          <label class="choice"><input type="radio" name="q3" value="1"><span>Compilers impose hard daily execution rate limits on test runners</span></label>
+          <label class="choice"><input type="radio" name="q3" value="2"><span>The dependency graph between components scales quadratically with codebase size, causing test interactions to multiply non-linearly</span></label>
+          <label class="choice"><input type="radio" name="q3" value="3"><span>Testing frameworks require human approval for every asserted condition</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="q3-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>Bender explains that dependency graphs between modules scale quadratically rather than linearly as code volume increases. Consequently, a tenfold increase in code volume can multiply the number of dependent tests and interactions by a hundredfold or more.</p>
+          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>. Also Session 4 reading check, Part 1, Q3.</p>
+        </div>
+      </li>
+
+      <!-- Q4: short answer -->
+      <li class="q card" id="q4" data-qid="q4" data-answer="short">
+        <h2 class="label q__num">Question 4 of 5 · short answer</h2>
+        <label class="q__prompt" for="q4-input">Adam Bender cites the principle that "amplification is a magnitude and not a direction". What does this imply for an engineering team adopting agentic software factories?</label>
+        <textarea id="q4-input" name="q4" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="q4-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Amplification magnifies whatever practices and processes a team already has, without steering their direction. A team with strong fundamentals in testing, architecture, and review accelerates good software delivery, whereas a team with poor practices merely accelerates chaos and technical debt at ten times the speed.</p>
+          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>, at about 15:30. Also Session 4 reading check, Part 1, Q4.</p>
+        </div>
+      </li>
+
+      <!-- Q5: short answer -->
+      <li class="q card" id="q5" data-qid="q5" data-answer="short">
+        <h2 class="label q__num">Question 5 of 5 · short answer</h2>
+        <label class="q__prompt" for="q5-input">According to Dex Horthy in "Why Software Factories Fail", what upstream activities should human engineers retain and restore instead of relying solely on downstream code review in a "lights-off" factory?</label>
+        <textarea id="q5-input" name="q5" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="q5-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Horthy argues that engineers must move review upstream to product review, system architecture, and program design before vertical slices are implemented. Intervening at the specification, requirements, and design stages prevents flawed structures before code is written, whereas downstream review cannot salvage bad program design.</p>
+          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, timestamps 14:58–15:37. Also Session 4 facilitator key.</p>
+        </div>
+      </li>
+    </ol>
+
+    <section class="score-card quiz-end" data-quiz-end="4" aria-label="Your result" hidden></section>
+
+    <div class="q__actions" style="margin-top:24px">
+      <button type="button" class="btn-text" data-quiz-restart="abandon" hidden>Clear my answers and start again</button>
+      <a class="link-row" href="week-4.html#live-h" style="min-height:32px">
+        <span class="link-row__text"><span class="link-row__verb">Back to</span> <span class="link-row__title">Week 4, live session</span></span>
+        <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <nav aria-label="More">
+      <ul class="site-footer__links">
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="further-reading.html">Further Reading</a></li>
+        <li><a href="facilitator.html">Facilitator</a></li>
+        <li><a href="progress.html">My progress</a></li>
+        <li><a href="v1/">Previous version</a></li>
+      </ul>
+    </nav>
+    <p class="meta">Agentic SE Course · v2, October 2026</p>
+  </div>
+</footer>
+
+<div class="sr-only" aria-live="polite" data-track-live></div>
+
+<script src="progress.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

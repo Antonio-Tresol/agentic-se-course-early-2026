@@ -12,3 +12,6 @@ anthropic-*.png
 local-*.png
 v[0-9]*-*.png
 screenshots/
+
+# Progress analysis output (may contain learner data)
+results/

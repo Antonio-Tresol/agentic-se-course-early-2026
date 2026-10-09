@@ -4,7 +4,7 @@ Browser-side progress for the Agentic SE course, plus the tools the course owner
 
 | File | Purpose |
 |---|---|
-| `../mockups/progress.js` | Classic script defining `window.AgenticProgress` (storage, export, import) |
+| `../../site/progress.js` | Classic script defining `window.AgenticProgress` (storage, export, import) |
 | `progress.schema.json` | JSON Schema (draft 2020-12) for the export file |
 | `analyse.py` | Owner's analysis script (Python 3, standard library only) |
 | `test_progress.cjs` | Node tests for `progress.js`; `--samples` regenerates `sample/` |
@@ -25,6 +25,7 @@ The record holds:
 - **deliverables**: link, note and rubric self-assessment for each week.
 - **outcomes** (optional): the learner's "I can do this" ticks on each week's outcomes checklist, `{ "w1": { "o1": { checked, at } } }`. An unticked box is kept as `checked: false` so a merge can tell which side is newer.
 - **stageLogs** (optional): the Week 3 hand-run loop and the Week 5 per-change report, `{ "w3": [ { id, change, stage, humanMinutes, tokens, costUsd, contextGiven, intervention, cause, judgement, at } ] }`. `failed` is an optional boolean marking a failed run (absent means false); `updateStage` takes `null` to clear `tokens` and `costUsd`. `stage` is `triage`, `spec`, `implement`, `review`, `pr` or `other`; `cause` is `missing-context`, `wrong-design`, `taste`, `none` or null. Written with `logStage`, `updateStage` and `removeStage`.
+- **certificates** (optional): course completion certificates and badges saved by the learner, `{ "w1:claude-code-101": { course, platform, url, image, earnedOn, addedAt } }`. At least one of `url` (HTTPS credential link) or `image` (screenshot as JPEG data URL) is required; `earnedOn` is YYYY-MM-DD or null. Written with `setCertificate`, `removeCertificate` and read with `getCertificates`.
 - **events**: the latest 500 actions with timestamps, used for timing analysis.
 
 There is no name, email, IP address or full user agent. The export carries only a coarse browser family (`chrome`, `firefox`, `safari`, `edge`, `other`).
@@ -50,12 +51,23 @@ python3 analyse.py inbox/ --out results/ --truth ../mockups/data/benchmarks.json
 ```
 
 - Invalid files are skipped with a warning. Learners are de-duplicated by `learner.id`; the latest `exportedAt` wins.
-- Outputs in `results/`: `learners.csv`, `items.csv` (completion, median and mean minutes against the page estimate, and their ratio, for calibrating time budgets), `questions.csv` (difficulty, self-scores, confidence and the confidence gap between right and wrong answers), `estimates.csv` (n, median, IQR, complexity and specification medians), `stages.csv` (per week and stage: n, median and mean human minutes, median tokens, median cost and counts per cause), `outcomes.csv` (per week and outcome: the proportion of learners who ticked it, among those whose file holds any outcome for that week), and `summary.md`. The last three sections of `summary.md` cover stage logs and outcomes when present.
+- Outputs in `results/`: `learners.csv`, `items.csv` (completion, median and mean minutes against the page estimate, and their ratio, for calibrating time budgets), `questions.csv` (difficulty, self-scores, confidence and the confidence gap between right and wrong answers), `estimates.csv` (n, median, IQR, complexity and specification medians), `stages.csv` (per week and stage: n, median and mean human minutes, median tokens, median cost and counts per cause), `outcomes.csv` (per week and outcome: the proportion of learners who ticked it, among those whose file holds any outcome for that week), `certificates.csv` (one row per learner and course: has_url, has_image, earnedOn), and `summary.md`. The last sections of `summary.md` cover stage logs, outcomes and certificates when present.
 - `--truth` takes the benchmark ground-truth file and adds the log10 ratio of estimate to truth. Tasks are matched on `id`. The numeric field defaults to `truthMinutes` (`--truth-field` to change it). If a task has only a bucket (`--bucket-field`, default `bucket`), the midpoint is used: `"90-150"` gives 120, `"<=30"` gives 15, `"240+"` gives 360, or supply `--bucket-midpoints '{"S": 30}'`. A missing file only produces a warning.
 - `--totals totals.json` (`{"w1": {"claude": 9, "codex": 10}}`) adds `completion_wN` columns to `learners.csv`; without it the file reports counts of done items.
 - Aliases are never printed or written unless `--show-aliases` is given.
 
 Quiz notes: confidence is recorded before the answer is revealed. Calibration is computed for MCQ only, as the mean confidence when right minus the mean when wrong.
+
+## Certificates
+
+The Week 1 and Week 2 self-checks require proof of external course certificates before unlocking. Because the static site has no backend, badge authenticity cannot be verified automatically. Instead, the page collects proof (an HTTPS credential or badge URL, or an uploaded screenshot stored as a downscaled JPEG data URL) that travels in the progress export, which the course owner inspects.
+
+Required proof by week and track:
+
+- **Week 1, Claude Code track**: Claude Code 101 and Claude Code in Action (Claude Academy completion badges).
+- **Week 1, Codex track**: Get Started with Codex and Extend Codex Workflows (OpenAI Academy badges via Accredible).
+- **Week 2, Claude Code track**: Introduction to Model Context Protocol (Claude Academy badge). Agent Skills and Subagents do not offer badges.
+- **Week 2, Codex track**: Introduction to Model Context Protocol and Scale Codex Across Teams and Systems.
 
 ## Cohort calendar
 

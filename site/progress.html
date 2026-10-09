@@ -97,6 +97,12 @@
     <div class="chart" data-pg-estimates></div>
   </section>
 
+  <!-- Certificates -->
+  <section class="section" aria-labelledby="certs-h">
+    <h2 id="certs-h" class="h-section">Certificates</h2>
+    <div class="panel" data-pg-certificates></div>
+  </section>
+
   <!-- Export -->
   <!-- Cohort calendar -->
   <section class="section" id="calendar" aria-labelledby="calendar-h">
@@ -305,7 +311,7 @@
   /* ---------- self-check scores ---------- */
   function renderScores(st) {
     var rows = S.weeks.filter(function (w) {
-      return w.n === 1 || (st.quizzes && st.quizzes["w" + w.n] && st.quizzes["w" + w.n].length);
+      return (w.n >= 0 && w.n <= 4) || (st.quizzes && st.quizzes["w" + w.n] && st.quizzes["w" + w.n].length);
     }).map(function (w) { return { w: w, sum: S.quizSummary(w.n, st) }; });
     var max = 5;
     rows.forEach(function (r) { if (r.sum.best) max = Math.max(max, r.sum.best.max); });
@@ -318,7 +324,7 @@
           var sum = r.sum, plot, val;
           if (!sum.latest) {
             plot = '<span class="hbars__nm">not taken yet</span>';
-            val = r.w.n === 1 ? '<a href="week-1-check.html">Take it</a>' : "";
+            val = (r.w.n >= 0 && r.w.n <= 4) ? '<a href="week-' + r.w.n + '-check.html">Take it</a>' : "";
           } else {
             var latest = S.attemptScore(sum.latest);
             plot = '<span class="dots__mark dots__mark--best" style="--x:' + pct(sum.best.value / max) + '"></span>' +
@@ -421,6 +427,35 @@
             '</td><td class="r">' + (e.specQuality === null ? "" : e.specQuality) + "</td><td>" + (e.revealedAt ? "Yes, estimate locked" : "Not yet") + "</td></tr>";
         }).join("") + "</tbody></table></div>" :
         '<p class="chart__empty">The <a href="week-1.html#bench-activity">Week 1</a> benchmark activity records your estimate for each task here, before the real answer is shown.</p>');
+  }
+
+  /* ---------- certificates ---------- */
+  function renderCertificates(st) {
+    var certs = st.certificates || {};
+    var keys = Object.keys(certs).sort();
+    var box = $("[data-pg-certificates]");
+    if (!box) return;
+    if (!keys.length) {
+      box.innerHTML = '<p class="chart__empty">No certificates recorded yet. The <a href="week-1-check.html">Week 1</a> and <a href="week-2-check.html">Week 2</a> self-checks collect proof for required course certificates before unlocking.</p>';
+      return;
+    }
+    box.innerHTML = '<p class="chart__sub">' + plural(keys.length, "certificate", "certificates") + ' saved in your progress file. The course owner checks these proofs when you export your record.</p>' +
+      '<div class="table-scroll" tabindex="0" role="region" aria-label="Saved certificates"><table class="data-table"><caption class="sr-only">Saved certificates</caption>' +
+      '<thead><tr><th scope="col">Week</th><th scope="col">Course</th><th scope="col">Platform</th><th scope="col">Proof</th><th scope="col">Earned</th></tr></thead><tbody>' +
+      keys.map(function (k) {
+        var c = certs[k], wMatch = k.match(/^w(\d+):/);
+        var wNum = wMatch ? wMatch[1] : "";
+        var proofHTML = "";
+        if (c.url) {
+          proofHTML += '<a href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer">Credential link<span class="sr-only"> (opens in a new tab)</span></a>';
+        }
+        if (c.image) {
+          if (proofHTML) proofHTML += "<br>";
+          proofHTML += '<img src="' + esc(c.image) + '" alt="Certificate screenshot for ' + esc(c.course) + '" style="max-height:60px;max-width:140px;border-radius:4px;border:1px solid var(--border);display:inline-block;vertical-align:middle;margin-top:4px">';
+        }
+        return '<tr><th scope="row">Week ' + esc(wNum) + '</th><td>' + esc(c.course) + '</td><td>' + esc(c.platform) +
+          '</td><td>' + proofHTML + '</td><td>' + (c.earnedOn ? esc(c.earnedOn) : '<span class="muted">Not set</span>') + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
   }
 
   /* ---------- export ---------- */
@@ -531,7 +566,7 @@
   });
 
   S.onRender(function (st) {
-    renderStats(st); renderWeeks(st); renderScores(st); renderCalibration(st); renderTime(st); renderEstimates(st); renderExport(st);
+    renderStats(st); renderWeeks(st); renderScores(st); renderCalibration(st); renderTime(st); renderEstimates(st); renderCertificates(st); renderExport(st);
   });
 })();
 </script>

@@ -1,7 +1,7 @@
 {
   "schema": "agentic-se-progress",
   "schemaVersion": 1,
-  "exportedAt": "2026-09-17T02:13:32.916Z",
+  "exportedAt": "2026-09-17T02:23:32.916Z",
   "appVersion": "mockup-2026-10-SYNTHETIC",
   "userAgentFamily": "chrome",
   "learner": {
@@ -79,7 +79,7 @@
   "quizzes": {
     "w1": [
       {
-        "attemptId": "A-1b45a142dc79d4e5",
+        "attemptId": "A-573a37e54b4ad684",
         "startedAt": "2026-09-16T22:08:32.916Z",
         "submittedAt": "2026-09-16T22:13:32.916Z",
         "answers": [
@@ -132,7 +132,7 @@
         }
       },
       {
-        "attemptId": "A-58fc4de3fc4458cb",
+        "attemptId": "A-113a3978a1d20c5d",
         "startedAt": "2026-09-16T23:13:32.916Z",
         "submittedAt": "2026-09-16T23:18:32.916Z",
         "answers": [
@@ -432,125 +432,135 @@
     },
     {
       "t": "2026-09-16T23:23:32.916Z",
+      "type": "certificate:set",
+      "ref": "w1:claude-code-101"
+    },
+    {
+      "t": "2026-09-16T23:28:32.916Z",
+      "type": "certificate:set",
+      "ref": "w1:claude-code-in-action"
+    },
+    {
+      "t": "2026-09-16T23:33:32.916Z",
       "type": "outcome:check",
       "ref": "w1:o1"
     },
     {
-      "t": "2026-09-16T23:28:32.916Z",
+      "t": "2026-09-16T23:38:32.916Z",
       "type": "outcome:check",
       "ref": "w1:o3"
     },
     {
-      "t": "2026-09-16T23:33:32.916Z",
+      "t": "2026-09-16T23:43:32.916Z",
       "type": "outcome:uncheck",
       "ref": "w1:o4"
     },
     {
-      "t": "2026-09-16T23:38:32.916Z",
+      "t": "2026-09-16T23:48:32.916Z",
       "type": "outcome:check",
       "ref": "w3:o2"
     },
     {
-      "t": "2026-09-16T23:43:32.916Z",
+      "t": "2026-09-16T23:53:32.916Z",
       "type": "outcome:check",
       "ref": "w3:o3"
     },
     {
-      "t": "2026-09-16T23:51:32.916Z",
+      "t": "2026-09-17T00:01:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-d085885243301979"
+      "ref": "w3:S-ebc1e242ae7b0cce"
     },
     {
-      "t": "2026-09-16T23:59:32.916Z",
+      "t": "2026-09-17T00:09:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-409ea77b08d8b897"
+      "ref": "w3:S-6044ea10d74646cf"
     },
     {
-      "t": "2026-09-17T00:07:32.916Z",
+      "t": "2026-09-17T00:17:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-8e4f4d9e152ef640"
+      "ref": "w3:S-bb0d3ef102642b5e"
     },
     {
-      "t": "2026-09-17T00:15:32.916Z",
+      "t": "2026-09-17T00:25:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-0b843e55af9cb26f"
+      "ref": "w3:S-83ff0132c06fc163"
     },
     {
-      "t": "2026-09-17T00:23:32.916Z",
+      "t": "2026-09-17T00:33:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-650e7c3f5e635a08"
+      "ref": "w3:S-eb82ceea732be358"
     },
     {
-      "t": "2026-09-17T00:31:32.916Z",
+      "t": "2026-09-17T00:41:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-6412a84275c67238"
+      "ref": "w3:S-ecc25f4b766aad5c"
     },
     {
-      "t": "2026-09-17T00:39:32.916Z",
+      "t": "2026-09-17T00:49:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-a4bfc009654cfcf1"
+      "ref": "w3:S-2c6907ce48053912"
     },
     {
-      "t": "2026-09-17T00:47:32.916Z",
+      "t": "2026-09-17T00:57:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-7f55694eec64d4dc"
+      "ref": "w3:S-c7e3c8564bce6c47"
     },
     {
-      "t": "2026-09-17T00:55:32.916Z",
+      "t": "2026-09-17T01:05:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-9b2590ec4546e383"
+      "ref": "w3:S-a83a66a7f004d6d4"
     },
     {
-      "t": "2026-09-17T01:03:32.916Z",
+      "t": "2026-09-17T01:13:32.916Z",
       "type": "stage:add",
-      "ref": "w3:S-0e37196044f3277a"
+      "ref": "w3:S-1746dce59524fa3e"
     },
     {
-      "t": "2026-09-17T01:23:32.916Z",
+      "t": "2026-09-17T01:33:32.916Z",
       "type": "stage:add",
-      "ref": "w5:S-4a5eccbe72aa5609"
+      "ref": "w5:S-67d910c3311126f5"
     },
     {
-      "t": "2026-09-17T01:43:32.916Z",
+      "t": "2026-09-17T01:53:32.916Z",
       "type": "stage:add",
-      "ref": "w5:S-6653b089916a11dd"
+      "ref": "w5:S-e94402a535bd49e1"
     },
     {
-      "t": "2026-09-17T02:03:32.916Z",
+      "t": "2026-09-17T02:13:32.916Z",
       "type": "stage:add",
-      "ref": "w5:S-5bdcfadca415c63a"
+      "ref": "w5:S-e2fb1027d9f25d4f"
     }
   ],
   "outcomes": {
     "w1": {
       "o1": {
         "checked": true,
-        "at": "2026-09-16T23:23:32.916Z"
+        "at": "2026-09-16T23:33:32.916Z"
       },
       "o3": {
         "checked": true,
-        "at": "2026-09-16T23:28:32.916Z"
+        "at": "2026-09-16T23:38:32.916Z"
       },
       "o4": {
         "checked": false,
-        "at": "2026-09-16T23:33:32.916Z"
+        "at": "2026-09-16T23:43:32.916Z"
       }
     },
     "w3": {
       "o2": {
         "checked": true,
-        "at": "2026-09-16T23:38:32.916Z"
+        "at": "2026-09-16T23:48:32.916Z"
       },
       "o3": {
         "checked": true,
-        "at": "2026-09-16T23:43:32.916Z"
+        "at": "2026-09-16T23:53:32.916Z"
       }
     }
   },
   "stageLogs": {
     "w3": [
       {
-        "id": "S-d085885243301979",
+        "id": "S-ebc1e242ae7b0cce",
         "change": "issue 4",
         "stage": "triage",
         "humanMinutes": 9,
@@ -561,10 +571,10 @@
         "cause": "taste",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-16T23:51:32.916Z"
+        "at": "2026-09-17T00:01:32.916Z"
       },
       {
-        "id": "S-409ea77b08d8b897",
+        "id": "S-6044ea10d74646cf",
         "change": "issue 4",
         "stage": "spec",
         "humanMinutes": 19,
@@ -575,10 +585,10 @@
         "cause": "none",
         "judgement": "",
         "failed": false,
-        "at": "2026-09-16T23:59:32.916Z"
+        "at": "2026-09-17T00:09:32.916Z"
       },
       {
-        "id": "S-8e4f4d9e152ef640",
+        "id": "S-bb0d3ef102642b5e",
         "change": "issue 4",
         "stage": "implement",
         "humanMinutes": 16,
@@ -589,10 +599,10 @@
         "cause": "wrong-design",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-17T00:07:32.916Z"
+        "at": "2026-09-17T00:17:32.916Z"
       },
       {
-        "id": "S-0b843e55af9cb26f",
+        "id": "S-83ff0132c06fc163",
         "change": "issue 4",
         "stage": "review",
         "humanMinutes": 18,
@@ -603,10 +613,10 @@
         "cause": "taste",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-17T00:15:32.916Z"
+        "at": "2026-09-17T00:25:32.916Z"
       },
       {
-        "id": "S-650e7c3f5e635a08",
+        "id": "S-eb82ceea732be358",
         "change": "issue 4",
         "stage": "pr",
         "humanMinutes": 4,
@@ -617,10 +627,10 @@
         "cause": "none",
         "judgement": "",
         "failed": false,
-        "at": "2026-09-17T00:23:32.916Z"
+        "at": "2026-09-17T00:33:32.916Z"
       },
       {
-        "id": "S-6412a84275c67238",
+        "id": "S-ecc25f4b766aad5c",
         "change": "issue 7",
         "stage": "triage",
         "humanMinutes": 7,
@@ -631,10 +641,10 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-17T00:31:32.916Z"
+        "at": "2026-09-17T00:41:32.916Z"
       },
       {
-        "id": "S-a4bfc009654cfcf1",
+        "id": "S-2c6907ce48053912",
         "change": "issue 7",
         "stage": "spec",
         "humanMinutes": 24,
@@ -645,10 +655,10 @@
         "cause": "none",
         "judgement": "",
         "failed": false,
-        "at": "2026-09-17T00:39:32.916Z"
+        "at": "2026-09-17T00:49:32.916Z"
       },
       {
-        "id": "S-7f55694eec64d4dc",
+        "id": "S-c7e3c8564bce6c47",
         "change": "issue 7",
         "stage": "implement",
         "humanMinutes": 12,
@@ -659,10 +669,10 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": true,
-        "at": "2026-09-17T00:47:32.916Z"
+        "at": "2026-09-17T00:57:32.916Z"
       },
       {
-        "id": "S-9b2590ec4546e383",
+        "id": "S-a83a66a7f004d6d4",
         "change": "issue 7",
         "stage": "review",
         "humanMinutes": 15,
@@ -673,10 +683,10 @@
         "cause": "taste",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-17T00:55:32.916Z"
+        "at": "2026-09-17T01:05:32.916Z"
       },
       {
-        "id": "S-0e37196044f3277a",
+        "id": "S-1746dce59524fa3e",
         "change": "issue 7",
         "stage": "pr",
         "humanMinutes": 5,
@@ -687,12 +697,12 @@
         "cause": "missing-context",
         "judgement": "synthetic judgement",
         "failed": false,
-        "at": "2026-09-17T01:03:32.916Z"
+        "at": "2026-09-17T01:13:32.916Z"
       }
     ],
     "w5": [
       {
-        "id": "S-4a5eccbe72aa5609",
+        "id": "S-67d910c3311126f5",
         "change": "issue 4",
         "stage": "other",
         "humanMinutes": 14,
@@ -703,10 +713,10 @@
         "cause": "none",
         "judgement": "synthetic",
         "failed": false,
-        "at": "2026-09-17T01:23:32.916Z"
+        "at": "2026-09-17T01:33:32.916Z"
       },
       {
-        "id": "S-6653b089916a11dd",
+        "id": "S-e94402a535bd49e1",
         "change": "issue 9",
         "stage": "other",
         "humanMinutes": 8,
@@ -717,10 +727,10 @@
         "cause": "none",
         "judgement": "synthetic",
         "failed": true,
-        "at": "2026-09-17T01:43:32.916Z"
+        "at": "2026-09-17T01:53:32.916Z"
       },
       {
-        "id": "S-5bdcfadca415c63a",
+        "id": "S-e2fb1027d9f25d4f",
         "change": "issue 12",
         "stage": "other",
         "humanMinutes": 19,
@@ -731,8 +741,26 @@
         "cause": "none",
         "judgement": "synthetic",
         "failed": false,
-        "at": "2026-09-17T02:03:32.916Z"
+        "at": "2026-09-17T02:13:32.916Z"
       }
     ]
+  },
+  "certificates": {
+    "w1:claude-code-101": {
+      "course": "Claude Code 101",
+      "platform": "Claude Academy",
+      "url": "https://credentials.example.org/badge/1",
+      "image": null,
+      "earnedOn": "2026-09-18",
+      "addedAt": "2026-09-16T23:23:32.916Z"
+    },
+    "w1:claude-code-in-action": {
+      "course": "Claude Code in Action",
+      "platform": "Claude Academy",
+      "url": null,
+      "image": "data:image/jpeg;base64,/9j/4AAQSkZJRg==",
+      "earnedOn": "2026-09-22",
+      "addedAt": "2026-09-16T23:28:32.916Z"
+    }
   }
 }

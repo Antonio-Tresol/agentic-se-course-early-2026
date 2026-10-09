@@ -359,8 +359,33 @@ def outcomes_table(ls):
     return header, rows
 
 
+def certificates_table(ls):
+    """Per learner and course: has_url, has_image, earnedOn."""
+    header = ["learner_id", "course_key", "course", "platform", "has_url", "has_image", "earnedOn"]
+    rows = []
+    for d in sorted(ls, key=lambda x: x["learner"]["id"]):
+        lid = d["learner"]["id"]
+        certs = d.get("certificates")
+        if not isinstance(certs, dict):
+            continue
+        for ck in sorted(certs.keys()):
+            c = certs[ck]
+            if not isinstance(c, dict):
+                continue
+            rows.append([
+                lid,
+                ck,
+                c.get("course", ""),
+                c.get("platform", ""),
+                bool(c.get("url")),
+                bool(c.get("image")),
+                c.get("earnedOn") or ""
+            ])
+    return header, rows
+
+
 # ---------- summary ----------
-def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes=None):
+def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes=None, certificates=None):
     n = len(ls)
     by_track = defaultdict(int)
     for d in ls:
@@ -454,6 +479,14 @@ def summary_md(ls, items, questions, estimates, has_truth, stages=None, outcomes
             lines += ["", "Least-ticked outcomes: " + ", ".join("%s %s (%s)" % (x[0], x[1], x[ox["proportion_checked"]]) for x in low) + "."]
         else:
             lines.append("No outcomes recorded.")
+    if certificates is not None:
+        ch, cr = certificates
+        lines += ["", "## Certificates", ""]
+        if cr:
+            unique_learners = len({x[0] for x in cr})
+            lines.append("%d certificates recorded across %d learners." % (len(cr), unique_learners))
+        else:
+            lines.append("No certificates recorded.")
     lines += ["", "Aliases are omitted from this report.", ""]
     return "\n".join(lines)
 
@@ -497,11 +530,12 @@ def main():
     et = estimates_table(ls, truth)
     st_t = stages_table(ls)
     ot = outcomes_table(ls)
+    ct = certificates_table(ls)
     for name, (h, rows) in (("learners", lt), ("items", it), ("questions", qt), ("estimates", et),
-                            ("stages", st_t), ("outcomes", ot)):
+                            ("stages", st_t), ("outcomes", ot), ("certificates", ct)):
         write_csv(out / (name + ".csv"), h, rows)
-    (out / "summary.md").write_text(summary_md(ls, it, qt, et, bool(truth), st_t, ot), encoding="utf-8")
-    print("Read %d learners; wrote learners.csv, items.csv, questions.csv, estimates.csv, stages.csv, outcomes.csv, summary.md to %s" % (len(ls), out))
+    (out / "summary.md").write_text(summary_md(ls, it, qt, et, bool(truth), st_t, ot, ct), encoding="utf-8")
+    print("Read %d learners; wrote learners.csv, items.csv, questions.csv, estimates.csv, stages.csv, outcomes.csv, certificates.csv, summary.md to %s" % (len(ls), out))
     return 0
 
 

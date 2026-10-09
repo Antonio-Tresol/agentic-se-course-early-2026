@@ -1,9 +1,9 @@
-/* Tests for ../mockups/progress.js in a minimal DOM shim.
+/* Tests for ../../site/progress.js in a minimal DOM shim.
    Run:  node test_progress.cjs            (tests)
          node test_progress.cjs --samples  (also rewrites sample/*.json, synthetic data) */
 "use strict";
 const fs = require("fs"), path = require("path"), vm = require("vm"), assert = require("assert");
-const SRC = fs.readFileSync(path.join(__dirname, "../mockups/progress.js"), "utf8");
+const SRC = fs.readFileSync(path.join(__dirname, "../../site/progress.js"), "utf8");
 
 /* ---- shim ---- */
 let clock = Date.parse("2026-10-01T09:00:00Z");
@@ -391,6 +391,54 @@ test("stage logs: failed flag defaults to false, updates both ways, only true co
   assert.strictEqual(load().P.importJSON(JSON.stringify(legacy)).ok, true);  // entries without the field stay valid
 });
 
+test("certificates: validation, set, remove, get", () => {
+  const { P } = load();
+  // Invalid calls
+  assert.strictEqual(P.setCertificate(1, "c1", {}).ok, false);
+  assert.strictEqual(P.setCertificate(1, "c1", { course: "C1", platform: "P1" }).ok, false, "needs url or image");
+  assert.strictEqual(P.setCertificate(1, "c1", { course: "C1", platform: "P1", url: "http://insecure.com" }).ok, false, "needs https");
+  assert.strictEqual(P.setCertificate(1, "c1", { course: "C1", platform: "P1", url: "https://example.com", earnedOn: "not-a-date" }).ok, false, "bad date");
+  assert.strictEqual(P.setCertificate(1, "c1", { course: "C1", platform: "P1", image: "data:image/png;base64,abc" }).ok, false, "needs jpeg");
+
+  // Valid calls
+  const ok1 = P.setCertificate(1, "c1", { course: "Course 101", platform: "Platform A", url: "https://example.com/badge/1" });
+  assert.strictEqual(ok1.ok, true);
+  const certs = P.getCertificates();
+  assert.ok(certs["w1:c1"]);
+  assert.strictEqual(certs["w1:c1"].course, "Course 101");
+  assert.strictEqual(certs["w1:c1"].platform, "Platform A");
+  assert.strictEqual(certs["w1:c1"].url, "https://example.com/badge/1");
+  assert.strictEqual(certs["w1:c1"].image, null);
+
+  // Set with image and earnedOn
+  const dummyJpg = "data:image/jpeg;base64,/9j/4AAQSkZJRg==";
+  const ok2 = P.setCertificate(2, "c2", { course: "Course 202", platform: "Platform B", image: dummyJpg, earnedOn: "2026-10-05" });
+  assert.strictEqual(ok2.ok, true);
+  assert.strictEqual(P.getCertificates()["w2:c2"].earnedOn, "2026-10-05");
+
+  // Removal
+  assert.strictEqual(P.removeCertificate(1, "c1"), true);
+  assert.strictEqual(P.getCertificates()["w1:c1"], undefined);
+  assert.strictEqual(P.removeCertificate(1, "c1"), false);
+});
+
+test("certificates: export and merge (later addedAt wins)", () => {
+  const { P: P1 } = load();
+  const { P: P2 } = load();
+  tick(10);
+  P1.setCertificate(1, "c1", { course: "Course 1", platform: "P", url: "https://example.com/1" });
+  tick(10);
+  P2.setCertificate(1, "c1", { course: "Course 1 Updated", platform: "P", url: "https://example.com/updated" });
+  P2.setCertificate(2, "c2", { course: "Course 2", platform: "P", url: "https://example.com/2" });
+
+  const exp2 = P2.exportJSON();
+  const res = P1.importJSON(exp2, { mode: "merge" });
+  assert.strictEqual(res.ok, true);
+  const certs = P1.getCertificates();
+  assert.strictEqual(certs["w1:c1"].url, "https://example.com/updated");
+  assert.ok(certs["w2:c2"]);
+});
+
 console.log("\n" + passed + " tests passed");
 
 if (process.argv.includes("--samples")) {
@@ -460,12 +508,28 @@ if (process.argv.includes("--samples")) {
       P.submitAttempt(1, id, KEYS);
     }
     if (weeks > 2) P.setDeliverable(3, { url: "https://example.invalid/synthetic", note: "synthetic", rubricSelf: { r1: "secure", r2: rnd() < 0.5 ? "secure" : "developing" } });
+    if (i === 0 || i === 2) {
+      tick(5);
+      P.setCertificate(1, track === "claude" ? "claude-code-101" : "codex-get-started", {
+        course: track === "claude" ? "Claude Code 101" : "Get Started with Codex",
+        platform: track === "claude" ? "Claude Academy" : "OpenAI Academy",
+        url: "https://credentials.example.org/badge/" + n,
+        earnedOn: "2026-09-18"
+      });
+      tick(5);
+      P.setCertificate(1, track === "claude" ? "claude-code-in-action" : "codex-extend", {
+        course: track === "claude" ? "Claude Code in Action" : "Extend Codex Workflows",
+        platform: track === "claude" ? "Claude Academy" : "OpenAI Academy",
+        image: "data:image/jpeg;base64,/9j/4AAQSkZJRg==",
+        earnedOn: "2026-09-22"
+      });
+    }
     addOptional(P, i, track);
     tick(10);
     const o = P.exportObject();
     o.learner.id = "L-synthetic-" + String(n).padStart(2, "0");
     o.appVersion = "mockup-2026-10-SYNTHETIC";
-    if (i === 1 || i === 3) { delete o.outcomes; delete o.stageLogs; }   // older-style exports, to test the optional fields
+    if (i === 1 || i === 3) { delete o.outcomes; delete o.stageLogs; delete o.certificates; }   // older-style exports, to test the optional fields
     fs.writeFileSync(path.join(dir, "synthetic-" + String(n).padStart(2, "0") + ".json"), JSON.stringify(o, null, 2) + "\n");
   });
   console.log("wrote 5 synthetic samples to " + dir);

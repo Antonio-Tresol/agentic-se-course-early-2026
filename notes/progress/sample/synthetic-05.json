@@ -51,7 +51,7 @@
   "quizzes": {
     "w1": [
       {
-        "attemptId": "A-0b6f479470515bfc",
+        "attemptId": "A-fe34dfcd9115e009",
         "startedAt": "2026-09-15T17:16:04.989Z",
         "submittedAt": "2026-09-15T17:21:04.989Z",
         "answers": [
@@ -104,7 +104,7 @@
         }
       },
       {
-        "attemptId": "A-d747cdea26cecaee",
+        "attemptId": "A-c115ba0548413c93",
         "startedAt": "2026-09-15T18:21:04.989Z",
         "submittedAt": "2026-09-15T18:26:04.989Z",
         "answers": [
@@ -413,5 +413,6 @@
       }
     }
   },
-  "stageLogs": {}
+  "stageLogs": {},
+  "certificates": {}
 }

@@ -112,7 +112,7 @@
       schemaVersion: VERSION,
       learner: { id: rid("L-"), alias: "", cohort: "early-2026", track: "claude", createdAt: nowISO() },
       items: {}, quizzes: {}, estimates: [], deliverables: {}, events: [],
-      outcomes: {}, stageLogs: {}
+      outcomes: {}, stageLogs: {}, certificates: {}
     };
   }
   function normalise(s) {
@@ -127,6 +127,7 @@
     b.deliverables = isObj(s.deliverables) ? s.deliverables : {};
     b.outcomes = isObj(s.outcomes) ? s.outcomes : {};
     b.stageLogs = isObj(s.stageLogs) ? s.stageLogs : {};
+    b.certificates = isObj(s.certificates) ? s.certificates : {};
     b.events = Array.isArray(s.events) ? s.events.slice(-EVENT_CAP) : [];
     return b;
   }
@@ -437,6 +438,62 @@
     return had;
   }
 
+  /* ---------- certificates ---------- */
+  function setCertificate(week, courseId, data) {
+    if (!isObj(data)) return { ok: false, errors: ["Data must be an object."] };
+    var errs = [];
+    var course = String(data.course || "").trim();
+    if (!course) errs.push("course must be a non-empty string.");
+    var platform = String(data.platform || "").trim();
+    if (!platform) errs.push("platform must be a non-empty string.");
+    var url = data.url;
+    if (url === undefined || url === null || url === "") {
+      url = null;
+    } else if (typeof url !== "string" || !/^https:\/\/.+/i.test(url.trim())) {
+      errs.push("url must be an https URL or null.");
+    } else {
+      url = url.trim();
+    }
+    var image = data.image;
+    if (image === undefined || image === null || image === "") {
+      image = null;
+    } else if (typeof image !== "string" || !/^data:image\/jpeg;base64,/i.test(image)) {
+      errs.push("image must be a JPEG data URL or null.");
+    }
+    if (!url && !image) {
+      errs.push("At least one of url or image must be present.");
+    }
+    var earnedOn = data.earnedOn;
+    if (earnedOn === undefined || earnedOn === null || earnedOn === "") {
+      earnedOn = null;
+    } else if (!validDate(earnedOn)) {
+      errs.push("earnedOn must be a valid date in YYYY-MM-DD format, or null.");
+    }
+    if (errs.length) return { ok: false, errors: errs };
+    var key = itemKey(week, courseId);
+    state.certificates = state.certificates || {};
+    state.certificates[key] = {
+      course: course,
+      platform: platform,
+      url: url,
+      image: image,
+      earnedOn: earnedOn,
+      addedAt: nowISO()
+    };
+    commit("certificate:set", key);
+    return { ok: true, errors: [] };
+  }
+  function removeCertificate(week, courseId) {
+    var key = itemKey(week, courseId);
+    if (!state.certificates || !state.certificates[key]) return false;
+    delete state.certificates[key];
+    commit("certificate:remove", key);
+    return true;
+  }
+  function getCertificates() {
+    return clone(state.certificates || {});
+  }
+
   /* ---------- summary ---------- */
   // Returns {track, weeks: {w1: {done, total, completion, minutes, quizBest,
   // estimates, outcomesChecked, outcomesTotal}}, totals: {done, total,
@@ -559,6 +616,25 @@
         else d.stageLogs[w].forEach(function (e) { if (!isObj(e) || !e.id) errs.push("Stage log entry without id in " + w); });
       });
     }
+    if (d.certificates !== undefined) {
+      if (!isObj(d.certificates)) errs.push("certificates must be an object.");
+      else Object.keys(d.certificates).forEach(function (k) {
+        if (!/^w\d+:.+/.test(k)) errs.push("Bad certificate key: " + k);
+        else {
+          var c = d.certificates[k];
+          if (!isObj(c)) errs.push("Certificate entry must be an object: " + k);
+          else {
+            if (typeof c.course !== "string" || !c.course.trim()) errs.push("Missing course in certificate " + k);
+            if (typeof c.platform !== "string" || !c.platform.trim()) errs.push("Missing platform in certificate " + k);
+            if (c.url !== null && (typeof c.url !== "string" || !/^https:\/\/.+/i.test(c.url))) errs.push("Invalid URL in certificate " + k);
+            if (c.image !== null && (typeof c.image !== "string" || !/^data:image\/jpeg;base64,/i.test(c.image))) errs.push("Invalid image in certificate " + k);
+            if (!c.url && !c.image) errs.push("Certificate must have url or image: " + k);
+            if (c.earnedOn !== null && !validDate(c.earnedOn)) errs.push("Invalid earnedOn in certificate " + k);
+            if (typeof c.addedAt !== "string") errs.push("Missing addedAt in certificate " + k);
+          }
+        }
+      });
+    }
     if (d.events !== undefined && !Array.isArray(d.events)) errs.push("events must be an array.");
     return errs.slice(0, 10);
   }
@@ -599,6 +675,13 @@
       });
       list.sort(function (x, y) { return String(x.at) < String(y.at) ? -1 : 1; });
     });
+    if (inc.certificates && isObj(inc.certificates)) {
+      cur.certificates = cur.certificates || {};
+      Object.keys(inc.certificates).forEach(function (k) {
+        var a = cur.certificates[k], b = inc.certificates[k];
+        if (!a || later(b.addedAt, a.addedAt)) cur.certificates[k] = b;
+      });
+    }
     var seen = {};
     cur.events = cur.events.concat(inc.events || []).filter(function (e) {
       var k = e.t + "|" + e.type + "|" + e.ref;
@@ -635,6 +718,7 @@
     addEstimate: addEstimate, revealEstimate: revealEstimate,
     setCalendar: setCalendar, getCalendar: getCalendar, clearCalendar: clearCalendar,
     setOutcome: setOutcome, logStage: logStage, updateStage: updateStage, removeStage: removeStage, setDeliverable: setDeliverable,
+    setCertificate: setCertificate, removeCertificate: removeCertificate, getCertificates: getCertificates,
     exportObject: exportObject, exportJSON: exportJSON, download: download,
     copyToClipboard: copyToClipboard, importJSON: importJSON, reset: reset, on: on,
     KEY: KEY, CALENDAR_KEY: CAL_KEY, SCHEMA_VERSION: VERSION

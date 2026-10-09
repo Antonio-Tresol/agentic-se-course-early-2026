@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Week 1 self-check · Agentic SE Course</title>
-<meta name="description" content="Week 1 self-check: retrieval questions and understanding checks on Week 1 core concepts.">
+<title>Week 2 self-check · Agentic SE Course</title>
+<meta name="description" content="Week 2 self-check: retrieval questions and understanding checks on context engineering, skills, MCP, and subagents.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,8 +35,8 @@
         <span class="week-nav__label" aria-hidden="true">Weeks</span>
         <ul class="week-nav__list">
           <li><a class="week-nav__link" href="week-0.html"><span class="sr-only">Week </span>0</a></li>
-          <li><a class="week-nav__link" href="week-1.html" aria-current="true"><span class="sr-only">Week </span>1</a></li>
-          <li><a class="week-nav__link" href="week-2.html"><span class="sr-only">Week </span>2</a></li>
+          <li><a class="week-nav__link" href="week-1.html"><span class="sr-only">Week </span>1</a></li>
+          <li><a class="week-nav__link" href="week-2.html" aria-current="true"><span class="sr-only">Week </span>2</a></li>
           <li><a class="week-nav__link" href="week-3.html"><span class="sr-only">Week </span>3</a></li>
           <li><a class="week-nav__link" href="week-4.html"><span class="sr-only">Week </span>4</a></li>
           <li><a class="week-nav__link" href="week-5.html"><span class="sr-only">Week </span>5</a></li>
@@ -51,8 +51,8 @@
   <div class="week-head">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
       <div>
-        <p class="label week-head__label"><a href="week-1.html">Week 1: One Coding Agent</a></p>
-        <h1 class="week-head__title">Week 1 self-check</h1>
+        <p class="label week-head__label"><a href="week-2.html">Week 2: Adapting a Coding Agent</a></p>
+        <h1 class="week-head__title">Week 2 self-check</h1>
       </div>
       <fieldset class="track-switch"
         data-announce-claude="Showing the Claude Code track."
@@ -73,7 +73,7 @@
     </p>
     <div class="score-card">
       <p class="label">This try</p>
-      <div data-quiz-score="1"></div>
+      <div data-quiz-score="2"></div>
       <p class="score-card__key" aria-hidden="true">
         <span><i class="scorebar__cell is-full"></i>Right</span>
         <span><i class="scorebar__cell is-half"></i>Half</span>
@@ -93,101 +93,101 @@
     </div>
   </section>
 
-  <form class="q-form" id="q-form" data-quiz="1" novalidate>
+  <form class="q-form" id="q-form" data-quiz="2" novalidate>
     <div class="msg msg--warn" id="quiz-gate-msg" role="status" style="margin-bottom:20px" hidden>
       <p><strong>Self-check locked:</strong> Please add proof for the required course certificates above to unlock these questions.</p>
     </div>
     <fieldset id="quiz-fieldset" style="border:none;padding:0;margin:0">
     <ol class="q-list">
 
-      <!-- Q1: short answer -->
-      <li class="q card" id="q1" data-qid="q1" data-answer="short">
-        <h2 class="label q__num">Question 1 of 5 · short answer</h2>
-        <label class="q__prompt" for="q1-input">Claude stops when the work looks done. What should you give it so that "looks done" is not its only signal? Name two examples.</label>
-        <textarea id="q1-input" name="q1" rows="3"></textarea>
+      <!-- Q1: choice -->
+      <li class="q card" id="q1" data-qid="q1" data-answer="2">
+        <h2 class="label q__num">Question 1 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">What is "context rot" as described in context engineering for AI agents?</legend>
+          <label class="choice"><input type="radio" name="q1" value="0"><span>When project documentation becomes outdated and gives obsolete instructions to the agent</span></label>
+          <label class="choice"><input type="radio" name="q1" value="1"><span>When cache tokens expire on the API server and must be recomputed</span></label>
+          <label class="choice"><input type="radio" name="q1" value="2"><span>The degradation of a model's recall and reasoning accuracy as context length grows, because attention is a finite resource</span></label>
+          <label class="choice"><input type="radio" name="q1" value="3"><span>The loss of model weights caused by running long fine-tuning steps</span></label>
+        </fieldset>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q1-answer" hidden>
-          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>A check it can run that returns pass or fail, with a result it can read in the conversation: a test suite, a build exit code, a linter, a script that diffs output against a fixture, or a screenshot compared against a design. Claude then does the work, runs the check, reads the result and iterates until the check passes. Without one, you become the verification loop.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Give Claude a way to verify its work"<span class="sr-only"> (opens in a new tab)</span></a>. Also in Claude Code in Action, on verification.</p>
+          <p class="q__verdict" data-verdict></p>
+          <p>Context rot refers to the phenomenon where, as the number of tokens in the context window increases, the model's ability to accurately recall information decreases because the model has a finite attention budget. Adding unnecessary tokens depletes this budget and degrades agent coherence.</p>
+          <p class="q__source">Source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Effective context engineering for AI agents<span class="sr-only"> (opens in a new tab)</span></a>, section "Context rot".</p>
         </div>
       </li>
 
       <!-- Q2: choice -->
-      <li class="q card" id="q2" data-qid="q2" data-answer="2">
+      <li class="q card" id="q2" data-qid="q2" data-answer="1">
         <h2 class="label q__num">Question 2 of 5 · choice</h2>
         <fieldset class="q__choices">
-          <legend class="q__prompt">When does the guide suggest skipping plan mode and asking Claude to make the change directly?</legend>
-          <label class="choice"><input type="radio" name="q2" value="0"><span>When the change touches several files</span></label>
-          <label class="choice"><input type="radio" name="q2" value="1"><span>When you are unfamiliar with the code being changed</span></label>
-          <label class="choice"><input type="radio" name="q2" value="2"><span>When you could describe the diff in one sentence</span></label>
-          <label class="choice"><input type="radio" name="q2" value="3"><span>Never: every change should start in plan mode</span></label>
+          <legend class="q__prompt">Under the Model Context Protocol (MCP) architecture, which three core primitives can an MCP server expose to an agent client?</legend>
+          <label class="choice"><input type="radio" name="q2" value="0"><span>Threads, Embeddings, and Tokens</span></label>
+          <label class="choice"><input type="radio" name="q2" value="1"><span>Tools, Resources, and Prompts</span></label>
+          <label class="choice"><input type="radio" name="q2" value="2"><span>Workflows, Sandboxes, and Webhooks</span></label>
+          <label class="choice"><input type="radio" name="q2" value="3"><span>Contexts, Filters, and Memory</span></label>
         </fieldset>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q2-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>Planning adds overhead. It pays off when you are unsure of the approach, when the change modifies several files, or when you do not know the code. A typo fix, a log line or a rename can go straight to implementation. The other two options are the cases where the guide recommends planning.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#explore-first-then-plan-then-code" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Explore first, then plan, then code"<span class="sr-only"> (opens in a new tab)</span></a>. Also in Claude Code 101, on the Explore, Plan, Code, Commit workflow.</p>
+          <p>MCP defines three core server primitives: Tools (executable functions the model can call), Resources (data and content the client can read), and Prompts (reusable templates and workflows). Other concepts like sandboxes or threads belong to clients or runtimes, not MCP server primitives.</p>
+          <p class="q__source">Source: <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture#primitives" target="_blank" rel="noopener noreferrer">Model Context Protocol Architecture, "Primitives"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
 
       <!-- Q3: choice -->
-      <li class="q card" id="q3" data-qid="q3" data-answer="1">
+      <li class="q card" id="q3" data-qid="q3" data-answer="0">
         <h2 class="label q__num">Question 3 of 5 · choice</h2>
         <fieldset class="q__choices">
-          <legend class="q__prompt">Which of these belongs in a project's CLAUDE.md?</legend>
-          <label class="choice"><input type="radio" name="q3" value="0"><span>A file-by-file description of the codebase</span></label>
-          <label class="choice"><input type="radio" name="q3" value="1"><span>A Bash command Claude cannot guess, such as how to run a single test</span></label>
-          <label class="choice"><input type="radio" name="q3" value="2"><span>The standard conventions of the language you use</span></label>
-          <label class="choice"><input type="radio" name="q3" value="3"><span>Detailed API documentation for your main library</span></label>
+          <legend class="q__prompt">How does loading instructions via an Agent Skill differ from placing them directly in a project's root instructions file (such as CLAUDE.md or AGENTS.md)?</legend>
+          <label class="choice"><input type="radio" name="q3" value="0"><span>Skills load their full instructions on demand when invoked, whereas root instruction files load on every session launch</span></label>
+          <label class="choice"><input type="radio" name="q3" value="1"><span>Skills run in a separate cloud container, whereas root instructions run on the local machine</span></label>
+          <label class="choice"><input type="radio" name="q3" value="2"><span>Root instruction files can only contain 100 words, whereas skills have unlimited context size</span></label>
+          <label class="choice"><input type="radio" name="q3" value="3"><span>Skills permanently modify the model weights, whereas root instruction files only apply to the current prompt</span></label>
         </fieldset>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q3-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>CLAUDE.md loads in every session, so it holds what Claude cannot infer from the code: commands it cannot guess, style rules that differ from the defaults, test instructions, repository etiquette and environment quirks. For each line, ask whether removing it would cause Claude to make mistakes; if not, cut it. The other three options are on the guide's list of things to leave out.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#write-an-effective-claude-md" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Write an effective CLAUDE.md"<span class="sr-only"> (opens in a new tab)</span></a>. Also in Claude Code in Action, on keeping CLAUDE.md lean.</p>
+          <p>Root instruction files load their full contents into context on every session launch, consuming a permanent portion of the attention budget. Skills only expose metadata initially and load their full instructional body on demand when invoked for a relevant task.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer">Claude Code Docs, "Skills"<span class="sr-only"> (opens in a new tab)</span></a> and <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">OpenAI Codex Docs, "Build skills"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
 
       <!-- Q4: short answer -->
       <li class="q card" id="q4" data-qid="q4" data-answer="short">
         <h2 class="label q__num">Question 4 of 5 · short answer</h2>
-        <label class="q__prompt" for="q4-input">You have corrected Claude twice on the same issue and it is still wrong. What does the guide recommend, and why?</label>
+        <label class="q__prompt" for="q4-input">Why is isolating side tasks in a subagent beneficial for managing the main agent's context window?</label>
         <textarea id="q4-input" name="q4" rows="3"></textarea>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q4-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>Run <code>/clear</code> and start again with a more specific prompt that uses what you learned. After repeated corrections the context is cluttered with failed approaches, and a clean session with a better prompt almost always outperforms a long session with accumulated corrections. <code>/clear</code> resets the context window entirely; <code>/compact</code> keeps a summary of what matters.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#course-correct-early-and-often" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Course-correct early and often"<span class="sr-only"> (opens in a new tab)</span></a> and "Avoid common failure patterns". Also in Claude Code 101, on <code>/compact</code>, <code>/clear</code> and <code>/context</code>.</p>
+          <p>Running a side task in a subagent keeps verbose intermediate output, such as extensive search results, build logs, or exploratory file reads, out of the primary conversation. The subagent executes within its own isolated context window and returns only the concise summary or finished artefact to the main agent.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener noreferrer">Claude Code Docs, "Create custom subagents"<span class="sr-only"> (opens in a new tab)</span></a>. Also in <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents" target="_blank" rel="noopener noreferrer">OpenAI Codex Docs, "Subagents"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
 
-      <!-- Q5: choice -->
-      <li class="q card" id="q5" data-qid="q5" data-answer="1">
-        <h2 class="label q__num">Question 5 of 5 · choice</h2>
-        <fieldset class="q__choices">
-          <legend class="q__prompt">In Manual permission mode, which actions does Claude Code ask you to approve?</legend>
-          <label class="choice"><input type="radio" name="q5" value="0"><span>Only git commits and pushes</span></label>
-          <label class="choice"><input type="radio" name="q5" value="1"><span>Actions that might modify your system: file writes, Bash commands and MCP tools</span></label>
-          <label class="choice"><input type="radio" name="q5" value="2"><span>Every action, including reading files</span></label>
-          <label class="choice"><input type="radio" name="q5" value="3"><span>None: a classifier model reviews each action instead of you</span></label>
-        </fieldset>
+      <!-- Q5: short answer -->
+      <li class="q card" id="q5" data-qid="q5" data-answer="short">
+        <h2 class="label q__num">Question 5 of 5 · short answer</h2>
+        <label class="q__prompt" for="q5-input">What is context compaction in long-horizon agent workflows, and what is the primary risk of overly aggressive compaction?</label>
+        <textarea id="q5-input" name="q5" rows="3"></textarea>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q5-answer" hidden>
-          <p class="q__verdict" data-verdict></p>
-          <p>Manual mode asks before actions that might modify your system. The last option describes auto mode, where a separate classifier model reviews most actions and blocks only what looks risky. Permission allowlists and sandboxing cut the number of prompts in either mode.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#configure-permissions" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Configure permissions"<span class="sr-only"> (opens in a new tab)</span></a>. Also Session 1, Part 4, on permission modes.</p>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Context compaction distils the accumulated conversation history into a concise, high-fidelity summary or structured artefact so the agent can continue working within its attention budget. The primary risk of overly aggressive compaction is accidentally discarding subtle but critical context whose importance only becomes apparent later in the task.</p>
+          <p class="q__source">Source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Effective context engineering for AI agents<span class="sr-only"> (opens in a new tab)</span></a>, section "Compaction".</p>
         </div>
       </li>
     </ol>
     </fieldset>
 
-    <section class="score-card quiz-end" data-quiz-end="1" aria-label="Your result" hidden></section>
+    <section class="score-card quiz-end" data-quiz-end="2" aria-label="Your result" hidden></section>
 
     <div class="q__actions" style="margin-top:24px">
       <button type="button" class="btn-text" data-quiz-restart="abandon" hidden>Clear my answers and start again</button>
-      <a class="link-row" href="week-1.html#live-h" style="min-height:32px">
-        <span class="link-row__text"><span class="link-row__verb">Back to</span> <span class="link-row__title">Week 1, live session</span></span>
+      <a class="link-row" href="week-2.html#live-h" style="min-height:32px">
+        <span class="link-row__text"><span class="link-row__verb">Back to</span> <span class="link-row__title">Week 2, live session</span></span>
         <svg class="arrow arrow--int" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 6H11M11 6L6.5 1.5M11 6L6.5 10.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -219,15 +219,16 @@
   var P = window.AgenticProgress, S = window.AgenticSite;
   if (!P || !S) return;
 
-  var WEEK = 1;
+  var WEEK = 2;
   var REQS = {
     claude: [
-      { id: "claude-code-101", title: "Claude Code 101", platform: "Claude Academy", defaultUrl: "https://academy.claude.com/courses/claude-code-101/badge" },
-      { id: "claude-code-in-action", title: "Claude Code in Action", platform: "Claude Academy", defaultUrl: "https://academy.claude.com/courses/claude-code-in-action/badge" }
+      { id: "mcp", title: "Introduction to Model Context Protocol", platform: "Claude Academy", defaultUrl: "https://academy.claude.com/courses/introduction-to-model-context-protocol/badge", required: true },
+      { id: "agent-skills", title: "Introduction to Agent Skills", platform: "Claude Academy", noBadge: true, required: false },
+      { id: "subagents", title: "Introduction to Subagents", platform: "Claude Academy", noBadge: true, required: false }
     ],
     codex: [
-      { id: "codex-get-started", title: "Get Started with Codex", platform: "OpenAI Academy", hint: "Digital badge link from Accredible email" },
-      { id: "codex-extend", title: "Extend Codex Workflows", platform: "OpenAI Academy", hint: "Digital badge link from Accredible email" }
+      { id: "mcp", title: "Introduction to Model Context Protocol", platform: "Claude Academy", defaultUrl: "https://academy.claude.com/courses/introduction-to-model-context-protocol/badge", required: true },
+      { id: "scale-codex", title: "Scale Codex Across Teams and Systems", platform: "OpenAI Academy", hint: "Digital badge link from Accredible email", required: true }
     ]
   };
 
@@ -265,6 +266,16 @@
     if (!container) return;
 
     var html = list.map(function (req) {
+      if (req.noBadge) {
+        return '<div class="card" style="margin-bottom:12px;background:var(--surface)">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px">' +
+            '<div><h3 class="h-card" style="margin:0">' + S.esc(req.title) + '</h3><span class="meta">' + S.esc(req.platform) + '</span></div>' +
+            '<span class="tag">No badge offered for this course</span>' +
+          '</div>' +
+          '<p class="meta" style="margin:4px 0 0">No badge offered for this course. Proof is not required for this self-check.</p>' +
+        '</div>';
+      }
+
       var key = "w" + WEEK + ":" + req.id;
       var c = certs[key];
       var isSaved = c && (c.url || c.image);
@@ -333,7 +344,7 @@
     if (!container) return;
 
     var track = S.track();
-    var list = REQS[track] || [];
+    var list = (REQS[track] || []).filter(function (r) { return r.required; });
 
     list.forEach(function (req) {
       var fileInput = document.getElementById("file-" + req.id);
@@ -411,7 +422,7 @@
 
   function updateGating() {
     var track = S.track();
-    var list = REQS[track] || [];
+    var list = (REQS[track] || []).filter(function (r) { return r.required; });
     var certs = P.getCertificates();
     var allSatisfied = list.every(function (req) {
       var c = certs["w" + WEEK + ":" + req.id];
