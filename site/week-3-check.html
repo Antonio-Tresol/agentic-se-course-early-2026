@@ -99,8 +99,8 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q1-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>RPI structures agent work into three sequential phases: Research (exploring codebase context and dependencies), Plan (outlining changes and validation steps), and Implement (executing code edits). Separating these phases prevents agents from jumping into premature, uninformed code modifications.</p>
-          <p class="q__source">Source: <a href="https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md" target="_blank" rel="noopener noreferrer">Getting AI to Work in Complex Codebases (ACE-FCA)<span class="sr-only"> (opens in a new tab)</span></a>, "The RPI Workflow". Also in <a href="https://www.youtube.com/watch?v=rmvDxxNubIg&amp;t=172s" target="_blank" rel="noopener noreferrer">No Vibes Allowed<span class="sr-only"> (opens in a new tab)</span></a> at 2:52.</p>
+          <p>RPI stands for research, plan, implement. Research is understanding the codebase, the files relevant to the issue and how information flows. Plan is outlining the exact steps and the files to edit, with precise testing and verification steps. Implement is stepping through the plan, phase by phase.</p>
+          <p class="q__source">Source: <a href="https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md" target="_blank" rel="noopener noreferrer">Getting AI to Work in Complex Codebases (ACE-FCA)<span class="sr-only"> (opens in a new tab)</span></a>, "What works even better: Frequent Intentional Compaction", which describes a "research, plan, implement" workflow. Also in <a href="https://www.youtube.com/watch?v=rmvDxxNubIg&amp;t=461s" target="_blank" rel="noopener noreferrer">No Vibes Allowed<span class="sr-only"> (opens in a new tab)</span></a> at 7:41.</p>
         </div>
       </li>
 
@@ -148,8 +148,8 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q4-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>Errors made upstream are heavily amplified downstream. A bad line of code affects only that specific change, whereas a faulty assumption in a plan can trigger hundreds of wasted lines of code, and a mistake in initial research can misdirect the entire planning and implementation cycle into completely unnecessary rewrites.</p>
-          <p class="q__source">Source: <a href="https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md" target="_blank" rel="noopener noreferrer">Getting AI to Work in Complex Codebases (ACE-FCA)<span class="sr-only"> (opens in a new tab)</span></a>, section "Leverage Asymmetry". Also in <a href="https://www.youtube.com/watch?v=rmvDxxNubIg&amp;t=394s" target="_blank" rel="noopener noreferrer">No Vibes Allowed<span class="sr-only"> (opens in a new tab)</span></a> at 6:34.</p>
+          <p>Errors made upstream are amplified downstream. A bad line of code is just a bad line of code, but a bad line of a plan could lead to hundreds of bad lines of code, and a bad line of research, a misunderstanding of how the codebase works, could lead to thousands. Reviewing research and plans therefore gives more leverage than reviewing code.</p>
+          <p class="q__source">Source: <a href="https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md" target="_blank" rel="noopener noreferrer">Getting AI to Work in Complex Codebases (ACE-FCA)<span class="sr-only"> (opens in a new tab)</span></a>, section "On Human Leverage". Also in <a href="https://www.youtube.com/watch?v=rmvDxxNubIg&amp;t=1031s" target="_blank" rel="noopener noreferrer">No Vibes Allowed<span class="sr-only"> (opens in a new tab)</span></a> at 17:11.</p>
         </div>
       </li>
 

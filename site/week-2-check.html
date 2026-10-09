@@ -107,13 +107,13 @@
           <legend class="q__prompt">What is "context rot" as described in context engineering for AI agents?</legend>
           <label class="choice"><input type="radio" name="q1" value="0"><span>When project documentation becomes outdated and gives obsolete instructions to the agent</span></label>
           <label class="choice"><input type="radio" name="q1" value="1"><span>When cache tokens expire on the API server and must be recomputed</span></label>
-          <label class="choice"><input type="radio" name="q1" value="2"><span>The degradation of a model's recall and reasoning accuracy as context length grows, because attention is a finite resource</span></label>
+          <label class="choice"><input type="radio" name="q1" value="2"><span>The decline in a model's ability to accurately recall information as the number of tokens in context grows, because attention is a finite resource</span></label>
           <label class="choice"><input type="radio" name="q1" value="3"><span>The loss of model weights caused by running long fine-tuning steps</span></label>
         </fieldset>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q1-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>Context rot refers to the phenomenon where, as the number of tokens in the context window increases, the model's ability to accurately recall information decreases because the model has a finite attention budget. Adding unnecessary tokens depletes this budget and degrades agent coherence.</p>
+          <p>Context rot refers to the finding that, as the number of tokens in the context window increases, the model's ability to accurately recall information from that context decreases. Context is a finite resource with diminishing marginal returns, and models have an attention budget that every new token depletes, so unnecessary tokens should be avoided.</p>
           <p class="q__source">Source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Effective context engineering for AI agents<span class="sr-only"> (opens in a new tab)</span></a>, section "Context rot".</p>
         </div>
       </li>
@@ -131,7 +131,7 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q2-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>MCP defines three core server primitives: Tools (executable functions the model can call), Resources (data and content the client can read), and Prompts (reusable templates and workflows). Other concepts like sandboxes or threads belong to clients or runtimes, not MCP server primitives.</p>
+          <p>MCP defines three core primitives that servers can expose: Tools (executable functions that AI applications can invoke to perform actions), Resources (data sources that provide contextual information, such as file contents or database records) and Prompts (reusable templates that help structure interactions with language models).</p>
           <p class="q__source">Source: <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture#primitives" target="_blank" rel="noopener noreferrer">Model Context Protocol Architecture, "Primitives"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
@@ -170,12 +170,12 @@
       <!-- Q5: short answer -->
       <li class="q card" id="q5" data-qid="q5" data-answer="short">
         <h2 class="label q__num">Question 5 of 5 · short answer</h2>
-        <label class="q__prompt" for="q5-input">What is context compaction in long-horizon agent workflows, and what is the primary risk of overly aggressive compaction?</label>
+        <label class="q__prompt" for="q5-input">What is context compaction in long-horizon agent workflows, and what is the risk of overly aggressive compaction?</label>
         <textarea id="q5-input" name="q5" rows="3"></textarea>
         <div data-quiz-controls></div>
         <div class="q__answer" id="q5-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>Context compaction distils the accumulated conversation history into a concise, high-fidelity summary or structured artefact so the agent can continue working within its attention budget. The primary risk of overly aggressive compaction is accidentally discarding subtle but critical context whose importance only becomes apparent later in the task.</p>
+          <p>Context compaction takes a conversation nearing the context window limit, summarises its contents in a high-fidelity way, and reinitiates a new context window with that summary so the agent can continue with minimal performance degradation. The risk of overly aggressive compaction is losing subtle but critical context whose importance only becomes apparent later, so the art lies in choosing what to keep and what to discard.</p>
           <p class="q__source">Source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Effective context engineering for AI agents<span class="sr-only"> (opens in a new tab)</span></a>, section "Compaction".</p>
         </div>
       </li>

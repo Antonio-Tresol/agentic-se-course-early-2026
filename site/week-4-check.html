@@ -108,7 +108,7 @@
       <li class="q card" id="q2" data-qid="q2" data-answer="0">
         <h2 class="label q__num">Question 2 of 5 · choice</h2>
         <fieldset class="q__choices">
-          <legend class="q__prompt">Why does Dex Horthy argue that adding more prompt guardrails or harness loops cannot solve the problem of declining software maintainability?</legend>
+          <legend class="q__prompt">Why does Dex Horthy argue that adding more prompt guardrails or harness loops cannot fully solve the problem of declining software maintainability?</legend>
           <label class="choice"><input type="radio" name="q2" value="0"><span>Foundation models are trained to pass tests, which rewards expedient fixes without penalising poor program design or eroded maintainability</span></label>
           <label class="choice"><input type="radio" name="q2" value="1"><span>Code harnesses use too much CPU memory to run full test suites reliably</span></label>
           <label class="choice"><input type="radio" name="q2" value="2"><span>Automated harnesses cannot parse git commit logs created by agents</span></label>
@@ -117,8 +117,8 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q2-answer" hidden>
           <p class="q__verdict" data-verdict></p>
-          <p>Coding models are optimised to make tests pass, but test suites do not penalise tangled dependencies, code duplication, or bad program design. Adding harness loops around a model cannot compensate for an objective that the model's underlying training does not reward.</p>
-          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, at 11:21. Also Session 4 facilitator key.</p>
+          <p>Coding models are trained with reinforcement learning to make tests pass, and nothing in that setup penalises poor program design or eroded maintainability. Horthy says review agents and extra tokens can raise the floor, but the model is still constrained by what can be taught during training, so harness loops alone do not fix maintainability.</p>
+          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, at 11:21 to 12:57. Also Session 4 facilitator key.</p>
         </div>
       </li>
 
@@ -136,7 +136,7 @@
         <div class="q__answer" id="q3-answer" hidden>
           <p class="q__verdict" data-verdict></p>
           <p>Bender explains that dependency graphs between modules scale quadratically rather than linearly as code volume increases. Consequently, a tenfold increase in code volume can multiply the number of dependent tests and interactions by a hundredfold or more.</p>
-          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>. Also Session 4 reading check, Part 1, Q3.</p>
+          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU&amp;t=1333s" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>, at about 22:13. Also Session 4 reading check, Part 1, Q3.</p>
         </div>
       </li>
 
@@ -148,8 +148,8 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q4-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>Amplification magnifies whatever practices and processes a team already has, without steering their direction. A team with strong fundamentals in testing, architecture, and review accelerates good software delivery, whereas a team with poor practices merely accelerates chaos and technical debt at ten times the speed.</p>
-          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>, at about 15:30. Also Session 4 reading check, Part 1, Q4.</p>
+          <p>Amplification magnifies whatever practices and processes a team already has, without steering their direction. Bender credits the idea to DORA: AI can produce more tests, documentation and code, but also more confusion. A team with good fundamentals can apply the amplification in useful directions, while a team without them gets more trouble.</p>
+          <p class="q__source">Source: <a href="https://www.youtube.com/watch?v=2n41YjR5QfU&amp;t=1956s" target="_blank" rel="noopener noreferrer">Adam Bender, "Software engineering at the tipping point"<span class="sr-only"> (opens in a new tab)</span></a>, at about 32:36. Also Session 4 reading check, Part 1, Q4.</p>
         </div>
       </li>
 
@@ -161,8 +161,8 @@
         <div data-quiz-controls></div>
         <div class="q__answer" id="q5-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
-          <p>Horthy argues that engineers must move review upstream to product review, system architecture, and program design before vertical slices are implemented. Intervening at the specification, requirements, and design stages prevents flawed structures before code is written, whereas downstream review cannot salvage bad program design.</p>
-          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, timestamps 14:58–15:37. Also Session 4 facilitator key.</p>
+          <p>Horthy says to turn the lights back on and put code review back, but to plan up front so that review is easier: product review (the problem, the desired behaviour, mock-ups), system architecture (component contracts, data models, constraints) and program design, then vertical slices. He estimates that thirty minutes of pre-planning and alignment can save hours in review.</p>
+          <p class="q__source">Source: <a href="https://ai.engineer/talks/Ib5GBkD555M-harness-engineering-is-not-enough-why-software-factories-fail" target="_blank" rel="noopener noreferrer">Dex Horthy, "Why Software Factories Fail"<span class="sr-only"> (opens in a new tab)</span></a>, timestamps 14:48 to 16:49. Also Session 4 facilitator key.</p>
         </div>
       </li>
     </ol>

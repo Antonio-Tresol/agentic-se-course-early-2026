@@ -31,7 +31,7 @@
       <div class="item"><span class="item-num">5&ndash;20</span><span class="item-text"><strong>Structured debate:</strong> Lloyd against Horthy.</span></div>
       <div class="item"><span class="item-num">20&ndash;45</span><span class="item-text"><strong>Design review:</strong> rubric rows 1 and 3 in threes.</span></div>
       <div class="item"><span class="item-num">45&ndash;55</span><span class="item-text"><strong>Failure walk:</strong> agent-to-agent incident.</span></div>
-      <div class="item"><span class="item-num">55&ndash;60</span><span class="item-text"><strong>Capstone launch:</strong> loop, log, fork rules.</span></div>
+      <div class="item"><span class="item-num">55&ndash;60</span><span class="item-text"><strong>Capstone launch:</strong> success criterion, log format, fork rules.</span></div>
     </div>
   </div>
 </div>
@@ -177,7 +177,7 @@
         <div class="items" style="margin-top: 6px; gap: 4px;">
           <div class="item" style="padding: 6px 12px;"><span class="item-text" style="font-size: 13px;">July 2025 HumanLayer incident</span></div>
           <div class="item" style="padding: 6px 12px;"><span class="item-text" style="font-size: 13px;">Unrewarded maintainability</span></div>
-          <div class="item" style="padding: 6px 12px;"><span class="item-text" style="font-size: 13px;">Bender: AI amplifies chaos</span></div>
+          <div class="item" style="padding: 6px 12px;"><span class="item-text" style="font-size: 13px;">Bender: AI amplifies existing practices</span></div>
         </div>
       </div>
     </div>
@@ -190,7 +190,7 @@
     <div class="slide-label">05&ndash;20 min &middot; Debate Close</div>
     <h2>Where Does the Bottleneck Move?</h2>
     <div class="quote" style="margin-top: 12px;">
-      <p style="font-size: 15px;">"When code generation is free, where does the bottleneck move?"</p>
+      <p style="font-size: 15px;">If code is cheap, where does the bottleneck move?</p>
       <cite>Adam Bender</cite>
     </div>
     <div class="items" style="margin-top: 14px; gap: 6px;">
@@ -221,14 +221,14 @@
     <h2>Rubric: Rows 1 and 3</h2>
     <div class="two-col" style="gap: 16px; margin-top: 12px;">
       <div class="card card-accent">
-        <h3>Row 1 &middot; Stages & Gates</h3>
+        <h3>Row 1 &middot; Trigger, artefact, justified gate</h3>
         <p>Trigger, artefact, and justified gate per stage.</p>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">Secure: Human gates tied to Week 3 risks.</p>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">Secure: each human gate tied to a risk in the Week 3 log or a reading.</p>
       </div>
       <div class="card card-accent">
-        <h3>Row 3 &middot; Bounded Observer</h3>
+        <h3>Row 3 &middot; A bounded observer loop</h3>
         <p>Signal, single writable file, and CI check.</p>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">Secure: Limits verified in automated checks.</p>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">Secure: names the signal, the one writable file and the CI check on its diff.</p>
       </div>
     </div>
   </div>
@@ -241,11 +241,11 @@
     <h2>The Agent-to-Agent Incident</h2>
     <div class="card" style="margin-top: 12px;">
       <p style="font-size: 14px; line-height: 1.5;">An incident agent asked another Claude via Slack to push a code fix.</p>
-      <p style="font-size: 14px; line-height: 1.5; margin-top: 6px;">A human review gate caught the unauthorised request.</p>
+      <p style="font-size: 14px; line-height: 1.5; margin-top: 6px;">After a model upgrade, the agent acted on its own initiative. A human review gate caught the request, as designed.</p>
     </div>
     <div class="quote" style="margin-top: 12px;">
-      <p style="font-size: 13px;">"Bound agents by access and actions, not instructions."</p>
-      <cite>Jason Clinton, Anthropic</cite>
+      <p style="font-size: 13px;">Set the boundary by what an agent can access and do, not by its instructions.</p>
+      <cite>Jason Clinton, Anthropic, paraphrased</cite>
     </div>
   </div>
 </div>
@@ -304,7 +304,7 @@
     <div class="slide-label">55&ndash;60 min &middot; Deliverable</div>
     <h2>Capstone Success Criteria</h2>
     <div class="items" style="margin-top: 12px; gap: 6px;">
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Unattended loop:</strong> issue to PR awaiting approval without humans.</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Unattended loop:</strong> three or more issues reach a PR awaiting only your approval; no human starts a stage.</span></div>
       <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Checkpoint evidence:</strong> PR carries spec, CI run, review notes.</span></div>
       <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Working observer:</strong> updates one skill file; verified on rerun.</span></div>
       <div class="item"><span class="item-num">4</span><span class="item-text"><strong>Honest numbers:</strong> includes setup time and failed runs.</span></div>
