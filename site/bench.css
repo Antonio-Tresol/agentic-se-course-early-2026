@@ -79,7 +79,7 @@
 .bench-code__copy { position: absolute; top: 6px; right: 6px; }
 
 /* ---------- Session bar (minutes, honest widths) ---------- */
-.bench-sbar { margin-top: 14px; max-width: 700px; }
+.bench-sbar { margin-top: 14px; }
 .bench-sbar__track { display: flex; gap: 2px; height: 16px; }
 .bench-sseg { flex: 0 0 auto; border-radius: 2px; min-width: 2px; }
 .bench-sseg--pairs { background: var(--text, #0A0A0A); }
@@ -90,7 +90,7 @@
 .bench-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-family: var(--font-mono); font-size: var(--meta, 12px); color: var(--text, #0A0A0A); }
 .bench-legend__item { display: inline-flex; align-items: center; gap: 6px; }
 .bench-legend__sw { width: 18px; height: 12px; border-radius: 2px; flex: none; }
-.bench-plan { border-top: 1px solid var(--border, #E5E5E5); max-width: 700px; margin-top: 16px; }
+.bench-plan { border-top: 1px solid var(--border, #E5E5E5); margin-top: 16px; }
 .bench-plan > li {
   display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 4px 12px;
   padding: 10px 0; border-bottom: 1px solid var(--border, #E5E5E5);
@@ -202,14 +202,14 @@
 .bench-fig__pair .bench-fig { margin-top: 16px; }
 
 /* Starter prompt */
-.bench-prompt { margin-top: 8px; max-width: 700px; }
+.bench-prompt { margin-top: 8px; }
 .bench-prompt blockquote {
   margin: 0; padding: 14px 16px; padding-right: 72px;
   background: var(--surface, #FFFFFF); border: 1px solid var(--border, #E5E5E5); border-left: 3px solid var(--text, #0A0A0A); border-radius: 6px;
   font-size: 15px; line-height: 1.65; color: var(--body, #262626);
 }
 .bench-question {
-  margin-top: 10px; max-width: 700px; padding: 12px 16px;
+  margin-top: 10px; padding: 12px 16px;
   background: var(--page, #F4F4F4); border-radius: 6px;
   font-family: var(--font-display); font-size: 15px; line-height: 1.55; color: var(--text, #0A0A0A);
 }
@@ -372,7 +372,7 @@ text.axis-title {
 }
 
 /* Reference list */
-.bench-refs { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; max-width: 700px; }
+.bench-refs { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
 .bench-refs li { font-size: 13px; line-height: 1.55; color: var(--body, #262626); padding-left: 1.6em; text-indent: -1.6em; overflow-wrap: anywhere; }
 
 /* ---------- Small screens ---------- */

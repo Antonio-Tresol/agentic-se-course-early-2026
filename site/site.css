@@ -802,7 +802,9 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
 .card__label { margin-bottom: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
 .card p { font-size: 15px; line-height: 1.72; color: var(--body); }
 .card p + p, .card p + .steps, .card .steps + p { margin-top: 12px; }
-.card--activity { max-width: 680px; }
+.card--activity { max-width: none; }
+/* Boxes fill the column; the text inside keeps a reading measure. */
+.card p, .callout p, .callout li, .card .steps { max-width: 680px; }
 /* Small mono paragraphs keep their size inside cards, where .card p would set 15 px. */
 .card .note, .card .deliverable { font-size: var(--meta); line-height: 1.6; }
 .card .note { color: var(--muted); }
@@ -846,7 +848,6 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
   border-left: 3px solid var(--text);
   padding: 14px 18px;
   border-radius: 0 6px 6px 0;
-  max-width: 680px;
 }
 .callout p { font-size: 15px; line-height: 1.7; color: var(--body); }
 
@@ -1326,7 +1327,7 @@ html.track-codex [data-track="claude"] { display: none !important; }
 .note a { color: var(--text); }
 
 /* ---------- Session plan ---------- */
-.plan { border-top: 1px solid var(--border); max-width: 680px; }
+.plan { border-top: 1px solid var(--border); }
 .plan > li {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr);
@@ -1344,7 +1345,6 @@ html.track-codex [data-track="claude"] { display: none !important; }
 .planbar {
   display: flex;
   gap: 2px;
-  max-width: 680px;
   margin-bottom: 10px;
   background: var(--page);
 }
@@ -1365,10 +1365,10 @@ html.track-codex [data-track="claude"] { display: none !important; }
   white-space: nowrap;
   overflow: visible;
 }
-.planbar__axis { display: flex; justify-content: space-between; max-width: 680px; margin: -4px 0 12px; }
+.planbar__axis { display: flex; justify-content: space-between; margin: -4px 0 12px; }
 
 /* ---------- Figure: factory loop (Week 4) ---------- */
-.loop-fig { margin-top: 20px; max-width: 680px; }
+.loop-fig { margin-top: 20px; }
 .loop-fig__frame {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2040,7 +2040,6 @@ a.cmap__link:hover .cmap__wk { text-decoration-thickness: 2px; }
   border-radius: var(--radius);
   background: var(--surface);
   font-size: 15px; line-height: 1.65; color: var(--body);
-  max-width: 680px;
 }
 .storage-warning { margin-top: 12px; }
 

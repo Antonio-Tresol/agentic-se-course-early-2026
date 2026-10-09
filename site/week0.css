@@ -44,7 +44,7 @@
 .w0-p { font-size: 15px; line-height: 1.7; color: var(--body, #262626); max-width: 680px; }
 
 /* ---------- Install: code blocks with a copy button ---------- */
-.w0-install { max-width: 700px; }
+.w0-install { }
 .w0-code { position: relative; margin-top: 6px; min-width: 0; max-width: 100%; }
 .w0-code pre {
   margin: 0; padding: 12px 14px; padding-right: 72px;
@@ -63,7 +63,7 @@
 .w0-copy:hover { background: var(--hover-card, #F0F0F0); }
 
 /* ---------- Teaser for the Week 1 activity ---------- */
-.w0-teaser { max-width: 700px; }
+.w0-teaser { }
 .w0-teaser__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 14px 0 12px; }
 .w0-teaser__stat { padding: 10px 12px; border-radius: 6px; background: var(--page, #F4F4F4); }
 .w0-teaser__num { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.2; color: var(--text, #0A0A0A); }
