@@ -18,17 +18,36 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # v2: the static site in site/, served as-is at the root
       - uses: actions/checkout@v4
+
+      # v1: the archived React site, rebuilt from its tag under /v1/
+      - uses: actions/checkout@v4
+        with:
+          ref: v1.0
+          path: v1src
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: v1src/package-lock.json
       - run: npm ci
-      - run: npm run build
+        working-directory: v1src
+      - run: npx vite build --base=/agentic-se-course-early-2026/v1/ --outDir "$GITHUB_WORKSPACE/_v1" --emptyOutDir
+        working-directory: v1src
+
+      - name: Assemble the Pages artifact
+        run: |
+          mkdir -p _site
+          cp -R site/. _site/
+          mkdir -p _site/v1
+          cp -R _v1/. _site/v1/
+          touch _site/.nojekyll
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build
