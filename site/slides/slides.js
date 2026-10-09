@@ -26,9 +26,16 @@
   }
 
   // ----- Build bottom navigation, including the Contents button -----
+  const weekAttr = document.body.getAttribute('data-week');
+  const weekPageHref = weekAttr !== null ? '../week-' + weekAttr + '.html' : '../index.html';
+  const weekPageText = weekAttr !== null ? 'Week ' + weekAttr + ' page' : 'Course page';
+  const runsheetHref = weekAttr === '4' ? '../facilitator-week-4.html' : '../facilitator.html';
+
   const nav = document.createElement('div');
   nav.className = 'nav';
   nav.innerHTML = [
+    '<a class="nav-btn nav-btn-week" id="weekPageLink" href="' + weekPageHref + '">' + weekPageText + '</a>',
+    '<a class="nav-btn nav-btn-runsheet" id="runsheetLink" href="' + runsheetHref + '">Run-sheet</a>',
     '<button class="nav-btn nav-btn-toc" id="tocToggle" type="button" aria-label="Open slide contents">' +
       '<svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true">' +
         '<path d="M0.5 1h10M0.5 4.5h10M0.5 8h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>' +

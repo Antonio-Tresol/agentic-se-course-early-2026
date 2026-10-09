@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,16 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
 </head>
-<body>
+<body data-week="0">
 
 <div class="progress" id="progress"></div>
 
 <!-- 1: Title -->
 <div class="slide slide-dark active">
   <div class="slide-inner">
-    <div class="slide-label">Week 0 &middot; Session 0</div>
-    <h1>Getting Started</h1>
-    <p class="subtitle" style="color: #D4D4D4;">Introductions, a fast review of AI foundations, installing Claude Code, and a preview of the weeks ahead.</p>
+    <div class="slide-label"><a href="../week-0.html" class="title-link">Week 0 &middot; Session 0</a></div>
+    <h1><a href="../week-0.html" class="title-link">Getting Started</a></h1>
+    <p class="subtitle" style="color: #D4D4D4;">Introductions, AI foundations recap, installing your agent, and the road ahead.</p>
   </div>
 </div>
 
@@ -26,10 +26,11 @@
     <div class="slide-label">Agenda</div>
     <h2>Today</h2>
     <div class="items">
-      <div class="item"><span class="item-num">0</span><span class="item-text"><strong>Introductions.</strong> Who are you, what do you build, do you have a Claude subscription?</span></div>
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>AI Fluency review.</strong> Foundations and the 4D framework.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Setup Claude Code.</strong> Install, authenticate, first command.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>The road ahead.</strong> What the next five weeks look like.</span></div>
+      <div class="item"><span class="item-num">0</span><span class="item-text"><strong>Introductions.</strong> Who you are, what you build, and your agent account.</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>AI Fluency review.</strong> Foundations, three modes, and the 4D framework.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Install your agent.</strong> Setup for Claude Code and Codex tracks.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Live demo.</strong> Open a repository and run a first task.</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text"><strong>The road ahead.</strong> Weeks 1 to 5, progress tracking, and pre-work.</span></div>
     </div>
   </div>
 </div>
@@ -42,9 +43,9 @@
     <div class="items">
       <div class="item"><span class="item-num">01</span><span class="item-text">Your name and what you work on</span></div>
       <div class="item"><span class="item-num">02</span><span class="item-text">Your experience with AI coding tools so far</span></div>
-      <div class="item"><span class="item-num">03</span><span class="item-text">Do you have a Claude subscription or Anthropic Console account?</span></div>
+      <div class="item"><span class="item-num">03</span><span class="item-text">The account you will use with your agent (Anthropic or OpenAI)</span></div>
     </div>
-    <p class="meta" style="margin-top: 22px;">If you don't yet, we'll get you set up during the install step.</p>
+    <p class="meta" style="margin-top: 22px;">If your account is not ready yet, we will set it up during the install step.</p>
   </div>
 </div>
 
@@ -53,24 +54,24 @@
   <div class="slide-inner">
     <div class="slide-label">Part 1</div>
     <h1>AI Fluency</h1>
-    <p class="subtitle">A fast recap: what fluent AI use looks like, what models bring and where they fail, and the 4D framework for working with them.</p>
+    <p class="subtitle">A fast recap: what fluent AI use looks like, what models bring, where they fail, and the 4D framework.</p>
   </div>
 </div>
 
 <!-- 5: Fluent AI = 4 E's -->
 <div class="slide">
   <div class="slide-inner">
-    <h2>Fluent AI Use Is&hellip;</h2>
+    <h2>Fluent AI Use Is...</h2>
     <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">01</div>
         <h3 style="margin-top: 10px;">Effective</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Achieves the outcome.</p>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Achieves the desired outcome.</p>
       </div>
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">02</div>
         <h3 style="margin-top: 10px;">Efficient</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Uses time and resources wisely.</p>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Uses time and tokens wisely.</p>
       </div>
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">03</div>
@@ -83,11 +84,11 @@
         <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Protects privacy and security.</p>
       </div>
     </div>
-    <p class="meta" style="margin-top: 22px; text-align: center;">Anthropic's three H's also apply to <em>us</em>: helpful, honest, harmless.</p>
+    <p class="meta" style="margin-top: 22px; text-align: center;">Anthropic's principles apply to engineers too: helpful, honest, harmless.</p>
   </div>
 </div>
 
-<!-- 6: Three Modes (visual spectrum) -->
+<!-- 6: Three Modes -->
 <div class="slide">
   <div class="slide-inner">
     <h2>Three Modes of Working with AI</h2>
@@ -96,8 +97,8 @@
         <div class="layer-num">1</div>
         <div class="layer-body">
           <div class="layer-title">Automation</div>
-          <div class="layer-when">AI does work for you, following explicit instructions.</div>
-          <div class="layer-tags"><span class="layer-tag">scripted</span><span class="layer-tag">mostly deterministic</span></div>
+          <div class="layer-when">AI follows explicit instructions.</div>
+          <div class="layer-tags"><span class="layer-tag">scripted</span><span class="layer-tag">deterministic</span></div>
         </div>
       </div>
       <div class="layer-arrow">&rarr;</div>
@@ -105,7 +106,7 @@
         <div class="layer-num">2</div>
         <div class="layer-body">
           <div class="layer-title">Augmentation</div>
-          <div class="layer-when">You and the AI work together, turn by turn.</div>
+          <div class="layer-when">Human and AI pair turn by turn.</div>
           <div class="layer-tags"><span class="layer-tag">pair</span><span class="layer-tag">conversational</span></div>
         </div>
       </div>
@@ -114,12 +115,12 @@
         <div class="layer-num">3</div>
         <div class="layer-body">
           <div class="layer-title">Agency</div>
-          <div class="layer-when">AI works independently on your behalf.</div>
+          <div class="layer-when">AI works independently towards goals.</div>
           <div class="layer-tags"><span class="layer-tag">long-horizon</span><span class="layer-tag">tools</span></div>
         </div>
       </div>
     </div>
-    <div class="layer-rule">This course lives at the right end: coding agents.</div>
+    <div class="layer-rule">This course focuses on agency: coding agents acting across tools.</div>
   </div>
 </div>
 
@@ -140,15 +141,15 @@
         <div class="col-label">Failure modes</div>
         <div class="items" style="margin-top: 8px;">
           <div class="item"><span class="item-text">Knowledge cutoff, stale facts</span></div>
-          <div class="item"><span class="item-text">Hallucination, confident wrong answers</span></div>
+          <div class="item"><span class="item-text">Hallucination, confident errors</span></div>
           <div class="item"><span class="item-text">Non-deterministic output</span></div>
         </div>
       </div>
     </div>
     <div class="kpi-ribbon">
-      <span class="kpi"><b>Context window</b> = everything the model can see right now</span>
+      <span class="kpi"><b>Context window</b>: visible tokens</span>
       <span class="kpi-sep">/</span>
-      <span class="kpi"><b>Extended thinking</b> = let it reason longer before answering</span>
+      <span class="kpi"><b>Extended thinking</b>: reasoning before acting</span>
     </div>
   </div>
 </div>
@@ -161,26 +162,26 @@
     <div class="grid-2">
       <div class="card card-accent">
         <h3>Delegation</h3>
-        <p>What's worth doing with AI, and how do we split the work?</p>
+        <p>What is worth delegating, and how do we divide the work?</p>
       </div>
       <div class="card card-accent">
         <h3>Description</h3>
-        <p>Communicate the vision, requirements, constraints, and how the AI should behave.</p>
+        <p>State requirements, context, and clear acceptance criteria.</p>
       </div>
       <div class="card card-accent">
         <h3>Discernment</h3>
-        <p>Critically evaluate every output. Is it useful, correct, right approach?</p>
+        <p>Evaluate outputs critically for correctness and design quality.</p>
       </div>
       <div class="card card-accent">
         <h3>Diligence</h3>
-        <p>Take responsibility for the final product. Accuracy, honesty, ethical use.</p>
+        <p>Take full ownership of the final code and its behaviour.</p>
       </div>
     </div>
-    <p class="meta" style="margin-top: 18px; text-align: center;">Delegation &rarr; Description &rarr; Discernment &rarr; Diligence &rarr; (repeat)</p>
+    <p class="meta" style="margin-top: 18px; text-align: center;">Delegation &rarr; Description &rarr; Discernment &rarr; Diligence &rarr; repeat</p>
   </div>
 </div>
 
-<!-- 9: Two quotes -->
+<!-- 9: Why This Matters -->
 <div class="slide">
   <div class="slide-inner">
     <h2>Why This Matters</h2>
@@ -194,7 +195,7 @@
         <cite>On diligence</cite>
       </div>
     </div>
-    <p class="meta" style="margin-top: 22px;">Agency raises the stakes. You are vouching for code you did not type. Discernment and diligence are the load-bearing skills.</p>
+    <p class="meta" style="margin-top: 22px;">Agency raises the stakes. You vouch for code you did not type. Discernment and diligence are essential.</p>
   </div>
 </div>
 
@@ -202,124 +203,78 @@
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 2</div>
-    <h1>Claude Code</h1>
-    <p class="subtitle">An agentic coding tool that reads your codebase, edits files, runs commands, and integrates with your dev tools. Terminal, IDE, desktop, web, mobile.</p>
+    <h1>Install Your Agent</h1>
+    <p class="subtitle">Both tracks supported throughout the course: Claude Code and OpenAI Codex.</p>
   </div>
 </div>
 
-<!-- 11: What it does -->
+<!-- 11: Install Claude Code -->
 <div class="slide">
   <div class="slide-inner">
-    <h2>What It Does</h2>
-    <div class="grid-2">
-      <div class="card card-accent">
-        <h3>Build &amp; fix</h3>
-        <p>Describe what you want. It plans, edits across files, runs tests, iterates.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Git-native</h3>
-        <p>Stages changes, writes commit messages, opens pull requests.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Connect anything with MCP</h3>
-        <p>Design docs, tickets, Slack, custom internal tools.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Customise with CLAUDE.md</h3>
-        <p>Coding standards, architecture notes, libraries, review checklists.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Agent teams</h3>
-        <p>Spawn sub-agents that work different parts of a task in parallel.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Pipe &amp; script</h3>
-        <p>Composable CLI. Pipe logs in, run in CI, chain with other tools.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 12: Where it runs -->
-<div class="slide">
-  <div class="slide-inner">
-    <h2>Available Everywhere</h2>
-    <p class="subtitle" style="margin-bottom: 8px;">Same engine, same settings, same <code>CLAUDE.md</code> across every surface.</p>
-    <div class="source-row" style="gap: 8px; margin-top: 22px;">
-      <span class="tag" style="font-size: 12px; padding: 7px 14px; border-color: var(--orange); color: var(--orange);">Terminal &middot; primary</span>
-      <span class="tag" style="font-size: 12px; padding: 7px 14px;">VS Code</span>
-      <span class="tag" style="font-size: 12px; padding: 7px 14px;">JetBrains</span>
-      <span class="tag" style="font-size: 12px; padding: 7px 14px;">Desktop app</span>
-      <span class="tag" style="font-size: 12px; padding: 7px 14px;">Web</span>
-      <span class="tag" style="font-size: 12px; padding: 7px 14px;">iOS</span>
-    </div>
-    <div class="kpi-ribbon" style="margin-top: 28px;">
-      <span class="kpi"><b>1</b> account</span>
-      <span class="kpi-sep">/</span>
-      <span class="kpi"><b>1</b> config</span>
-      <span class="kpi-sep">/</span>
-      <span class="kpi"><b>N</b> surfaces</span>
-    </div>
-  </div>
-</div>
-
-<!-- 13: Install -->
-<div class="slide">
-  <div class="slide-inner">
-    <h2>Install &amp; Run</h2>
-    <div class="code-block">
+    <div class="slide-label">Claude Code Track</div>
+    <h2>Install Claude Code</h2>
+    <div class="code-block" style="font-size: 13px;">
       <span class="comment"># macOS, Linux, WSL</span><br/>
       <span class="cmd">curl -fsSL https://claude.ai/install.sh | bash</span><br/><br/>
       <span class="comment"># Windows PowerShell</span><br/>
       <span class="cmd">irm https://claude.ai/install.ps1 | iex</span><br/><br/>
       <span class="comment"># Homebrew</span><br/>
       <span class="cmd">brew install --cask claude-code</span><br/><br/>
-      <span class="comment"># Run it</span><br/>
+      <span class="comment"># Run in any repository</span><br/>
       <span class="cmd">cd your-project &amp;&amp; claude</span>
     </div>
-    <p class="meta" style="margin-top: 16px;">Log in on first use. Docs: code.claude.com/docs</p>
+    <p class="meta" style="margin-top: 14px;">Sign in on first use. Docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener noreferrer">code.claude.com/docs</a></p>
   </div>
 </div>
 
-<!-- 14: Live demo -->
+<!-- 12: Install Codex -->
+<div class="slide">
+  <div class="slide-inner">
+    <div class="slide-label">Codex Track</div>
+    <h2>Install Codex</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">1</span><span class="item-text">Follow installation steps in the official Codex documentation.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Run Codex in your terminal within any local repository.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text">Sign in to your OpenAI account on first use.</span></div>
+    </div>
+    <p class="meta" style="margin-top: 18px;">Documentation and setup guide: <a href="https://learn.chatgpt.com/docs" target="_blank" rel="noopener noreferrer">learn.chatgpt.com/docs</a></p>
+  </div>
+</div>
+
+<!-- 13: Live demo -->
 <div class="slide">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">Together</div>
     <h1>Live Demo</h1>
-    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Open a terminal, pick a project, ask Claude Code to explore the codebase or fix a small issue.</p>
+    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Open a terminal, pick a project, and ask your agent to explore the codebase or fix a small issue.</p>
   </div>
 </div>
 
-<!-- 15: Course arc -->
+<!-- 14: The road ahead -->
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Part 3</div>
     <h2>The Road Ahead</h2>
     <div class="items">
-      <div class="item" style="border-left: 3px solid var(--orange); padding-left: 17px;">
-        <span class="item-num" style="min-width: 64px; color: var(--orange);">Week 0</span>
-        <span class="item-text"><strong>Getting Started.</strong> You are here.</span>
-      </div>
-      <div class="item">
-        <span class="item-num" style="min-width: 64px;">Week 1</span>
-        <span class="item-text"><strong>One Coding Agent.</strong> Hands-on with Claude Code.</span>
-      </div>
-      <div class="item">
-        <span class="item-num" style="min-width: 64px;">Week 2</span>
-        <span class="item-text"><strong>Adapting a Coding Agent.</strong> Skills, MCP, context engineering.</span>
-      </div>
-      <div class="item">
-        <span class="item-num" style="min-width: 64px;">Week 3</span>
-        <span class="item-text"><strong>Working in Complex Codebases.</strong> Principles, approaches, open debates.</span>
-      </div>
-      <div class="item">
-        <span class="item-num" style="min-width: 64px;">Week 4</span>
-        <span class="item-text"><strong>Towards Agent-First SE.</strong> Harness engineering.</span>
-      </div>
-      <div class="item">
-        <span class="item-num" style="min-width: 64px;">Week 5</span>
-        <span class="item-text"><strong>Capstone.</strong> Optional. Build something harness-first.</span>
-      </div>
+      <div class="item" style="border-left: 3px solid var(--orange); padding-left: 17px;"><span class="item-num" style="min-width: 64px; color: var(--orange);">Week 0</span><span class="item-text"><strong>Getting Started.</strong> Environment setup and fluency baseline.</span></div>
+      <div class="item"><span class="item-num" style="min-width: 64px;">Week 1</span><span class="item-text"><strong>One Coding Agent.</strong> Scope frontier benchmark tasks in pairs.</span></div>
+      <div class="item"><span class="item-num" style="min-width: 64px;">Week 2</span><span class="item-text"><strong>Adapting a Coding Agent.</strong> Skills, subagents, and MCP.</span></div>
+      <div class="item"><span class="item-num" style="min-width: 64px;">Week 3</span><span class="item-text"><strong>One change through the whole loop.</strong> Triage, spec, implement, review.</span></div>
+      <div class="item"><span class="item-num" style="min-width: 64px;">Week 4</span><span class="item-text"><strong>From harness to factory.</strong> Factory loop design and debate.</span></div>
+      <div class="item"><span class="item-num" style="min-width: 64px;">Week 5</span><span class="item-text"><strong>A minimal factory, measured.</strong> Optional capstone build.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 15: Tracking progress -->
+<div class="slide">
+  <div class="slide-inner">
+    <div class="slide-label">Course Platform</div>
+    <h2>Tracking Your Progress</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Tick as you go.</strong> Mark outcomes, readings, and activities done on the week pages.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Saved in browser.</strong> Checkboxes and timings persist in local storage.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Export anytime.</strong> The "My progress" page exports your full record as JSON.</span></div>
     </div>
   </div>
 </div>
@@ -328,35 +283,50 @@
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Before Week 1</div>
-    <h2>Your Pre-Work</h2>
-    <div class="items">
-      <div class="item">
-        <span class="item-num">1</span>
-        <span class="item-text"><strong>Complete</strong> <em>Claude Code 101</em> &nbsp;<span class="meta">Claude Academy, 12 lessons. Codex users: Get Started with Codex, OpenAI Academy</span></span>
+    <h2>Core Pre-Work</h2>
+    <div class="two-col" style="gap: 16px;">
+      <div>
+        <div class="col-label">Claude Code Track</div>
+        <div class="items" style="margin-top: 6px; gap: 6px;">
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Claude Code 101</strong>: 12 lessons, ~90 min</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Claude Code in Action</strong>: 9 lessons, ~60 min</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Best Practices docs</strong>: reading, ~22 min</span></div>
+        </div>
       </div>
-      <div class="item">
-        <span class="item-num">2</span>
-        <span class="item-text"><strong>Complete</strong> <em>Claude Code in Action</em> &nbsp;<span class="meta">Claude Academy, 9 lessons, after 101. Codex users: Extend Codex Workflows, OpenAI Academy</span></span>
+      <div>
+        <div class="col-label">Codex Track</div>
+        <div class="items" style="margin-top: 6px; gap: 6px;">
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Get Started with Codex</strong>: course, ~80 min</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Extend Codex Workflows</strong>: course, ~90 min</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Best practices &amp; AGENTS.md</strong>: ~15 min</span></div>
+        </div>
       </div>
-      <div class="item">
-        <span class="item-num">3</span>
-        <span class="item-text"><strong>Read</strong> <em>Best Practices for Claude Code</em> &nbsp;<span class="meta">code.claude.com/docs</span></span>
-      </div>
-    </div>
-    <div class="quote" style="margin-top: 26px;">
-      <p>Come ready to share what you tried while working through the courses. We'll compare what worked and what didn't.</p>
     </div>
   </div>
 </div>
 
-<!-- 17: Closing -->
+<!-- 17: Teaser for Week 1 -->
+<div class="slide">
+  <div class="slide-inner">
+    <div class="slide-label">Next Session</div>
+    <h2>Estimating Real Benchmark Tasks</h2>
+    <p class="subtitle" style="margin-bottom: 12px;">Bring your installed agent to Session 1.</p>
+    <div class="items">
+      <div class="item"><span class="item-num">1</span><span class="item-text">Inspect frontier leaderboards and their caveats.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Use your agent to scope real tasks from SWE-bench, Terminal-Bench, and SWE-Bench Pro.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text">Estimate human time and complexity before revealing published results.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 18: Closing -->
 <div class="slide slide-dark">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-label">Week 0 &middot; Session 0</div>
+    <div class="slide-label"><a href="../week-0.html" class="title-link">Week 0 &middot; Session 0</a></div>
     <h1>Let's Get Started</h1>
-    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Full curriculum and all resources at:</p>
+    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Full curriculum and resources:</p>
     <p style="margin-top: 16px; font-family: var(--mono); font-size: 14px;">
-      <a href="https://antonio-tresol.github.io/agentic-se-course-early-2026/">antonio-tresol.github.io/agentic-se-course-early-2026</a>
+      <a href="../week-0.html">Return to Week 0 Page</a>
     </p>
   </div>
 </div>
