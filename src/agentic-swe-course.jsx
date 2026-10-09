@@ -18,8 +18,10 @@ const weeks = [
     title: "One Coding Agent",
     intro: "This week is about getting your hands dirty. You install a coding agent, work through two structured courses, and learn the established best practices for steering it effectively.",
     prework: [
-      { text: "Claude Code 101", url: "https://anthropic.skilljar.com/claude-code-101", verb: "Complete", note: "Anthropic · 12 lectures · start here; assumes no prior agent experience" },
-      { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", verb: "Complete", note: "Anthropic · 9 lectures · take after 101; long hands-off sessions, hooks, verification" },
+      { text: "Claude Code 101", url: "https://academy.claude.com/courses/claude-code-101", verb: "Complete", note: "Anthropic · 12 lessons · start here; assumes no prior agent experience",
+        alt: { text: "Get Started with Codex", url: "https://academy.openai.com/public/courses/get-started-with-codex-jkhsq", verb: "complete", note: "OpenAI · ~80 min · no prior Codex experience assumed" } },
+      { text: "Claude Code in Action", url: "https://academy.claude.com/courses/claude-code-in-action", verb: "Complete", note: "Anthropic · 9 lessons · take after 101; long hands-off sessions, hooks, verification",
+        alt: { text: "Extend Codex Workflows", url: "https://academy.openai.com/public/courses/extend-codex-workflows-4e61p", verb: "complete", note: "OpenAI · ~90 min · take after Get Started; reusable skills, subagents, longer-running work" } },
       { text: "Best Practices for Claude Code", url: "https://code.claude.com/docs/en/best-practices", verb: "Read", note: "Anthropic" },
     ],
     activity: null,
@@ -42,9 +44,11 @@ const weeks = [
     title: "Adapting A Coding Agent",
     intro: "A generic agent is useful. An agent that knows your team's PR checklist, can query your database, and applies your coding standards automatically is transformative. This week you learn skills (how to encode knowledge), MCP (how to connect tools), and the deeper principles of context engineering.",
     prework: [
-      { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", verb: "Complete", note: "Anthropic · Mar 2026 · includes exercises and reflections" },
-      { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", verb: "Complete", note: "Anthropic · Mar 2026" },
-      { text: "Introduction to Subagents", url: "https://anthropic.skilljar.com/introduction-to-subagents", verb: "Complete", note: "Anthropic · Apr 2026" },
+      { text: "Introduction to Agent Skills", url: "https://academy.claude.com/courses/introduction-to-agent-skills", verb: "Complete", note: "Anthropic · Mar 2026 · includes exercises and reflections",
+        alt: { text: "Build skills", url: "https://learn.chatgpt.com/docs/build-skills", verb: "read", note: "OpenAI · Codex skills follow the same open agent skills standard" } },
+      { text: "Introduction to Model Context Protocol", url: "https://academy.claude.com/courses/introduction-to-model-context-protocol", verb: "Complete", note: "Anthropic · Mar 2026 · vendor-neutral; Codex users take this one too" },
+      { text: "Introduction to Subagents", url: "https://academy.claude.com/courses/introduction-to-subagents", verb: "Complete", note: "Anthropic · Apr 2026",
+        alt: { text: "Scale Codex Across Teams and Systems", url: "https://academy.openai.com/public/courses/scale-codex-across-teams-and-systems-jr83a", verb: "complete", note: "OpenAI · ~100 min · advanced; parallel workstreams and integration" } },
       { text: "How Claude Code Works", url: "https://code.claude.com/docs/en/how-claude-code-works", verb: "Read", note: "Anthropic" },
       { text: "Effective Context Engineering for AI Agents", url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents", verb: "Read", note: "Anthropic · Sep 2025" },
     ],
@@ -154,13 +158,17 @@ const weeks = [
 
 const resources = {
   courses: [
-    { text: "AI Fluency: Framework & Foundations", url: "https://anthropic.skilljar.com/ai-fluency-framework-foundations", note: "Anthropic · prerequisite · Mar 2026" },
-    { text: "Claude Code 101", url: "https://anthropic.skilljar.com/claude-code-101", note: "Anthropic · 12 lectures" },
-    { text: "Claude Code in Action", url: "https://anthropic.skilljar.com/claude-code-in-action", note: "Anthropic · 9 lectures · assumes prior Claude Code use" },
-    { text: "Introduction to Agent Skills", url: "https://anthropic.skilljar.com/introduction-to-agent-skills", note: "Anthropic · Mar 2026" },
-    { text: "Introduction to Model Context Protocol", url: "https://anthropic.skilljar.com/introduction-to-model-context-protocol", note: "Anthropic · Mar 2026" },
-    { text: "AI Capabilities and Limitations", url: "https://anthropic.skilljar.com/ai-capabilities-and-limitations", note: "Anthropic · prerequisite · Apr 2026" },
-    { text: "Introduction to Subagents", url: "https://anthropic.skilljar.com/introduction-to-subagents", note: "Anthropic · Apr 2026" },
+    { text: "AI Fluency: Framework & Foundations", url: "https://academy.claude.com/courses/ai-fluency-framework-foundations", note: "Anthropic · prerequisite · Mar 2026" },
+    { text: "Claude Code 101", url: "https://academy.claude.com/courses/claude-code-101", note: "Anthropic · 12 lessons" },
+    { text: "Claude Code in Action", url: "https://academy.claude.com/courses/claude-code-in-action", note: "Anthropic · 9 lessons · assumes prior Claude Code use" },
+    { text: "Introduction to Agent Skills", url: "https://academy.claude.com/courses/introduction-to-agent-skills", note: "Anthropic · Mar 2026" },
+    { text: "Introduction to Model Context Protocol", url: "https://academy.claude.com/courses/introduction-to-model-context-protocol", note: "Anthropic · Mar 2026" },
+    { text: "AI Capabilities and Limitations", url: "https://academy.claude.com/courses/ai-capabilities-and-limitations", note: "Anthropic · prerequisite · Apr 2026" },
+    { text: "Introduction to Subagents", url: "https://academy.claude.com/courses/introduction-to-subagents", note: "Anthropic · Apr 2026" },
+    { text: "AI Foundations", url: "https://academy.openai.com/public/courses/ai-foundations-dnq5w", note: "OpenAI · ~70 min · optional extra; does not replace AI Fluency, which Week 0 reviews" },
+    { text: "Get Started with Codex", url: "https://academy.openai.com/public/courses/get-started-with-codex-jkhsq", note: "OpenAI · ~80 min · Codex equivalent of Claude Code 101" },
+    { text: "Extend Codex Workflows", url: "https://academy.openai.com/public/courses/extend-codex-workflows-4e61p", note: "OpenAI · ~90 min · Codex equivalent of Claude Code in Action" },
+    { text: "Scale Codex Across Teams and Systems", url: "https://academy.openai.com/public/courses/scale-codex-across-teams-and-systems-jr83a", note: "OpenAI · ~100 min · advanced · Codex equivalent of Introduction to Subagents" },
   ],
   docs: [
     { text: "Claude Code Product Page", url: "https://claude.com/product/claude-code", note: "Anthropic" },
@@ -685,7 +693,14 @@ function CurriculumWeekCard({ week, isOpen, onToggle }) {
               <Label>Pre-work</Label>
               <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
                 {week.prework.map((item, i) => (
-                  <LinkRow key={i} href={item.url} title={item.text} meta={item.note} index={i + 1} verb={item.verb} />
+                  <div key={i}>
+                    <LinkRow href={item.url} title={item.text} meta={item.note} index={i + 1} verb={item.verb} />
+                    {item.alt && (
+                      <div style={{ paddingLeft: "30px" }}>
+                        <LinkRow href={item.alt.url} title={item.alt.text} meta={item.alt.note} verb={`or, with Codex, ${item.alt.verb}`} compact />
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
@@ -802,13 +817,13 @@ function CurriculumView() {
               <div style={{ marginBottom: "6px" }}>A working terminal (macOS, Linux, or WSL)</div>
               <div style={{ marginBottom: "6px" }}>A GitHub account with a repo to experiment on</div>
               <LinkRow
-                href="https://anthropic.skilljar.com/ai-fluency-framework-foundations"
+                href="https://academy.claude.com/courses/ai-fluency-framework-foundations"
                 title="AI Fluency: Framework & Foundations"
                 meta="Anthropic · Mar 2026 · required"
                 compact
               />
               <LinkRow
-                href="https://anthropic.skilljar.com/ai-capabilities-and-limitations"
+                href="https://academy.claude.com/courses/ai-capabilities-and-limitations"
                 title="AI Capabilities and Limitations"
                 meta="Anthropic · Apr 2026 · required"
                 compact
@@ -822,7 +837,7 @@ function CurriculumView() {
               <InlineLink href="https://claude.com/product/claude-code" style={{ fontWeight: 600 }}>
                 Claude Code
               </InlineLink>
-              {" "}as our primary coding agent. The principles transfer directly to other agents (Codex, Copilot CLI, OpenCode), but having everyone on the same tool keeps things simple.
+              {" "}as our primary coding agent. If you work in Codex, the pre-work pairs the Claude Academy courses with OpenAI Academy equivalents where one exists. The principles also transfer to other agents such as Copilot CLI and OpenCode.
             </div>
           </Card>
         </div>
@@ -1087,7 +1102,7 @@ export default function AgenticSECourse() {
           Each week you complete pre-work on your own (courses, readings, videos) and then we meet for one hour to discuss, ask questions, and work on something together.
         </p>
         <p style={{ fontFamily: "var(--mono)", fontSize: "12px", color: palette.text, lineHeight: 1.6, marginBottom: "12px" }}>
-          The Anthropic Skilljar courses used in Weeks 1 and 2 award certificates on completion.
+          On Claude Academy, Claude Code 101, Claude Code in Action and Introduction to Model Context Protocol award a completion badge. OpenAI Academy courses award a badge once you pass the course assessment with at least 80%.
         </p>
         <p style={{ fontFamily: "var(--mono)", fontSize: "11px", color: palette.muted, lineHeight: 1.6 }}>
           This curriculum was developed in March-April 2026 and last reviewed in August 2026. If you are reading this three months from now, things might be very different and the industry might be in a much more autonomous place. Please do your own research and validate that this content is still current and at the frontier.
