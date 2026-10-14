@@ -31,22 +31,22 @@
 /* The sprint is constructive, then interactive, with no fixed split. */
 .s2-con-int { background: linear-gradient(90deg, #009E73 0%, #009E73 40%, #853866 100%); color: #0A0A0A; }
 .s2-hour-axis { position: relative; height: 26px; }
-.s2-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: #A3A3A3; }
-.s2-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: #A3A3A3; }
+.s2-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.s2-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: var(--muted); }
 .s2-tick:first-child { transform: none; }
 .s2-tick:first-child::before { left: 0; }
 .s2-tick:last-child { transform: translateX(-100%); }
 .s2-tick:last-child::before { left: auto; right: 0; }
 .s2-callouts { position: relative; height: 22px; margin-top: 10px; }
-.s2-callout { position: absolute; top: 0; left: calc(var(--c) / 60 * 100%); font-family: var(--display); font-size: 14px; font-weight: 600; color: #FFFFFF; white-space: nowrap; line-height: 22px; }
-.s2-callout .s2-callout-min { font-family: var(--mono); font-size: 14px; font-weight: 400; color: #D4D4D4; margin-left: 6px; }
-.s2-callout::before { content: ""; position: absolute; left: 0; bottom: 100%; width: 1px; height: 36px; background: #D4D4D4; }
+.s2-callout { position: absolute; top: 0; left: calc(var(--c) / 60 * 100%); font-family: var(--display); font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; line-height: 22px; }
+.s2-callout .s2-callout-min { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+.s2-callout::before { content: ""; position: absolute; left: 0; bottom: 100%; width: 1px; height: 36px; background: var(--muted); }
 .s2-callout { padding-left: 8px; }
 .s2-callout-r { transform: translateX(-100%); padding-left: 0; padding-right: 8px; }
 .s2-callout-r::before { left: auto; right: 0; }
-.s2-axis-title { font-family: var(--mono); font-size: 12px; color: #A3A3A3; text-align: center; margin-top: -20px; }
+.s2-axis-title { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: center; margin-top: -20px; }
 .s2-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; }
-.s2-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: #D4D4D4; }
+.s2-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: var(--body); }
 .s2-swatch { width: 16px; height: 16px; box-shadow: inset 0 0 0 1.5px #FFFFFF; }
 .s2-swatch-wide { width: 34px; }
 
@@ -253,7 +253,7 @@
 </div>
 
 <!-- 2: Plan for the hour -->
-<div class="slide slide-dark" id="s1">
+<div class="slide" id="s1">
   <div class="slide-inner">
     <div class="slide-label">Run-Sheet</div>
     <h2>Plan for the Hour</h2>

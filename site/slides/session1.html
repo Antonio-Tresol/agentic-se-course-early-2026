@@ -6,6 +6,236 @@
 <title>Session 1 &middot; One Coding Agent</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
+<style>
+/* Session 1 visuals. Every class is prefixed .s1-; tokens come from slides.css.
+   Data colours (Okabe and Ito): course #0072B2, reading #009E73.
+   ICAP: passive #6B6B6B, active #0072B2, constructive #009E73, interactive #853866. */
+.s1-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.s1-link { color: var(--text); border-bottom: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.s1-link:hover { border-bottom: 0; text-decoration-thickness: 2px; }
+
+/* ----- Shared chart marks (inline SVG) ----- */
+.s1-fig { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+.s1-chart { display: block; width: 100%; height: auto; overflow: visible; }
+.s1-lab { font-family: var(--display); font-size: 14px; font-weight: 500; fill: var(--text); }
+.s1-lab--lg { font-size: 15px; }
+.s1-val { font-family: var(--mono); font-size: 13px; fill: var(--text); }
+.s1-val--muted { fill: var(--muted); }
+.s1-big { font-family: var(--mono); font-size: 18px; font-weight: 500; fill: var(--text); }
+.s1-code { font-family: var(--mono); font-size: 13px; fill: var(--text); }
+.s1-tick { font-family: var(--mono); font-size: 12px; fill: var(--muted); }
+.s1-tick--lg { font-size: 14px; fill: var(--text); }
+.s1-axis-title, .s1-colhead, .s1-note-txt { font-family: var(--mono); font-size: 12px; fill: var(--body); }
+.s1-colhead { fill: var(--muted); }
+.s1-grid { stroke: var(--border); stroke-width: 1; }
+.s1-rule { stroke: var(--border); stroke-width: 1; }
+.s1-base { stroke: var(--text); stroke-width: 1.5; }
+.s1-bar { fill: var(--body); }
+.s1-ref { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.s1-whisker { stroke: var(--muted); stroke-width: 1.2; }
+.s1-dot { fill: var(--text); }
+.s1-dot--accent { fill: var(--orange); stroke: var(--text); stroke-width: 1.2; }
+.s1-band { fill: rgba(38, 38, 38, 0.16); }
+.s1-band-edge { stroke: var(--text); stroke-width: 2; }
+.s1-cell { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; }
+.s1-cell--pass { fill: var(--text); stroke: var(--text); }
+.s1-badge { fill: var(--text); }
+.s1-badge-txt { font-family: var(--mono); font-size: 13px; fill: #FFFFFF; }
+.s1-zero { fill: var(--orange); }
+.s1-col { fill: var(--bg); }
+.s1-rot { stroke: var(--text); stroke-width: 1.5; }
+.s1-node { fill: var(--surface); stroke: var(--text); stroke-width: 1.5; }
+.s1-node-t { font-family: var(--mono); font-size: 14px; fill: var(--text); }
+.s1-k-course { fill: #0072B2; background: #0072B2; }
+.s1-k-reading { fill: #009E73; background: #009E73; }
+.s1-cap, .s1-fig-note { font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--body); margin-top: 10px; }
+.s1-fig-note { margin-top: 6px; }
+.s1-glyph { width: 24px; height: 24px; flex: none; fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ----- Legends and chips ----- */
+.s1-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 12px; font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--body); }
+.s1-legend-k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.s1-legend-i { display: inline-flex; align-items: center; gap: 7px; }
+.s1-sw { display: inline-block; width: 14px; height: 14px; border-radius: 2px; }
+.s1-total { margin-top: 6px; }
+.s1-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.s1-chip { display: inline-flex; align-items: center; font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--text); background: var(--bg); border: 1.5px solid var(--border); border-radius: 6px; padding: 4px 9px; }
+.s1-chip code { font-family: var(--mono); font-size: 13px; }
+.s1-fn { display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 500; color: var(--step); margin-right: 8px; }
+.s1-mono { font-family: var(--mono); }
+.s1-center { text-align: center; }
+
+/* ----- Plan for the hour: one 0 to 60 bar, wrapped at the reveal ----- */
+.s1-plan { position: relative; margin-top: 2px; }
+.s1-plan-cap { font-family: var(--mono); font-size: 12px; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.s1-plan-bar { position: relative; height: 56px; }
+.s1-seg { position: absolute; top: 0; height: 56px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border-left: 2px solid var(--bg); font-family: var(--mono); font-size: 14px; font-weight: 500; color: #FFFFFF; }
+.s1-seg--first { border-left: 0; }
+.s1-icap-p { background: #6B6B6B; }
+.s1-icap-a { background: #0072B2; }
+.s1-icap-c { background: #009E73; color: var(--text); }
+.s1-icap-i { background: #853866; }
+.s1-plan-lab { position: relative; height: 70px; }
+.s1-lead { position: absolute; top: 0; width: 1px; margin-left: -0.5px; background: var(--muted); }
+.s1-lead--1 { height: 6px; }
+.s1-lead--2 { height: 46px; }
+.s1-pl { position: absolute; transform: translateX(-50%); white-space: nowrap; text-align: center; font-family: var(--display); font-size: 14px; font-weight: 500; line-height: 1.2; color: var(--text); }
+.s1-pl--1 { top: 8px; }
+.s1-pl--2 { top: 48px; }
+.s1-pl--end { transform: none; text-align: right; }
+.s1-plan-axis { position: relative; height: 22px; margin-top: 2px; border-top: 1.5px solid var(--text); }
+.s1-pt { position: absolute; top: 5px; transform: translateX(-50%); font-family: var(--mono); font-size: 12px; line-height: 1.2; color: var(--muted); }
+.s1-pt::before { content: ""; position: absolute; left: 50%; top: -10px; width: 1.5px; height: 5px; margin-left: -0.75px; background: var(--text); }
+.s1-pt--start { transform: none; }
+.s1-pt--start::before { left: 0; margin-left: 0; }
+.s1-pt--end { transform: translateX(-100%); }
+.s1-pt--end::before { left: auto; right: 0; margin-left: 0; }
+.s1-plan-axis-title { font-family: var(--mono); font-size: 12px; line-height: 1.3; color: var(--body); text-align: center; margin: 2px 0 0; }
+
+/* ----- Answer key ----- */
+.s1-key { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 8px; align-items: stretch; }
+.s1-key-col { display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+.s1-key-n { font-family: var(--mono); font-size: 13px; line-height: 1; color: var(--step); margin: 0; }
+.s1-key-h { font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--text); margin: 0; }
+.s1-lane { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.s1-track { flex-basis: 100%; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.s1-arr { font-family: var(--mono); font-size: 15px; color: var(--text); }
+.s1-modes { display: flex; flex-direction: column; gap: 6px; }
+.s1-mode { font-family: var(--display); font-size: 15px; line-height: 1.3; color: var(--body); background: var(--surface); border: 1.5px solid var(--border); border-radius: 6px; padding: 8px 12px; }
+.s1-mode--on { background: var(--text); border-color: var(--text); color: #FFFFFF; font-weight: 600; }
+.s1-mode-tag { display: block; margin-top: 2px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: #E5E5E5; }
+
+/* ----- Debrief T-chart ----- */
+.s1-t { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; border-top: 1.5px solid var(--text); }
+.s1-t-col { padding: 18px 26px 10px; }
+.s1-t-col + .s1-t-col { border-left: 1.5px solid var(--text); }
+.s1-t-col h3 { font-size: 22px; margin-bottom: 14px; }
+.s1-chips--lg .s1-chip { font-size: 17px; padding: 7px 12px; background: var(--surface); }
+
+/* ----- Frontier panels ----- */
+.s1-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.s1-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px 8px; }
+.s1-panel-title { font-size: 16px; line-height: 24px; margin: 0; }
+.s1-panel-title a, .s1-cav-name a, .s1-site-name a { display: inline-block; min-height: 24px; }
+.s1-panel-note { font-family: var(--mono); font-size: 12px; line-height: 1.3; color: var(--muted); margin: 0 0 2px; }
+
+/* ----- Caveat cards ----- */
+.s1-cavs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.s1-cav { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+.s1-cav-name { font-size: 15px; line-height: 24px; margin: 0; }
+.s1-cav-head { font-family: var(--display); font-size: 26px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: var(--text); margin: 0 0 4px; }
+.s1-prop { position: relative; height: 14px; border: 1.5px solid var(--text); border-radius: 2px; background: var(--surface); overflow: hidden; }
+.s1-prop span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--text); }
+.s1-cav-txt { font-family: var(--display); font-size: 15px; line-height: 1.35; color: var(--body); margin: 0 0 6px; }
+.s1-cav-txt b { font-family: var(--mono); font-weight: 500; color: var(--text); }
+.s1-frozen { display: flex; align-items: center; height: 16px; }
+.s1-frozen-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--text); flex: none; }
+.s1-frozen-line { flex: 1; border-top: 1.5px dashed var(--muted); }
+.s1-frozen-end { width: 1.5px; height: 14px; background: var(--text); flex: none; }
+.s1-frozen-lab { display: flex; justify-content: space-between; gap: 8px; }
+.s1-frozen-lab span:last-child { text-align: right; }
+.s1-frozen-lab b { display: block; }
+
+/* ----- Compare models yourself ----- */
+.s1-sites { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0; margin: 0; }
+.s1-site { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 16px 14px; font-size: 16px; line-height: 1.3; }
+.s1-site-name { font-family: var(--display); font-size: 16px; font-weight: 600; line-height: 1.4; color: var(--text); margin: 0; }
+.s1-site-what { font-family: var(--mono); font-size: 12px; line-height: 1.45; color: var(--body); margin: 4px 0 0; }
+
+/* ----- Rules for the agent ----- */
+.s1-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.s1-agent { grid-column: 1 / -1; justify-self: center; font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--text); background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 10px 26px; }
+.s1-branch { grid-column: 1 / -1; display: block; width: 100%; height: 40px; }
+.s1-branch path { fill: none; stroke: var(--text); stroke-width: 1.5; }
+.s1-branch .s1-head { fill: var(--text); stroke: none; }
+.s1-zone { border-radius: 6px; padding: 14px 16px; }
+.s1-zone--ok { background: var(--surface); border: 1.5px solid var(--text); }
+.s1-zone--no { background: var(--surface); border: 1.5px dashed var(--text); }
+.s1-zone-h { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--text); margin: 0 0 10px; }
+.s1-zone-h .s1-glyph { width: 20px; height: 20px; stroke-width: 2.2; }
+.s1-zone-sub { display: flex; align-items: center; gap: 6px; font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--body); margin: 12px 0 8px; }
+.s1-zone-sub .s1-glyph { width: 18px; height: 18px; }
+.s1-file { font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--text); background: var(--bg); border: 1.5px solid var(--border); border-radius: 4px; padding: 3px 8px; }
+.s1-file code { font-family: var(--mono); font-size: 13px; }
+
+/* ----- Scoping question scales ----- */
+.s1-q { font-size: 20px; max-width: 820px; margin-bottom: 18px; }
+.s1-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.s1-scale-h { font-family: var(--display); font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--text); margin: 0 0 8px; }
+.s1-scale-h span { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+.s1-steps { display: grid; grid-template-columns: repeat(5, 1fr); overflow: hidden; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; }
+.s1-step { padding: 8px 0; text-align: center; font-family: var(--mono); font-size: 14px; color: var(--text); }
+.s1-step + .s1-step { border-left: 1px solid var(--border); }
+.s1-step--anchor { background: var(--text); color: #FFFFFF; }
+.s1-anchors { position: relative; height: 40px; margin-top: 6px; }
+.s1-anchor { position: absolute; top: 0; width: 32%; font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--body); }
+
+/* ----- Flows ----- */
+.s1-flow, .s1-loop { display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr; }
+.s1-flow { align-items: stretch; margin-top: 8px; }
+.s1-fstep { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 14px; font-family: var(--display); font-size: 16px; line-height: 1.35; color: var(--text); }
+.s1-fstep .s1-fn { display: block; margin: 0 0 6px; }
+.s1-farr { position: relative; align-self: center; height: 1.5px; margin: 0 6px 0 4px; background: var(--text); }
+.s1-farr::after { content: ""; position: absolute; right: -2px; top: -4px; border-left: 8px solid var(--text); border-top: 4.75px solid transparent; border-bottom: 4.75px solid transparent; }
+.s1-loop > span { grid-column: 5 / 8; position: relative; height: 24px; margin: 0 18% 0 14%; border: 1.5px solid var(--text); border-top: 0; border-radius: 0 0 8px 8px; }
+.s1-loop > span::before { content: ""; position: absolute; left: -5.5px; top: -1px; border-bottom: 8px solid var(--text); border-left: 4.75px solid transparent; border-right: 4.75px solid transparent; }
+.s1-loop > span b { position: absolute; left: 50%; top: 30px; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--body); }
+.s1-loop + .activity-link { margin-top: 44px; }
+
+/* ----- Submission form ----- */
+.s1-form { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 8px; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 18px; }
+.s1-field-l { font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--text); margin: 0 0 8px; min-height: 40px; }
+.s1-field-box { display: flex; align-items: center; height: 44px; padding: 0 10px; border: 1.5px solid var(--muted); border-radius: 4px; }
+.s1-field-box span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* ----- Pair rotation ----- */
+.s1-rot-heads { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin: 0 0 4px; font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 24px; }
+.s1-rot-heads a { display: inline-block; min-height: 24px; }
+.s1-steps3 { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0; margin: 12px 0 0; }
+.s1-steps3 li { font-family: var(--display); font-size: 15px; line-height: 1.35; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; }
+
+/* ----- Sealed estimates ----- */
+.s1-seal { display: grid; grid-template-columns: 1fr 1fr 44px 1fr; gap: 12px; align-items: stretch; margin: 8px 0 18px; }
+.s1-seal .s1-farr { margin: 0; }
+.s1-est { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 16px; }
+.s1-est-h { font-family: var(--display); font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--text); margin: 0; }
+.s1-est-s { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 13px; line-height: 1.3; color: var(--body); margin: 6px 0 0; }
+.s1-est-s .s1-glyph { width: 18px; height: 18px; stroke-width: 2.2; }
+.s1-est--lock { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; background: var(--text); }
+.s1-est--lock .s1-glyph { grid-row: 1 / 3; stroke: #FFFFFF; }
+.s1-est--lock .s1-est-h, .s1-est--lock .s1-est-s { color: #FFFFFF; }
+
+/* ----- Discussion prompts ----- */
+.s1-prompts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.s1-prompts--2 { grid-template-columns: 1fr 1fr; }
+.s1-prompt { font-family: var(--display); font-size: 16px; line-height: 1.35; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin: 0; }
+
+/* ----- Judging autonomy ----- */
+.s1-sub { font-size: 19px; margin: -8px 0 14px; }
+.s1-judge { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; }
+.s1-qcard { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+.s1-qcard h3 { font-size: 16px; margin-bottom: 8px; }
+.s1-qcard p { font-family: var(--display); font-size: 15px; line-height: 1.4; color: var(--text); margin-top: 8px; }
+.s1-qcard code { font-family: var(--mono); font-size: 13px; }
+.s1-mini { margin: 0; }
+
+
+/* Halo keeps chart labels legible where they cross gridlines and whiskers. */
+.s1-chart .s1-val, .s1-chart .s1-lab, .s1-chart .s1-note-txt { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.s1-axis { stroke: var(--text); stroke-width: 1.5; }
+.s1-leader { stroke: var(--muted); stroke-width: 1; }
+.s1-rules { align-items: start; }
+.s1-anchor { text-wrap: balance; }
+.s1-site-body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+.s1-cav-sub { font-family: var(--mono); font-size: 12px; line-height: 1.4; color: var(--body); margin: -6px 0 4px; }
+.s1-pl { font-weight: 600; }
+.s1-plan-bar .s1-seg:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+.s1-plan-bar .s1-seg:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+.s1-qcard-h { line-height: 24px; }
+.s1-qcard-h a { display: inline-block; min-height: 24px; }
+
+</style>
 </head>
 <body data-week="1" class="deck-v2">
 
@@ -20,42 +250,17 @@
   </div>
 </div>
 
-<!-- 2: Plan for the hour, before the reveal -->
-<div class="slide slide-dark" id="s1">
+<!-- 2: Plan for the hour -->
+<div class="slide" id="s1">
   <div class="slide-inner">
-    <div class="slide-label">Run-Sheet &middot; 1 of 2</div>
-    <h2>Plan for the Hour: Before the Reveal</h2>
-    <div class="items" style="gap: 6px;">
-      <div class="item"><span class="item-num clock">0:00 to 5:00</span><span class="item-text"><strong>Retrieval opener:</strong> three questions on paper.</span></div>
-      <div class="item"><span class="item-num clock">5:00 to 10:00</span><span class="item-text"><strong>Course debrief:</strong> what worked, what failed.</span></div>
-      <div class="item"><span class="item-num clock">10:00 to 14:00</span><span class="item-text"><strong>Framing:</strong> the question, charts, caveats.</span></div>
-      <div class="item"><span class="item-num clock">14:00 to 16:00</span><span class="item-text"><strong>Pairs and rules.</strong></span></div>
-      <div class="item"><span class="item-num clock">16:00 to 25:00</span><span class="item-text"><strong>Round 1 scoping.</strong></span></div>
-      <div class="item"><span class="item-num clock">25:00 to 27:00</span><span class="item-text"><strong>Round 1 submission.</strong></span></div>
-      <div class="item"><span class="item-num clock">27:00 to 36:00</span><span class="item-text"><strong>Round 2 scoping.</strong></span></div>
-      <div class="item"><span class="item-num clock">36:00 to 38:00</span><span class="item-text"><strong>Round 2 submission.</strong></span></div>
-    </div>
+    <div class="slide-label">Run-Sheet</div>
+    <h2>Plan for the Hour</h2>
+    <div class="s1-plan" aria-hidden="true"><p class="s1-plan-cap" style="padding-left:0.0000%">Before the reveal</p><div class="s1-plan-bar"><span class="s1-seg s1-icap-a s1-seg--first" data-min="5" style="left:0.0000%;width:8.3333%">5 min</span><span class="s1-seg s1-icap-i" data-min="5" style="left:8.3333%;width:8.3333%">5 min</span><span class="s1-seg s1-icap-p" data-min="4" style="left:16.6667%;width:6.6667%">4 min</span><span class="s1-seg s1-icap-p" data-min="2" style="left:23.3333%;width:3.3333%">2</span><span class="s1-seg s1-icap-i" data-min="9" style="left:26.6667%;width:15.0000%">9 min</span><span class="s1-seg s1-icap-c" data-min="2" style="left:41.6667%;width:3.3333%">2</span><span class="s1-seg s1-icap-i" data-min="9" style="left:45.0000%;width:15.0000%">9 min</span><span class="s1-seg s1-icap-c" data-min="2" style="left:60.0000%;width:3.3333%">2</span></div><div class="s1-plan-lab"><span class="s1-lead s1-lead--1" style="left:4.1667%"></span><span class="s1-pl s1-pl--1" style="left:4.1667%">Retrieval<br>opener</span><span class="s1-lead s1-lead--1" style="left:12.5000%"></span><span class="s1-pl s1-pl--1" style="left:12.5000%">Course<br>debrief</span><span class="s1-lead s1-lead--1" style="left:20.0000%"></span><span class="s1-pl s1-pl--1" style="left:20.0000%">Framing</span><span class="s1-lead s1-lead--2" style="left:25.0000%"></span><span class="s1-pl s1-pl--2" style="left:25.0000%">Pairs and rules</span><span class="s1-lead s1-lead--1" style="left:34.1667%"></span><span class="s1-pl s1-pl--1" style="left:34.1667%">Round 1<br>scoping</span><span class="s1-lead s1-lead--1" style="left:43.3333%"></span><span class="s1-pl s1-pl--1" style="left:43.3333%">Round 1<br>submission</span><span class="s1-lead s1-lead--1" style="left:52.5000%"></span><span class="s1-pl s1-pl--1" style="left:52.5000%">Round 2<br>scoping</span><span class="s1-lead s1-lead--1" style="left:61.6667%"></span><span class="s1-pl s1-pl--1" style="left:61.6667%">Round 2<br>submission</span></div><p class="s1-plan-cap" style="padding-left:63.3333%">After the reveal</p><div class="s1-plan-bar"><span class="s1-seg s1-icap-p s1-seg--first" data-min="3" style="left:63.3333%;width:5.0000%">3</span><span class="s1-seg s1-icap-i" data-min="4" style="left:68.3333%;width:6.6667%">4 min</span><span class="s1-seg s1-icap-i" data-min="4" style="left:75.0000%;width:6.6667%">4 min</span><span class="s1-seg s1-icap-i" data-min="4" style="left:81.6667%;width:6.6667%">4 min</span><span class="s1-seg s1-icap-c" data-min="5" style="left:88.3333%;width:8.3333%">5 min</span><span class="s1-seg s1-icap-p" data-min="2" style="left:96.6667%;width:3.3333%">2</span></div><div class="s1-plan-lab"><span class="s1-lead s1-lead--1" style="left:65.8333%"></span><span class="s1-pl s1-pl--1" style="left:65.8333%">Reveal</span><span class="s1-lead s1-lead--2" style="left:71.6667%"></span><span class="s1-pl s1-pl--2" style="left:71.6667%">How far off</span><span class="s1-lead s1-lead--1" style="left:78.3333%"></span><span class="s1-pl s1-pl--1" style="left:78.3333%">Why</span><span class="s1-lead s1-lead--2" style="left:85.0000%"></span><span class="s1-pl s1-pl--2" style="left:85.0000%">Judging autonomy</span><span class="s1-lead s1-lead--1" style="left:92.5000%"></span><span class="s1-pl s1-pl--1" style="left:92.5000%">Exit<br>question</span><span class="s1-lead s1-lead--2" style="left:98.3333%"></span><span class="s1-pl s1-pl--end s1-pl--2" style="right:0">Close</span></div><div class="s1-plan-axis"><span class="s1-pt s1-pt--start" style="left:0.0000%">0</span><span class="s1-pt" style="left:25.0000%">15</span><span class="s1-pt" style="left:50.0000%">30</span><span class="s1-pt" style="left:75.0000%">45</span><span class="s1-pt s1-pt--end" style="left:100.0000%">60</span></div><p class="s1-plan-axis-title">Minutes into the session</p></div><p class="s1-legend"><span class="s1-legend-k">ICAP mode</span><span class="s1-legend-i"><span class="s1-sw s1-icap-p" aria-hidden="true"></span>Passive</span><span class="s1-legend-i"><span class="s1-sw s1-icap-a" aria-hidden="true"></span>Active</span><span class="s1-legend-i"><span class="s1-sw s1-icap-c" aria-hidden="true"></span>Constructive</span><span class="s1-legend-i"><span class="s1-sw s1-icap-i" aria-hidden="true"></span>Interactive</span></p><ol class="s1-sr-only"><li>0:00 to 5:00: Retrieval opener, 5 minutes, active.</li><li>5:00 to 10:00: Course debrief, 5 minutes, interactive.</li><li>10:00 to 14:00: Framing, 4 minutes, passive.</li><li>14:00 to 16:00: Pairs and rules, 2 minutes, passive.</li><li>16:00 to 25:00: Round 1 scoping, 9 minutes, interactive.</li><li>25:00 to 27:00: Round 1 submission, 2 minutes, constructive.</li><li>27:00 to 36:00: Round 2 scoping, 9 minutes, interactive.</li><li>36:00 to 38:00: Round 2 submission, 2 minutes, constructive.</li><li>38:00 to 41:00: Reveal, 3 minutes, passive.</li><li>41:00 to 45:00: How far off, 4 minutes, interactive.</li><li>45:00 to 49:00: Why, 4 minutes, interactive.</li><li>49:00 to 53:00: Judging autonomy, 4 minutes, interactive.</li><li>53:00 to 58:00: Exit question, 5 minutes, constructive.</li><li>58:00 to 60:00: Close, 2 minutes, passive.</li></ol>
   </div>
 </div>
 
-<!-- 3: Plan for the hour, after the reveal -->
-<div class="slide slide-dark" id="s2">
-  <div class="slide-inner">
-    <div class="slide-label">Run-Sheet &middot; 2 of 2</div>
-    <h2>Plan for the Hour: After the Reveal</h2>
-    <div class="items" style="gap: 6px;">
-      <div class="item"><span class="item-num clock">38:00 to 41:00</span><span class="item-text"><strong>Reveal:</strong> estimates and predictions against the truth.</span></div>
-      <div class="item"><span class="item-num clock">41:00 to 45:00</span><span class="item-text"><strong>How far off:</strong> medians, spread, buckets.</span></div>
-      <div class="item"><span class="item-num clock">45:00 to 49:00</span><span class="item-text"><strong>Why:</strong> the furthest pairs; patch size against complexity.</span></div>
-      <div class="item"><span class="item-num clock">49:00 to 53:00</span><span class="item-text"><strong>Judging autonomy:</strong> METR, human time, predictions.</span></div>
-      <div class="item"><span class="item-num clock">53:00 to 58:00</span><span class="item-text"><strong>Exit question,</strong> individually.</span></div>
-      <div class="item"><span class="item-num clock">58:00 to 60:00</span><span class="item-text"><strong>Close.</strong></span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 4: Retrieval opener -->
-<div class="slide" id="s3">
+<!-- 3: Retrieval opener -->
+<div class="slide" id="s2">
   <div class="slide-inner">
     <div class="slide-label">0:00 to 5:00 &middot; Active</div>
     <h2>Retrieval Opener</h2>
@@ -68,49 +273,59 @@
   </div>
 </div>
 
-<!-- 5: Opener key -->
-<div class="slide" id="s4">
+<!-- 4: Answer key -->
+<div class="slide" id="s3">
   <div class="slide-inner">
     <div class="slide-label">0:00 to 5:00 &middot; Opener Key</div>
     <h2>Answer Key</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Claude Code:</strong> <code>/clear</code>, then a more specific prompt. <strong>Codex:</strong> ask for a retrospective, then update AGENTS.md.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Commands it cannot guess (build, test, lint) and how to verify work is done.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Automation, augmentation, agency. Agency.</span></div>
+    <div class="s1-key">
+      <section class="s1-key-col">
+        <p class="s1-key-n">1</p>
+        <div class="s1-lane"><span class="s1-track">Claude Code</span><span class="s1-chip"><code>/clear</code></span><span class="s1-arr" aria-hidden="true">&rarr;</span><span class="s1-chip">more specific prompt</span></div>
+        <div class="s1-lane"><span class="s1-track">Codex</span><span class="s1-chip">retrospective</span><span class="s1-arr" aria-hidden="true">&rarr;</span><span class="s1-chip">update AGENTS.md</span></div>
+      </section>
+      <section class="s1-key-col">
+        <p class="s1-key-n">2</p>
+        <p class="s1-key-h">Commands it cannot guess</p>
+        <div class="s1-chips"><span class="s1-chip"><code>build</code></span><span class="s1-chip"><code>test</code></span><span class="s1-chip"><code>lint</code></span></div>
+        <p class="s1-key-h">How to verify work is done</p>
+      </section>
+      <section class="s1-key-col">
+        <p class="s1-key-n">3</p>
+        <div class="s1-modes"><span class="s1-mode">Automation</span><span class="s1-mode">Augmentation</span><span class="s1-mode s1-mode--on">Agency <span class="s1-mode-tag">works independently</span></span></div>
+      </section>
     </div>
   </div>
 </div>
 
-<!-- 6: Course debrief -->
-<div class="slide" id="s5">
+<!-- 5: Course debrief -->
+<div class="slide" id="s4">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 10:00 &middot; Interactive</div>
     <h2>Course Debrief</h2>
-    <div class="two-col" style="gap: 20px;">
-      <div class="card card-accent">
-        <h3>What worked well?</h3>
-        <p>Speed, clarity, or effective tool execution during your pre-work?</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Where did it stumble?</h3>
-        <p>Loops, ungrounded assumptions, or prompt fatigue?</p>
-      </div>
+    <div class="s1-t">
+      <section class="s1-t-col"><h3>What worked well?</h3><div class="s1-chips s1-chips--lg"><span class="s1-chip">Speed</span><span class="s1-chip">Clarity</span><span class="s1-chip">Effective tool execution</span></div></section>
+      <section class="s1-t-col"><h3>Where did it stumble?</h3><div class="s1-chips s1-chips--lg"><span class="s1-chip">Loops</span><span class="s1-chip">Ungrounded assumptions</span><span class="s1-chip">Prompt fatigue</span></div></section>
     </div>
+    <p class="meta s1-center">From your pre-work</p>
   </div>
 </div>
 
-<!-- 7: Where the frontier stands -->
-<div class="slide" id="s6">
+<!-- 6: Frontier -->
+<div class="slide" id="s5">
   <div class="slide-inner">
     <div class="slide-label">10:00 to 14:00 &middot; Framing</div>
     <h2>Where the Frontier Stands</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>SWE-bench Verified</strong>: record 79.2% (Dec 2025); OpenAI stopped reporting it in Feb 2026.</span></div>
-      <div class="item"><span class="item-text"><strong>SWE-Bench Pro</strong>: Scale's board tops at 61.5% (Muse Spark 1.1); V2 released 22 Sep.</span></div>
-      <div class="item"><span class="item-text"><strong>Terminal-Bench 4.0</strong>: Claude Opus 5.5 in Claude Code leads at 64.8%.</span></div>
-      <div class="item"><span class="item-text"><strong>FrontierCode 1.1</strong>: graded on mergeability; Claude Opus 5.5 leads at 54.6.</span></div>
-      <div class="item"><span class="item-text"><strong>METR</strong>: about 17 hours for Claude Mythos Preview; page frozen in September.</span></div>
-    </div>
+    <div class="s1-panels"><section class="s1-panel"><h3 class="s1-panel-title"><a class="s1-link" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer">SWE-bench Verified<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><p class="s1-panel-note">Record set Dec 2025</p><svg class="s1-chart" viewBox="0 0 420 125" role="img" aria-label="SWE-bench Verified, top three by rank: Sonar Foundation Agent + Claude 4.5 Opus 79.2% (5 Dec 2025); live-SWE-agent + Claude 4.5 Opus medium (20251101) 79.2% (15 Dec 2025); TRAE + Doubao-Seed-Code 78.8% (28 Sep 2025). The record has stood since December 2025."><line class="s1-grid" x1="281.0" x2="281.0" y1="4" y2="85"/><line class="s1-axis" x1="196" x2="366" y1="85.75" y2="85.75"/><line class="s1-axis" x1="281.0" x2="281.0" y1="85" y2="89"/><line class="s1-axis" x1="366.0" x2="366.0" y1="85" y2="89"/><text class="s1-lab" x="0" y="22">Sonar Foundation Agent</text><rect class="s1-bar" x="196" y="11" width="134.6" height="14"/><text class="s1-val" x="336.6" y="22">79.2%</text><text class="s1-lab" x="0" y="49">live-SWE-agent</text><rect class="s1-bar" x="196" y="38" width="134.6" height="14"/><text class="s1-val" x="336.6" y="49">79.2%</text><text class="s1-lab" x="0" y="76">TRAE</text><rect class="s1-bar" x="196" y="65" width="134.0" height="14"/><text class="s1-val" x="336.0" y="76">78.8%</text><line class="s1-base" x1="196" x2="196" y1="4" y2="85"/><text class="s1-tick" x="366" y="101" text-anchor="middle">100</text><text class="s1-axis-title" x="281.0" y="118" text-anchor="middle">Resolved (%)</text></svg></section><section class="s1-panel"><h3 class="s1-panel-title"><a class="s1-link" href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer">SWE-Bench Pro<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><p class="s1-panel-note">Public set, v1</p><svg class="s1-chart" viewBox="0 0 420 125" role="img" aria-label="SWE-Bench Pro public set (v1) on Scale&#x27;s board, top three: Muse Spark 1.1 61.5%; gpt-5.4 (xHigh) 59.1%; Muse Spark 55.0%."><line class="s1-grid" x1="281.0" x2="281.0" y1="4" y2="85"/><line class="s1-axis" x1="196" x2="366" y1="85.75" y2="85.75"/><line class="s1-axis" x1="281.0" x2="281.0" y1="85" y2="89"/><line class="s1-axis" x1="366.0" x2="366.0" y1="85" y2="89"/><text class="s1-lab" x="0" y="22">Muse Spark 1.1</text><rect class="s1-bar" x="196" y="11" width="104.5" height="14"/><text class="s1-val" x="306.6" y="22">61.5%</text><text class="s1-lab" x="0" y="49">gpt-5.4 (xHigh)</text><rect class="s1-bar" x="196" y="38" width="100.5" height="14"/><text class="s1-val" x="302.5" y="49">59.1%</text><text class="s1-lab" x="0" y="76">Muse Spark</text><rect class="s1-bar" x="196" y="65" width="93.5" height="14"/><text class="s1-val" x="295.5" y="76">55.0%</text><line class="s1-base" x1="196" x2="196" y1="4" y2="85"/><text class="s1-tick" x="366" y="101" text-anchor="middle">100</text><text class="s1-axis-title" x="281.0" y="118" text-anchor="middle">Resolved (%)</text></svg></section><section class="s1-panel"><h3 class="s1-panel-title"><a class="s1-link" href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer">Terminal-Bench 4.0<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><svg class="s1-chart" viewBox="0 0 420 152" role="img" aria-label="Terminal-Bench 4.0, top three ranks, percent of 330 trials passed: Opus 5.5 in Claude Code 64.8%; Sonnet 5.5 in Claude Code 61.8%; GPT-6 Astra in Codex 58.2%; GPT-6.1 Sol in Codex 58.2%. Claude Code leads; two Codex entries tie for third."><line class="s1-grid" x1="281.0" x2="281.0" y1="4" y2="112"/><line class="s1-axis" x1="196" x2="366" y1="112.75" y2="112.75"/><line class="s1-axis" x1="281.0" x2="281.0" y1="112" y2="116"/><line class="s1-axis" x1="366.0" x2="366.0" y1="112" y2="116"/><text class="s1-lab" x="0" y="22">Opus 5.5, Claude Code</text><rect class="s1-bar" x="196" y="11" width="110.2" height="14"/><text class="s1-val" x="312.2" y="22">64.8%</text><text class="s1-lab" x="0" y="49">Sonnet 5.5, Claude Code</text><rect class="s1-bar" x="196" y="38" width="105.1" height="14"/><text class="s1-val" x="307.1" y="49">61.8%</text><text class="s1-lab" x="0" y="76">GPT-6 Astra, Codex</text><rect class="s1-bar" x="196" y="65" width="98.9" height="14"/><text class="s1-val" x="300.9" y="76">58.2%</text><text class="s1-lab" x="0" y="103">GPT-6.1 Sol, Codex</text><rect class="s1-bar" x="196" y="92" width="98.9" height="14"/><text class="s1-val" x="300.9" y="103">58.2%</text><line class="s1-base" x1="196" x2="196" y1="4" y2="112"/><text class="s1-tick" x="366" y="128" text-anchor="middle">100</text><text class="s1-axis-title" x="281.0" y="145" text-anchor="middle">Trials passed (%)</text></svg></section><section class="s1-panel"><h3 class="s1-panel-title"><a class="s1-link" href="https://cognition.com/frontiercode" target="_blank" rel="noopener noreferrer">FrontierCode 1.1<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><p class="s1-panel-note">Graded on mergeability</p><svg class="s1-chart" viewBox="0 0 420 125" role="img" aria-label="FrontierCode 1.1 Main, top three by rubric score out of 100: Opus 5.5 54.6; Fable 5 53.5; Opus 5 53.4."><line class="s1-grid" x1="281.0" x2="281.0" y1="4" y2="85"/><line class="s1-axis" x1="196" x2="366" y1="85.75" y2="85.75"/><line class="s1-axis" x1="281.0" x2="281.0" y1="85" y2="89"/><line class="s1-axis" x1="366.0" x2="366.0" y1="85" y2="89"/><text class="s1-lab" x="0" y="22">Opus 5.5</text><rect class="s1-bar" x="196" y="11" width="92.8" height="14"/><text class="s1-val" x="294.8" y="22">54.6</text><text class="s1-lab" x="0" y="49">Fable 5</text><rect class="s1-bar" x="196" y="38" width="91.0" height="14"/><text class="s1-val" x="292.9" y="49">53.5</text><text class="s1-lab" x="0" y="76">Opus 5</text><rect class="s1-bar" x="196" y="65" width="90.8" height="14"/><text class="s1-val" x="292.8" y="76">53.4</text><line class="s1-base" x1="196" x2="196" y1="4" y2="85"/><text class="s1-tick" x="366" y="101" text-anchor="middle">100</text><text class="s1-axis-title" x="281.0" y="118" text-anchor="middle">Rubric score</text></svg></section></div>
+  </div>
+</div>
+
+<!-- 7: METR -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="slide-label">10:00 to 14:00 &middot; Framing</div>
+    <h2>How the Frontier Moved</h2>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 330" role="img" aria-label="METR&#x27;s 50% time horizon, log scale: from 0.1 minutes for GPT-2 in February 2019 to 1,044.8 minutes, about 17 hours, for Claude Mythos Preview (early) in April 2026. That last point sits above 960 minutes, the 16 hours METR calls reliable. Whiskers are 95% confidence intervals; Claude Opus 4.6 spans 316.7 to 3,633.8 minutes."><text class="s1-axis-title" x="0" y="12">Human minutes, log scale</text><line class="s1-grid" x1="52" x2="868" y1="270.8" y2="270.8"/><text class="s1-tick" x="44" y="274.8" text-anchor="end">0.1</text><line class="s1-grid" x1="52" x2="868" y1="220.4" y2="220.4"/><text class="s1-tick" x="44" y="224.4" text-anchor="end">1</text><line class="s1-grid" x1="52" x2="868" y1="170.0" y2="170.0"/><text class="s1-tick" x="44" y="174.0" text-anchor="end">10</text><line class="s1-grid" x1="52" x2="868" y1="119.6" y2="119.6"/><text class="s1-tick" x="44" y="123.6" text-anchor="end">100</text><line class="s1-base" x1="52" x2="868" y1="286" y2="286"/><line class="s1-base" x1="52.0" x2="52.0" y1="286" y2="291"/><text class="s1-tick" x="52.0" y="305" text-anchor="middle">2019</text><line class="s1-base" x1="154.0" x2="154.0" y1="286" y2="291"/><line class="s1-base" x1="256.2" x2="256.2" y1="286" y2="291"/><line class="s1-base" x1="358.2" x2="358.2" y1="286" y2="291"/><text class="s1-tick" x="358.2" y="305" text-anchor="middle">2022</text><line class="s1-base" x1="460.1" x2="460.1" y1="286" y2="291"/><line class="s1-base" x1="562.1" x2="562.1" y1="286" y2="291"/><line class="s1-base" x1="664.3" x2="664.3" y1="286" y2="291"/><text class="s1-tick" x="664.3" y="305" text-anchor="middle">2025</text><line class="s1-base" x1="766.3" x2="766.3" y1="286" y2="291"/><text class="s1-axis-title" x="460.0" y="326" text-anchor="middle">Release date</text><line class="s1-ref" x1="52" x2="868" y1="70.1" y2="70.1"/><text class="s1-note-txt" x="58" y="63.1">960 min (16 h): METR's reliable limit</text><line class="s1-whisker" x1="64.3" x2="64.3" y1="270.8" y2="286.0"/><line class="s1-whisker" x1="61.3" x2="67.3" y1="270.8" y2="270.8"/><line class="s1-whisker" x1="195.3" x2="195.3" y1="255.7" y2="270.8"/><line class="s1-whisker" x1="192.3" x2="198.3" y1="255.7" y2="255.7"/><line class="s1-whisker" x1="192.3" x2="198.3" y1="270.8" y2="270.8"/><line class="s1-whisker" x1="378.6" x2="378.6" y1="218.3" y2="246.8"/><line class="s1-whisker" x1="375.6" x2="381.6" y1="218.3" y2="218.3"/><line class="s1-whisker" x1="375.6" x2="381.6" y1="246.8" y2="246.8"/><line class="s1-whisker" x1="480.3" x2="480.3" y1="174.9" y2="206.4"/><line class="s1-whisker" x1="477.3" x2="483.3" y1="174.9" y2="174.9"/><line class="s1-whisker" x1="477.3" x2="483.3" y1="206.4" y2="206.4"/><line class="s1-whisker" x1="546.5" x2="546.5" y1="173.8" y2="206.4"/><line class="s1-whisker" x1="543.5" x2="549.5" y1="173.8" y2="173.8"/><line class="s1-whisker" x1="543.5" x2="549.5" y1="206.4" y2="206.4"/><line class="s1-whisker" x1="599.3" x2="599.3" y1="164.4" y2="190.1"/><line class="s1-whisker" x1="596.3" x2="602.3" y1="164.4" y2="164.4"/><line class="s1-whisker" x1="596.3" x2="602.3" y1="190.1" y2="190.1"/><line class="s1-whisker" x1="609.9" x2="609.9" y1="152.4" y2="183.1"/><line class="s1-whisker" x1="606.9" x2="612.9" y1="152.4" y2="152.4"/><line class="s1-whisker" x1="606.9" x2="612.9" y1="183.1" y2="183.1"/><line class="s1-whisker" x1="633.3" x2="633.3" y1="143.6" y2="166.6"/><line class="s1-whisker" x1="630.3" x2="636.3" y1="143.6" y2="143.6"/><line class="s1-whisker" x1="630.3" x2="636.3" y1="166.6" y2="166.6"/><line class="s1-whisker" x1="644.5" x2="644.5" y1="139.2" y2="169.8"/><line class="s1-whisker" x1="641.5" x2="647.5" y1="139.2" y2="139.2"/><line class="s1-whisker" x1="641.5" x2="647.5" y1="169.8" y2="169.8"/><line class="s1-whisker" x1="656.8" x2="656.8" y1="129.1" y2="153.6"/><line class="s1-whisker" x1="653.8" x2="659.8" y1="129.1" y2="129.1"/><line class="s1-whisker" x1="653.8" x2="659.8" y1="153.6" y2="153.6"/><line class="s1-whisker" x1="679.4" x2="679.4" y1="118.7" y2="143.9"/><line class="s1-whisker" x1="676.4" x2="682.4" y1="118.7" y2="118.7"/><line class="s1-whisker" x1="676.4" x2="682.4" y1="143.9" y2="143.9"/><line class="s1-whisker" x1="693.7" x2="693.7" y1="105.5" y2="126.0"/><line class="s1-whisker" x1="690.7" x2="696.7" y1="105.5" y2="105.5"/><line class="s1-whisker" x1="690.7" x2="696.7" y1="126.0" y2="126.0"/><line class="s1-whisker" x1="725.2" x2="725.2" y1="89.0" y2="117.0"/><line class="s1-whisker" x1="722.2" x2="728.2" y1="89.0" y2="89.0"/><line class="s1-whisker" x1="722.2" x2="728.2" y1="117.0" y2="117.0"/><line class="s1-whisker" x1="754.0" x2="754.0" y1="90.4" y2="112.3"/><line class="s1-whisker" x1="751.0" x2="757.0" y1="90.4" y2="90.4"/><line class="s1-whisker" x1="751.0" x2="757.0" y1="112.3" y2="112.3"/><line class="s1-whisker" x1="755.7" x2="755.7" y1="79.6" y2="109.1"/><line class="s1-whisker" x1="752.7" x2="758.7" y1="79.6" y2="79.6"/><line class="s1-whisker" x1="752.7" x2="758.7" y1="109.1" y2="109.1"/><line class="s1-whisker" x1="760.4" x2="760.4" y1="73.7" y2="104.7"/><line class="s1-whisker" x1="757.4" x2="763.4" y1="73.7" y2="73.7"/><line class="s1-whisker" x1="757.4" x2="763.4" y1="104.7" y2="104.7"/><line class="s1-whisker" x1="776.1" x2="776.1" y1="41.0" y2="94.4"/><line class="s1-whisker" x1="773.1" x2="779.1" y1="41.0" y2="41.0"/><line class="s1-whisker" x1="773.1" x2="779.1" y1="94.4" y2="94.4"/><line class="s1-whisker" x1="793.1" x2="793.1" y1="43.1" y2="84.0"/><line class="s1-whisker" x1="790.1" x2="796.1" y1="43.1" y2="43.1"/><line class="s1-whisker" x1="790.1" x2="796.1" y1="84.0" y2="84.0"/><circle class="s1-dot" cx="64.3" cy="270.8" r="4.5"/><circle class="s1-dot" cx="195.3" cy="270.8" r="4.5"/><circle class="s1-dot" cx="378.6" cy="231.6" r="4.5"/><circle class="s1-dot" cx="480.3" cy="190.1" r="4.5"/><circle class="s1-dot" cx="546.5" cy="190.1" r="4.5"/><circle class="s1-dot" cx="599.3" cy="177.8" r="4.5"/><circle class="s1-dot" cx="609.9" cy="167.2" r="4.5"/><circle class="s1-dot" cx="633.3" cy="154.5" r="4.5"/><circle class="s1-dot" cx="644.5" cy="154.3" r="4.5"/><circle class="s1-dot" cx="656.8" cy="140.3" r="4.5"/><circle class="s1-dot" cx="679.4" cy="130.7" r="4.5"/><circle class="s1-dot" cx="693.7" cy="115.7" r="4.5"/><circle class="s1-dot" cx="725.2" cy="104.1" r="4.5"/><circle class="s1-dot" cx="754.0" cy="101.9" r="4.5"/><circle class="s1-dot" cx="755.7" cy="96.1" r="4.5"/><circle class="s1-dot" cx="760.4" cy="92.1" r="4.5"/><circle class="s1-dot" cx="776.1" cy="76.4" r="4.5"/><circle class="s1-dot s1-dot--accent" cx="793.1" cy="68.3" r="5.5"/><text class="s1-lab" x="749.1" y="30.3" text-anchor="end">Claude Mythos Preview (early)</text><text class="s1-lab" x="749.1" y="48.3" text-anchor="end">1,044.8 min, about 17 h</text><line class="s1-leader" x1="753.1" y1="44.3" x2="787.1" y2="65.3"/></svg></figure><p class="s1-cap"><a class="s1-link" href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer">METR time horizon<span class="s1-sr-only"> (opens in a new tab)</span></a> &middot; last updated 8 Sep 2026</p>
   </div>
 </div>
 
@@ -119,172 +334,195 @@
   <div class="slide-inner">
     <div class="slide-label">10:00 to 14:00 &middot; Caveats</div>
     <h2>Benchmark Caveats</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Verified is retired</strong>: 59.4% of 138 audited tasks had flawed tests or descriptions.</span></div>
-      <div class="item"><span class="item-text"><strong>Pro's public set</strong>: about 30% broken, OpenAI estimates.</span></div>
-      <div class="item"><span class="item-text"><strong>METR</strong> stopped updating its page in September.</span></div>
-      <div class="item"><span class="item-text"><strong>Maintainers</strong> would not merge about half of test-passing Verified patches.</span></div>
+    <div class="s1-cavs">
+      <section class="s1-cav">
+        <h3 class="s1-cav-name"><a class="s1-link" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer">SWE-bench Verified<span class="s1-sr-only"> (opens in a new tab)</span></a></h3>
+        <p class="s1-cav-head">Retired</p>
+        <p class="s1-cav-sub">OpenAI stopped reporting it, Feb 2026</p>
+        <div class="s1-prop" aria-hidden="true"><span style="width:59.4%"></span></div>
+        <p class="s1-cav-txt"><b>59.4%</b> of 138 audited tasks had flawed tests or descriptions</p>
+        <div class="s1-prop" aria-hidden="true"><span style="width:50%"></span></div>
+        <p class="s1-cav-txt"><b>About half</b> of test-passing patches would not be merged by maintainers</p>
+      </section>
+      <section class="s1-cav">
+        <h3 class="s1-cav-name"><a class="s1-link" href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer">SWE-Bench Pro<span class="s1-sr-only"> (opens in a new tab)</span></a></h3>
+        <p class="s1-cav-head">Broken tasks</p>
+        <div class="s1-prop" aria-hidden="true"><span style="width:30%"></span></div>
+        <p class="s1-cav-txt"><b>About 30%</b> of the public set broken, OpenAI estimates</p>
+      </section>
+      <section class="s1-cav">
+        <h3 class="s1-cav-name"><a class="s1-link" href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer">METR time horizon<span class="s1-sr-only"> (opens in a new tab)</span></a></h3>
+        <p class="s1-cav-head">Frozen</p>
+        <div class="s1-frozen" aria-hidden="true"><span class="s1-frozen-dot"></span><span class="s1-frozen-line"></span><span class="s1-frozen-end"></span></div>
+        <p class="s1-cav-txt s1-frozen-lab"><span><b>8 Sep 2026</b> last update</span><span><b>9 Oct 2026</b> boards read</span></p>
+      </section>
     </div>
   </div>
 </div>
 
-<!-- 9: Rules for the agent -->
+<!-- 9: Compare -->
 <div class="slide" id="s8">
+  <div class="slide-inner">
+    <div class="slide-label">10:00 to 14:00 &middot; Framing</div>
+    <h2>Compare Models Yourself</h2>
+    <ul class="s1-sites"><li class="s1-site"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20V11M10 20V5M16 20V14M2 20.5h20"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://artificialanalysis.ai/models" target="_blank" rel="noopener noreferrer">Artificial Analysis, models<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Intelligence, speed and price</p></div></div></li><li class="s1-site"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M6.5 9.5l3 2.5-3 2.5M12 15h5"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer">Artificial Analysis, coding agents<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Coding agent benchmarks and leaderboard</p></div></div></li><li class="s1-site s1-site--group"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 8.5h19M5.5 6.2h.01M8 6.2h.01"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://arena.ai/leaderboard/code/webdev" target="_blank" rel="noopener noreferrer">Arena WebDev (formerly LMArena)<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">WebDev leaderboard</p></div><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://arena.ai/leaderboard/chat/text/coding" target="_blank" rel="noopener noreferrer">Arena, coding<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Text Arena rankings for code</p></div><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://arena.ai/leaderboard/agent" target="_blank" rel="noopener noreferrer">Arena, agents<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Agent Arena: how often users confirm the task is done</p></div></div></li><li class="s1-site"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 20.5h19M3.5 17l5-5 4 3 7-8"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://epoch.ai/benchmarks" target="_blank" rel="noopener noreferrer">Epoch AI<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Benchmarks and capabilities</p></div></div></li><li class="s1-site"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6h12M9 12h9M9 18h6"/><circle cx="4.5" cy="6" r="1.4"/><circle cx="4.5" cy="12" r="1.4"/><circle cx="4.5" cy="18" r="1.4"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://openrouter.ai/rankings" target="_blank" rel="noopener noreferrer">OpenRouter<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">LLM usage rankings</p></div></div></li><li class="s1-site"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 9.5h19M2.5 14.5h19M9 4v16"/></svg><div class="s1-site-body"><div class="s1-site-one"><p class="s1-site-name"><a class="s1-link" href="https://www.vals.ai/benchmarks" target="_blank" rel="noopener noreferrer">Vals AI<span class="s1-sr-only"> (opens in a new tab)</span></a></p><p class="s1-site-what">Benchmarks and leaderboards</p></div></div></li></ul>
+  </div>
+</div>
+
+<!-- 10: Rules -->
+<div class="slide" id="s9">
   <div class="slide-inner">
     <div class="slide-label">14:00 to 16:00 &middot; Pairs &amp; Rules</div>
     <h2>Rules for the Agent</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Allowed</strong>: read and run code to inspect the project.</span></div>
-      <div class="item"><span class="item-text"><strong>Forbidden</strong>: editing files or searching the web.</span></div>
-      <div class="item"><span class="item-text"><strong>Never open</strong>: README, task configs, solution, tests or the linked pull request.</span></div>
+    <div class="s1-rules">
+      <div class="s1-agent">Agent</div>
+      <svg class="s1-branch" viewBox="0 0 886 40" aria-hidden="true" focusable="false">
+        <path d="M443 0V14H218V31M443 14H668V31"/>
+        <path class="s1-head" d="M212.5 31h11L218 40Z"/><path class="s1-head" d="M662.5 31h11L668 40Z"/>
+      </svg>
+        <section class="s1-zone s1-zone--ok">
+          <p class="s1-zone-h"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Allowed</p>
+          <div class="s1-chips"><span class="s1-chip">Read code</span><span class="s1-chip">Run code</span></div>
+        </section>
+        <section class="s1-zone s1-zone--no">
+          <p class="s1-zone-h"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>Forbidden</p>
+          <div class="s1-chips"><span class="s1-chip">Edit files</span><span class="s1-chip">Search the web</span></div>
+          <p class="s1-zone-sub"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Never open: they hold the answer or the published time</p>
+          <div class="s1-chips"><span class="s1-file"><code>README.md</code></span><span class="s1-file"><code>task.toml</code></span><span class="s1-file"><code>solution/</code></span><span class="s1-file"><code>tests/</code></span><span class="s1-file">linked pull request</span></div>
+        </section>
     </div>
     <p class="activity-link"><a href="../week-1.html#bench-rules">Starter prompt on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 10: Scoping criteria -->
-<div class="slide" id="s9">
+<!-- 11: Scoping question -->
+<div class="slide" id="s10">
   <div class="slide-inner">
     <div class="slide-label">14:00 to 16:00 &middot; Question &amp; Scales</div>
     <h2>The Scoping Question</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">How many minutes would an experienced engineer, new to this repository, need without AI to pass the tests?</p>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Complexity (1 to 5)</h3>
-        <p style="font-size: 13px;">1: one location.<br/>3: several files or subtle logic.<br/>5: days of expert work.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Specification (1 to 5)</h3>
-        <p style="font-size: 13px;">1: goal unclear.<br/>3: edge cases left to judgement.<br/>5: precise to names and errors.</p>
-      </div>
+    <p class="subtitle s1-q">How many minutes would an experienced engineer, new to this repository, need without AI to pass the tests?</p>
+    <div class="s1-scales">
+      <div class="s1-scale"><p class="s1-scale-h">Complexity</p><div class="s1-steps"><span class="s1-step s1-step--anchor">1</span><span class="s1-step">2</span><span class="s1-step s1-step--anchor">3</span><span class="s1-step">4</span><span class="s1-step s1-step--anchor">5</span></div><div class="s1-anchors"><span class="s1-anchor" style="left:0;text-align:left">one location</span><span class="s1-anchor" style="left:50%;transform:translateX(-50%);text-align:center">several files or subtle logic</span><span class="s1-anchor" style="right:0;text-align:right">days of expert work</span></div></div>
+      <div class="s1-scale"><p class="s1-scale-h">Specification</p><div class="s1-steps"><span class="s1-step s1-step--anchor">1</span><span class="s1-step">2</span><span class="s1-step s1-step--anchor">3</span><span class="s1-step">4</span><span class="s1-step s1-step--anchor">5</span></div><div class="s1-anchors"><span class="s1-anchor" style="left:0;text-align:left">goal unclear</span><span class="s1-anchor" style="left:50%;transform:translateX(-50%);text-align:center">edge cases left to judgement</span><span class="s1-anchor" style="right:0;text-align:right">precise to names and errors</span></div></div>
     </div>
     <p class="meta" style="margin-top: 14px;">Then predict how many published agent runs passed. Tasks 1 to 4 only.</p>
   </div>
 </div>
 
-<!-- 11: Round 1 scoping -->
-<div class="slide" id="s10">
+<!-- 12: Round 1 scoping -->
+<div class="slide" id="s11">
   <div class="slide-inner">
     <div class="slide-label">16:00 to 25:00 &middot; In Pairs</div>
     <h2>Round 1 Scoping</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Open your pair's Round 1 card.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Run its setup command.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Give the agent the starter prompt; read its answer and probe it.</span></div>
+    <div class="s1-flow">
+      <div class="s1-fstep"><span class="s1-fn">1</span>Open your pair's Round 1 card</div>
+      <span class="s1-farr" aria-hidden="true"></span>
+      <div class="s1-fstep"><span class="s1-fn">2</span>Run its setup command</div>
+      <span class="s1-farr" aria-hidden="true"></span>
+      <div class="s1-fstep"><span class="s1-fn">3</span>Give the agent the starter prompt</div>
+      <span class="s1-farr" aria-hidden="true"></span>
+      <div class="s1-fstep s1-fstep--loop"><span class="s1-fn">4</span>Read its answer and probe it</div>
     </div>
+    <div class="s1-loop"><span><b>follow-up questions</b></span></div>
     <p class="activity-link"><a href="../week-1.html#bench-tasks">Task cards on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 12: Round 1 submission -->
-<div class="slide" id="s11">
+<!-- 13: Submit 1 -->
+<div class="slide" id="s12">
   <div class="slide-inner">
     <div class="slide-label">25:00 to 27:00 &middot; In Pairs</div>
     <h2>Submit Round 1</h2>
-    <div class="items">
-      <div class="item"><span class="item-text">Human minutes, complexity and specification quality.</span></div>
-      <div class="item"><span class="item-text">Agent prediction, Tasks 1 to 4: how many runs passed.</span></div>
-      <div class="item"><span class="item-text">A one-line reason.</span></div>
-    </div>
+    <div class="s1-form" role="img" aria-label="The Round 1 submission: human minutes, complexity 1 to 5, specification quality 1 to 5, how many agent runs passed (Tasks 1 to 4 only), and a one-line reason."><div class="s1-field"><p class="s1-field-l">Human minutes</p><div class="s1-field-box"><span>min</span></div></div><div class="s1-field"><p class="s1-field-l">Complexity</p><div class="s1-field-box"><span>1 to 5</span></div></div><div class="s1-field"><p class="s1-field-l">Specification quality</p><div class="s1-field-box"><span>1 to 5</span></div></div><div class="s1-field"><p class="s1-field-l">Agent runs passed</p><div class="s1-field-box"><span>Tasks 1 to 4</span></div></div><div class="s1-field"><p class="s1-field-l">Reason</p><div class="s1-field-box"><span>one line</span></div></div></div>
     <p class="activity-link"><a href="../week-1.html#bench-tasks">Task cards on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 13: Round 2 scoping -->
-<div class="slide" id="s12">
+<!-- 14: Round 2 scoping -->
+<div class="slide" id="s13">
   <div class="slide-inner">
     <div class="slide-label">27:00 to 36:00 &middot; In Pairs</div>
     <h2>Round 2 Scoping</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Open your pair's Round 2 card: a different benchmark.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Run its setup command in a fresh directory.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Scope it under the same rules for the agent.</span></div>
-    </div>
+    <figure class="s1-fig s1-fig--rot"><div class="s1-rot-heads"><span><a class="s1-link" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer">SWE-bench Verified<span class="s1-sr-only"> (opens in a new tab)</span></a></span><span><a class="s1-link" href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer">Terminal-Bench 4.0<span class="s1-sr-only"> (opens in a new tab)</span></a></span><span><a class="s1-link" href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer">SWE-Bench Pro<span class="s1-sr-only"> (opens in a new tab)</span></a> V2</span></div><svg class="s1-chart" viewBox="0 0 886 150" role="img" aria-label="Pair rotation: the pair that scopes Task 1 in Round 1 scopes Task 4, 2 in Round 1 scopes Task 5, 3 in Round 1 scopes Task 6, 4 in Round 1 scopes Task 1, 5 in Round 1 scopes Task 2, 6 in Round 1 scopes Task 3 in Round 2, so every pair meets two benchmarks."><rect class="s1-col" x="37.7" y="6" width="220" height="138" rx="6"/><rect class="s1-col" x="333.0" y="6" width="220" height="138" rx="6"/><rect class="s1-col" x="628.3" y="6" width="220" height="138" rx="6"/><line class="s1-rot" x1="87.7" y1="44" x2="503.0" y2="112"/><line class="s1-rot" x1="207.7" y1="44" x2="678.3" y2="112"/><line class="s1-rot" x1="383.0" y1="44" x2="798.3" y2="112"/><line class="s1-rot" x1="503.0" y1="44" x2="87.7" y2="112"/><line class="s1-rot" x1="678.3" y1="44" x2="207.7" y2="112"/><line class="s1-rot" x1="798.3" y1="44" x2="383.0" y2="112"/><circle class="s1-node" cx="87.7" cy="30" r="15"/><text class="s1-node-t" x="87.7" y="35" text-anchor="middle">1</text><circle class="s1-node" cx="87.7" cy="126" r="15"/><text class="s1-node-t" x="87.7" y="131" text-anchor="middle">1</text><circle class="s1-node" cx="207.7" cy="30" r="15"/><text class="s1-node-t" x="207.7" y="35" text-anchor="middle">2</text><circle class="s1-node" cx="207.7" cy="126" r="15"/><text class="s1-node-t" x="207.7" y="131" text-anchor="middle">2</text><circle class="s1-node" cx="383.0" cy="30" r="15"/><text class="s1-node-t" x="383.0" y="35" text-anchor="middle">3</text><circle class="s1-node" cx="383.0" cy="126" r="15"/><text class="s1-node-t" x="383.0" y="131" text-anchor="middle">3</text><circle class="s1-node" cx="503.0" cy="30" r="15"/><text class="s1-node-t" x="503.0" y="35" text-anchor="middle">4</text><circle class="s1-node" cx="503.0" cy="126" r="15"/><text class="s1-node-t" x="503.0" y="131" text-anchor="middle">4</text><circle class="s1-node" cx="678.3" cy="30" r="15"/><text class="s1-node-t" x="678.3" y="35" text-anchor="middle">5</text><circle class="s1-node" cx="678.3" cy="126" r="15"/><text class="s1-node-t" x="678.3" y="131" text-anchor="middle">5</text><circle class="s1-node" cx="798.3" cy="30" r="15"/><text class="s1-node-t" x="798.3" y="35" text-anchor="middle">6</text><circle class="s1-node" cx="798.3" cy="126" r="15"/><text class="s1-node-t" x="798.3" y="131" text-anchor="middle">6</text><text class="s1-axis-title" x="0" y="34">Round 1</text><text class="s1-axis-title" x="0" y="130">Round 2</text></svg></figure>
+    <ol class="s1-steps3">
+      <li>Open your pair's Round 2 card: a different benchmark.</li>
+      <li>Run its setup command in a fresh directory.</li>
+      <li>Scope it under the same rules for the agent.</li>
+    </ol>
     <p class="activity-link"><a href="../week-1.html#bench-tasks">Task cards on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 14: Round 2 submission -->
-<div class="slide" id="s13">
+<!-- 15: Submit 2 -->
+<div class="slide" id="s14">
   <div class="slide-inner">
     <div class="slide-label">36:00 to 38:00 &middot; In Pairs</div>
     <h2>Submit Round 2</h2>
+    <div class="s1-seal">
+      <div class="s1-est"><p class="s1-est-h">Round 1 estimate</p><p class="s1-est-s"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7"/></svg>saved</p></div>
+      <div class="s1-est"><p class="s1-est-h">Round 2 estimate</p><p class="s1-est-s"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7"/></svg>saved</p></div>
+      <span class="s1-farr" aria-hidden="true"></span>
+      <div class="s1-est s1-est--lock"><svg class="s1-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><p class="s1-est-h">Reveal</p><p class="s1-est-s"><span class="s1-mono">38:00</span></p></div>
+    </div>
     <p class="subtitle">The same fields as Round 1. Both estimates are saved before anyone reveals.</p>
     <p class="activity-link"><a href="../week-1.html#bench-tasks">Task cards on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 15: The reveal -->
-<div class="slide" id="s14">
+<!-- 16: Reveal -->
+<div class="slide" id="s15">
   <div class="slide-inner">
     <div class="slide-label">38:00 to 41:00 &middot; Ground Truth</div>
     <h2>The Reveal</h2>
-    <table class="table" style="font-size: 13px; margin-top: 8px;">
-      <thead>
-        <tr><th>Task</th><th>Human time</th><th>Patch</th><th>Agent results</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><code>swev-flask-blueprint-name</code></td><td>&lt;15 min</td><td>+3 &minus;0</td><td>15/15</td></tr>
-        <tr><td><code>swev-pylint-type-hints</code></td><td>1 to 4 h</td><td>+99 &minus;27</td><td>0/15</td></tr>
-        <tr><td><code>tb4-bun-sourcemaps</code></td><td>90 min</td><td>script rewrite</td><td>0/10</td></tr>
-        <tr><td><code>tb4-archive-clone</code></td><td>960 min</td><td>single file</td><td>10/10</td></tr>
-        <tr><td><code>pro-ansible-human-to-bytes</code></td><td>not published</td><td>+31 &minus;4</td><td>in HARD-51</td></tr>
-        <tr><td><code>pro-flipt-skip-existing</code></td><td>not published</td><td>+90 &minus;3</td><td>not in HARD-51</td></tr>
-      </tbody>
-    </table>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 302" role="img" aria-label="Ground truth for the six tasks. Human time did not predict agent success: the 960-minute task passed every run and the 90-minute task none. Task 1 swev-flask-blueprint-name: human time &lt;15 min, 15 of 15 agent runs passed, patch +3 −0; Task 2 swev-pylint-type-hints: human time 1 to 4 h, 0 of 15 agent runs passed, patch +99 −27; Task 3 tb4-bun-sourcemaps: human time 90 min, 0 of 10 agent runs passed, patch script rewrite; Task 4 tb4-archive-clone: human time 960 min, 10 of 10 agent runs passed, patch single file; Task 5 pro-ansible-human-to-bytes: human time not published, in HARD-51, patch +31 −4; Task 6 pro-flipt-skip-existing: human time not published, not in HARD-51, patch +90 −3."><text class="s1-colhead" x="540" y="14">Agent runs passed</text><text class="s1-colhead" x="762" y="14">Patch</text><line class="s1-grid" x1="228.0" x2="228.0" y1="30" y2="258"/><text class="s1-tick" x="228.0" y="273" text-anchor="start">1</text><line class="s1-grid" x1="308.5" x2="308.5" y1="30" y2="258"/><text class="s1-tick" x="308.5" y="273" text-anchor="middle">10</text><line class="s1-grid" x1="389.1" x2="389.1" y1="30" y2="258"/><text class="s1-tick" x="389.1" y="273" text-anchor="middle">100</text><line class="s1-grid" x1="469.6" x2="469.6" y1="30" y2="258"/><text class="s1-tick" x="469.6" y="273" text-anchor="middle">1,000</text><text class="s1-axis-title" x="368.0" y="292" text-anchor="middle">Human minutes, log scale</text><text class="s1-code" x="0" y="54.0">swev-flask-blueprint-name</text><rect class="s1-band" x="228.0" y="40.0" width="94.7" height="18"/><line class="s1-band-edge" x1="322.7" x2="322.7" y1="40.0" y2="58.0"/><text class="s1-val" x="329.7" y="54.0">&lt;15 min</text><rect class="s1-cell s1-cell--pass" x="540.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="550.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="560.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="570.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="580.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="590.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="600.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="610.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="620.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="630.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="640.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="650.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="660.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="670.75" y="42.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="680.75" y="42.00" width="5.5" height="14"/><text class="s1-val" x="696" y="54.0">15/15</text><text class="s1-val" x="762" y="54.0">+3 −0</text><line class="s1-rule" x1="0" x2="886" y1="68" y2="68"/><text class="s1-code" x="0" y="92.0">swev-pylint-type-hints</text><rect class="s1-band" x="371.2" y="78.0" width="48.5" height="18"/><line class="s1-band-edge" x1="371.2" x2="371.2" y1="78.0" y2="96.0"/><line class="s1-band-edge" x1="419.7" x2="419.7" y1="78.0" y2="96.0"/><text class="s1-val" x="426.7" y="92.0">1 to 4 h</text><rect class="s1-cell" x="540.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="550.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="560.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="570.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="580.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="590.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="600.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="610.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="620.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="630.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="640.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="650.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="660.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="670.75" y="80.00" width="5.5" height="14"/><rect class="s1-cell" x="680.75" y="80.00" width="5.5" height="14"/><text class="s1-val" x="696" y="92.0">0/15</text><text class="s1-val" x="762" y="92.0">+99 −27</text><line class="s1-rule" x1="0" x2="886" y1="106" y2="106"/><text class="s1-code" x="0" y="130.0">tb4-bun-sourcemaps</text><circle class="s1-dot" cx="385.4" cy="125.0" r="5.5"/><text class="s1-val" x="395.4" y="130.0">90 min</text><rect class="s1-cell" x="540.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="550.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="560.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="570.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="580.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="590.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="600.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="610.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="620.75" y="118.00" width="5.5" height="14"/><rect class="s1-cell" x="630.75" y="118.00" width="5.5" height="14"/><text class="s1-val" x="696" y="130.0">0/10</text><text class="s1-val" x="762" y="130.0">script rewrite</text><line class="s1-rule" x1="0" x2="886" y1="144" y2="144"/><text class="s1-code" x="0" y="168.0">tb4-archive-clone</text><circle class="s1-dot" cx="468.2" cy="163.0" r="5.5"/><text class="s1-val" x="478.2" y="168.0">960 min</text><rect class="s1-cell s1-cell--pass" x="540.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="550.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="560.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="570.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="580.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="590.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="600.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="610.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="620.75" y="156.00" width="5.5" height="14"/><rect class="s1-cell s1-cell--pass" x="630.75" y="156.00" width="5.5" height="14"/><text class="s1-val" x="696" y="168.0">10/10</text><text class="s1-val" x="762" y="168.0">single file</text><line class="s1-rule" x1="0" x2="886" y1="182" y2="182"/><text class="s1-code" x="0" y="206.0">pro-ansible-human-to-bytes</text><text class="s1-val s1-val--muted" x="228" y="206.0">not published</text><text class="s1-val" x="540" y="206.0">in HARD-51</text><text class="s1-val" x="762" y="206.0">+31 −4</text><line class="s1-rule" x1="0" x2="886" y1="220" y2="220"/><text class="s1-code" x="0" y="244.0">pro-flipt-skip-existing</text><text class="s1-val s1-val--muted" x="228" y="244.0">not published</text><text class="s1-val" x="540" y="244.0">not in HARD-51</text><text class="s1-val" x="762" y="244.0">+90 −3</text></svg></figure>
     <p class="meta" style="margin-top: 8px;">HARD-51: tasks failed by at least two of five model families.</p>
     <p class="activity-link" style="margin-top: 8px;"><a href="../week-1.html#bench-calibration">Estimates against the ground truth on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 16: Discussion 1 -->
-<div class="slide" id="s15">
+<!-- 17: How far off -->
+<div class="slide" id="s16">
   <div class="slide-inner">
     <div class="slide-label">41:00 to 45:00 &middot; Interactive</div>
     <h2>How Far Off Were We?</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Class median against the published ground truth.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Spread across pairs on each task.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Pairs inside the annotators' bucket (&lt;15 min, 1 to 4 h).</span></div>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 118" role="img" aria-label="Distance from the published time in doublings: 0 is the published time, plus 1 twice as long, minus 1 half as long. Verified tasks count 0 inside the annotators' bucket."><line class="s1-base" x1="60" x2="826" y1="50" y2="50"/><rect class="s1-zero" x="440.0" y="34" width="6" height="32"/><line class="s1-base" x1="60.0" x2="60.0" y1="44" y2="56"/><text class="s1-tick s1-tick--lg" x="60.0" y="80" text-anchor="middle">−2</text><line class="s1-base" x1="251.5" x2="251.5" y1="44" y2="56"/><text class="s1-tick s1-tick--lg" x="251.5" y="80" text-anchor="middle">−1</text><line class="s1-base" x1="443.0" x2="443.0" y1="44" y2="56"/><text class="s1-tick s1-tick--lg" x="443.0" y="80" text-anchor="middle">0</text><line class="s1-base" x1="634.5" x2="634.5" y1="44" y2="56"/><text class="s1-tick s1-tick--lg" x="634.5" y="80" text-anchor="middle">+1</text><line class="s1-base" x1="826.0" x2="826.0" y1="44" y2="56"/><text class="s1-tick s1-tick--lg" x="826.0" y="80" text-anchor="middle">+2</text><text class="s1-lab" x="251.5" y="24" text-anchor="middle">half as long</text><text class="s1-lab" x="443.0" y="24" text-anchor="middle">published time</text><text class="s1-lab" x="634.5" y="24" text-anchor="middle">twice as long</text><text class="s1-axis-title" x="443.0" y="108" text-anchor="middle">log₂(your estimate ÷ published time)</text></svg></figure>
+    <div class="s1-prompts">
+      <p class="s1-prompt">Class median against the published ground truth</p>
+      <p class="s1-prompt">Spread across pairs on each task</p>
+      <p class="s1-prompt">Pairs inside the bucket (&lt;15 min, 1 to 4 h)</p>
     </div>
     <p class="activity-link"><a href="../week-1.html#bench-calibration">Class distribution on the Week 1 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 17: Discussion 2 -->
-<div class="slide" id="s16">
+<!-- 18: Why -->
+<div class="slide" id="s17">
   <div class="slide-inner">
     <div class="slide-label">45:00 to 49:00 &middot; Interactive</div>
     <h2>Why Were We Off?</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Furthest pairs on each side: what did you assume?</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Ansible (+31 lines, HARD-51) against Flipt (+90 lines, outside HARD-51).</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">How can a small patch hide high complexity?</span></div>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 124" role="img" aria-label="Task 5, Ansible, has the smaller patch, +31 −4 lines against +90 −3 for Task 6, Flipt, but 22 fail-to-pass tests against 2, and only Ansible is in HARD-51."><text class="s1-axis-title" x="760" y="118">HARD-51</text><line class="s1-base" x1="170.0" x2="170.0" y1="4" y2="84"/><text class="s1-tick" x="170.0" y="99" text-anchor="middle">0</text><line class="s1-grid" x1="420.0" x2="420.0" y1="4" y2="84"/><text class="s1-tick" x="420.0" y="99" text-anchor="middle">100</text><line class="s1-base" x1="480.0" x2="480.0" y1="4" y2="84"/><text class="s1-tick" x="480.0" y="99" text-anchor="middle">0</text><line class="s1-grid" x1="656.0" x2="656.0" y1="4" y2="84"/><text class="s1-tick" x="656.0" y="99" text-anchor="middle">20</text><text class="s1-axis-title" x="295.0" y="118" text-anchor="middle">Lines added</text><text class="s1-axis-title" x="590.0" y="118" text-anchor="middle">Fail-to-pass tests</text><text class="s1-lab" x="0" y="29.0">Ansible</text><rect class="s1-bar" x="170" y="16.0" width="77.5" height="16"/><text class="s1-val" x="253.5" y="29.0">+31 −4</text><rect class="s1-bar" x="480" y="16.0" width="193.6" height="16"/><text class="s1-val" x="679.6" y="29.0">22</text><rect class="s1-badge" x="760" y="13.0" width="38" height="22" rx="3"/><text class="s1-badge-txt" x="779" y="29.0" text-anchor="middle">in</text><text class="s1-lab" x="0" y="69.0">Flipt</text><rect class="s1-bar" x="170" y="56.0" width="225.0" height="16"/><text class="s1-val" x="401.0" y="69.0">+90 −3</text><rect class="s1-bar" x="480" y="56.0" width="17.6" height="16"/><text class="s1-val" x="503.6" y="69.0">2</text><text class="s1-val" x="760" y="69.0">not in</text></svg></figure>
+    <div class="s1-prompts s1-prompts--2">
+      <p class="s1-prompt">Furthest pairs on each side: what did you assume?</p>
+      <p class="s1-prompt">How can a small patch hide high complexity?</p>
     </div>
   </div>
 </div>
 
-<!-- 18: Discussion 3 -->
-<div class="slide" id="s17">
+<!-- 19: Judging -->
+<div class="slide" id="s18">
   <div class="slide-inner">
     <div class="slide-label">49:00 to 53:00 &middot; Interactive</div>
     <h2>Could You Judge What an Agent Can Do Alone?</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">METR measures reach in human minutes. Test that task by task.</p>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Task 3 against Task 4</h3>
-        <p>Bun sourcemaps: 90 min, 0/10 passed.<br/>Archive clone: 960 min, 10/10 passed.<br/>Did human time predict agent success?</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Task 1 against Task 2</h3>
-        <p>Flask: under 15 min, 15/15.<br/>Pylint: 1 to 4 h, 0/15; a hidden test imports <code>get_annotation</code>. Did your specification score catch it?</p>
-      </div>
+    <p class="subtitle s1-sub"><a class="s1-link" href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer">METR<span class="s1-sr-only"> (opens in a new tab)</span></a> measures reach in human minutes. Test that task by task.</p>
+    <div class="s1-judge">
+      <section class="s1-qcard"><h3 class="s1-qcard-h"><a class="s1-link" href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer">Terminal-Bench 4.0<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><figure class="s1-mini"><svg class="s1-chart" viewBox="0 0 418 126" role="img" aria-label="Task 3: human time 90 min, 0 of 10 agent runs passed; Task 4: human time 960 min, 10 of 10 agent runs passed."><line class="s1-grid" x1="64.0" x2="64.0" y1="6" y2="86"/><text class="s1-tick" x="64.0" y="101" text-anchor="start">1</text><line class="s1-grid" x1="182.5" x2="182.5" y1="6" y2="86"/><text class="s1-tick" x="182.5" y="101" text-anchor="middle">100</text><line class="s1-base" x1="64" x2="270" y1="86" y2="86"/><text class="s1-axis-title" x="167.0" y="120" text-anchor="middle">Minutes, log scale</text><text class="s1-axis-title" x="332" y="101">Runs passed</text><text class="s1-lab" x="0" y="31.0">Task 3</text><circle class="s1-dot" cx="179.8" cy="26.0" r="6"/><text class="s1-val" x="190.8" y="31.0">90 min</text><text class="s1-big" x="332" y="32.0">0/10</text><text class="s1-lab" x="0" y="71.0">Task 4</text><circle class="s1-dot" cx="240.7" cy="66.0" r="6"/><text class="s1-val" x="251.7" y="71.0">960 min</text><text class="s1-big" x="332" y="72.0">10/10</text></svg></figure><p>Did human time predict agent success?</p></section>
+      <section class="s1-qcard"><h3 class="s1-qcard-h"><a class="s1-link" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer">SWE-bench Verified<span class="s1-sr-only"> (opens in a new tab)</span></a></h3><figure class="s1-mini"><svg class="s1-chart" viewBox="0 0 418 126" role="img" aria-label="Task 1: human time &lt;15 min, 15 of 15 agent runs passed; Task 2: human time 1 to 4 h, 0 of 15 agent runs passed."><line class="s1-grid" x1="64.0" x2="64.0" y1="6" y2="86"/><text class="s1-tick" x="64.0" y="101" text-anchor="start">1</text><line class="s1-grid" x1="182.5" x2="182.5" y1="6" y2="86"/><text class="s1-tick" x="182.5" y="101" text-anchor="middle">100</text><line class="s1-base" x1="64" x2="270" y1="86" y2="86"/><text class="s1-axis-title" x="167.0" y="120" text-anchor="middle">Minutes, log scale</text><text class="s1-axis-title" x="332" y="101">Runs passed</text><text class="s1-lab" x="0" y="31.0">Task 1</text><rect class="s1-band" x="64.0" y="17.0" width="69.7" height="18"/><line class="s1-band-edge" x1="133.7" x2="133.7" y1="17.0" y2="35.0"/><text class="s1-val" x="140.7" y="31.0">&lt;15 min</text><text class="s1-big" x="332" y="32.0">15/15</text><text class="s1-lab" x="0" y="71.0">Task 2</text><rect class="s1-band" x="169.3" y="57.0" width="35.7" height="18"/><line class="s1-band-edge" x1="169.3" x2="169.3" y1="57.0" y2="75.0"/><line class="s1-band-edge" x1="205.0" x2="205.0" y1="57.0" y2="75.0"/><text class="s1-val" x="212.0" y="71.0">1 to 4 h</text><text class="s1-big" x="332" y="72.0">0/15</text></svg></figure><p>A hidden Pylint test imports <code>get_annotation</code>. Did your specification score catch it?</p></section>
     </div>
   </div>
 </div>
 
-<!-- 19: Exit question -->
-<div class="slide" id="s18">
+<!-- 20: Exit -->
+<div class="slide" id="s19">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">53:00 to 58:00 &middot; Constructive</div>
     <h2>Exit Question</h2>
@@ -295,39 +533,26 @@
   </div>
 </div>
 
-<!-- 20: Pre-work Claude -->
-<div class="slide" id="s19">
-  <div class="slide-inner">
-    <div class="slide-label">58:00 to 60:00 &middot; Before Week 2</div>
-    <h2>Pre-Work: Claude Code Track</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Introduction to Agent Skills</strong>: course, ~60 min</span></div>
-      <div class="item"><span class="item-text"><strong>Introduction to Model Context Protocol</strong>: course, ~60 min</span></div>
-      <div class="item"><span class="item-text"><strong>Introduction to Subagents</strong>: course, ~45 min</span></div>
-      <div class="item"><span class="item-text"><strong>How Claude Code Works</strong>: reading, 10 min</span></div>
-      <div class="item"><span class="item-text"><strong>Effective Context Engineering for AI Agents</strong>: reading, 13 min</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 21: Pre-work Codex -->
+<!-- 21: Pre-work claude -->
 <div class="slide" id="s20">
   <div class="slide-inner">
     <div class="slide-label">58:00 to 60:00 &middot; Before Week 2</div>
-    <h2>Pre-Work: Codex Track</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Build skills</strong>: reading, 6 min</span></div>
-      <div class="item"><span class="item-text"><strong>Introduction to Model Context Protocol</strong>: course, ~60 min</span></div>
-      <div class="item"><span class="item-text"><strong>Scale Codex Across Teams and Systems</strong>: course, ~100 min</span></div>
-      <div class="item"><span class="item-text"><strong>Sandbox</strong>: reading, 7 min</span></div>
-      <div class="item"><span class="item-text"><strong>Agent approvals &amp; security</strong>: reading, 19 min</span></div>
-      <div class="item"><span class="item-text"><strong>Effective Context Engineering for AI Agents</strong>: reading, 13 min</span></div>
-    </div>
+    <h2>Pre-Work: Claude Code Track</h2>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 214" role="img" aria-label="Week 2 pre-work, Claude Code track, 188.6 planned minutes: Introduction to Agent Skills, course, 60 minutes; Introduction to Model Context Protocol, course, 60 minutes; Introduction to Subagents, course, 45 minutes; How Claude Code Works, reading, 10.3 minutes; Effective Context Engineering for AI Agents, reading, 13.3 minutes."><line class="s1-grid" x1="600.0" x2="600.0" y1="4" y2="174"/><line class="s1-grid" x1="800.0" x2="800.0" y1="4" y2="174"/><text class="s1-lab s1-lab--lg" x="0" y="26.0">Introduction to Agent Skills</text><rect class="s1-k-course" x="400" y="12.0" width="240.0" height="18"/><text class="s1-val" x="647.0" y="26.0">60</text><text class="s1-lab s1-lab--lg" x="0" y="60.0">Introduction to Model Context Protocol</text><rect class="s1-k-course" x="400" y="46.0" width="240.0" height="18"/><text class="s1-val" x="647.0" y="60.0">60</text><text class="s1-lab s1-lab--lg" x="0" y="94.0">Introduction to Subagents</text><rect class="s1-k-course" x="400" y="80.0" width="180.0" height="18"/><text class="s1-val" x="587.0" y="94.0">45</text><text class="s1-lab s1-lab--lg" x="0" y="128.0">How Claude Code Works</text><rect class="s1-k-reading" x="400" y="114.0" width="41.2" height="18"/><text class="s1-val" x="448.2" y="128.0">10.3</text><text class="s1-lab s1-lab--lg" x="0" y="162.0">Effective Context Engineering for AI Agents</text><rect class="s1-k-reading" x="400" y="148.0" width="53.2" height="18"/><text class="s1-val" x="460.2" y="162.0">13.3</text><line class="s1-base" x1="400" x2="400" y1="4" y2="174"/><text class="s1-tick" x="400.0" y="189" text-anchor="middle">0</text><text class="s1-tick" x="800.0" y="189" text-anchor="middle">100</text><text class="s1-axis-title" x="600.0" y="208" text-anchor="middle">Planned minutes</text></svg></figure><p class="s1-legend"><span class="s1-legend-i"><span class="s1-sw s1-k-course" aria-hidden="true"></span>Course</span><span class="s1-legend-i"><span class="s1-sw s1-k-reading" aria-hidden="true"></span>Reading</span></p>
   </div>
 </div>
 
-<!-- 22: Closing -->
-<div class="slide slide-dark" id="s21">
+<!-- 22: Pre-work codex -->
+<div class="slide" id="s21">
+  <div class="slide-inner">
+    <div class="slide-label">58:00 to 60:00 &middot; Before Week 2</div>
+    <h2>Pre-Work: Codex Track</h2>
+    <figure class="s1-fig"><svg class="s1-chart" viewBox="0 0 886 248" role="img" aria-label="Week 2 pre-work, Codex track, 204.3 planned minutes: Build skills, reading, 5.5 minutes; Introduction to Model Context Protocol, course, 60 minutes; Scale Codex Across Teams and Systems, course, 100 minutes; Sandbox, reading, 6.8 minutes; Agent approvals &amp; security, reading, 18.7 minutes; Effective Context Engineering for AI Agents, reading, 13.3 minutes."><line class="s1-grid" x1="600.0" x2="600.0" y1="4" y2="208"/><line class="s1-grid" x1="800.0" x2="800.0" y1="4" y2="208"/><text class="s1-lab s1-lab--lg" x="0" y="26.0">Build skills</text><rect class="s1-k-reading" x="400" y="12.0" width="22.0" height="18"/><text class="s1-val" x="429.0" y="26.0">5.5</text><text class="s1-lab s1-lab--lg" x="0" y="60.0">Introduction to Model Context Protocol</text><rect class="s1-k-course" x="400" y="46.0" width="240.0" height="18"/><text class="s1-val" x="647.0" y="60.0">60</text><text class="s1-lab s1-lab--lg" x="0" y="94.0">Scale Codex Across Teams and Systems</text><rect class="s1-k-course" x="400" y="80.0" width="400.0" height="18"/><text class="s1-val" x="807.0" y="94.0">100</text><text class="s1-lab s1-lab--lg" x="0" y="128.0">Sandbox</text><rect class="s1-k-reading" x="400" y="114.0" width="27.2" height="18"/><text class="s1-val" x="434.2" y="128.0">6.8</text><text class="s1-lab s1-lab--lg" x="0" y="162.0">Agent approvals &amp; security</text><rect class="s1-k-reading" x="400" y="148.0" width="74.8" height="18"/><text class="s1-val" x="481.8" y="162.0">18.7</text><text class="s1-lab s1-lab--lg" x="0" y="196.0">Effective Context Engineering for AI Agents</text><rect class="s1-k-reading" x="400" y="182.0" width="53.2" height="18"/><text class="s1-val" x="460.2" y="196.0">13.3</text><line class="s1-base" x1="400" x2="400" y1="4" y2="208"/><text class="s1-tick" x="400.0" y="223" text-anchor="middle">0</text><text class="s1-tick" x="800.0" y="223" text-anchor="middle">100</text><text class="s1-axis-title" x="600.0" y="242" text-anchor="middle">Planned minutes</text></svg></figure><p class="s1-legend"><span class="s1-legend-i"><span class="s1-sw s1-k-course" aria-hidden="true"></span>Course</span><span class="s1-legend-i"><span class="s1-sw s1-k-reading" aria-hidden="true"></span>Reading</span></p>
+  </div>
+</div>
+
+<!-- 23: Close -->
+<div class="slide slide-dark" id="s22">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">58:00 to 60:00 &middot; Close</div>
     <h1>Close &amp; Next Steps</h1>

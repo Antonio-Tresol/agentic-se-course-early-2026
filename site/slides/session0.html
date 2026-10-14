@@ -30,15 +30,15 @@
 .s0-con { background: #009E73; color: #0A0A0A; }
 .s0-int { background: #853866; color: #FFFFFF; }
 .s0-hour-axis { position: relative; height: 26px; margin-top: 0; }
-.s0-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: #A3A3A3; }
-.s0-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: #A3A3A3; }
+.s0-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.s0-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: var(--muted); }
 .s0-tick:first-child { transform: none; }
 .s0-tick:first-child::before { left: 0; }
 .s0-tick:last-child { transform: translateX(-100%); }
 .s0-tick:last-child::before { left: auto; right: 0; }
-.s0-axis-title { font-family: var(--mono); font-size: 12px; color: #A3A3A3; text-align: center; margin-top: 2px; }
+.s0-axis-title { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: center; margin-top: 2px; }
 .s0-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; }
-.s0-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: #D4D4D4; }
+.s0-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: var(--body); }
 .s0-swatch { width: 16px; height: 16px; box-shadow: inset 0 0 0 1.5px #FFFFFF; }
 
 /* ----- Shared horizontal flow: boxes with arrows between ----- */
@@ -200,7 +200,7 @@
 </div>
 
 <!-- 2: Agenda, the hour bar -->
-<div class="slide slide-dark">
+<div class="slide">
   <div class="slide-inner">
     <div class="slide-label">Agenda</div>
     <h2>Plan for the Hour</h2>
