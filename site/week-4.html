@@ -769,7 +769,7 @@
     var c = cur();
     P.setDeliverable(4, { url: v, note: note.value, rubricSelf: c.rubricSelf });
     delete url.dataset.dirty; delete note.dataset.dirty;
-    say(v ? "Saved your link and note in this browser." : "Saved your note. No link is set.");
+    say(v ? "Saved your link and note." : "Saved your note. No link is set.");
   });
   fill(true);
   P.on("change", function () { fill(false); });
