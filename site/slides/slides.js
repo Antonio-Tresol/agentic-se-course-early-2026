@@ -9,6 +9,11 @@
 
    This script discovers the slides, builds the bottom navigation, the
    TOC drawer, and wires keyboard, click, and touch handlers.
+
+   The current slide is kept in the URL hash (#5 is the fifth slide) and
+   in localStorage per deck, so leaving for the week page and coming
+   back, by the browser's Back button or the "Open slides" link,
+   returns to the same slide.
    ===================================================================== */
 (function () {
   'use strict';
@@ -127,6 +132,15 @@
   // ----- Slide navigation -----
   const progress = document.getElementById('progress');
 
+  const storeKey = 'agentic-se-slide:' + location.pathname.split('/').pop();
+  function remember() {
+    try { history.replaceState(null, '', '#' + (current + 1)); } catch (e) {}
+    try { localStorage.setItem(storeKey, String(current + 1)); } catch (e) {}
+  }
+  function slideFromHash() {
+    const m = /^#(\d+)$/.exec(location.hash);
+    return m ? parseInt(m[1], 10) - 1 : null;
+  }
   function showSlide(n) {
     slides[current].classList.remove('active');
     current = Math.max(0, Math.min(n, total - 1));
@@ -134,6 +148,7 @@
     if (slideCount) slideCount.textContent = (current + 1) + ' / ' + total;
     if (progress) progress.style.width = ((current + 1) / total * 100) + '%';
     syncTOC();
+    remember();
   }
   function navigate(dir) { showSlide(current + dir); }
 
@@ -187,6 +202,14 @@
     if (Math.abs(diff) > 50) navigate(diff < 0 ? 1 : -1);
   });
 
-  // ----- Initial paint -----
-  showSlide(current);
+  // ----- Initial paint: the hash wins, then the last slide shown -----
+  let start = slideFromHash();
+  if (start === null) {
+    try { const saved = parseInt(localStorage.getItem(storeKey), 10); if (saved > 0) start = saved - 1; } catch (e) {}
+  }
+  showSlide(start === null ? current : start);
+  window.addEventListener('hashchange', () => {
+    const n = slideFromHash();
+    if (n !== null && n !== current) showSlide(n);
+  });
 })();
