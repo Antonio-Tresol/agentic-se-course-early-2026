@@ -99,8 +99,8 @@
     <fieldset id="quiz-fieldset" style="border:none;padding:0;margin:0">
     <ol class="q-list">
 
-      <!-- Q1: short answer -->
-      <li class="q card" id="q1" data-qid="q1" data-answer="short">
+      <!-- Q1, Claude Code track: short answer -->
+      <li class="q card" id="q1" data-qid="q1" data-answer="short" data-track="claude">
         <h2 class="label q__num">Question 1 of 5 · short answer</h2>
         <label class="q__prompt" for="q1-input">Claude stops when the work looks done. What should you give it so that "looks done" is not its only signal? Name two examples.</label>
         <textarea id="q1-input" name="q1" rows="3"></textarea>
@@ -112,8 +112,21 @@
         </div>
       </li>
 
-      <!-- Q2: choice -->
-      <li class="q card" id="q2" data-qid="q2" data-answer="2">
+      <!-- Q1, Codex track: short answer -->
+      <li class="q card" id="cq1" data-qid="cq1" data-answer="short" data-track="codex">
+        <h2 class="label q__num">Question 1 of 5 · short answer</h2>
+        <label class="q__prompt" for="cq1-input">Codex can test, check and review its own change before you accept it. What does it need from you for that to work, and where can you put it?</label>
+        <textarea id="cq1-input" name="cq1" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq1-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>It needs to know what "good" looks like: which tests to write or update, which suites to run, the lint, formatting or type checks, the behaviour to confirm and what to look for when it reviews the diff. That guidance can come from the prompt, whose "done when" part says what must be true before the task is complete, or from AGENTS.md.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/guides/best-practices#improve-reliability-with-testing-and-review" target="_blank" rel="noopener noreferrer">Best practices (OpenAI Codex docs), "Improve reliability with testing and review"<span class="sr-only"> (opens in a new tab)</span></a> and "Strong first use: Context and prompts".</p>
+        </div>
+      </li>
+
+      <!-- Q2, Claude Code track: choice -->
+      <li class="q card" id="q2" data-qid="q2" data-answer="2" data-track="claude">
         <h2 class="label q__num">Question 2 of 5 · choice</h2>
         <fieldset class="q__choices">
           <legend class="q__prompt">When does the guide suggest skipping plan mode and asking Claude to make the change directly?</legend>
@@ -130,8 +143,26 @@
         </div>
       </li>
 
-      <!-- Q3: choice -->
-      <li class="q card" id="q3" data-qid="q3" data-answer="1">
+      <!-- Q2, Codex track: choice -->
+      <li class="q card" id="cq2" data-qid="cq2" data-answer="1" data-track="codex">
+        <h2 class="label q__num">Question 2 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">Which of these does the guide list as a common mistake?</legend>
+          <label class="choice"><input type="radio" name="cq2" value="0"><span>Keeping one chat per coherent unit of work</span></label>
+          <label class="choice"><input type="radio" name="cq2" value="1"><span>Skipping planning on multi-step and complex tasks</span></label>
+          <label class="choice"><input type="radio" name="cq2" value="2"><span>Starting with the default permissions</span></label>
+          <label class="choice"><input type="radio" name="cq2" value="3"><span>Moving durable rules out of the prompt into AGENTS.md or a skill</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq2-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>When a task is complex, ambiguous or hard to describe well, the guide says to ask Codex to plan before it starts coding, for example in Plan mode (<code>/plan</code> or Shift+Tab), where it gathers context and asks clarifying questions first. The other three options are the guide's own advice: one chat per coherent unit of work, the default permissions while you are new, and durable rules in AGENTS.md or a skill rather than in the prompt.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/guides/best-practices#common-mistakes" target="_blank" rel="noopener noreferrer">Best practices (OpenAI Codex docs), "Common mistakes"<span class="sr-only"> (opens in a new tab)</span></a> and "Plan first for difficult tasks".</p>
+        </div>
+      </li>
+
+      <!-- Q3, Claude Code track: choice -->
+      <li class="q card" id="q3" data-qid="q3" data-answer="1" data-track="claude">
         <h2 class="label q__num">Question 3 of 5 · choice</h2>
         <fieldset class="q__choices">
           <legend class="q__prompt">Which of these belongs in a project's CLAUDE.md?</legend>
@@ -148,8 +179,26 @@
         </div>
       </li>
 
-      <!-- Q4: short answer -->
-      <li class="q card" id="q4" data-qid="q4" data-answer="short">
+      <!-- Q3, Codex track: choice -->
+      <li class="q card" id="cq3" data-qid="cq3" data-answer="3" data-track="codex">
+        <h2 class="label q__num">Question 3 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">Which of these belongs in a repository's AGENTS.md?</legend>
+          <label class="choice"><input type="radio" name="cq3" value="0"><span>Every rule you can think of, written up front so Codex never has to guess</span></label>
+          <label class="choice"><input type="radio" name="cq3" value="1"><span>The full text of your planning, code review and architecture guides</span></label>
+          <label class="choice"><input type="radio" name="cq3" value="2"><span>Data that changes often, such as the current state of your issue tracker</span></label>
+          <label class="choice"><input type="radio" name="cq3" value="3"><span>Build, test and lint commands, and how to verify that work is done</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq3-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>A good AGENTS.md covers the repository layout, how to run the project, build, test and lint commands, conventions and PR expectations, do-not rules, and what done means and how to verify work. Keep it short and accurate: add rules only after you notice repeated mistakes, point to separate files for planning, code review or architecture, and use MCP for context that lives outside the repository and changes often.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/guides/best-practices#make-guidance-reusable-with-agentsmd" target="_blank" rel="noopener noreferrer">Best practices (OpenAI Codex docs), "Make guidance reusable with AGENTS.md"<span class="sr-only"> (opens in a new tab)</span></a> and "Use MCPs for external context".</p>
+        </div>
+      </li>
+
+      <!-- Q4, Claude Code track: short answer -->
+      <li class="q card" id="q4" data-qid="q4" data-answer="short" data-track="claude">
         <h2 class="label q__num">Question 4 of 5 · short answer</h2>
         <label class="q__prompt" for="q4-input">You have corrected Claude twice on the same issue and it is still wrong. What does the guide recommend, and why?</label>
         <textarea id="q4-input" name="q4" rows="3"></textarea>
@@ -161,8 +210,21 @@
         </div>
       </li>
 
-      <!-- Q5: choice -->
-      <li class="q card" id="q5" data-qid="q5" data-answer="1">
+      <!-- Q4, Codex track: short answer -->
+      <li class="q card" id="cq4" data-qid="cq4" data-answer="short" data-track="codex">
+        <h2 class="label q__num">Question 4 of 5 · short answer</h2>
+        <label class="q__prompt" for="cq4-input">Codex has made the same mistake twice. What does the guide suggest you do, and why does it help?</label>
+        <textarea id="cq4-input" name="cq4" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq4-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Ask Codex for a retrospective, then update AGENTS.md with what it found. Codex reads AGENTS.md before doing any work, so the correction carries into later tasks, and rules added this way stay practical because they come from real friction rather than guesses made up front.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/guides/best-practices#make-guidance-reusable-with-agentsmd" target="_blank" rel="noopener noreferrer">Best practices (OpenAI Codex docs), "Make guidance reusable with AGENTS.md"<span class="sr-only"> (opens in a new tab)</span></a>. Also in <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">Custom instructions with AGENTS.md (OpenAI Codex docs)<span class="sr-only"> (opens in a new tab)</span></a>, opening paragraph.</p>
+        </div>
+      </li>
+
+      <!-- Q5, Claude Code track: choice -->
+      <li class="q card" id="q5" data-qid="q5" data-answer="1" data-track="claude">
         <h2 class="label q__num">Question 5 of 5 · choice</h2>
         <fieldset class="q__choices">
           <legend class="q__prompt">In Manual permission mode, which actions does Claude Code ask you to approve?</legend>
@@ -176,6 +238,24 @@
           <p class="q__verdict" data-verdict></p>
           <p>Manual mode asks before actions that might modify your system. The last option describes auto mode, where a separate classifier model reviews most actions and blocks only what looks risky. Permission allowlists and sandboxing cut the number of prompts in either mode.</p>
           <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#configure-permissions" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Configure permissions"<span class="sr-only"> (opens in a new tab)</span></a>. Also Session 1, Part 4, on permission modes.</p>
+        </div>
+      </li>
+
+      <!-- Q5, Codex track: choice -->
+      <li class="q card" id="cq5" data-qid="cq5" data-answer="2" data-track="codex">
+        <h2 class="label q__num">Question 5 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">Codex has two permission settings, approval mode and sandbox mode. What does sandbox mode determine?</legend>
+          <label class="choice"><input type="radio" name="cq5" value="0"><span>When Codex asks for your permission to run a command</span></label>
+          <label class="choice"><input type="radio" name="cq5" value="1"><span>Which model and reasoning effort Codex uses</span></label>
+          <label class="choice"><input type="radio" name="cq5" value="2"><span>Whether Codex can read or write in the directory, and which files it can access</span></label>
+          <label class="choice"><input type="radio" name="cq5" value="3"><span>Which MCP servers Codex can connect to</span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq5-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>Sandbox mode sets whether Codex can read or write in the directory and which files it can access; approval mode decides when it asks for your permission to run a command. Model, reasoning effort and MCP servers are separate settings in the same configuration. If you are new to coding agents, start with the default permissions and loosen them only for trusted repositories or specific workflows.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/guides/best-practices#configure-codex-for-consistency" target="_blank" rel="noopener noreferrer">Best practices (OpenAI Codex docs), "Configure Codex for consistency"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
     </ol>

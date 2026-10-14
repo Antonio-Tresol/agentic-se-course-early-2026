@@ -196,14 +196,17 @@ def items_table(ls):
 
 
 def questions_table(ls):
-    per = defaultdict(lambda: {"type": "", "n": 0, "learners": set(), "right": 0, "graded": 0,
+    per = defaultdict(lambda: {"type": "", "n": 0, "learners": set(), "right": 0, "graded": 0, "tracks": set(),
                                "self": [], "conf": [], "conf_ok": [], "conf_bad": []})
     for d in ls:
         for w, attempts in d["quizzes"].items():
             for a in submitted(attempts):
+                # attempt.track is optional; older attempts lack it
+                tr = a.get("track") if a.get("track") in ("claude", "codex") else "unrecorded"
                 for ans in a.get("answers", []):
                     e = per[(w, ans.get("qid"))]
                     e["type"] = ans.get("type", e["type"])
+                    e["tracks"].add(tr)
                     e["n"] += 1
                     e["learners"].add(d["learner"]["id"])
                     c = ans.get("confidence")
@@ -216,13 +219,13 @@ def questions_table(ls):
                             (e["conf_ok"] if ans["correct"] else e["conf_bad"]).append(c)
                     if ans.get("type") == "short" and isinstance(ans.get("selfScore"), (int, float)):
                         e["self"].append(ans["selfScore"])
-    header = ["week", "qid", "type", "attempts", "learners", "proportion_correct", "mean_self_score_0_2",
+    header = ["week", "qid", "type", "tracks", "attempts", "learners", "proportion_correct", "mean_self_score_0_2",
               "mean_confidence", "mean_conf_correct", "mean_conf_wrong", "calibration_gap"]
     rows = []
     for (w, q), e in sorted(per.items(), key=lambda x: (week_of(x[0][0]), str(x[0][1]))):
         ok, bad = mean(e["conf_ok"]), mean(e["conf_bad"])
         gap = ok - bad if ok != "" and bad != "" else ""
-        rows.append([w, q, e["type"], e["n"], len(e["learners"]),
+        rows.append([w, q, e["type"], ";".join(sorted(e["tracks"])), e["n"], len(e["learners"]),
                      r(e["right"] / e["graded"]) if e["graded"] else "",
                      r(mean(e["self"])), r(mean(e["conf"])), r(ok), r(bad), r(gap)])
     return header, rows

@@ -335,11 +335,13 @@
             '</span><span class="hbars__val">' + val + "</span></div>";
         }).join("") +
         '<div class="hbars__axis hbars__axis--bottom"><span></span><span class="hbars__axis-title axis-title">Score out of ' + max + '</span><span></span></div></div>' +
-        tableToggle("sc-table", "Self-check tries", ["Week", "Try", "Submitted", { t: "Score", r: 1 }, { t: "Out of", r: 1 }],
+        tableToggle("sc-table", "Self-check tries", ["Week", "Try", "Track", "Submitted", { t: "Score", r: 1 }, { t: "Out of", r: 1 }],
           [].concat.apply([], rows.map(function (r) {
             return r.sum.submitted.map(function (a, i) {
               var s = S.attemptScore(a);
-              return ["Week " + r.w.n, "Try " + (i + 1), String(a.submittedAt).slice(0, 16).replace("T", " "), s.value, s.max];
+              // Each try is scored against its own track's questions.
+              return ["Week " + r.w.n, "Try " + (i + 1), a.track === "claude" || a.track === "codex" ? S.trackName(a.track) : "Not recorded",
+                String(a.submittedAt).slice(0, 16).replace("T", " "), s.value, s.max];
             });
           })));
     });

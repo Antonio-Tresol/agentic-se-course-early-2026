@@ -87,6 +87,55 @@ test("quiz attempt: MCQ auto-grading, self-scores, best score", () => {
   assert.strictEqual(P.get().quizzes.w1.length, 2);
 });
 
+test("quiz attempt: track stored when valid, left out otherwise", () => {
+  const { P } = load();
+  const a = P.startAttempt(1, { track: "codex" });
+  const b = P.startAttempt(1);
+  const c = P.startAttempt(1, { track: "gemini" });
+  const d = P.startAttempt(1, "codex");
+  const list = P.get().quizzes.w1;
+  assert.strictEqual(list.find(x => x.attemptId === a).track, "codex");
+  [b, c, d].forEach(id => assert.ok(!("track" in list.find(x => x.attemptId === id)), "no track for " + id));
+  P.setTrack("codex");
+  const e = P.startAttempt(1);
+  assert.ok(!("track" in P.get().quizzes.w1.find(x => x.attemptId === e)), "not taken from learner.track");
+});
+
+test("quiz attempt: a track's key never scores an answer to the other track's question", () => {
+  const { P } = load();
+  const id = P.startAttempt(2, { track: "codex" });
+  ["q1", "q2", "q3"].forEach(q => P.answer(2, id, { qid: q, type: "mcq", response: 1, confidence: 3, revealed: true }));
+  P.answer(2, id, { qid: "q4", type: "short", response: "stray", confidence: 2, revealed: true, selfScore: 2 });   // Claude-only qid
+  P.answer(2, id, { qid: "cq4", type: "short", response: "x", confidence: 2, revealed: true, selfScore: 1 });
+  P.answer(2, id, { qid: "q5", type: "short", response: "y", confidence: 2, revealed: true, selfScore: 0 });
+  const res = P.submitAttempt(2, id, { q1: 1, q2: 1, q3: 0, cq4: "short", q5: "short" });
+  eq(res.score, { auto: 2, autoMax: 3, self: 1, selfMax: 4 });
+  assert.strictEqual(res.track, "codex");
+  assert.ok(!("correct" in res.answers.find(x => x.qid === "q4")), "the stray answer is not graded");
+});
+
+test("export carries the attempt track; import checks it; attempts without it still import", () => {
+  const { P } = load();
+  const id = P.startAttempt(1, { track: "codex" });
+  P.answer(1, id, { qid: "cq2", type: "mcq", response: 1, confidence: 4, revealed: true });
+  P.submitAttempt(1, id, { cq2: 1 });
+  const o = P.exportObject();
+  assert.strictEqual(o.schemaVersion, 1);
+  assert.strictEqual(o.quizzes.w1[0].track, "codex");
+  const t = load();
+  eq(t.P.importJSON(P.exportJSON(), { mode: "replace" }), { ok: true, errors: [] });
+  assert.strictEqual(t.P.get().quizzes.w1[0].track, "codex");
+  const bad = JSON.parse(P.exportJSON()); bad.quizzes.w1[0].track = "both";
+  const r = t.P.importJSON(JSON.stringify(bad));
+  assert.strictEqual(r.ok, false); assert.match(r.errors[0], /track must be "claude" or "codex"/);
+  const legacy = JSON.parse(P.exportJSON()); delete legacy.quizzes.w1[0].track; legacy.quizzes.w1[0].attemptId = "A-legacy";
+  const u = load();
+  eq(u.P.importJSON(JSON.stringify(legacy)), { ok: true, errors: [] });
+  assert.ok(!("track" in u.P.get().quizzes.w1[0]), "nothing invented on import");
+  eq(u.P.importJSON(P.exportJSON()), { ok: true, errors: [] });             // merge: both attempts kept
+  eq(u.P.get().quizzes.w1.map(a => a.track || null), [null, "codex"]);
+});
+
 test("estimates: add, replace, reveal, lock", () => {
   const { P } = load();
   assert.ok(P.addEstimate({ taskId: "t1", estimateMinutes: 90, complexity: 9, specQuality: 3, reason: "r", pairId: "p1" }));
@@ -514,7 +563,8 @@ if (process.argv.includes("--samples")) {
   let seed = 42; const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
   const W1 = [["pw-1", 20], ["pw-2", 35, "claude"], ["pw-3", 35, "codex"], ["pw-4", 25], ["pw-5", 30], ["pw-6", 15]];
   const W3 = [["pw-1", 40], ["pw-2", 30], ["pw-3", 45, "claude"], ["pw-4", 45, "codex"], ["act", 60]];
-  const KEYS = { q1: "short", q2: 2, q3: 1, q4: "short", q5: 1 };
+  const KEYS = { q1: "short", q2: 2, q3: 1, q4: "short", q5: 1 };              // Week 1, Claude Code cards
+  const CODEX_KEYS = { cq1: "short", cq2: 1, cq3: 3, cq4: "short", cq5: 2 };   // Week 1, Codex cards
   const TASKS = { "bm-01": 45, "bm-02": 120, "bm-03": 240, "bm-04": 30 };
   const profiles = [["claude", 1.0, 3], ["claude", 0.6, 2], ["codex", 1.0, 3], ["codex", 0.4, 1], ["codex", 0.8, 2]];
   // Outcomes and stage logs use their own generator so the older sample data is unchanged.
@@ -579,16 +629,18 @@ if (process.argv.includes("--samples")) {
         P.markItem(w, x[0], { status: "done", minutesSpent: Math.round(x[1] * (0.6 + rnd() * 1.3)), estimateMinutes: x[1] });
       });
     });
+    // Samples 02 and 04 predate the attempt track: everyone then saw the questions that are now the Claude Code cards.
+    const legacyQuiz = i === 1 || i === 3, key = track === "codex" && !legacyQuiz ? CODEX_KEYS : KEYS;
     for (let a = 0; a < (i === 3 ? 1 : 2); a++) {
-      tick(60); const id = P.startAttempt(1);
-      Object.keys(KEYS).forEach(q => {
-        tick(1); const mcq = typeof KEYS[q] === "number";
+      tick(60); const id = P.startAttempt(1, legacyQuiz ? {} : { track });
+      Object.keys(key).forEach(q => {
+        tick(1); const mcq = typeof key[q] === "number";
         const right = rnd() < (0.45 + 0.2 * a + 0.1 * pace);
         const conf = Math.min(4, Math.max(1, Math.round((right ? 3 : 2) + (rnd() - 0.5) * 2)));
-        P.answer(1, id, { qid: q, type: mcq ? "mcq" : "short", response: mcq ? (right ? KEYS[q] : (KEYS[q] + 1) % 4) : "synthetic answer", confidence: conf, revealed: true });
+        P.answer(1, id, { qid: q, type: mcq ? "mcq" : "short", response: mcq ? (right ? key[q] : (key[q] + 1) % 4) : "synthetic answer", confidence: conf, revealed: true });
         if (!mcq) P.answer(1, id, { qid: q, selfScore: right ? 2 : (rnd() < 0.5 ? 1 : 0) });
       });
-      P.submitAttempt(1, id, KEYS);
+      P.submitAttempt(1, id, key);
     }
     if (weeks > 2) P.setDeliverable(3, { url: "https://example.invalid/synthetic", note: "synthetic", rubricSelf: { r1: "secure", r2: rnd() < 0.5 ? "secure" : "developing" } });
     if (i === 0 || i === 2) {

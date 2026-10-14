@@ -153,8 +153,8 @@
         </div>
       </li>
 
-      <!-- Q4: short answer -->
-      <li class="q card" id="q4" data-qid="q4" data-answer="short">
+      <!-- Q4, Claude Code track: short answer -->
+      <li class="q card" id="q4" data-qid="q4" data-answer="short" data-track="claude">
         <h2 class="label q__num">Question 4 of 5 · short answer</h2>
         <label class="q__prompt" for="q4-input">Why is isolating side tasks in a subagent beneficial for managing the main agent's context window?</label>
         <textarea id="q4-input" name="q4" rows="3"></textarea>
@@ -162,7 +162,20 @@
         <div class="q__answer" id="q4-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
           <p>Running a side task in a subagent keeps verbose intermediate output, such as extensive search results, build logs, or exploratory file reads, out of the primary conversation. The subagent executes within its own isolated context window and returns only the concise summary or finished artefact to the main agent.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener noreferrer">Claude Code Docs, "Create custom subagents"<span class="sr-only"> (opens in a new tab)</span></a>. Also in <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents" target="_blank" rel="noopener noreferrer">OpenAI Codex Docs, "Subagents"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener noreferrer">Claude Code Docs, "Create custom subagents"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+        </div>
+      </li>
+
+      <!-- Q4, Codex track: short answer -->
+      <li class="q card" id="cq4" data-qid="cq4" data-answer="short" data-track="codex">
+        <h2 class="label q__num">Question 4 of 5 · short answer</h2>
+        <label class="q__prompt" for="cq4-input">Codex runs locally with the workspace-write sandbox and on-request approvals. What can it do without asking you, and what makes it stop and ask?</label>
+        <textarea id="cq4-input" name="cq4" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq4-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Inside the workspace it reads files, makes edits and runs routine commands on its own, and every command it spawns, such as git, a package manager or a test runner, stays inside the same sandbox limits. It stops to ask before editing files outside the workspace or running commands that need network access, which is off by default. This spares you from confirming every low-risk command while the sandbox still enforces the boundary.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/docs/agent-approvals-security#sandbox-and-approvals" target="_blank" rel="noopener noreferrer">Agent approvals &amp; security (OpenAI Codex docs), "Sandbox and approvals"<span class="sr-only"> (opens in a new tab)</span></a>, and <a href="https://learn.chatgpt.com/docs/sandboxing#what-the-sandbox-does" target="_blank" rel="noopener noreferrer">Sandbox (OpenAI Codex docs), "What the sandbox does" and "Why it matters"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
 

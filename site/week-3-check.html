@@ -121,8 +121,8 @@
         </div>
       </li>
 
-      <!-- Q3: choice -->
-      <li class="q card" id="q3" data-qid="q3" data-answer="2">
+      <!-- Q3, Claude Code track: choice -->
+      <li class="q card" id="q3" data-qid="q3" data-answer="2" data-track="claude">
         <h2 class="label q__num">Question 3 of 5 · choice</h2>
         <fieldset class="q__choices">
           <legend class="q__prompt">When starting an agent session at the root of a large repository or monorepo, how are per-directory instruction files (such as nested CLAUDE.md files) loaded into context?</legend>
@@ -135,7 +135,25 @@
         <div class="q__answer" id="q3-answer" hidden>
           <p class="q__verdict" data-verdict></p>
           <p>In a monorepo, loading every nested instruction file at launch would flood the context window with irrelevant guidance. Only the root instruction file loads at launch; nested subdirectory instruction files load on demand when the agent accesses or reads files within that specific sub-tree.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/large-codebases" target="_blank" rel="noopener noreferrer">Set up Claude Code in a monorepo or large codebase<span class="sr-only"> (opens in a new tab)</span></a>, section "Layer CLAUDE.md by directory". Also in <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">OpenAI Codex Docs, "Custom instructions with AGENTS.md"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/large-codebases" target="_blank" rel="noopener noreferrer">Set up Claude Code in a monorepo or large codebase<span class="sr-only"> (opens in a new tab)</span></a>, section "Layer CLAUDE.md by directory".</p>
+        </div>
+      </li>
+
+      <!-- Q3, Codex track: choice -->
+      <li class="q card" id="cq3" data-qid="cq3" data-answer="1" data-track="codex">
+        <h2 class="label q__num">Question 3 of 5 · choice</h2>
+        <fieldset class="q__choices">
+          <legend class="q__prompt">You start Codex at the root of a monorepo and ask it to change code in <code>services/payments</code>, which has its own AGENTS.md. Does Codex add that file to its instruction chain?</legend>
+          <label class="choice"><input type="radio" name="cq3" value="0"><span>Yes: Codex reads every AGENTS.md in the repository when it starts</span></label>
+          <label class="choice"><input type="radio" name="cq3" value="1"><span>No: Codex builds the chain once at startup, from the project root down to the directory it started in, so a file below that directory is left out</span></label>
+          <label class="choice"><input type="radio" name="cq3" value="2"><span>Yes: Codex loads it on demand the first time it reads a file in <code>services/payments</code></span></label>
+          <label class="choice"><input type="radio" name="cq3" value="3"><span>No: Codex reads only the global AGENTS.md in <code>~/.codex</code></span></label>
+        </fieldset>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq3-answer" hidden>
+          <p class="q__verdict" data-verdict></p>
+          <p>When it starts, Codex reads the global file in <code>~/.codex</code>, then walks from the project root down to the current working directory, taking at most one file per directory; files closer to that directory come later in the combined prompt and override earlier guidance. It stops searching at the current directory, so to apply the payments rules, start Codex there, for example with <code>codex --cd services/payments</code>.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md#how-codex-discovers-guidance" target="_blank" rel="noopener noreferrer">Custom instructions with AGENTS.md (OpenAI Codex docs), "How Codex discovers guidance"<span class="sr-only"> (opens in a new tab)</span></a> and "Layer project instructions".</p>
         </div>
       </li>
 
@@ -152,8 +170,8 @@
         </div>
       </li>
 
-      <!-- Q5: short answer -->
-      <li class="q card" id="q5" data-qid="q5" data-answer="short">
+      <!-- Q5, Claude Code track: short answer -->
+      <li class="q card" id="q5" data-qid="q5" data-answer="short" data-track="claude">
         <h2 class="label q__num">Question 5 of 5 · short answer</h2>
         <label class="q__prompt" for="q5-input">In autonomous long-running agent workflows (such as <code>/goal</code>), why does a condition like "unit tests in tests/unit pass" succeed as an evaluation criterion, while "the architecture is clean" fails?</label>
         <textarea id="q5-input" name="q5" rows="3"></textarea>
@@ -161,7 +179,20 @@
         <div class="q__answer" id="q5-answer" hidden>
           <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
           <p>Goal evaluators judge only the evidence surfaced in the conversation transcript. A command like "unit tests pass" produces a deterministic pass/fail terminal output that the evaluator can verify directly, whereas subjective qualities like "clean architecture" have no measurable, concrete end state demonstrable in the agent's output.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/goal" target="_blank" rel="noopener noreferrer">Keep Claude working toward a goal<span class="sr-only"> (opens in a new tab)</span></a>, section "Write an effective condition". Also in <a href="https://learn.chatgpt.com/docs/long-running-work" target="_blank" rel="noopener noreferrer">OpenAI Codex Docs, "Long-running work"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/goal" target="_blank" rel="noopener noreferrer">Keep Claude working toward a goal<span class="sr-only"> (opens in a new tab)</span></a>, section "Write an effective condition".</p>
+        </div>
+      </li>
+
+      <!-- Q5, Codex track: short answer -->
+      <li class="q card" id="cq5" data-qid="cq5" data-answer="short" data-track="codex">
+        <h2 class="label q__num">Question 5 of 5 · short answer</h2>
+        <label class="q__prompt" for="cq5-input">You start Goal mode in Codex with <code>/goal</code>. What three things should the goal include so that Codex can verify its own progress?</label>
+        <textarea id="cq5-input" name="cq5" rows="3"></textarea>
+        <div data-quiz-controls></div>
+        <div class="q__answer" id="cq5-answer" hidden>
+          <p class="q__verdict" data-verdict>Compare your answer with this one.</p>
+          <p>Outcome, constraints and verification. The outcome describes the result you want rather than only the activity, the constraints name required tools, boundaries, compatibility needs or approaches to avoid, and the verification adds tests, measurements or review criteria that prove the work is complete. The goal text becomes both the first prompt and the completion criteria for the task.</p>
+          <p class="q__source">Source: <a href="https://learn.chatgpt.com/docs/long-running-work#define-what-done-means" target="_blank" rel="noopener noreferrer">Long-running work (OpenAI Codex docs), "Define what done means"<span class="sr-only"> (opens in a new tab)</span></a> and "Start a goal".</p>
         </div>
       </li>
     </ol>

@@ -96,10 +96,36 @@
          the confident-error line, and persists with startAttempt (on
          first interaction), answer and submitAttempt (when every
          question has a grade). Copy the markup from week-1-check.html.
+         Tracks: a card with data-track="claude"|"codex" shows on that
+         track only; cards without it are shared. Each track sees five
+         cards. Put a track's card right after its counterpart with the
+         same "Question N of 5" heading, and give Codex cards their own
+         qids whose digits match the slot (cq4 in slot 4: score bars sort
+         by those digits). Only the current track's cards count towards
+         completion, the live score, the submit key and the end card.
+         startAttempt records the track ({track}). An attempt belongs to
+         the track it records; one saved before that field existed
+         belongs to a track whose cards cover every qid it answered. When
+         no card has data-track (Weeks 0 and 4), every attempt belongs to
+         both tracks.
+         Switching track: the page keeps one in-memory slot per track (one
+         in all on a page with no track cards). A switch parks the current
+         slot as it is, in progress or not, and shows the other track's
+         slot, loaded on first use from that track's latest attempt:
+         resumed if in progress, its end card if submitted, blank if none.
+         Nothing is scored across tracks, and switching back resumes the
+         parked attempt. A reload loads the current track's slot the same
+         way. On a page with no track cards the attempt carries on and
+         keeps the track it started on. A link to a card on the other
+         track (week-1-check.html#q5 on Codex) scrolls to this track's
+         card in the same slot. "Clear my answers" leaves the
+         cleared attempt stored and unsubmitted, so a reload brings its
+         answers back (as before tracks).
      [data-quiz-score="3"]       live score bar for the current attempt
-     [data-quiz-end="3"]         end card: latest and best, Try again
+     [data-quiz-end="3"]         end card: latest and best on the
+                                 current track, Try again
      [data-quiz-summary="3"]     latest submitted score bar and best, for
-                                 the week page
+                                 the week page; tries on either track
      fieldset.track-switch[data-announce-week="3"]  announces that week's
          totals; [data-announce-course] announces every week's total;
          otherwise data-announce-claude / data-announce-codex text.
@@ -116,7 +142,7 @@
    API  window.AgenticSite = {weeks, week(n), calendar(), session(n), kinds,
         track(), stageLog, weekStats(n, track?, state?), currentWeek(),
         nextSession(),
-        attemptScore(a), attemptCells(a), quizSummary(week, state?),
+        attemptScore(a), attemptCells(a), quizSummary(week, state?, filter?),
         fmt(n), esc(s), glyph(kind), storageOK, announce(msg),
         onRender(fn), render()}
    ========================================================================== */
@@ -463,9 +489,12 @@
       return x.correct === true ? 1 : x.correct === false ? 0 : null;
     });
   }
-  function quizSummary(n, st) {
+  // filter (optional): keep only the attempts it returns true for, as the
+  // self-check page does for the current track.
+  function quizSummary(n, st, filter) {
     st = st || snap();
     var list = (st.quizzes && st.quizzes["w" + n]) || [];
+    if (typeof filter === "function") list = list.filter(filter);
     var done = list.filter(function (a) { return a.submittedAt; });
     var best = null;
     done.forEach(function (a, i) {
@@ -863,38 +892,95 @@
   }
 
   /* ---------- self-check (3.4) ---------- */
+  // Track-aware: see the data-quiz notes in the header comment. q.attemptId,
+  // q.submitted and q.state belong to the current track's slot; useTrack
+  // parks them in q.slots and brings back (or loads) the other track's.
   var quizzes = [];
-  function latestAttempt(n) {
-    var list = (snap().quizzes["w" + n]) || [];
-    return list.length ? list[list.length - 1] : null;
+  function qidOf(card) { return card.getAttribute("data-qid"); }
+  function cardTrack(card) { return validTrack(card.getAttribute("data-track")); }
+  function cardsOn(q, t) { return q.cards.filter(function (c) { var ct = cardTrack(c); return !ct || ct === t; }); }
+  function visible(q) { return cardsOn(q, q.track); }
+  function onTrack(q, card) { var ct = cardTrack(card); return !ct || ct === q.track; }
+  function slotKey(q, t) { return q.split ? t : "both"; }
+  // An attempt belongs to track t when its track field says so. One saved
+  // before the field existed belongs when t's cards cover every qid it
+  // answered. With no track-specific card, every attempt belongs.
+  function belongs(q, a, t) {
+    if (!q.split) return true;
+    if (validTrack(a.track)) return a.track === t;
+    var on = {};
+    cardsOn(q, t).forEach(function (c) { on[qidOf(c)] = true; });
+    return (a.answers || []).every(function (x) { return on[x.qid]; });
+  }
+  function mine(q) { return function (a) { return belongs(q, a, q.track); }; }
+  function blankAnswer() { return { response: null, confidence: null, revealed: false, selfScore: null }; }
+  // The latest attempt on track t, skipping one that another slot is
+  // still answering, restored into a fresh slot.
+  function loadSlot(q, t) {
+    var s = { attemptId: null, submitted: false, state: {} }, held = {};
+    q.cards.forEach(function (c) { s.state[qidOf(c)] = blankAnswer(); });
+    Object.keys(q.slots).forEach(function (k) { var o = q.slots[k]; if (o.attemptId && !o.submitted) held[o.attemptId] = true; });
+    var list = ((snap().quizzes || {})["w" + q.week] || []).filter(function (a) { return !held[a.attemptId] && belongs(q, a, t); });
+    var att = list.length ? list[list.length - 1] : null;
+    if (!att) return s;
+    s.attemptId = att.attemptId;
+    s.submitted = !!att.submittedAt;
+    (att.answers || []).forEach(function (x) {
+      var r = s.state[x.qid];
+      if (!r) return;
+      if (x.response !== undefined && x.response !== null) r.response = x.response;
+      if (typeof x.confidence === "number") r.confidence = x.confidence;
+      if (x.revealedAt) r.revealed = true;
+      if (typeof x.selfScore === "number") r.selfScore = x.selfScore;
+    });
+    return s;
+  }
+  function useTrack(q, t) {
+    if (q.slot) q.slots[q.slot] = { attemptId: q.attemptId, submitted: q.submitted, state: q.state };
+    q.track = t;
+    q.slot = slotKey(q, t);
+    var s = q.slots[q.slot] || loadSlot(q, t);
+    q.slots[q.slot] = s;
+    q.attemptId = s.attemptId;
+    q.submitted = s.submitted;
+    q.state = s.state;
+    syncControls(q);
+    q.cards.forEach(function (card) { renderCard(q, card); });
+  }
+  function syncQuizTracks() {
+    quizzes.forEach(function (q) { if (q.track !== track) useTrack(q, track); });
+  }
+  // Week pages link to a card by id (week-1-check.html#q5). When that card
+  // is on the other track, scroll to this track's card in the same slot.
+  function slotOf(card) { return parseInt(qidOf(card).replace(/\D+/g, ""), 10); }
+  function followHash() {
+    var el = null;
+    try { el = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null; } catch (e) { el = null; }
+    if (!el || !el.hasAttribute("data-qid")) return;
+    quizzes.forEach(function (q) {
+      if (q.cards.indexOf(el) < 0 || onTrack(q, el)) return;
+      var alt = visible(q).filter(function (c) { return slotOf(c) === slotOf(el); })[0];
+      if (alt) alt.scrollIntoView();
+    });
   }
   function initQuiz(form) {
     var n = parseInt(form.getAttribute("data-quiz"), 10);
-    var q = { week: n, form: form, cards: $$(".q[data-qid]", form), key: {}, attemptId: null, submitted: false, state: {} };
+    var q = { week: n, form: form, cards: $$(".q[data-qid]", form), key: {}, attemptId: null, submitted: false, state: {},
+              track: null, slot: null, slots: {} };
+    q.split = q.cards.some(function (c) { return !!cardTrack(c); });
     q.cards.forEach(function (card) {
-      var qid = card.getAttribute("data-qid"), a = card.getAttribute("data-answer");
+      var qid = qidOf(card), a = card.getAttribute("data-answer");
       q.key[qid] = a === "short" ? "short" : parseInt(a, 10);
-      q.state[qid] = { response: null, confidence: null, revealed: false, selfScore: null };
       injectControls(q, card, qid, a === "short");
     });
-    var att = latestAttempt(n);
-    if (att) {
-      q.attemptId = att.attemptId;
-      q.submitted = !!att.submittedAt;
-      att.answers.forEach(function (x) {
-        var s = q.state[x.qid];
-        if (!s) return;
-        if (x.response !== undefined && x.response !== null) s.response = x.response;
-        if (typeof x.confidence === "number") s.confidence = x.confidence;
-        if (x.revealedAt) s.revealed = true;
-        if (typeof x.selfScore === "number") s.selfScore = x.selfScore;
-      });
-      syncControls(q);
-    }
     form.addEventListener("submit", function (e) { e.preventDefault(); });
     form.addEventListener("change", function (e) { quizChange(q, e.target); });
     form.addEventListener("input", function (e) {
-      if (e.target.tagName === "TEXTAREA") { var card = e.target.closest(".q"); q.state[card.getAttribute("data-qid")].response = e.target.value; renderCard(q, card); }
+      if (e.target.tagName !== "TEXTAREA") return;
+      var card = e.target.closest(".q");
+      if (!card || !onTrack(q, card)) return;
+      q.state[qidOf(card)].response = e.target.value;
+      renderCard(q, card);
     });
     form.addEventListener("click", function (e) {
       var b = e.target.closest && e.target.closest("button");
@@ -903,7 +989,7 @@
       else if (b.hasAttribute("data-quiz-restart")) restart(q, b.getAttribute("data-quiz-restart") === "abandon");
     });
     quizzes.push(q);
-    q.cards.forEach(function (card) { renderCard(q, card); });
+    useTrack(q, track);
   }
   function injectControls(q, card, qid, isShort) {
     var ctl = $("[data-quiz-controls]", card);
@@ -938,7 +1024,7 @@
     });
   }
   function ensureAttempt(q) {
-    if (!q.attemptId && P) { q.attemptId = P.startAttempt(q.week); q.submitted = false; }
+    if (!q.attemptId && P) { q.attemptId = P.startAttempt(q.week, { track: q.track }); q.submitted = false; }
     return q.attemptId;
   }
   function isShort(q, qid) { return q.key[qid] === "short"; }
@@ -954,7 +1040,7 @@
   function quizChange(q, el) {
     if (!el || !el.name || !P) return;
     var card = el.closest(".q");
-    if (!card) return;
+    if (!card || !onTrack(q, card)) return;
     var qid = card.getAttribute("data-qid"), s = q.state[qid];
     if (q.submitted) return;
     if (el.name === qid && el.type === "radio") {
@@ -974,7 +1060,7 @@
     } else if (el.name === qid + "-self") {
       s.selfScore = parseInt(el.value, 10);
       P.answer(q.week, q.attemptId, { qid: qid, type: "short", selfScore: s.selfScore });
-      announce("Question " + (q.cards.indexOf(card) + 1) + ": " + SELF.filter(function (x) { return x[0] === s.selfScore; })[0][1] + ", " + (s.selfScore / 2) + " of 1.");
+      announce("Question " + (visible(q).indexOf(card) + 1) + ": " + SELF.filter(function (x) { return x[0] === s.selfScore; })[0][1] + ", " + (s.selfScore / 2) + " of 1.");
       maybeSubmit(q);
     }
     renderCard(q, card);
@@ -986,7 +1072,7 @@
     return { answer: hasAnswer, confidence: s.confidence !== null, ok: hasAnswer && s.confidence !== null };
   }
   function reveal(q, card) {
-    if (!P) return;
+    if (!P || !card || !onTrack(q, card)) return;
     var qid = card.getAttribute("data-qid"), s = q.state[qid], r = ready(q, qid);
     if (!r.ok || s.revealed || q.submitted) return;
     ensureAttempt(q);
@@ -995,7 +1081,7 @@
     renderCard(q, card);
     var panel = $(".q__answer", card);
     panel.focus();
-    var num = q.cards.indexOf(card) + 1;
+    var num = visible(q).indexOf(card) + 1;
     if (isShort(q, qid)) announce("Question " + num + ": answer shown. Compare it with yours, then score it.");
     else announce("Question " + num + ": " + (s.response === q.key[qid] ? "correct." : "not this one. The answer is " + LETTERS[q.key[qid]] + "."));
     maybeSubmit(q);
@@ -1003,21 +1089,24 @@
   }
   function maybeSubmit(q) {
     if (q.submitted || !q.attemptId) return;
-    for (var i = 0; i < q.cards.length; i++) if (!graded(q, q.cards[i].getAttribute("data-qid"))) return;
-    var a = P.submitAttempt(q.week, q.attemptId, q.key);
+    // Only the current track's cards are graded and scored.
+    var cards = visible(q), key = {};
+    for (var i = 0; i < cards.length; i++) if (!graded(q, qidOf(cards[i]))) return;
+    cards.forEach(function (c) { key[qidOf(c)] = q.key[qidOf(c)]; });
+    var a = P.submitAttempt(q.week, q.attemptId, key);
     q.submitted = true;
     q.cards.forEach(function (card) { renderCard(q, card); });
-    var sc = attemptScore(a), sum = quizSummary(q.week);
+    var sc = attemptScore(a), sum = quizSummary(q.week, null, mine(q));
     announce("Self-check saved: " + fmt(sc.value) + " of " + fmt(sc.max) + ". Your best is " + fmt(sum.best.value) + " of " + fmt(sum.best.max) + ".");
   }
   function restart(q, abandon) {
     q.attemptId = null;
     q.submitted = false;
-    Object.keys(q.state).forEach(function (k) { q.state[k] = { response: null, confidence: null, revealed: false, selfScore: null }; });
+    Object.keys(q.state).forEach(function (k) { q.state[k] = blankAnswer(); });
     syncControls(q);
     q.cards.forEach(function (card) { renderCard(q, card); });
     renderQuizScores();
-    var first = $("input, textarea", q.cards[0]);
+    var first = visible(q)[0] && $("input, textarea", visible(q)[0]);
     if (first) first.focus();
     announce(abandon ? "Answers cleared. Your next answer starts a new try." : "New try. Your earlier scores are kept.");
   }
@@ -1069,10 +1158,10 @@
   function renderQuizScores() {
     var st = snap();
     quizzes.forEach(function (q) {
-      var cells = q.cards.map(function (c) { return value(q, c.getAttribute("data-qid")); });
+      var cells = visible(q).map(function (c) { return value(q, qidOf(c)); });
       var got = 0, checked = 0;
       cells.forEach(function (v) { if (v !== null) { got += v; checked++; } });
-      var sum = quizSummary(q.week, st);
+      var sum = quizSummary(q.week, st, mine(q));
       var tryNo = sum.all.length + (q.attemptId ? 0 : 1);
       $$('[data-quiz-score="' + q.week + '"]').forEach(function (el) {
         el.innerHTML = '<div class="score"><span class="scorebar" role="img" aria-label="This try: ' + fmt(got) + " of " + cells.length + ", " + checked + " of " +
@@ -1621,6 +1710,7 @@
   function render() {
     if (!started) return;
     var st = snap();
+    syncQuizTracks();
     if (P) {
       renderItems(st);
       renderBudgets(st);
@@ -1677,6 +1767,7 @@
     if (P) P.on("change", function () { render(); });
     storageWarning();
     render();
+    if (quizzes.length) { followHash(); window.addEventListener("hashchange", followHash); }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitLabels(document); });
   }
 

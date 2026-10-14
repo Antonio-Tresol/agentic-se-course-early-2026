@@ -16,7 +16,8 @@
    SCHEMA    schemaVersion 1. See notes/progress/progress.schema.json.
              "outcomes" and "stageLogs" are optional, additive fields, so the
              version did not change. So are the estimate fields
-             "agentPassPredicted" and "agentAttempts".
+             "agentPassPredicted" and "agentAttempts", and the attempt
+             field "track".
 
    API (all synchronous unless stated; "change" fires after every write)
      get()                       deep copy of the stored state
@@ -30,7 +31,11 @@
      setTrack(track)             "claude" | "codex"
      setAlias(alias)             optional free text; "" clears it
      markItem(week, id, {status, minutesSpent, estimateMinutes})
-     startAttempt(week)          returns attemptId
+     startAttempt(week, {track}) returns attemptId. track ("claude" |
+                                 "codex") is stored on the attempt when
+                                 valid: the track whose questions it
+                                 answers. Attempts saved before the field
+                                 existed have none.
      answer(week, attemptId, {qid, type, response, confidence, revealed,
                               selfScore})   merges by qid
      submitAttempt(week, attemptId, answerKey)  grades and scores. answerKey:
@@ -230,9 +235,10 @@
     for (var i = 0; i < list.length; i++) if (list[i].attemptId === attemptId) return list[i];
     return null;
   }
-  function startAttempt(week) {
+  function startAttempt(week, opts) {
     var a = { attemptId: rid("A-"), startedAt: nowISO(), submittedAt: null, answers: [],
               score: { auto: 0, autoMax: 0, self: 0, selfMax: 0 } };
+    if (opts && TRACKS.indexOf(opts.track) >= 0) a.track = opts.track;
     attemptsOf(week, true).push(a);
     commit("quiz:start", wk(week));
     return a.attemptId;
@@ -614,7 +620,11 @@
     if (!isObj(d.quizzes)) errs.push("quizzes must be an object.");
     else Object.keys(d.quizzes).forEach(function (k) {
       if (!Array.isArray(d.quizzes[k])) errs.push("quizzes." + k + " must be an array.");
-      else d.quizzes[k].forEach(function (a) { if (!isObj(a) || !a.attemptId || !Array.isArray(a.answers)) errs.push("Bad attempt in " + k); });
+      else d.quizzes[k].forEach(function (a) {
+        if (!isObj(a) || !a.attemptId || !Array.isArray(a.answers)) errs.push("Bad attempt in " + k);
+        // Optional; attempts saved before the field existed have none.
+        else if (a.track !== undefined && TRACKS.indexOf(a.track) < 0) errs.push("Attempt " + a.attemptId + " in " + k + ': track must be "claude" or "codex".');
+      });
     });
     if (!Array.isArray(d.estimates)) errs.push("estimates must be an array.");
     else d.estimates.forEach(function (e) {

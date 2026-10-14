@@ -10,7 +10,7 @@ Browser-side progress for the Agentic SE course, plus the tools the course owner
 | `test_progress.cjs` | Node tests for `progress.js`; `--samples` regenerates `sample/` |
 | `calendar.schema.json` | JSON Schema (draft 2020-12) for a cohort calendar |
 | `../mockups/data/calendar.sample.json` | Sample calendar (cohort `sample-cohort`, invented dates) |
-| `sample/` | Five **synthetic** exports. The aliases read `SYNTHETIC-01` to `SYNTHETIC-05` and the learner ids start `L-synthetic-`. They are not real learners. 01 and 05 carry agent predictions on three course task ids; 02 to 04 have estimates without the fields |
+| `sample/` | Five **synthetic** exports. The aliases read `SYNTHETIC-01` to `SYNTHETIC-05` and the learner ids start `L-synthetic-`. They are not real learners. 01 and 05 carry agent predictions on three course task ids; 02 to 04 have estimates without the fields. 02 and 04 have Week 1 attempts without a `track`, as saved before the field; the Codex learners 03 and 05 answer the Codex questions (`cq1` to `cq5`) |
 
 ## What is stored, and where
 
@@ -20,7 +20,7 @@ The record holds:
 
 - **learner**: a random id made on first use, an optional alias the learner types themselves, cohort, track (`claude` or `codex`), creation time.
 - **items**: status (`todo`, `done`, `skipped`), completion time, optional self-reported minutes, and the page's own estimate for that item.
-- **quizzes**: every self-check attempt, with each answer, the confidence given before the reveal, MCQ correctness, short-answer self-score, and totals.
+- **quizzes**: every self-check attempt, with each answer, the confidence given before the reveal, MCQ correctness, short-answer self-score, and totals. An optional `track` (`claude` or `codex`) names the track whose questions the attempt answered. Weeks 1 to 3 show some questions on one track only; those shown only on Codex have their own qids starting with `c` (`cq1` to `cq5` in Week 1, `cq4` in Week 2, `cq3` and `cq5` in Week 3), and each attempt is scored against its own track's five questions. Attempts saved before the field existed have no `track`; they answered the questions then shown to everyone, which are now the shared and Claude Code questions.
 - **estimates**: the Week 1 benchmark estimates, with complexity and specification quality ratings and the reason given. Two optional fields hold the agent prediction: `agentAttempts`, the task's published run count copied from the task data when the estimate is saved, and `agentPassPredicted`, the predicted number of passing runs from 0 to `agentAttempts`. Both are null for tasks with no published per-task agent results (SWE-Bench Pro), and absent in estimates saved before they existed.
 - **deliverables**: link, note and rubric self-assessment for each week.
 - **outcomes** (optional): the learner's "I can do this" ticks on each week's outcomes checklist, `{ "w1": { "o1": { checked, at } } }`. An unticked box is kept as `checked: false` so a merge can tell which side is newer.
@@ -51,7 +51,7 @@ python3 analyse.py inbox/ --out results/ --truth ../mockups/data/benchmarks.json
 ```
 
 - Invalid files are skipped with a warning. Learners are de-duplicated by `learner.id`; the latest `exportedAt` wins.
-- Outputs in `results/`: `learners.csv`, `items.csv` (completion, median and mean minutes against the page estimate, and their ratio, for calibrating time budgets), `questions.csv` (difficulty, self-scores, confidence and the confidence gap between right and wrong answers), `estimates.csv` (n, median, IQR, complexity and specification medians, and the agent predictions: their count, the run count, the median predicted passes and pass rate, and with `--truth` the published pass count and rate), `stages.csv` (per week and stage: n, median and mean human minutes, median tokens, median cost and counts per cause), `outcomes.csv` (per week and outcome: the proportion of learners who ticked it, among those whose file holds any outcome for that week), `certificates.csv` (one row per learner and course: has_url, has_image, earnedOn), and `summary.md`. The last sections of `summary.md` cover stage logs, outcomes and certificates when present.
+- Outputs in `results/`: `learners.csv`, `items.csv` (completion, median and mean minutes against the page estimate, and their ratio, for calibrating time budgets), `questions.csv` (difficulty, self-scores, confidence and the confidence gap between right and wrong answers; `tracks` lists the attempt tracks that answered each question, `unrecorded` for attempts without one), `estimates.csv` (n, median, IQR, complexity and specification medians, and the agent predictions: their count, the run count, the median predicted passes and pass rate, and with `--truth` the published pass count and rate), `stages.csv` (per week and stage: n, median and mean human minutes, median tokens, median cost and counts per cause), `outcomes.csv` (per week and outcome: the proportion of learners who ticked it, among those whose file holds any outcome for that week), `certificates.csv` (one row per learner and course: has_url, has_image, earnedOn), and `summary.md`. The last sections of `summary.md` cover stage logs, outcomes and certificates when present.
 - `--truth` takes the benchmark ground-truth file, matched on `tasks[].taskId`. Its `groundTruth.agentPassCount` and `agentAttempts` give the published pass counts for the agent columns and one summary line. For minutes it adds the log10 ratio of estimate to truth, using `groundTruth.humanMinutesPoint` (Terminal-Bench) or the midpoint of `humanMinutesLow` and `humanMinutesHigh` (SWE-bench Verified buckets, so `<15 min` counts as 7.5 and `1-4 hours` as 150). SWE-Bench Pro tasks have neither and are left out. Other files may instead give a top-level numeric field (`--truth-field`, default `truthMinutes`) or a bucket label (`--bucket-field`, default `bucket`; `"90-150"` gives 120, `"<=30"` gives 15, `"240+"` gives 360, or supply `--bucket-midpoints '{"S": 30}'`). A missing file only produces a warning.
 - `--totals totals.json` (`{"w1": {"claude": 9, "codex": 10}}`) adds `completion_wN` columns to `learners.csv`; without it the file reports counts of done items.
 - Aliases are never printed or written unless `--show-aliases` is given.
@@ -87,7 +87,7 @@ There is no backend, so session dates come from a file the owner publishes, one 
 ## Schema versioning
 
 - `schemaVersion` is an integer, currently `1`.
-- Adding an optional field is not a version change. Readers must ignore unknown fields, and files that lack the field stay valid. `outcomes`, `stageLogs` and the estimate fields `agentAttempts` and `agentPassPredicted` were added this way, so `schemaVersion` is still `1`; an older file imports cleanly and leaves them empty or absent.
+- Adding an optional field is not a version change. Readers must ignore unknown fields, and files that lack the field stay valid. `outcomes`, `stageLogs`, the estimate fields `agentAttempts` and `agentPassPredicted` and the attempt field `track` were added this way, so `schemaVersion` is still `1`; an older file imports cleanly and leaves them empty or absent.
 - Renaming, removing or retyping a field, or changing what a value means, bumps the version.
 - `progress.js` and `analyse.py` refuse files of any other version with a clear message rather than guessing. When version 2 exists, the importer should migrate version 1 files explicitly, and `analyse.py` should keep reading both.
 - `appVersion` records which build of the site wrote the file, which helps when interpreting items whose ids changed.
@@ -95,7 +95,7 @@ There is no backend, so session dates come from a file the owner publishes, one 
 ## Tests
 
 ```
-node test_progress.cjs            # 28 tests: items, quiz grading, estimates and agent predictions, outcomes, stage logs (null clearing, failed), calendar, certificates, export, merge, replace, version mismatch
+node test_progress.cjs            # 31 tests: items, quiz grading and the attempt track, estimates and agent predictions, outcomes, stage logs (null clearing, failed), calendar, certificates, export, merge, replace, version mismatch
 node test_progress.cjs --samples  # also regenerates sample/ (values are seeded; attempt and stage ids come from crypto and change on every run)
 python3 analyse.py sample --out /tmp/results
 ```

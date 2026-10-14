@@ -79,12 +79,12 @@
   "quizzes": {
     "w1": [
       {
-        "attemptId": "A-e168510a586642e6",
+        "attemptId": "A-ac943e38d722bfd5",
         "startedAt": "2026-09-16T21:06:18.758Z",
         "submittedAt": "2026-09-16T21:11:18.758Z",
         "answers": [
           {
-            "qid": "q1",
+            "qid": "cq1",
             "type": "short",
             "response": "synthetic answer",
             "confidence": 4,
@@ -92,23 +92,23 @@
             "selfScore": 2
           },
           {
-            "qid": "q2",
+            "qid": "cq2",
             "type": "mcq",
-            "response": 3,
+            "response": 2,
             "confidence": 1,
             "revealedAt": "2026-09-16T21:08:18.758Z",
             "correct": false
           },
           {
-            "qid": "q3",
+            "qid": "cq3",
             "type": "mcq",
-            "response": 2,
+            "response": 0,
             "confidence": 2,
             "revealedAt": "2026-09-16T21:09:18.758Z",
             "correct": false
           },
           {
-            "qid": "q4",
+            "qid": "cq4",
             "type": "short",
             "response": "synthetic answer",
             "confidence": 2,
@@ -116,9 +116,9 @@
             "selfScore": 1
           },
           {
-            "qid": "q5",
+            "qid": "cq5",
             "type": "mcq",
-            "response": 1,
+            "response": 2,
             "confidence": 3,
             "revealedAt": "2026-09-16T21:11:18.758Z",
             "correct": true
@@ -129,15 +129,16 @@
           "autoMax": 3,
           "self": 3,
           "selfMax": 4
-        }
+        },
+        "track": "codex"
       },
       {
-        "attemptId": "A-840f6cfb47d08e44",
+        "attemptId": "A-e5d8798a171ca1e7",
         "startedAt": "2026-09-16T22:11:18.758Z",
         "submittedAt": "2026-09-16T22:16:18.758Z",
         "answers": [
           {
-            "qid": "q1",
+            "qid": "cq1",
             "type": "short",
             "response": "synthetic answer",
             "confidence": 2,
@@ -145,23 +146,23 @@
             "selfScore": 2
           },
           {
-            "qid": "q2",
+            "qid": "cq2",
             "type": "mcq",
-            "response": 3,
+            "response": 2,
             "confidence": 2,
             "revealedAt": "2026-09-16T22:13:18.758Z",
             "correct": false
           },
           {
-            "qid": "q3",
+            "qid": "cq3",
             "type": "mcq",
-            "response": 2,
+            "response": 0,
             "confidence": 2,
             "revealedAt": "2026-09-16T22:14:18.758Z",
             "correct": false
           },
           {
-            "qid": "q4",
+            "qid": "cq4",
             "type": "short",
             "response": "synthetic answer",
             "confidence": 4,
@@ -169,9 +170,9 @@
             "selfScore": 2
           },
           {
-            "qid": "q5",
+            "qid": "cq5",
             "type": "mcq",
-            "response": 2,
+            "response": 3,
             "confidence": 2,
             "revealedAt": "2026-09-16T22:16:18.758Z",
             "correct": false
@@ -182,7 +183,8 @@
           "autoMax": 3,
           "self": 4,
           "selfMax": 4
-        }
+        },
+        "track": "codex"
       }
     ]
   },
@@ -343,37 +345,37 @@
     {
       "t": "2026-09-16T21:07:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q1"
+      "ref": "w1:cq1"
     },
     {
       "t": "2026-09-16T21:07:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q1"
+      "ref": "w1:cq1"
     },
     {
       "t": "2026-09-16T21:08:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q2"
+      "ref": "w1:cq2"
     },
     {
       "t": "2026-09-16T21:09:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q3"
+      "ref": "w1:cq3"
     },
     {
       "t": "2026-09-16T21:10:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q4"
+      "ref": "w1:cq4"
     },
     {
       "t": "2026-09-16T21:10:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q4"
+      "ref": "w1:cq4"
     },
     {
       "t": "2026-09-16T21:11:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q5"
+      "ref": "w1:cq5"
     },
     {
       "t": "2026-09-16T21:11:18.758Z",
@@ -388,37 +390,37 @@
     {
       "t": "2026-09-16T22:12:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q1"
+      "ref": "w1:cq1"
     },
     {
       "t": "2026-09-16T22:12:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q1"
+      "ref": "w1:cq1"
     },
     {
       "t": "2026-09-16T22:13:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q2"
+      "ref": "w1:cq2"
     },
     {
       "t": "2026-09-16T22:14:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q3"
+      "ref": "w1:cq3"
     },
     {
       "t": "2026-09-16T22:15:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q4"
+      "ref": "w1:cq4"
     },
     {
       "t": "2026-09-16T22:15:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q4"
+      "ref": "w1:cq4"
     },
     {
       "t": "2026-09-16T22:16:18.758Z",
       "type": "quiz:answer",
-      "ref": "w1:q5"
+      "ref": "w1:cq5"
     },
     {
       "t": "2026-09-16T22:16:18.758Z",
@@ -468,27 +470,27 @@
     {
       "t": "2026-09-16T22:59:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-a70c2fbe411bd660"
+      "ref": "w3:S-baf443eda1471267"
     },
     {
       "t": "2026-09-16T23:07:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-16dd94daae1ebd61"
+      "ref": "w3:S-2036d5a0fb003ad4"
     },
     {
       "t": "2026-09-16T23:15:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-3ff1c7eb4c8fbf08"
+      "ref": "w3:S-0fc06d971199681a"
     },
     {
       "t": "2026-09-16T23:23:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-167260d0f0cd29bb"
+      "ref": "w3:S-b128df2239175591"
     },
     {
       "t": "2026-09-16T23:31:18.758Z",
       "type": "stage:add",
-      "ref": "w3:S-205b1a90b918ad76"
+      "ref": "w3:S-a418310e55bb7995"
     }
   ],
   "outcomes": {
@@ -520,7 +522,7 @@
   "stageLogs": {
     "w3": [
       {
-        "id": "S-a70c2fbe411bd660",
+        "id": "S-baf443eda1471267",
         "change": "issue 4",
         "stage": "triage",
         "humanMinutes": 9,
@@ -534,7 +536,7 @@
         "at": "2026-09-16T22:59:18.758Z"
       },
       {
-        "id": "S-16dd94daae1ebd61",
+        "id": "S-2036d5a0fb003ad4",
         "change": "issue 4",
         "stage": "spec",
         "humanMinutes": 24,
@@ -548,7 +550,7 @@
         "at": "2026-09-16T23:07:18.758Z"
       },
       {
-        "id": "S-3ff1c7eb4c8fbf08",
+        "id": "S-0fc06d971199681a",
         "change": "issue 4",
         "stage": "implement",
         "humanMinutes": 16,
@@ -562,7 +564,7 @@
         "at": "2026-09-16T23:15:18.758Z"
       },
       {
-        "id": "S-167260d0f0cd29bb",
+        "id": "S-b128df2239175591",
         "change": "issue 4",
         "stage": "review",
         "humanMinutes": 17,
@@ -576,7 +578,7 @@
         "at": "2026-09-16T23:23:18.758Z"
       },
       {
-        "id": "S-205b1a90b918ad76",
+        "id": "S-a418310e55bb7995",
         "change": "issue 4",
         "stage": "pr",
         "humanMinutes": 8,
