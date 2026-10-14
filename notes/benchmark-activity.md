@@ -182,6 +182,8 @@ The SWE-bench Verified counts come from 15 runs in the SWE-bench experiments rep
 
 ## The activity, minute by minute
 
+The current plan, with the opener and the course debrief, is the run-sheet at `site/facilitator-week-1.html`; the table below is the original 60-minute draft.
+
 Pairs are numbered from 1. Pair *p* takes task ((*p* − 1) mod 6) + 1 in round 1 and task ((*p* + 2) mod 6) + 1 in round 2, so each pair meets two benchmarks and a class of 12 pairs gives every task four estimates.
 
 | Time | Who | What happens |

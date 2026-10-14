@@ -389,7 +389,7 @@
       <div data-session-fact="1" hidden></div>
       <div><dt>Length</dt><dd>60 min</dd></div>
     </dl>
-    <p class="section-intro">After a short debrief on what worked in the courses, pairs scope real benchmark tasks with their agent, estimate each task's human time, complexity and specification quality, predict how many published agent runs passed, then compare with the published results.</p>
+    <p class="section-intro">We debrief on the courses, then break into pairs for benchmark estimation.</p>
 
     <div class="callout" role="group" aria-labelledby="opener-h" style="margin-top:20px">
       <h3 id="opener-h" class="h-card">Five-minute retrieval opener</h3>
@@ -397,120 +397,85 @@
     </div>
 
 
-
-    <section id="bench-activity" class="section" aria-labelledby="bench-activity-h">
-  <div class="card__label"><span class="label label--ink">Live session activity · in pairs · 60 min</span></div>
-  <h3 id="bench-activity-h" class="bench-title">Can you judge how much work an agent can complete on its own today?</h3>
-  <p class="bench-p">You installed your agent in Week 0 and have worked through this week's courses. In the session you point it at someone else's hardest problems and test your judgement of what agents can do without help. First look at the latest numbers on the hardest public software-engineering benchmarks, then open real tasks from them. In pairs, take ten minutes per task: use your coding agent to understand the task and its size, estimate how long it would take an experienced engineer, how complex it is and how well specified it is, and predict how many of the published agent runs on it passed. Only then do you see the published answers.</p>
-
-  <noscript><p class="note">The charts, task cards and estimate forms need JavaScript. The same data is in data/benchmarks.json.</p></noscript>
-
-  <div class="bench-sub" id="bench-frontier">
-    <h4 class="bench-h">Where the frontier stands</h4>
-    <p class="bench-p">We read every board on 9 October 2026. The hardest public boards show saturation followed by replacement. SWE-bench Verified last set a record on its own board in December 2025, at 79.2%. OpenAI stopped reporting it in February 2026, after finding that 59.4% of 138 audited hard tasks had flawed tests or descriptions and that every frontier model it probed could reproduce gold patches or problem text for some tasks. OpenAI recommended SWE-Bench Pro instead. Scale's public board tops out at 61.5% (Muse Spark 1.1, July 2026), yet in July OpenAI estimated that about 30% of Pro's public tasks are broken and withdrew its recommendation. Scale released a revised 642-task V2 on 22 September.</p>
-    <p class="bench-p">Terminal-Bench now versions itself continuously: among the models its team compared, the best score was 83.8% on version 2.1 and 34.4% on 3.0, and the 4.0 board is led by Claude Opus 5.5 in Claude Code at 64.8%. FrontierCode, Cognition's private benchmark graded on whether a maintainer would merge the patch, is led by Claude Opus 5.5 at 54.6. METR's 50% time horizon reached about 17 hours for Claude Mythos Preview, beyond the 16 hours METR calls reliable, and METR stopped updating the page in September. Passing tests also overstates usefulness: maintainers would not merge about half of test-passing Verified patches.</p>
-    <div class="bench-grid" data-bench-panels></div>
-    <h5 class="bench-h" id="bench-boards-h" style="margin-top:22px">The five boards</h5>
-    <ul class="bench-links" aria-labelledby="bench-boards-h">
-      <li><a class="link-row" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">SWE-bench</span><span class="link-row__meta">SWE-bench Verified and its variants</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">SWE-Bench Pro</span><span class="link-row__meta">Scale's public and private sets</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Terminal-Bench</span><span class="link-row__meta">terminal tasks, by version</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://cognition.com/frontiercode" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">FrontierCode</span><span class="link-row__meta">Cognition's board, maintainer-style grading</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">METR time horizons</span><span class="link-row__meta">task length in human time at 50% success</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-    </ul>
-    <h5 class="bench-h" id="bench-compare-h" style="margin-top:22px">Compare models yourself</h5>
-    <ul class="bench-links" aria-labelledby="bench-compare-h">
-      <li><a class="link-row" href="https://artificialanalysis.ai/models" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Artificial Analysis, models</span><span class="link-row__meta">intelligence, speed and price</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Artificial Analysis, coding agents</span><span class="link-row__meta">coding agent benchmarks and leaderboard</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://arena.ai/leaderboard/code/webdev" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena WebDev</span><span class="link-row__meta">WebDev leaderboard, formerly LMArena</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://arena.ai/leaderboard/chat/text/coding" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena, coding</span><span class="link-row__meta">Text Arena rankings for code</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://arena.ai/leaderboard/agent" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena, agents</span><span class="link-row__meta">Agent Arena: how often users confirm the task is done</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://epoch.ai/benchmarks" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Epoch AI</span><span class="link-row__meta">benchmarks and capabilities</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://openrouter.ai/rankings" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">OpenRouter</span><span class="link-row__meta">LLM usage rankings</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      <li><a class="link-row" href="https://www.vals.ai/benchmarks" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Vals AI</span><span class="link-row__meta">benchmarks and leaderboards</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-    </ul>
-  </div>
-
-  <div class="bench-sub" id="bench-frontier-time">
-    <h4 class="bench-h">How the frontier moved</h4>
-    <p class="bench-p">Three series from the same sources. Different measures are never drawn on one scale.</p>
-    <div data-bench-metr></div>
-    <div class="bench-fig__pair">
-      <div data-bench-swev></div>
-      <div data-bench-tbv></div>
-    </div>
-  </div>
-
-  <div class="bench-sub" id="bench-hour">
-    <h4 class="bench-h">The Week 1 session, minute by minute</h4>
-    <figure class="bench-sbar" aria-labelledby="bench-sbar-cap">
-      <p id="bench-sbar-cap" class="label">60 minutes, by who is working</p>
-      <div class="bench-sbar__track" aria-hidden="true" data-sbar></div>
-      <div class="bench-sbar__scale meta" aria-hidden="true"><span>0:00</span><span>30:00</span><span>60:00</span></div>
-      <div class="bench-sbar__axis-title axis-title axis-title--x">Session time (mm:ss)</div>
-      <div class="bench-legend" data-sbar-legend></div>
-    </figure>
-    <ol class="bench-plan" data-plan aria-label="Activity plan"></ol>
-  </div>
-
-  <div class="bench-sub" id="bench-rules">
-    <h4 class="bench-h">Rules for the agent</h4>
-    <p class="bench-p">The agent may read and run code. It must not edit files, search the web, or open <code>README.md</code>, <code>task.toml</code>, <code>solution/</code>, <code>tests/</code> or the linked pull request: those hold the answer or the published time. Give it this starter prompt, identical for Claude Code and Codex, then read its answer and probe it with follow-up questions.</p>
-    <div class="bench-prompt bench-code" data-copy-src="prompt">
-      <blockquote><p data-prompt>Help us scope this task before anyone writes code. Read TASK.md (or instruction.md). Do not edit any file, do not search the web, and do not open README.md, task.toml, solution/, tests/ or any linked pull request. Then (1) list the files and functions involved, one line each; (2) describe what a complete solution must change; (3) name the two riskiest unknowns; (4) say how you would check the solution works. Keep the answer under 300 words.</p></blockquote>
-    </div>
-    <p class="bench-p" style="margin-top:14px">Every estimate answers one question. It asks about an experienced engineer rather than about you, because the published human times assume roughly that person.</p>
-    <p class="bench-question">How many minutes would an experienced engineer, new to this repository, need without AI help to reach a solution that passes the task's tests?</p>
-  </div>
-
-  <div class="bench-sub" id="bench-tasks">
-    <h4 class="bench-h">The six tasks</h4>
-    <p class="bench-p">Two tasks from each of SWE-bench Verified, Terminal-Bench 4.0 and SWE-Bench Pro V2. Each pair scopes two of them, one per round. The cards hold back the published answers until you reveal them, because the upstream folders and IDs give them away.</p>
-    <div class="est-pair">
-      <div>
-        <label for="bench-pair-num">Your pair number</label>
-        <input id="bench-pair-num" type="number" min="1" step="1" inputmode="numeric" aria-describedby="bench-pair-out bench-pair-rule">
+    <div id="bench-activity">
+    <article class="card card--activity" aria-labelledby="bench-activity-h" style="margin-top:20px">
+      <h3 id="bench-activity-h" class="h-card">Benchmark Estimation</h3>
+      <p>Can you judge how much work an agent can complete on its own today? You test your judgement on two tasks from public coding benchmarks and see the published results only after you commit to an answer.</p>
+      <ol class="steps">
+        <li>Enter your pair number to get your two tasks, one for each round.</li>
+        <li>Run the task's setup commands and give your agent the starter prompt.</li>
+        <li>Read the agent's answer and probe it with follow-up questions, for about nine minutes.</li>
+        <li>Save your estimate: the minutes an experienced engineer would need, complexity, specification quality and how many published agent runs passed.</li>
+        <li>Repeat for round 2, then reveal both tasks when the facilitator calls it.</li>
+      </ol>
+      <div id="bench-prompt" class="bench-prompt-wrap">
+        <p class="label">Starter prompt</p>
+        <div class="bench-prompt bench-code" data-copy-src="prompt">
+          <blockquote><p data-prompt>Help us scope this task before anyone writes code. Read TASK.md (or instruction.md). Do not edit any file, do not search the web, and do not open README.md, task.toml, solution/, tests/ or any linked pull request. Then (1) list the files and functions involved, one line each; (2) describe what a complete solution must change; (3) name the two riskiest unknowns; (4) say how you would check the solution works. Keep the answer under 300 words.</p></blockquote>
+        </div>
       </div>
-      <p class="est-pair__out" id="bench-pair-out" aria-live="polite"></p>
+    </article>
+
+    <section class="panel" id="bench-tasks" aria-labelledby="bench-tasks-h" style="margin-top:20px">
+      <h3 id="bench-tasks-h" class="h-card">Your tasks</h3>
+      <noscript><p class="note">The task cards and estimate forms need JavaScript.</p></noscript>
+      <div class="est-pair">
+        <div>
+          <label for="bench-pair-num">Your pair number</label>
+          <input id="bench-pair-num" type="number" min="1" step="1" inputmode="numeric" aria-describedby="bench-pair-out">
+        </div>
+        <p class="est-pair__out" id="bench-pair-out" aria-live="polite"></p>
+      </div>
+      <div class="est-tabs" role="tablist" aria-label="Benchmark tasks" data-tabs></div>
+      <div data-panels></div>
+    </section>
+    <div class="sr-only" aria-live="polite" data-bench-live></div>
     </div>
-    <p class="note" id="bench-pair-rule">Pair <i>p</i> takes task ((<i>p</i> − 1) mod 6) + 1 in round 1 and task ((<i>p</i> + 2) mod 6) + 1 in round 2, so each pair meets two benchmarks.</p>
-    <div class="est-tabs" role="tablist" aria-label="Benchmark tasks" data-tabs></div>
-    <div data-panels></div>
-  </div>
 
-  <div class="bench-sub" id="bench-calibration">
-    <h4 class="bench-h">Your estimates against the ground truth</h4>
-    <p class="bench-p">Each revealed task with a published human time gets a row on a log scale, because the times run from under 15 minutes to 960. Terminal-Bench tasks compare with the task author's point estimate as log<sub>2</sub>(estimate ÷ point): +1 is twice as long, −1 half as long. SWE-bench Verified tasks count as inside the annotators' bucket, or else take the log<sub>2</sub> distance to the nearer bound.</p>
-    <div data-cal></div>
-    <p class="bench-p bench-p--after">Each revealed task with published agent results also gets a pair of bars: the share of runs you predicted would pass, and the share that did.</p>
-    <div data-cal-agent></div>
-    <p class="note">Tasks 5 and 6 come from SWE-Bench Pro, which publishes no per-task human time or agent results.</p>
-  </div>
-
-  <div class="bench-sub" id="bench-exit">
-    <h4 class="bench-h">Exit question</h4>
-    <div class="callout">
-      <p>Could you judge how much work an agent can complete on its own? Compare your agent predictions with the published results. Which of your three numbers (time, complexity, specification quality) best predicted whether the agents solved your two tasks, and what does that suggest about how you will choose work for an agent this term?</p>
+    <div style="margin-top:28px">
+      <h3 class="h-card">Plan for the hour</h3>
+      <ol class="plan">
+        <li><span class="plan__min">5 min</span><span>Retrieval opener <span class="tag">Active</span></span></li>
+        <li><span class="plan__min">5 min</span><span>Debrief on the courses <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">6 min</span><span>Where the frontier stands, and the rules for the agent <span class="tag">Passive</span></span></li>
+        <li><span class="plan__min">22 min</span><span>Two rounds of scoping and estimating in pairs <span class="tag">Interactive</span>, then <span class="tag">Constructive</span></span></li>
+        <li><span class="plan__min">15 min</span><span>Reveal and discussion <span class="tag">Passive</span>, then <span class="tag">Interactive</span></span></li>
+        <li><span class="plan__min">7 min</span><span>Exit question: which of your three numbers best predicted whether the agents solved your two tasks? <span class="tag">Constructive</span></span></li>
+      </ol>
+      <p class="note">Tags give each block's mode of engagement in the ICAP framework: passive, active, constructive or interactive.</p>
     </div>
-    <p class="bench-p bench-p--after">METR's chart above reduces an agent's reach to one number: the human minutes at which it succeeds half the time. The discussion tests that number task by task, on the four tasks with published agent results.</p>
-  </div>
 
-  <div class="bench-sub" id="bench-why">
-    <h4 class="bench-h">Why we estimate before we look</h4>
-    <p class="bench-p">Prediction before the reveal carries most of the learning. Crouch and colleagues found that students who only watched a physics demonstration understood the underlying concepts no better than students who never saw it, while students who predicted the outcome first showed significantly greater understanding [<a href="#bench-ref-crouch2004">1</a>]. Asking questions before instruction has a related benefit: prequestions before segments of an educational video improved later test performance on both the prequestioned and the non-prequestioned material [<a href="#bench-ref-carpenter2017">2</a>]. The estimate form plays the part of the prediction and the reveal plays the demonstration, so the page locks each estimate before any ground truth appears.</p>
-    <p class="bench-p">Calibration feedback follows the reveal. Hattie and Timperley conclude that feedback is among the strongest influences on learning, and that its type and the way it is given decide whether it helps [<a href="#bench-ref-hattie2007">3</a>]. In software estimation specifically, lessons-learned sessions on professionals' own estimates did not improve estimation accuracy, while feedback about other professionals' estimation performance produced more realistic uncertainty assessments than the same feedback about one's own [<a href="#bench-ref-jorgensen2009">4</a>]. The discussion therefore opens on the class distribution for each task, with every pair's estimate on one axis, before any pair examines its own error.</p>
-    <p class="bench-p">The wording of the estimate question draws on the planning fallacy: people underestimate their own task completion times, focusing on plans rather than past experience, while observers overestimate the completion times of others [<a href="#bench-ref-buehler1994">5</a>]. Asking about an experienced engineer new to the repository puts pairs in the observer's position and matches the ground-truth definitions. The activity also previews the idea behind METR's time horizon, which measures task difficulty by how long humans take [<a href="#bench-ref-kwa2025">6</a>]; your agent prediction and the reveal let you check whether human time and agent success point the same way on your two tasks.</p>
-    <ol class="bench-refs" aria-label="References">
-      <li id="bench-ref-crouch2004">1. Crouch, C., Fagen, A. P., Callan, J. P. and Mazur, E. (2004). Classroom demonstrations: Learning tools or entertainment? <i>American Journal of Physics</i>, 72(6), 835 to 838. <a href="https://doi.org/10.1119/1.1707018">doi:10.1119/1.1707018</a></li>
-      <li id="bench-ref-carpenter2017">2. Carpenter, S. K. and Toftness, A. R. (2017). The effect of prequestions on learning from video presentations. <i>Journal of Applied Research in Memory and Cognition</i>, 6(1), 104 to 109. <a href="https://doi.org/10.1016/j.jarmac.2016.07.014">doi:10.1016/j.jarmac.2016.07.014</a></li>
-      <li id="bench-ref-hattie2007">3. Hattie, J. and Timperley, H. (2007). The power of feedback. <i>Review of Educational Research</i>, 77(1), 81 to 112. <a href="https://doi.org/10.3102/003465430298487">doi:10.3102/003465430298487</a></li>
-      <li id="bench-ref-jorgensen2009">4. Jørgensen, M. and Gruschke, T. M. (2009). The impact of lessons-learned sessions on effort estimation and uncertainty assessments. <i>IEEE Transactions on Software Engineering</i>, 35(3), 368 to 383. <a href="https://doi.org/10.1109/TSE.2009.2">doi:10.1109/TSE.2009.2</a></li>
-      <li id="bench-ref-buehler1994">5. Buehler, R., Griffin, D. and Ross, M. (1994). Exploring the "planning fallacy": Why people underestimate their task completion times. <i>Journal of Personality and Social Psychology</i>, 67(3), 366 to 381. <a href="https://doi.org/10.1037/0022-3514.67.3.366">doi:10.1037/0022-3514.67.3.366</a></li>
-      <li id="bench-ref-kwa2025">6. Kwa, T., West, B., Becker, J. and others (2025). Measuring AI ability to complete long software tasks. arXiv:2503.14499. <a href="https://arxiv.org/abs/2503.14499">arxiv.org/abs/2503.14499</a></li>
-    </ol>
-  </div>
-  <div class="sr-only" aria-live="polite" data-bench-live></div>
-</section>
+    <div id="bench-boards" style="margin-top:28px">
+      <h3 class="h-card">Leaderboards</h3>
+      <div class="bench-boards">
+        <div>
+          <h4 class="label" id="bench-boards-h">Benchmark boards</h4>
+          <ul class="bench-links" aria-labelledby="bench-boards-h">
+            
+            <li><a class="link-row" href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">SWE-bench</span><span class="link-row__meta">SWE-bench Verified and its variants</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">SWE-Bench Pro</span><span class="link-row__meta">Scale's public and private sets</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Terminal-Bench</span><span class="link-row__meta">terminal tasks, by version</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://cognition.com/frontiercode" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">FrontierCode</span><span class="link-row__meta">Cognition's board, maintainer-style grading</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">METR time horizons</span><span class="link-row__meta">task length in human time at 50% success</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="label" id="bench-compare-h">Model comparisons</h4>
+          <ul class="bench-links" aria-labelledby="bench-compare-h">
+            
+            <li><a class="link-row" href="https://artificialanalysis.ai/models" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Artificial Analysis, models</span><span class="link-row__meta">intelligence, speed and price</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Artificial Analysis, coding agents</span><span class="link-row__meta">coding agent benchmarks and leaderboard</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://arena.ai/leaderboard/code/webdev" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena WebDev</span><span class="link-row__meta">WebDev leaderboard, formerly LMArena</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://arena.ai/leaderboard/chat/text/coding" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena, coding</span><span class="link-row__meta">Text Arena rankings for code</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://arena.ai/leaderboard/agent" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Arena, agents</span><span class="link-row__meta">Agent Arena: how often users confirm the task is done</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://epoch.ai/benchmarks" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Epoch AI</span><span class="link-row__meta">benchmarks and capabilities</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://openrouter.ai/rankings" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">OpenRouter</span><span class="link-row__meta">LLM usage rankings</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="link-row" href="https://www.vals.ai/benchmarks" target="_blank" rel="noopener noreferrer"><span class="link-row__text"><span class="link-row__title">Vals AI</span><span class="link-row__meta">benchmarks and leaderboards</span><span class="sr-only"> (opens in a new tab)</span></span><svg class="arrow arrow--ext" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1 11L11 1M11 1H4M11 1V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
 <script type="application/json" id="bench-data">
 {
   "fetchedAt": "2026-10-09",
@@ -1737,7 +1702,6 @@
   var SCOPE = doc.getElementById("bench-activity");
   if (!SCOPE) return;
   function $(sel) { return SCOPE.querySelector(sel); }
-  function $$(sel) { return SCOPE.querySelectorAll(sel); }
   var SVGNS = "http://www.w3.org/2000/svg";
   var DATA = null;
   try { DATA = JSON.parse(doc.getElementById("bench-data").textContent); } catch (e) { DATA = null; }
@@ -1827,8 +1791,6 @@
 
   /* ---------- formatting ---------- */
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  function fmtDate(iso) { var p = String(iso).split("-"); return parseInt(p[2], 10) + " " + MONTHS[parseInt(p[1], 10) - 1] + " " + p[0]; }
-  function fmtMonth(iso) { var p = String(iso).split("-"); return MONTHS[parseInt(p[1], 10) - 1] + " " + p[0]; }
   function group(s) { var parts = s.split("."); parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); return parts.join("."); }
   function fx(v, d) { return group(Number(v).toFixed(d)); }
   function fmtMin(m) {
@@ -1880,412 +1842,6 @@
   }
   var promptBox = $('[data-copy-src="prompt"]');
   if (promptBox) addCopy(promptBox, function () { return promptBox.querySelector("[data-prompt]").textContent; }, "starter prompt");
-
-  /* ---------- session plan ---------- */
-  var WHO = {
-    room: { label: "Room", cls: "bench-sseg--room" },
-    fac: { label: "Facilitator", cls: "bench-sseg--fac" },
-    pairs: { label: "Pairs", cls: "bench-sseg--pairs" },
-    ind: { label: "Individuals", cls: "bench-sseg--ind" }
-  };
-  var PLAN = [
-    { min: 5, who: "ind", clock: "0:00 to 5:00", what: "Retrieval opener. Three closed-book questions on this week's courses and the best-practices reading, answered on paper, then compared." },
-    { min: 5, who: "room", clock: "5:00 to 10:00", what: "What we tried in the courses: what worked, and what did not." },
-    { min: 4, who: "fac", clock: "10:00 to 14:00", what: "Framing. Put the session's question: can you judge how much work an agent can complete on its own today? Show the top-five chart and the frontier-over-time chart. Give the three caveats in one breath: Verified is retired, Pro's public set has broken tasks, and METR's page is frozen. Show FrontierCode's example task for what maintainer-style grading looks like." },
-    { min: 2, who: "fac", clock: "14:00 to 16:00", what: "Pairs and rules. Each pair opens its round-1 card. The agent may read and run code but must not edit files, search the web, or open `README.md`, `task.toml`, `solution/`, `tests/` or the linked pull request." },
-    { min: 9, who: "pairs", clock: "16:00 to 25:00", what: "Round 1 scoping. Run the setup command, give the agent the starter prompt, read its answer and probe it with follow-up questions." },
-    { min: 2, who: "pairs", clock: "25:00 to 27:00", what: "Round 1 submission: minutes, complexity, specification quality, the agent prediction and a one-line reason." },
-    { min: 9, who: "pairs", clock: "27:00 to 36:00", what: "Round 2 scoping on the second card." },
-    { min: 2, who: "pairs", clock: "36:00 to 38:00", what: "Round 2 submission. Both estimates are saved before anyone reveals." },
-    { min: 3, who: "fac", clock: "38:00 to 41:00", what: "Reveal. Pairs reveal their two tasks; the facilitator shows every pair's estimate per task on a log axis against the ground truth, with the agents' results beside the pairs' predictions." },
-    { min: 4, who: "room", clock: "41:00 to 45:00", what: "How far off were we? For each task, read the class median against the ground truth and the spread across pairs. On Verified tasks, count the pairs inside the annotators' bucket." },
-    { min: 4, who: "room", clock: "45:00 to 49:00", what: "Why? The pairs furthest from the ground truth on each side explain what they assumed. Compare Tasks 5 and 6 on patch size against the pairs' complexity scores." },
-    { min: 4, who: "room", clock: "49:00 to 53:00", what: "Could we judge what an agent can do alone? METR's time-horizon chart measures an agent's reach in human minutes; test that task by task. Set the two Terminal-Bench tasks side by side, then Tasks 1 and 2, on human time, agent results and the pairs' predictions. Then set what the reveal says about Task 2's tests beside the pairs' specification scores." },
-    { min: 5, who: "ind", clock: "53:00 to 58:00", what: "Exit question on the page." },
-    { min: 2, who: "fac", clock: "58:00 to 60:00", what: "Close." }
-  ];
-  function renderPlan() {
-    var track = $("[data-sbar]"), list = $("[data-plan]"), leg = $("[data-sbar-legend]");
-    if (!track || !list) return;
-    var total = PLAN.reduce(function (a, p) { return a + p.min; }, 0), byWho = {};
-    PLAN.forEach(function (p) {
-      byWho[p.who] = (byWho[p.who] || 0) + p.min;
-      var seg = el("span", { class: "bench-sseg " + WHO[p.who].cls + "" });
-      seg.style.flexBasis = "calc(" + (p.min / total * 100) + "% - 2px)";
-      track.appendChild(seg);
-      var sw = el("span", { class: "bench-legend__sw " + WHO[p.who].cls + "", "aria-hidden": "true" });
-      list.appendChild(el("li", null, [
-        el("span", { class: "bench-plan__time" }, [p.clock, el("br"), p.min + " min"]),
-        el("span", null, [
-          el("span", { class: "bench-plan__who" }, [sw, WHO[p.who].label]),
-          
-          " "
-        ].concat(rich(p.what)))
-      ]));
-    });
-    Object.keys(WHO).forEach(function (k) {
-      leg.appendChild(el("span", { class: "bench-legend__item" }, [
-        el("span", { class: "bench-legend__sw " + WHO[k].cls, "aria-hidden": "true" }),
-        WHO[k].label + " " + byWho[k] + " min"
-      ]));
-    });
-  }
-
-  /* ==========================================================================
-     Benchmark charts
-     ========================================================================== */
-  function warnIcon() {
-    return sv("svg", { viewBox: "0 0 12 12", "aria-hidden": "true", focusable: "false" }, [
-      sv("path", { d: "M6 1L11 10.5H1Z", fill: "none", stroke: "currentColor", "stroke-width": "1.3", "stroke-linejoin": "round" }),
-      sv("path", { d: "M6 4.5V7.2M6 8.6V8.7", fill: "none", stroke: "currentColor", "stroke-width": "1.3", "stroke-linecap": "round" })
-    ]);
-  }
-  function details(summaryText, content) {
-    return el("details", { class: "bench-details" }, [el("summary", { text: summaryText }), content]);
-  }
-  function table(caption, head, rows, numCols) {
-    numCols = numCols || [];
-    var t = el("table", { class: "bench-table" }, [
-      el("caption", { text: caption }),
-      el("thead", null, [el("tr", null, head.map(function (h) { return el("th", { scope: "col", text: h }); }))]),
-      el("tbody", null, rows.map(function (r) {
-        return el("tr", null, r.map(function (c, i) { return el("td", { class: numCols.indexOf(i) >= 0 ? "num" : null, text: c }); }));
-      }))
-    ]);
-    return el("div", { class: "bench-tablewrap", tabindex: "0", role: "region", "aria-label": caption }, [t]);
-  }
-  /* Rows of HTML labels with an inline SVG bar sized in percent of the track. */
-  function barRows(rows, scale) {
-    var ul = el("ul", { class: "bench-rows" });
-    rows.forEach(function (r) {
-      var pct = function (v) { return Math.max(0, Math.min(100, v / scale.max * 100)); };
-      var s = sv("svg", { class: "bench-row__svg", height: "20", "aria-hidden": "true", focusable: "false" });
-      scale.grid.forEach(function (g) { s.appendChild(sv("line", { class: "bench-grid-line", x1: pct(g) + "%", x2: pct(g) + "%", y1: 0, y2: 20 })); });
-      if (r.lo !== undefined && r.hi !== undefined) {
-        var lo = pct(r.lo), hi = pct(r.hi);
-        s.appendChild(sv("rect", { class: "bench-ci", x: lo + "%", width: Math.max(0.4, hi - lo) + "%", y: 1, height: 18, rx: 1 }));
-      }
-      var w = pct(r.value);
-      s.appendChild(sv("rect", { class: "bench-bar" + (r.accent ? " bench-bar--accent" : ""), x: 0, y: 4, width: w + "%", height: 12, rx: 2 }));
-      s.appendChild(sv("rect", { class: "bench-bar" + (r.accent ? " bench-bar--accent" : ""), x: 0, y: 4, width: Math.min(w, 2) + "%", height: 12 }));
-      s.appendChild(sv("line", { class: "bench-base-line", x1: 0, x2: 0, y1: 0, y2: 20 }));
-      if (scale.ref !== undefined) s.appendChild(sv("line", { class: "bench-ref-line", x1: pct(scale.ref) + "%", x2: pct(scale.ref) + "%", y1: 0, y2: 20 }));
-      ul.appendChild(el("li", { class: "bench-row" }, [
-        el("div", { class: "bench-row__label" }, [
-          r.rank !== undefined ? el("span", { class: "bench-row__rank", text: String(r.rank) }) : null,
-          el("span", { class: "bench-row__name", text: r.name }),
-          r.meta ? el("span", { class: "bench-row__meta", text: r.meta }) : null
-        ]),
-        el("div", { class: "bench-row__plot" }, [s, el("span", { class: "bench-row__val", text: r.valueText })])
-      ]));
-    });
-    var ax = sv("svg", { class: "bench-axis__svg", height: "16", "aria-hidden": "true", focusable: "false" });
-    scale.ticks.forEach(function (t, i) {
-      var p = t.v / scale.max * 100;
-      var anchor = p <= 0 ? "start" : (p >= 100 ? "end" : "middle");
-      ax.appendChild(sv("text", { class: "bench-tick", x: p + "%", y: 12, "text-anchor": anchor, text: t.label }));
-    });
-    var axis = el("div", { class: "bench-axis", "aria-hidden": "true" }, [ax, el("span", { class: "bench-axis__unit" })]);
-    var titleEl = el("div", { class: "bench-axis__title axis-title axis-title--x", text: scale.axisTitle || "Percent" });
-    return el("div", null, [ul, axis, titleEl]);
-  }
-
-  var PCT_SCALE = { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "%", axisTitle: "Percent" };
-  var PANEL_META = {
-    "swe-bench-verified": {
-      title: "SWE-bench Verified", tags: ["Saturated", "Contaminated", "Retired by OpenAI"],
-      newest: "Newest entry on the board: 26 Feb 2026.",
-      axisTitle: "Percent resolved",
-      row: function (e) {
-        var att = /2\+/.test(e.attempts) ? "2+ attempts" : (/- 2$/.test(e.attempts) ? "2 attempts" : "1 attempt");
-        return { name: e.system, meta: fmtDate(e.date) + " · " + att, value: e.score, valueText: fx(e.score, 1) + "%" };
-      },
-      table: function (e) { return [String(e.rank), e.system, fx(e.score, 1), e.attempts.replace("Attempts - ", ""), fmtDate(e.date)]; },
-      head: ["Rank", "System", "% resolved", "Attempts", "Date"]
-    },
-    "swe-bench-pro-public": {
-      title: "SWE-Bench Pro, public set (v1, 731 tasks)", tags: ["About 30% of tasks broken", "Partial board"],
-      newest: "Newest entry: 9 Jul 2026. No GPT-6, Claude 5 series or Fable model is on this board.",
-      axisTitle: "Percent resolved",
-      row: function (e) {
-        return { name: e.system.replace(/\*$/, ""), meta: e.harness + " · ± " + fx(e.ci95, 1) + " · added " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
-      },
-      table: function (e) { return [String(e.rank), e.system.replace(/\*$/, ""), e.harness, fx(e.score, 1), "± " + fx(e.ci95, 1), fmtDate(e.date)]; },
-      head: ["Rank", "Model", "Harness", "% resolved", "95% CI", "Added"]
-    },
-    "terminal-bench-4": {
-      title: "Terminal-Bench 4.0", tags: ["Compare within a version only"],
-      newest: "Board read 9 Oct 2026; best reasoning effort per model and agent.",
-      axisTitle: "Percent passed",
-      row: function (e) {
-        return { name: e.model + " in " + e.agent, meta: e.reasoningEffort + " effort · ± " + fx(e.ci95, 1) + " · " + fmtDate(e.date), value: e.score, lo: e.score - e.ci95, hi: e.score + e.ci95, valueText: fx(e.score, 1) + "%" };
-      },
-      table: function (e) { return [String(e.rank), e.model, e.agent, e.reasoningEffort, fx(e.score, 1), "± " + fx(e.ci95, 1), fmtDate(e.date)]; },
-      head: ["Rank", "Model", "Agent", "Effort", "% passed", "95% CI", "Date"]
-    },
-    "frontiercode-main": {
-      title: "FrontierCode 1.1 Main (Cognition)", tags: ["Private tasks", "Vendor-run board"],
-      newest: "Dates from the board's changelog.",
-      row: function (e) {
-        var when = /launch/.test(e.dateMeaning || "") ? "on the board since launch, " + fmtDate(e.date) : "added " + fmtDate(e.date);
-        return { name: e.system, meta: e.reasoningEffort + " effort · pass rate " + fx(e.passRate, 1) + "% · " + when, value: e.score, valueText: fx(e.score, 1) };
-      },
-      table: function (e) { return [String(e.rank), e.system, e.reasoningEffort, fx(e.score, 1), fx(e.passRate, 1), fmtDate(e.date)]; },
-      head: ["Rank", "Model", "Effort", "Score", "Pass rate %", "Date"],
-      scale: { max: 100, grid: [25, 50, 75], ticks: [{ v: 0, label: "0" }, { v: 50, label: "50" }, { v: 100, label: "100" }], unit: "score", axisTitle: "Rubric score out of 100" }
-    },
-    "metr-time-horizon": {
-      title: "METR 50% time horizon (TH 1.1)", tags: ["Frozen since 8 Sep 2026", "Top entry above reliable range"],
-      newest: "Grey band: 95% CI. Dashed line: 960 min (16 h), the longest horizon METR measures reliably.",
-      row: function (e) {
-        return { name: e.system, meta: "95% CI " + fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1) + " min · released " + fmtDate(e.date), value: e.score, lo: e.ciLow, hi: e.ciHigh, valueText: fx(e.score, 1) };
-      },
-      table: function (e) { return [String(e.rank), e.system, fx(e.score, 1), fx(e.ciLow, 1) + " to " + fx(e.ciHigh, 1), fmtDate(e.date)]; },
-      head: ["Rank", "Model", "p50 (min)", "95% CI (min)", "Released"],
-      scale: { max: 4000, grid: [2000], ref: 960, ticks: [{ v: 0, label: "0" }, { v: 2000, label: "2,000" }, { v: 4000, label: "4,000" }], unit: "min", axisTitle: "p50 human minutes" }
-    }
-  };
-
-  function renderPanels() {
-    var host = $("[data-bench-panels]");
-    if (!host || !DATA) return;
-    DATA.charts.topScores.benchmarks.forEach(function (b) {
-      var m = PANEL_META[b.id];
-      if (!m) return;
-      var src = sourceById(b.sourceId);
-      var hid = "bp-" + b.id;
-      var panel = el("section", { class: "bench-panel", "aria-labelledby": hid }, [
-        el("h5", { class: "bench-panel__title", id: hid, text: m.title }),
-        el("p", { class: "bench-panel__metric", text: b.metric }),
-        el("p", { class: "bench-panel__src" }, [
-          "Read " + fmtDate(src && src.fetchedAt || DATA.fetchedAt) + " · ",
-          src ? extLink(src.url, "source") : null
-        ]),
-        el("p", { class: "bench-tags" }, [el("span", { class: "sr-only", text: "Caveats: " })].concat(m.tags.map(function (t, i) { return el("span", { class: "bench-tag" }, [warnIcon(), t + (i < m.tags.length - 1 ? "" : ""), el("span", { class: "sr-only", text: i < m.tags.length - 1 ? ";" : "." })]); }))),
-        barRows(b.entries.map(function (e) { var r = m.row(e); r.rank = e.rank; return r; }), m.scale || { max: PCT_SCALE.max, grid: PCT_SCALE.grid, ticks: PCT_SCALE.ticks, unit: PCT_SCALE.unit, axisTitle: m.axisTitle || "Percent" }),
-        el("p", { class: "meta", style: "margin-top:6px", text: m.newest }),
-        el("ul", { class: "bench-notes", "aria-label": "Notes from the sources" }, b.caveats.map(function (c) { return el("li", { text: c }); })),
-        el("div", { class: "bench-panel__foot" }, [details("Show as table", table(m.title + ", read " + fmtDate(DATA.fetchedAt), m.head, b.entries.map(m.table)))])
-      ]);
-      host.appendChild(panel);
-    });
-    host.appendChild(el("section", { class: "bench-panel bench-panel--note", "aria-labelledby": "bp-note" }, [
-      el("h5", { class: "bench-panel__title", id: "bp-note", text: "Read these numbers with care" }),
-      el("p", { style: "margin-top:8px", text: "The bars rank AI systems on published boards. They are course material, not a target for you." }),
-      el("p", { text: "Some figures appear on no board: OpenAI reports 80.9% on Verified and 80.3% on the Pro public split. They stay in the notes and are never drawn as bars." }),
-      el("p", null, ["Passing tests is not the same as useful work. METR found that maintainers would not merge about half of the test-passing Verified patches it reviewed. ", extLink("https://metr.org/notes/2026-03-10-many-swe-bench-passing-prs-would-not-be-merged-into-main/", "METR note, 10 Mar 2026")])
-    ]));
-  }
-
-  /* ---------- time charts (SVG at the container's pixel width) ---------- */
-  var TIME_RENDERERS = [];
-  function figShell(host, title, sub, caption) {
-    var plot = el("div", { class: "bench-fig__plot" });
-    var tip = el("div", { class: "bench-tip", hidden: true, "aria-hidden": "true" });
-    var frame = el("div", { class: "bench-fig__frame" }, [
-      el("p", { class: "bench-fig__title", text: title }),
-      sub ? el("p", { class: "bench-fig__sub", text: sub }) : null,
-      plot, tip
-    ]);
-    var fig = el("figure", { class: "bench-fig" }, [frame]);
-    if (caption) fig.appendChild(el("figcaption", null, caption));
-    host.appendChild(fig);
-    return { fig: fig, frame: frame, plot: plot, tip: tip };
-  }
-  function yearTicks(t0, t1, every) {
-    var out = [], y0 = new Date(t0).getUTCFullYear(), y1 = new Date(t1).getUTCFullYear();
-    for (var y = y0; y <= y1; y++) {
-      var t = Date.UTC(y, 0, 1);
-      if (t >= t0 && t <= t1 && (y - y0) % every === 0) out.push({ t: t, label: String(y) });
-    }
-    return out;
-  }
-  function utc(iso) { var p = iso.split("-"); return Date.UTC(+p[0], +p[1] - 1, +p[2]); }
-
-  function renderMetr() {
-    var host = $("[data-bench-metr]");
-    if (!host || !DATA) return;
-    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "metr-p50-sota"; })[0];
-    if (!series) return;
-    var pts = series.points;
-    var dt = series.doublingTimeDays.fromIncluding2023;
-    var src = sourceById(series.sourceId);
-    var shell = figShell(host, "METR 50% time horizon of the models METR flags as state of the art",
-      "Minutes of expert human time at which the model is predicted to succeed half the time, by release date. Log scale; whiskers are 95% CIs.",
-      [
-        "METR's data file gives a doubling time of " + fx(dt.point_estimate, 1) + " days for models from 2023 onwards (95% CI " + fx(dt.ci_low, 1) + " to " + fx(dt.ci_high, 1) + "), excluding points above 16 hours. No trend line is drawn here. ",
-        series.caveats.join(" "), " ",
-        src ? extLink(src.url, "METR time horizons") : null
-      ]);
-    var tableRows = pts.map(function (p) { return [p.model, fmtDate(p.releaseDate), fx(p.p50Minutes, 1), fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1)]; });
-    shell.fig.appendChild(details("Show as table", table("METR 50% time horizon, state-of-the-art models (TH 1.1)", ["Model", "Released", "p50 (min)", "95% CI (min)"], tableRows, [2, 3])));
-    var readout = el("p", { class: "sr-only", "aria-live": "polite" });
-    shell.frame.appendChild(readout);
-
-    var active = -1;
-    function draw() {
-      var W = shell.plot.clientWidth;
-      if (!W) return;
-      var narrow = W < 520;
-      var H = narrow ? 280 : 330;
-      var m = { l: 52, r: 12, t: 22, b: 42 };
-      var t0 = Date.UTC(2019, 0, 1), t1 = Date.UTC(2026, 11, 31);
-      var yLo = 0.05, yHi = 6000;
-      var pw = W - m.l - m.r, ph = H - m.t - m.b;
-      function X(t) { return m.l + (t - t0) / (t1 - t0) * pw; }
-      function Y(v) { var c = Math.max(v, yLo); return m.t + (1 - (log10(c) - log10(yLo)) / (log10(yHi) - log10(yLo))) * ph; }
-      var svg = sv("svg", { width: W, height: H, role: "img", tabindex: "0",
-        "aria-label": "METR 50% time horizon from GPT-2 in February 2019 at 0.1 minutes to Claude Mythos Preview in April 2026 at 1,044.8 minutes, on a log scale. Use the left and right arrow keys to step through the " + pts.length + " models; the table below lists every value." });
-      shell.plot.textContent = "";
-      shell.plot.appendChild(svg);
-      function clampLabel(t) {
-        try {
-          var bb = t.getBBox(), x = parseFloat(t.getAttribute("x"));
-          if (bb.x < 2) t.setAttribute("x", x + (2 - bb.x));
-          else if (bb.x + bb.width > W - 2) t.setAttribute("x", x - (bb.x + bb.width - (W - 2)));
-        } catch (e) {}
-      }
-      [0.1, 1, 10, 100].forEach(function (g) {
-        svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
-        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: group(String(g)) }));
-      });
-      svg.appendChild(sv("text", { class: "axis-title", transform: "rotate(-90)", x: -(m.t + ph / 2), y: 14, "text-anchor": "middle", text: "p50 human minutes, log scale" }));
-      svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: m.t + ph, y2: m.t + ph }));
-      yearTicks(t0, t1, narrow ? 2 : 1).forEach(function (yt) {
-        svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 22, "text-anchor": "middle", text: yt.label }));
-      });
-      svg.appendChild(sv("text", { class: "axis-title", x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", text: "Release year" }));
-      svg.appendChild(sv("line", { class: "bench-ref-line", x1: m.l, x2: m.l + pw, y1: Y(960), y2: Y(960) }));
-      svg.appendChild(sv("text", { class: "bench-label bench-label--muted", x: m.l + 4, y: narrow ? Y(960) + 15 : Y(960) - 6, text: narrow ? "960 min: reliable limit" : "960 min (16 h): METR's reliable limit" }));
-      var dots = [];
-      pts.forEach(function (p, i) {
-        var x = X(utc(p.releaseDate));
-        var yTop = Y(p.ciHigh), yBot = Y(p.ciLow);
-        svg.appendChild(sv("line", { class: "bench-whisker", x1: x, x2: x, y1: yTop, y2: yBot }));
-        svg.appendChild(sv("line", { class: "bench-whisker", x1: x - 3, x2: x + 3, y1: yTop, y2: yTop }));
-        if (p.ciLow > yLo) svg.appendChild(sv("line", { class: "bench-whisker", x1: x - 3, x2: x + 3, y1: yBot, y2: yBot }));
-        var d = sv("circle", { class: "bench-dot" + (i === active ? " is-active" : ""), cx: x, cy: Y(p.p50Minutes), r: 4.5 });
-        dots.push({ x: x, y: Y(p.p50Minutes), node: d });
-      });
-      dots.forEach(function (d) { svg.appendChild(d.node); });
-      var labelIdx = narrow ? [0, pts.length - 1] : [0, 3, pts.length - 1];
-      labelIdx.forEach(function (i) {
-        var p = pts[i], d = dots[i], last = i === pts.length - 1, first = i === 0;
-        var pos = first ? { x: d.x - 4, y: d.y - 12, a: "start" } : last ? { x: d.x - 8, y: d.y - 10, a: "end" } : { x: d.x - 9, y: d.y + 4, a: "end" };
-        var lab = sv("text", { class: "bench-label", x: pos.x, y: pos.y, "text-anchor": pos.a, text: (narrow && last ? p.model.replace(/^Claude /, "") : p.model) + ", " + fx(p.p50Minutes, 1) + " min" });
-        svg.appendChild(lab);
-        clampLabel(lab);
-      });
-      var hit = sv("rect", { class: "bench-hit", x: m.l, y: 0, width: pw, height: H });
-      svg.appendChild(hit);
-      function show(i, fromKey) {
-        active = i;
-        dots.forEach(function (d, j) { d.node.setAttribute("class", "bench-dot" + (j === i ? " is-active" : "")); });
-        var p = pts[i], d = dots[i];
-        shell.tip.textContent = "";
-        append(shell.tip, [el("strong", { text: fx(p.p50Minutes, 1) + " min" }), p.model, el("br"), "Released " + fmtDate(p.releaseDate), el("br"), "95% CI " + fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1) + " min"]);
-        shell.tip.hidden = false;
-        var fr = shell.frame.getBoundingClientRect(), pr = shell.plot.getBoundingClientRect();
-        var left = pr.left - fr.left + d.x + 12, top = pr.top - fr.top + d.y - 20;
-        var tw = shell.tip.offsetWidth || 200;
-        if (left + tw > fr.width - 8) left = pr.left - fr.left + d.x - tw - 12;
-        shell.tip.style.left = Math.max(4, left) + "px";
-        shell.tip.style.top = Math.max(4, top) + "px";
-        if (fromKey) readout.textContent = p.model + ", released " + fmtDate(p.releaseDate) + ", " + fx(p.p50Minutes, 1) + " minutes, 95% CI " + fx(p.ciLow, 1) + " to " + fx(p.ciHigh, 1) + ".";
-      }
-      function hide() { active = -1; shell.tip.hidden = true; dots.forEach(function (d) { d.node.setAttribute("class", "bench-dot"); }); }
-      svg.addEventListener("pointermove", function (ev) {
-        var r = svg.getBoundingClientRect(), px = ev.clientX - r.left, py = ev.clientY - r.top, best = 0, bd = Infinity;
-        dots.forEach(function (d, j) { var dd = Math.pow(d.x - px, 2) + Math.pow((d.y - py) * 0.5, 2); if (dd < bd) { bd = dd; best = j; } });
-        show(best, false);
-      });
-      svg.addEventListener("pointerleave", hide);
-      svg.addEventListener("blur", hide);
-      svg.addEventListener("keydown", function (ev) {
-        var k = ev.key, i = active;
-        if (k === "ArrowRight" || k === "ArrowUp") i = Math.min(pts.length - 1, i + 1);
-        else if (k === "ArrowLeft" || k === "ArrowDown") i = Math.max(0, i < 0 ? 0 : i - 1);
-        else if (k === "Home") i = 0;
-        else if (k === "End") i = pts.length - 1;
-        else if (k === "Escape") { hide(); return; }
-        else return;
-        ev.preventDefault();
-        show(i, true);
-      });
-    }
-    TIME_RENDERERS.push(draw);
-    draw();
-  }
-
-  function renderSwev() {
-    var host = $("[data-bench-swev]");
-    if (!host || !DATA) return;
-    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "swev-record"; })[0];
-    if (!series) return;
-    var pts = series.points, first = pts[0], last = pts[pts.length - 1];
-    var src = sourceById(series.sourceId);
-    var shell = figShell(host, "SWE-bench Verified: board record by submission date", "% of 500 tasks resolved, from " + fx(first.score, 1) + "% (" + fmtMonth(first.date) + ") to " + fx(last.score, 1) + "% (" + fmtMonth(last.date) + "). Dotted: no new record up to the newest entry, 26 Feb 2026.",
-      [series.caveats.join(" "), " ", src ? extLink(src.url, "swebench.com") : null]);
-    shell.fig.appendChild(details("Show as table", table("SWE-bench Verified board records", ["Date", "% resolved", "System"], pts.map(function (p) { return [fmtDate(p.date), fx(p.score, 1), p.system]; }), [1])));
-    function draw() {
-      var W = shell.plot.clientWidth;
-      if (!W) return;
-      var H = 220, m = { l: 48, r: 12, t: 16, b: 42 };
-      var t0 = Date.UTC(2023, 8, 1), t1 = Date.UTC(2026, 3, 1);
-      var pw = W - m.l - m.r, ph = H - m.t - m.b;
-      function X(t) { return m.l + (t - t0) / (t1 - t0) * pw; }
-      function Y(v) { return m.t + (1 - v / 100) * ph; }
-      var svg = sv("svg", { width: W, height: H, role: "img", "aria-label": "SWE-bench Verified board record rising in steps from " + fx(first.score, 1) + "% in " + fmtMonth(first.date) + " to " + fx(last.score, 1) + "% in " + fmtMonth(last.date) + ", with no new record since." });
-      [25, 50, 75, 100].forEach(function (g) {
-        svg.appendChild(sv("line", { class: "bench-grid-line", x1: m.l, x2: m.l + pw, y1: Y(g), y2: Y(g) }));
-        svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(g) + 4, "text-anchor": "end", text: String(g) }));
-      });
-      svg.appendChild(sv("text", { class: "axis-title", transform: "rotate(-90)", x: -(m.t + ph / 2), y: 14, "text-anchor": "middle", text: "Percent resolved" }));
-      svg.appendChild(sv("line", { class: "bench-base-line", x1: m.l, x2: m.l + pw, y1: Y(0), y2: Y(0) }));
-      svg.appendChild(sv("text", { class: "bench-tick", x: m.l - 6, y: Y(0) + 4, "text-anchor": "end", text: "0" }));
-      yearTicks(t0, t1, 1).forEach(function (yt) { svg.appendChild(sv("text", { class: "bench-tick", x: X(yt.t), y: H - 22, "text-anchor": "middle", text: yt.label })); });
-      svg.appendChild(sv("text", { class: "axis-title", x: m.l + pw / 2, y: H - 6, "text-anchor": "middle", text: "Submission date" }));
-      var d = "";
-      pts.forEach(function (p, i) {
-        var x = X(utc(p.date)), y = Y(p.score);
-        if (i === 0) d += "M" + x + " " + y;
-        else d += "H" + x + "V" + y;
-      });
-      svg.appendChild(sv("path", { class: "bench-line", d: d }));
-      var xl = X(utc(last.date)), xe = X(utc("2026-02-26"));
-      svg.appendChild(sv("path", { class: "bench-line bench-line--ext", d: "M" + xl + " " + Y(last.score) + "H" + xe }));
-      svg.appendChild(sv("circle", { class: "bench-dot", cx: X(utc(first.date)), cy: Y(first.score), r: 4.5 }));
-      svg.appendChild(sv("circle", { class: "bench-dot", cx: xl, cy: Y(last.score), r: 4.5 }));
-      svg.appendChild(sv("text", { class: "bench-label", x: X(utc(first.date)), y: Y(first.score) - 10, "text-anchor": "middle", text: fx(first.score, 1) + "%" }));
-      svg.appendChild(sv("text", { class: "bench-label", x: xl - 8, y: Y(last.score) - 10, "text-anchor": "end", text: fx(last.score, 1) + "%, " + fmtMonth(last.date) }));
-      shell.plot.textContent = "";
-      shell.plot.appendChild(svg);
-    }
-    TIME_RENDERERS.push(draw);
-    draw();
-  }
-
-  function renderTbVersions() {
-    var host = $("[data-bench-tbv]");
-    if (!host || !DATA) return;
-    var series = DATA.charts.frontierOverTime.series.filter(function (s) { return s.id === "terminal-bench-versions"; })[0];
-    if (!series) return;
-    var tb3 = sourceById("tb3-blog"), lb = sourceById("tb-leaderboard");
-    var host2 = el("figure", { class: "bench-fig" });
-    var frame = el("div", { class: "bench-fig__frame" }, [
-      el("p", { class: "bench-fig__title", text: "Terminal-Bench: top score at each version" }),
-      el("p", { class: "bench-fig__sub", text: "Each version is a different task set, so the bars are not a trend." })
-    ]);
-    var rows = series.points.map(function (p) {
-      var meta = p.version === "2.1" ? "best of the models compared in the 3.0 post" : (p.version === "3.0" ? "3.0 release post" : "leaderboard, " + fmtDate(p.date));
-      return { name: "Version " + p.version + ": " + p.system, meta: meta, value: p.score, valueText: fx(p.score, 1) + "%" };
-    });
-    frame.appendChild(barRows(rows, { max: PCT_SCALE.max, grid: PCT_SCALE.grid, ticks: PCT_SCALE.ticks, unit: PCT_SCALE.unit, axisTitle: "Percent passed" }));
-    host2.appendChild(frame);
-    host2.appendChild(el("figcaption", null, [series.caveats.join(" ") + " Version 4.0 removed eight tasks, two of them for saturation. ", tb3 ? extLink(tb3.url, "3.0 post") : null, " · ", lb ? extLink(lb.url, "leaderboard") : null]));
-    host2.appendChild(details("Show as table", table("Top Terminal-Bench score by version", ["Version", "System", "% passed", "Reported"], series.points.map(function (p) { return [p.version, p.system, fx(p.score, 1), p.dateMeaning]; }), [2])));
-    host.appendChild(host2);
-  }
 
   /* ==========================================================================
      Tasks, estimates and reveal
@@ -2422,17 +1978,17 @@
     var u = UI[id] = { task: t };
     var card = el("article", { class: "est-card", "aria-labelledby": "est-title-" + n });
     card.appendChild(el("div", { class: "est-card__label" }, [el("span", { class: "label label--ink", text: "Task " + n + " · " + t.benchmark })]));
-    card.appendChild(el("h5", { class: "est-card__title", id: "est-title-" + n, text: t.title }));
+    card.appendChild(el("h4", { class: "est-card__title", id: "est-title-" + n, text: t.title }));
     card.appendChild(el("p", { class: "est-card__id" }, ["Course ID ", el("code", { text: id }), " · repository " + t.repo]));
-    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "The task" }), el("p", null, rich(txt.summary || ""))]));
-    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "What to look at first" }), el("p", null, rich(txt.look || ""))]));
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h5", { text: "The task" }), el("p", null, rich(txt.summary || ""))]));
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h5", { text: "What to look at first" }), el("p", null, rich(txt.look || ""))]));
     var copyText = t.openLocally + (txt.extra ? "\n" + txt.extra : "");
     var shown = commandLines(t.openLocally) + (txt.extra ? "\n" + txt.extra : "");
     var codeBox = el("div", { class: "bench-code" }, [el("pre", null, [el("code", { text: shown })])]);
     addCopy(codeBox, function () { return copyText; }, "setup commands for Task " + n);
-    card.appendChild(el("div", { class: "est-card__block" }, [el("h6", { text: "Open it locally" }), codeBox, el("p", { class: "est-hint", style: "margin-top:6px" }, rich(txt.after || ""))]));
+    card.appendChild(el("div", { class: "est-card__block" }, [el("h5", { text: "Open it locally" }), codeBox, el("p", { class: "est-hint", style: "margin-top:6px" }, rich(txt.after || ""))]));
     card.appendChild(el("div", { class: "est-card__block" }, [
-      el("h6", { text: "Statement" }),
+      el("h5", { text: "Statement" }),
       linkRow(t.statementUrl, "Read", t.statementUrl.indexOf("/issues/") > 0 ? "The issue on GitHub" : "instruction.md on GitHub", t.statementNote)
     ]));
     card.appendChild(buildForm(t, u));
@@ -2458,8 +2014,7 @@
   function buildForm(t, u) {
     var n = t.order;
     var form = el("form", { class: "est-form", novalidate: true, "aria-labelledby": "est-form-h-" + n });
-    form.appendChild(el("h6", { class: "est-form__h", id: "est-form-h-" + n, text: "Your pair's estimate" }));
-    form.appendChild(el("p", { class: "est-form__intro", text: "Save it once your ten minutes are up. You can change it until you reveal the answer." }));
+    form.appendChild(el("h5", { class: "est-form__h", id: "est-form-h-" + n, text: "Your pair's estimate" }));
 
     var minId = "est-min-" + n;
     u.min = el("input", { type: "number", id: minId, min: "1", step: "any", inputmode: "decimal", "aria-describedby": minId + "-as " + minId + "-err" });
@@ -2489,7 +2044,7 @@
       ]));
     } else {
       u.agent = null;
-      form.appendChild(el("div", { class: "est-field" }, [el("p", { class: "est-noagent", text: "No per-task agent results are published for this benchmark, so this task has no agent prediction." })]));
+      form.appendChild(el("div", { class: "est-field" }, [el("p", { class: "est-noagent", text: "This benchmark publishes no per-task agent results." })]));
     }
 
     var rId = "est-reason-" + n;
@@ -2497,29 +2052,25 @@
     u.reasonCount = el("p", { class: "est-hint", id: rId + "-count", text: "0 of 200 characters" });
     form.appendChild(el("div", { class: "est-field est-reason" }, [el("label", { for: rId, text: "One-line reason" }), u.reason, u.reasonCount]));
 
-    var pId = "est-pair-" + n;
-    u.pair = el("input", { type: "text", id: pId, maxlength: "40", autocomplete: "off", "aria-describedby": pId + "-hint" });
-    form.appendChild(el("div", { class: "est-field est-pairid" }, [el("label", { for: pId, text: "Pair ID" }), u.pair, el("p", { class: "est-hint", id: pId + "-hint", text: "The number the facilitator gave your pair. Leave it blank if you are working alone." })]));
 
     u.save = el("button", { type: "submit", class: "bench-btn bench-btn--primary", text: "Save estimate" });
     u.revealBtn = el("button", { type: "button", class: "bench-btn", "aria-expanded": "false", "aria-controls": "est-confirm-" + n, "aria-describedby": "est-wait-" + n, text: "Reveal the answer" });
     u.status = el("p", { class: "est-status" });
     u.locked = el("p", { class: "est-locked", hidden: true });
     form.appendChild(el("div", { class: "est-actions" }, [u.save, u.revealBtn, u.status, u.locked]));
-    u.wait = el("p", { class: "est-hint est-wait", id: "est-wait-" + n, text: "In the session, wait for the facilitator's reveal after both rounds are saved. Revealing locks this estimate." });
+    u.wait = el("p", { class: "est-hint est-wait", id: "est-wait-" + n, text: "In the session, reveal when the facilitator calls it." });
     form.appendChild(u.wait);
 
     var go = el("button", { type: "button", class: "bench-btn bench-btn--primary", text: "Reveal and lock" });
     var cancel = el("button", { type: "button", class: "bench-linkbtn", text: "Cancel" });
     u.confirm = el("div", { class: "est-confirm", id: "est-confirm-" + n, role: "group", "aria-labelledby": "est-confirm-t-" + n, hidden: true }, [
-      el("p", { id: "est-confirm-t-" + n, text: "Revealing shows the published answer for Task " + n + " and locks your estimate: you cannot change it afterwards." }),
+      el("p", { id: "est-confirm-t-" + n, text: "Revealing shows the published answer for Task " + n + " and locks your estimate." }),
       el("div", { class: "est-confirm__btns" }, [go, cancel])
     ]);
     form.appendChild(u.confirm);
 
     u.min.addEventListener("input", function () { u.editing = true; updateMinAs(u); updateDirty(u); });
     u.reason.addEventListener("input", function () { u.editing = true; u.reasonCount.textContent = u.reason.value.length + " of 200 characters"; updateDirty(u); });
-    u.pair.addEventListener("input", function () { u.editing = true; updateDirty(u); });
     if (u.agent) u.agent.addEventListener("input", function () { u.editing = true; updateDirty(u); });
     form.addEventListener("change", function (e) { if (e.target && e.target.type === "radio") { u.editing = true; updateDirty(u); } });
     form.addEventListener("submit", function (e) { e.preventDefault(); save(t, u); });
@@ -2543,7 +2094,7 @@
     u.minAs.textContent = u.min.value.trim() !== "" && isFinite(v) && v >= 60 ? "= " + fmtMin(v).replace(/^.* min \(/, "").replace(/\)$/, "") : "";
   }
   function formValues(u) {
-    return { minutes: u.min.value.trim(), cx: radioVal(u.cx), sq: radioVal(u.sq), reason: u.reason.value.trim(), pair: u.pair.value.trim(), agent: u.agent ? u.agent.value.trim() : "" };
+    return { minutes: u.min.value.trim(), cx: radioVal(u.cx), sq: radioVal(u.sq), reason: u.reason.value.trim(), agent: u.agent ? u.agent.value.trim() : "" };
   }
   /* A blank field, null and a missing field (estimates saved before the prediction existed) all read as "". */
   function agentText(v) { return v === null || v === undefined || v === "" ? "" : String(Number(v)); }
@@ -2551,7 +2102,7 @@
     var e = estimateOf(state(), u.task.taskId);
     if (!e) return false;
     var f = formValues(u);
-    return Number(f.minutes) !== e.estimateMinutes || f.cx !== e.complexity || f.sq !== e.specQuality || f.reason !== (e.reason || "") || f.pair !== (e.pairId || "") ||
+    return Number(f.minutes) !== e.estimateMinutes || f.cx !== e.complexity || f.sq !== e.specQuality || f.reason !== (e.reason || "") ||
       (!!u.agent && agentText(f.agent) !== agentText(e.agentPassPredicted));
   }
   function updateDirty(u) {
@@ -2576,7 +2127,7 @@
     }
     if (!minOk) bad = u.min; else if (!f.cx) bad = u.cx.querySelector("input"); else if (!f.sq) bad = u.sq.querySelector("input"); else if (!agentOk) bad = u.agent;
     if (bad) { bad.focus(); announce("The estimate was not saved. " + (!minOk ? u.minErr.textContent : (!f.cx ? u.cxErr.textContent : (!f.sq ? u.sqErr.textContent : u.agentErr.textContent)))); return; }
-    var ok = P.addEstimate({ taskId: t.taskId, estimateMinutes: mins, complexity: f.cx, specQuality: f.sq, reason: f.reason.slice(0, 200), pairId: f.pair,
+    var ok = P.addEstimate({ taskId: t.taskId, estimateMinutes: mins, complexity: f.cx, specQuality: f.sq, reason: f.reason.slice(0, 200), pairId: pairNumber ? String(pairNumber) : ((estimateOf(state(), t.taskId) || {}).pairId || ""),
       agentAttempts: u.attempts, agentPassPredicted: u.agent ? agentVal : null });
     if (!ok) { syncTask(t); announce("This task was already revealed, so the estimate is locked."); return; }
     if (f.pair) rememberPair(f.pair);
@@ -2590,7 +2141,6 @@
     u.confirm.hidden = true;
     u.revealBtn.setAttribute("aria-expanded", "false");
     syncTask(t);
-    renderCharts();
     if (ok || estimateOf(state(), t.taskId)) {
       var h = u.reveal.querySelector(".est-reveal__h");
       if (h) h.focus();
@@ -2612,20 +2162,17 @@
         setRadio(u.cx, e.complexity);
         setRadio(u.sq, e.specQuality);
         u.reason.value = e.reason || "";
-        u.pair.value = e.pairId || "";
         if (u.agent) u.agent.value = agentText(e.agentPassPredicted);
         u.reasonCount.textContent = u.reason.value.length + " of 200 characters";
         updateMinAs(u);
       }
-    } else if (!e && pairNumber && !u.pair.value) {
-      u.pair.value = String(pairNumber);
     }
     var inputs = u.panel.querySelectorAll(".est-form input");
     for (var i = 0; i < inputs.length; i++) inputs[i].disabled = revealed;
     u.save.hidden = revealed;
     u.revealBtn.hidden = revealed;
     u.revealBtn.disabled = !e;
-    u.wait.textContent = e ? "In the session, wait for the facilitator's reveal after both rounds are saved. Revealing locks this estimate." : "Save an estimate to unlock the reveal. In the session, wait for the facilitator's reveal after both rounds are saved.";
+    u.wait.textContent = e ? "In the session, reveal when the facilitator calls it." : "Save an estimate to unlock the reveal.";
     u.locked.hidden = !revealed;
     u.wait.hidden = revealed;
     if (revealed) {
@@ -2684,7 +2231,7 @@
   function buildReveal(t, u, e) {
     var n = t.order, g = truthOf(t), txt = TEXT[t.taskId] || {};
     var box = u.reveal;
-    box.appendChild(el("h6", { class: "est-reveal__h", id: "est-rev-h-" + n, tabindex: "-1", text: "The answer for Task " + n }));
+    box.appendChild(el("h5", { class: "est-reveal__h", id: "est-rev-h-" + n, tabindex: "-1", text: "The answer for Task " + n }));
     var tt = truthText(g);
     var dl = el("dl", { class: "est-facts" });
     function fact(label, kids) { dl.appendChild(el("div", { class: "est-fact" }, [el("dt", { text: label }), el("dd", null, kids)])); }
@@ -2757,7 +2304,7 @@
     wrap.appendChild(legend);
     var list = el("ul", { class: "est-cal__rows" });
     rows.forEach(function (r) {
-      var g = r.t.groundTruth, est = r.e.estimateMinutes, c = compare(g, est);
+      var g = r.t.groundTruth, est = r.e.estimateMinutes;
       var s = sv("svg", { class: "est-cal__svg", height: "28", "aria-hidden": "true", focusable: "false" });
       ticks.forEach(function (tk) { s.appendChild(sv("line", { class: "bench-grid-line", x1: pct(tk) + "%", x2: pct(tk) + "%", y1: 0, y2: 28 })); });
       if (g.humanTimeKind === "annotator bucket") {
@@ -2770,12 +2317,7 @@
         s.appendChild(sv("line", { class: "est-truth", x1: xp + "%", x2: xp + "%", y1: 2, y2: 26 }));
       }
       s.appendChild(sv("circle", { class: "est-you", cx: pct(est) + "%", cy: 14, r: 6.5 }));
-      var tt = truthText(g);
-      list.appendChild(el("li", null, [
-        el("p", { class: "est-cal__label" }, [el("b", { text: "Task " + r.t.order + " · " + (TEXT[r.t.taskId] || {}).short }),
-          el("span", { class: "est-cal__meta", text: "You: " + fmtMin(est) + " · published: " + tt.big.toLowerCase() + " · " + c.text })]),
-        s
-      ]));
+      list.appendChild(el("li", null, [s]));
     });
     wrap.appendChild(list);
     var ax = sv("svg", { class: "est-cal__svg est-cal__axis", height: "16", "aria-hidden": "true", focusable: "false" });
@@ -2786,7 +2328,6 @@
     });
     wrap.appendChild(ax);
     wrap.appendChild(el("div", { class: "est-cal__axis-title axis-title axis-title--x", text: "Human minutes, log scale" }));
-    wrap.appendChild(el("p", { class: "est-hint", text: "60 min is 1 hour; 960 min is 16 hours." }));
     return wrap;
   }
   function legendSvg(kind) {
@@ -2797,100 +2338,9 @@
     return s;
   }
 
-  function renderCalibration() {
-    var host = $("[data-cal]");
-    if (!host) return;
-    var wasOpen = !!host.querySelector("details[open]");
-    host.textContent = "";
-    var s = state();
-    var rows = TASKS.map(function (t) { return { t: t, e: estimateOf(s, t.taskId) }; })
-      .filter(function (r) { return r.e && r.e.revealedAt && hasTime(r.t.groundTruth) && r.e.estimateMinutes > 0; });
-    if (!rows.length) {
-      host.appendChild(el("div", { class: "est-cal" }, [el("p", { class: "est-cal__empty", text: "Nothing to plot yet. Reveal a task with a published human time (Tasks 1 to 4) and it appears here, beside the published answer." })]));
-      return;
-    }
-    var fig = el("figure", { class: "bench-fig", style: "margin-top:0" });
-    var chart = stripChart(rows, false);
-    chart.setAttribute("role", "group");
-    chart.setAttribute("aria-label", "Your revealed estimates against the published human time, log scale: " + rows.map(function (r) { return "Task " + r.t.order + ", " + compare(r.t.groundTruth, r.e.estimateMinutes).text; }).join("; ") + ".");
-    fig.appendChild(chart);
-    fig.appendChild(details("Show as table", table("Your revealed estimates against the published human time", ["Task", "Your estimate (min)", "Published", "Kind", "Comparison"],
-      rows.map(function (r) { var g = r.t.groundTruth, tt = truthText(g); return ["Task " + r.t.order + ": " + r.t.taskId, fx(r.e.estimateMinutes, r.e.estimateMinutes % 1 ? 1 : 0), tt.big, g.humanTimeKind, compare(g, r.e.estimateMinutes).text]; }), [1])));
-    if (wasOpen) fig.querySelector("details").open = true;
-    host.appendChild(fig);
-  }
-
-  /* ---------- agent chart: predicted against published pass rate, 0 to 100% ---------- */
+  /* ---------- agent results ---------- */
   function hasAgentTruth(g) { return !!g && typeof g.agentAttempts === "number" && g.agentAttempts > 0 && typeof g.agentPassCount === "number"; }
   function hasPrediction(e) { return !!e && typeof e.agentPassPredicted === "number"; }
-  function passRate(n, nRuns) { return n / nRuns * 100; }
-  function fmtRate(v) { return fx(v, v % 1 ? 1 : 0) + "%"; }
-  /* One labelled bar: who | track with the bar | value. Zero draws no bar, only the baseline. */
-  function agentBar(who, pct, cls) {
-    var s = sv("svg", { class: "est-agent__svg", height: "16", "aria-hidden": "true", focusable: "false" });
-    [25, 50, 75, 100].forEach(function (v) { s.appendChild(sv("line", { class: "bench-grid-line", x1: v + "%", x2: v + "%", y1: 0, y2: 16 })); });
-    if (pct > 0) {
-      s.appendChild(sv("rect", { class: cls, x: 0, y: 2, width: pct + "%", height: 12, rx: 2 }));
-      s.appendChild(sv("rect", { class: cls, x: 0, y: 2, width: Math.min(pct, 2) + "%", height: 12 }));
-    }
-    s.appendChild(sv("line", { class: "bench-base-line", x1: 0, x2: 0, y1: 0, y2: 16 }));
-    return el("div", { class: "est-agent__row" }, [el("span", { class: "est-agent__who", text: who }), s, el("span", { class: "est-agent__val", text: fmtRate(pct) })]);
-  }
-  function agentBars(rows) {
-    var wrap = el("div", { class: "est-cal est-agent" });
-    wrap.appendChild(el("div", { class: "bench-legend", "aria-hidden": "true" }, [
-      el("span", { class: "bench-legend__item" }, [el("span", { class: "bench-legend__sw est-agent__sw--you" }), "Your prediction"]),
-      el("span", { class: "bench-legend__item" }, [el("span", { class: "bench-legend__sw est-agent__sw--pub" }), "Published result"])
-    ]));
-    var list = el("ul", { class: "est-cal__rows" });
-    rows.forEach(function (r) {
-      var g = r.t.groundTruth, nRuns = g.agentAttempts;
-      list.appendChild(el("li", null, [
-        el("p", { class: "est-cal__label" }, [el("b", { text: "Task " + r.t.order + " · " + (TEXT[r.t.taskId] || {}).short }),
-          el("span", { class: "est-cal__meta", text: "You: " + r.e.agentPassPredicted + " of " + nRuns + " · published: " + g.agentPassCount + " of " + nRuns + " runs passed" })]),
-        agentBar("You", passRate(r.e.agentPassPredicted, nRuns), "est-agent__you"),
-        agentBar("Published", passRate(g.agentPassCount, nRuns), "est-agent__pub")
-      ]));
-    });
-    wrap.appendChild(list);
-    var ax = sv("svg", { class: "est-agent__svg", height: "16", "aria-hidden": "true", focusable: "false" });
-    [0, 25, 50, 75, 100].forEach(function (v) {
-      ax.appendChild(sv("text", { class: "bench-tick" + (v === 25 || v === 75 ? " est-tick--minor" : ""), x: v + "%", y: 12, "text-anchor": v === 0 ? "start" : (v === 100 ? "end" : "middle"), text: String(v) }));
-    });
-    wrap.appendChild(el("div", { class: "est-agent__row est-agent__axis", "aria-hidden": "true" }, [el("span"), ax, el("span")]));
-    wrap.appendChild(el("div", { class: "est-agent__axis-title axis-title axis-title--x", text: "Agent runs passed, percent" }));
-    return wrap;
-  }
-  function renderAgentCal() {
-    var host = $("[data-cal-agent]");
-    if (!host) return;
-    var wasOpen = !!host.querySelector("details[open]");
-    host.textContent = "";
-    var s = state();
-    var rows = TASKS.map(function (t) { return { t: t, e: estimateOf(s, t.taskId) }; })
-      .filter(function (r) { return r.e && r.e.revealedAt && hasAgentTruth(r.t.groundTruth) && hasPrediction(r.e); });
-    if (!rows.length) {
-      host.appendChild(el("div", { class: "est-cal" }, [el("p", { class: "est-cal__empty", text: "Nothing to plot yet. Reveal a task with published agent results (Tasks 1 to 4) and your prediction appears here, beside the share of runs that passed." })]));
-      return;
-    }
-    var fig = el("figure", { class: "bench-fig", style: "margin-top:0" });
-    var chart = agentBars(rows);
-    chart.setAttribute("role", "group");
-    chart.setAttribute("aria-label", "Your agent predictions against the published results, percent of runs passed: " + rows.map(function (r) {
-      var g = r.t.groundTruth;
-      return "Task " + r.t.order + ", you " + r.e.agentPassPredicted + " of " + g.agentAttempts + ", published " + g.agentPassCount + " of " + g.agentAttempts;
-    }).join("; ") + ".");
-    fig.appendChild(chart);
-    fig.appendChild(details("Show as table", table("Your agent predictions against the published results", ["Task", "Predicted passes", "Published passes", "Runs", "Predicted %", "Published %"],
-      rows.map(function (r) {
-        var g = r.t.groundTruth, nRuns = g.agentAttempts;
-        return ["Task " + r.t.order + ": " + r.t.taskId, String(r.e.agentPassPredicted), String(g.agentPassCount), String(nRuns), fmtRate(passRate(r.e.agentPassPredicted, nRuns)).replace("%", ""), fmtRate(passRate(g.agentPassCount, nRuns)).replace("%", "")];
-      }), [1, 2, 3, 4, 5])));
-    if (wasOpen) fig.querySelector("details").open = true;
-    host.appendChild(fig);
-  }
-  function renderCharts() { renderCalibration(); renderAgentCal(); }
-
   /* ---------- pair finder ---------- */
   var PAIR_KEY = "agentic-se:v2:bench-pair";
   function rememberPair(v) { try { localStorage.setItem(PAIR_KEY, String(v)); } catch (e) {} }
@@ -2904,21 +2354,14 @@
     var t1 = TASKS[r1 - 1], t2 = TASKS[r2 - 1];
     out.textContent = "Round 1: Task " + r1 + " (" + t1.benchmark + "). Round 2: Task " + r2 + " (" + t2.benchmark + ").";
     [[t1, "Round 1"], [t2, "Round 2"]].forEach(function (x) { var r = UI[x[0].taskId].tab.querySelector("[data-round]"); r.hidden = false; r.textContent = x[1]; });
-    TASKS.forEach(function (t) { var u = UI[t.taskId]; if (!estimateOf(state(), t.taskId) && !u.pair.value) u.pair.value = String(p); });
     if (focusTab) select(r1, false);
   }
 
   /* ---------- wiring ---------- */
   function syncAll() {
     TASKS.forEach(syncTask);
-    renderCharts();
   }
 
-  renderPlan();
-  renderPanels();
-  renderMetr();
-  renderSwev();
-  renderTbVersions();
   if (TASKS.length) {
     buildTabs();
     var hashN = /^#bench-task-([1-6])$/.exec(location.hash || "");
@@ -2936,11 +2379,6 @@
   syncAll();
   try { P.on("change", function () { syncAll(); }); } catch (e) {}
 
-  var rt = null;
-  window.addEventListener("resize", function () {
-    clearTimeout(rt);
-    rt = setTimeout(function () { TIME_RENDERERS.forEach(function (f) { f(); }); }, 120);
-  });
   if (P.memoryOnly) announce("Progress cannot be saved in this browser. Export before you leave.");
   }
 })();

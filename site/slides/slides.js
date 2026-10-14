@@ -45,7 +45,7 @@
   const weekAttr = document.body.getAttribute('data-week');
   const hasWeek = weekAttr !== null && Object.prototype.hasOwnProperty.call(WEEK_TITLES, weekAttr);
   const weekPageHref = hasWeek ? '../week-' + weekAttr + '.html' : '../index.html';
-  const runsheetHref = weekAttr === '4' ? '../facilitator-week-4.html' : '../facilitator.html';
+  const runsheetHref = weekAttr === '1' || weekAttr === '4' ? '../facilitator-week-' + weekAttr + '.html' : '../facilitator.html';
   const sep = '<span class="nav-crumbs-sep" aria-hidden="true">›</span>';
   const crumbs = hasWeek
     ? '<li class="nav-crumbs-course"><a href="../index.html">Course</a></li>' +
