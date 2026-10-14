@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
 </head>
-<body data-week="3">
+<body data-week="3" class="deck-v2">
 
 <div class="progress" id="progress"></div>
 
@@ -26,11 +26,11 @@
     <div class="slide-label">Run-Sheet</div>
     <h2>Plan for the Hour</h2>
     <div class="items">
-      <div class="item"><span class="item-num">00-05</span><span class="item-text"><strong>Retrieval opener.</strong> Five questions on paper.</span></div>
-      <div class="item"><span class="item-num">05-15</span><span class="item-text"><strong>Example log.</strong> Facilitator walkthrough of lanorme stages.</span></div>
-      <div class="item"><span class="item-num">15-35</span><span class="item-text"><strong>Pairs compare logs.</strong> Expensive stages: why and what if.</span></div>
-      <div class="item"><span class="item-num">35-50</span><span class="item-text"><strong>Shared table.</strong> Pooled cohort minutes and cost.</span></div>
-      <div class="item"><span class="item-num">50-60</span><span class="item-text"><strong>Exit ticket.</strong> Unattended trust, and pre-work.</span></div>
+      <div class="item"><span class="item-num clock">0:00 to 5:00</span><span class="item-text"><strong>Retrieval opener</strong>, on paper.</span></div>
+      <div class="item"><span class="item-num clock">5:00 to 15:00</span><span class="item-text"><strong>Example log</strong> walkthrough.</span></div>
+      <div class="item"><span class="item-num clock">15:00 to 35:00</span><span class="item-text"><strong>Pairs compare logs</strong>: why and what if.</span></div>
+      <div class="item"><span class="item-num clock">35:00 to 50:00</span><span class="item-text"><strong>Shared table</strong>; the stage to automate first.</span></div>
+      <div class="item"><span class="item-num clock">50:00 to 60:00</span><span class="item-text"><strong>Exit ticket</strong>, and pre-work.</span></div>
     </div>
   </div>
 </div>
@@ -41,9 +41,9 @@
     <div class="slide-label">0:00 to 5:00 &middot; Active</div>
     <h2>Retrieval Opener: Part 1</h2>
     <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">What does compaction produce, and why keep context below full?</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Why does a bad plan line cost more than bad code?</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Which failure stems from handing thinking to the agent?</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text">What does intentional compaction produce, and what does the next session read?</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Why does a bad line in a plan cost more than a bad line of code?</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text">Started at the root of a large repository, which nested instruction files does your agent load?</span></div>
     </div>
   </div>
 </div>
@@ -54,215 +54,248 @@
     <div class="slide-label">0:00 to 5:00 &middot; Active</div>
     <h2>Retrieval Opener: Part 2</h2>
     <div class="items">
-      <div class="item"><span class="item-num">4</span><span class="item-text">Which steps of QRSPI must a human engineer own?</span></div>
-      <div class="item"><span class="item-num">5</span><span class="item-text"><strong>Application</strong>: Which context strategy did your log use, and at which stage?</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text">What must a <code>/goal</code> condition contain for the agent to verify its own progress?</span></div>
+      <div class="item"><span class="item-num">5</span><span class="item-text"><strong>Application</strong>: which of the context-engineering article's long-horizon strategies did your log use, and at which stage?</span></div>
     </div>
   </div>
 </div>
 
-<!-- 5: Compaction -->
+<!-- 5: Opener key 1 -->
 <div class="slide" id="s4">
   <div class="slide-inner">
-    <div class="slide-label">No Vibes Allowed &middot; Key Idea</div>
-    <h2>Intentional Compaction</h2>
+    <div class="slide-label">0:00 to 5:00 &middot; Opener Key</div>
+    <h2>Answer Key: Part 1</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Attention degrades</strong>: Crowded context introduces noise and confusion.</span></div>
-      <div class="item"><span class="item-text"><strong>Crystallise state</strong>: Distil research into clear files like <code>specs/&lt;issue&gt;.md</code>.</span></div>
-      <div class="item"><span class="item-text"><strong>Fresh sessions</strong>: Implement from the spec alone, leaving history behind.</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text">A file, such as <code>specs/4.md</code>; the fresh implementation session reads only that file.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Errors amplify downstream: one bad plan line can produce hundreds of bad lines of code.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Claude Code:</strong> nested CLAUDE.md files load on demand. <strong>Codex:</strong> none below the start directory; the chain is built once at startup.</span></div>
     </div>
   </div>
 </div>
 
-<!-- 6: Research before planning -->
+<!-- 6: Opener key 2 -->
 <div class="slide" id="s5">
   <div class="slide-inner">
-    <div class="slide-label">RPI to QRSPI &middot; Key Idea</div>
+    <div class="slide-label">0:00 to 5:00 &middot; Opener Key</div>
+    <h2>Answer Key: Part 2</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">4</span><span class="item-text"><strong>Claude Code:</strong> a check with pass or fail output. <strong>Codex:</strong> outcome, constraints, verification.</span></div>
+      <div class="item"><span class="item-num">5</span><span class="item-text">Compaction, notes or subagents. The example log compacts into <code>specs/4.md</code> at spec.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 7: Compaction -->
+<div class="slide" id="s6">
+  <div class="slide-inner">
+    <div class="slide-label">5:00 to 15:00 &middot; Key Idea</div>
+    <h2>Intentional Compaction</h2>
+    <div class="items">
+      <div class="item"><span class="item-text"><strong>Attention degrades</strong>: crowded context introduces noise and confusion.</span></div>
+      <div class="item"><span class="item-text"><strong>Crystallise state</strong>: distil research into a file such as <code>specs/&lt;issue&gt;.md</code>.</span></div>
+      <div class="item"><span class="item-text"><strong>Fresh sessions</strong>: implement from the spec alone, leaving history behind.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 8: Research before planning -->
+<div class="slide" id="s7">
+  <div class="slide-inner">
+    <div class="slide-label">5:00 to 15:00 &middot; Key Idea</div>
     <h2>Research Before Planning</h2>
     <div class="two-col" style="gap: 18px;">
       <div class="card card-accent">
         <h3>Bad plans multiply waste</h3>
-        <p style="font-size: 13px;">A bad line of code is one bad line. A bad line in a plan can produce hundreds, and a bad line in research thousands.</p>
+        <p style="font-size: 14px;">A bad line of code is one bad line; in a plan, hundreds; in research, thousands.</p>
       </div>
       <div class="card card-accent">
         <h3>Ground in real code</h3>
-        <p style="font-size: 13px;">Inspect existing files, test fixtures, and interfaces before committing to a design. Never let the agent plan from prompt assumptions alone.</p>
+        <p style="font-size: 14px;">Inspect existing files and interfaces before designing.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 7: Annotated example log overview -->
-<div class="slide" id="s6">
+<!-- 9: Annotated example log overview -->
+<div class="slide" id="s8">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Walkthrough</div>
-    <h2>Annotated Example Log: Overview</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">Issue 4 on lanorme (a new check):</p>
+    <h2>Annotated Example Log</h2>
+    <p class="subtitle" style="margin-bottom: 12px;">Issue 4, a new check. Illustrative values, not a recorded run.</p>
     <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">47</div>
         <h3 style="margin-top: 8px;">Human min</h3>
-        <p style="font-size: 12px; color: var(--muted);">Setup was 8 min</p>
+        <p style="font-size: 13px; color: var(--muted);">Setup: 8 more</p>
       </div>
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">465k</div>
         <h3 style="margin-top: 8px;">Tokens</h3>
-        <p style="font-size: 12px; color: var(--muted);">Across 5 stages</p>
+        <p style="font-size: 13px; color: var(--muted);">Across 5 stages</p>
       </div>
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">$2.90</div>
         <h3 style="margin-top: 8px;">Cost</h3>
-        <p style="font-size: 12px; color: var(--muted);">Measured /usage</p>
+        <p style="font-size: 13px; color: var(--muted);">Estimated, <code>/usage</code></p>
       </div>
       <div class="stat-tile stat-tile-accent">
         <div class="stat-num">4</div>
         <h3 style="margin-top: 8px;">Interventions</h3>
-        <p style="font-size: 12px; color: var(--muted);">Human judgement</p>
+        <p style="font-size: 13px; color: var(--muted);">4 stages needed a person</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 16px;">On Codex: token counts from <code>codex exec --json</code>.</p>
   </div>
 </div>
 
-<!-- 8: Stage 1 & 2: Triage & Spec -->
-<div class="slide" id="s7">
+<!-- 10: Stages 1 and 2: triage and spec -->
+<div class="slide" id="s9">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough &middot; Stages 1 and 2</div>
+    <div class="slide-label">5:00 to 15:00 &middot; Stages 1 and 2</div>
     <h2>Triage &amp; Spec</h2>
     <div class="two-col" style="gap: 16px;">
       <div class="card card-accent">
-        <h3>Triage: 4 min &middot; 6k tokens ($0.04)</h3>
-        <p style="font-size: 13px;"><strong>Context</strong>: Issue text and root CLAUDE.md.<br/><strong>Intervention</strong>: None.<br/><strong>Judgement</strong>: Design: classified as needs-spec because check needs new test fixtures.</p>
+        <h3>Triage: 4 min &middot; 6k tokens &middot; $0.04</h3>
+        <p style="font-size: 14px;"><strong>Context</strong>: issue text and root CLAUDE.md.<br/><strong>Intervention</strong>: none.<br/><strong>Judgement</strong>: design: needs-spec, as a new check needs fixtures.</p>
       </div>
       <div class="card card-accent">
-        <h3>Spec: 16 min &middot; 120k tokens ($0.75)</h3>
-        <p style="font-size: 13px;"><strong>Context</strong>: Researched checks/ and tests/; benchmarks/ denied. Compacted to <code>specs/4.md</code>.<br/><strong>Intervention</strong>: Cut unrequested config option.<br/><strong>Judgement</strong>: Product scope.</p>
+        <h3>Spec: 16 min &middot; 120k tokens &middot; $0.75</h3>
+        <p style="font-size: 14px;"><strong>Context</strong>: <code>checks/</code> and <code>tests/</code>; <code>benchmarks/</code> denied. Compacted into <code>specs/4.md</code>.<br/><strong>Intervention</strong>: cut an unrequested config option.<br/><strong>Judgement</strong>: product.</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 16px;">On Codex: the root AGENTS.md takes the place of the root CLAUDE.md.</p>
   </div>
 </div>
 
-<!-- 9: Stage 3: Implement with /goal -->
-<div class="slide" id="s8">
+<!-- 11: Stage 3: implement with /goal -->
+<div class="slide" id="s10">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough &middot; Stage 3</div>
+    <div class="slide-label">5:00 to 15:00 &middot; Stage 3</div>
     <h2>Implement with <code>/goal</code></h2>
     <div class="card card-accent">
       <h3>12 human min &middot; 260k tokens &middot; $1.60</h3>
-      <p style="font-size: 14px; margin-top: 8px;"><strong>Context</strong>: <code>specs/4.md</code> only, loaded in a fresh session.</p>
-      <p style="font-size: 14px; margin-top: 6px;"><strong>Goal condition</strong>: <code>uv run pytest tests/unit</code> passes and <code>uv run lanorme check .</code> is clean.</p>
-      <p style="font-size: 14px; margin-top: 6px;"><strong>Intervention</strong>: Stopped agent editing an unrelated failing test (cause: missing context).</p>
-      <p style="font-size: 14px; margin-top: 6px;"><strong>Judgement</strong>: None required during coding: goal held once CI gates passed.</p>
+      <p style="font-size: 15px; margin-top: 8px;"><strong>Context</strong>: <code>specs/4.md</code> only, in a fresh session.</p>
+      <p style="font-size: 15px; margin-top: 6px;"><strong>Goal</strong>: <code>uv run pytest tests/unit</code> passes and <code>uv run lanorme check .</code> is clean.</p>
+      <p style="font-size: 15px; margin-top: 6px;"><strong>Intervention</strong>: stopped an edit to an unrelated failing test (missing context).</p>
+      <p style="font-size: 15px; margin-top: 6px;"><strong>Judgement</strong>: none; the goal held once tests and lint passed.</p>
     </div>
+    <p class="meta" style="margin-top: 16px;">On Codex: Codex's own <code>/goal</code>, with the same condition.</p>
   </div>
 </div>
 
-<!-- 10: Stage 4 & 5: Review & PR -->
-<div class="slide" id="s9">
+<!-- 12: Stages 4 and 5: review and PR -->
+<div class="slide" id="s11">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough &middot; Stages 4 and 5</div>
+    <div class="slide-label">5:00 to 15:00 &middot; Stages 4 and 5</div>
     <h2>Review &amp; Pull Request</h2>
     <div class="two-col" style="gap: 16px;">
       <div class="card card-accent">
-        <h3>Review: 10 min &middot; 70k tokens ($0.45)</h3>
-        <p style="font-size: 13px;"><strong>Context</strong>: Diff and <code>specs/4.md</code> in reviewer subagent.<br/><strong>Intervention</strong>: Rejected one naming finding.<br/><strong>Judgement</strong>: Taste: deciding which findings to accept.</p>
+        <h3>Review: 10 min &middot; 70k tokens &middot; $0.45</h3>
+        <p style="font-size: 14px;"><strong>Context</strong>: the diff and <code>specs/4.md</code>, in a reviewer subagent.<br/><strong>Intervention</strong>: rejected one naming finding.<br/><strong>Judgement</strong>: taste.</p>
       </div>
       <div class="card card-accent">
-        <h3>PR: 5 min &middot; 9k tokens ($0.06)</h3>
-        <p style="font-size: 13px;"><strong>Context</strong>: Diff, spec link, and CI checks.<br/><strong>Intervention</strong>: Rewrote PR summary line.<br/><strong>Judgement</strong>: Risk: whether the change is ready for a reviewer.</p>
+        <h3>PR: 5 min &middot; 9k tokens &middot; $0.06</h3>
+        <p style="font-size: 14px;"><strong>Context</strong>: the diff, spec link and CI result.<br/><strong>Intervention</strong>: rewrote the summary line.<br/><strong>Judgement</strong>: risk: ready for a reviewer?</p>
       </div>
     </div>
+    <p class="meta" style="margin-top: 16px;">On Codex: <code>/review</code> or a reviewer subagent for step 4.</p>
   </div>
 </div>
 
-<!-- 11: Pairs compare logs -->
-<div class="slide" id="s10">
+<!-- 13: Pairs compare logs, on screen until 35:00 -->
+<div class="slide" id="s12">
   <div class="slide-inner">
-    <div class="slide-label">15:00 to 35:00 &middot; Interactive</div>
-    <h2>Pairs Compare Logs</h2>
+    <div class="slide-label">15:00 to 35:00 &middot; In Pairs</div>
+    <h2>Pairs Compare Logs, Until 35:00</h2>
     <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Swap stage logs with your partner.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Name your most expensive stage and required judgement.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Partner asks: <strong>why</strong> did that stage need a human?</span></div>
-      <div class="item"><span class="item-num">4</span><span class="item-text">Partner asks: <strong>what if</strong> an agent ran it unattended?</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text">Open your stage logs side by side.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Each names their most expensive stage and the judgement it required.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text">Partner asks one <strong>why</strong>: why did that stage need a person?</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text">Partner asks one <strong>what if</strong>: what if an agent ran it unattended?</span></div>
     </div>
+    <div class="card card-accent" style="margin-top: 14px; padding-top: 12px; padding-bottom: 12px;">
+      <p><strong>By 35:00:</strong> your minutes and cost per stage, ready for the shared table. On Codex, token counts.</p>
+    </div>
+    <p class="activity-link"><a href="../week-3.html#slog-h">Stage log on the Week 3 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 12: Shared stage table -->
-<div class="slide" id="s11">
+<!-- 14: Shared stage table -->
+<div class="slide" id="s13">
   <div class="slide-inner">
     <div class="slide-label">35:00 to 50:00 &middot; Interactive</div>
     <h2>Shared Stage Table</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Time spread</strong>: Where did human minutes cluster across the cohort?</span></div>
-      <div class="item"><span class="item-text"><strong>Cost spread</strong>: Where did token spending peak? Did cost match speed?</span></div>
-      <div class="item"><span class="item-text"><strong>Interventions</strong>: Missing context, wrong design, or taste?</span></div>
+      <div class="item"><span class="item-text"><strong>Time spread</strong>: where did human minutes cluster across the cohort?</span></div>
+      <div class="item"><span class="item-text"><strong>Cost spread</strong>: where did token spending peak? Did cost match speed?</span></div>
+      <div class="item"><span class="item-text"><strong>Interventions</strong>: missing context, wrong design, or taste?</span></div>
     </div>
   </div>
 </div>
 
-<!-- 13: Discussion: Automate first -->
-<div class="slide" id="s12">
+<!-- 15: Discussion: automate first -->
+<div class="slide" id="s14">
   <div class="slide-inner">
-    <div class="slide-label">Discussion &middot; The Factory Transition</div>
+    <div class="slide-label">35:00 to 50:00 &middot; Interactive</div>
     <h2>What Would You Automate First?</h2>
     <div class="two-col" style="gap: 16px;">
       <div class="card card-accent">
         <h3>First to automate</h3>
-        <p style="font-size: 13px;">Which stage has deterministic gates and low risk, making it safe to run unattended in CI?</p>
+        <p style="font-size: 14px;">Which stage has deterministic gates and low risk, so it could run unattended in CI?</p>
       </div>
       <div class="card card-accent">
         <h3>Last to automate</h3>
-        <p style="font-size: 13px;">Which stage holds load-bearing design, product, or taste decisions that require human sign-off?</p>
+        <p style="font-size: 14px;">Which stage holds design, product or taste decisions that need human sign-off?</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 14: Exit ticket -->
-<div class="slide" id="s13">
+<!-- 16: Exit ticket -->
+<div class="slide" id="s15">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">50:00 to 60:00 &middot; Constructive</div>
     <h2>Exit Ticket</h2>
-    <p class="subtitle" style="max-width: 600px; margin: 0 auto 16px;">Submit on the Week 3 page:</p>
     <div class="quote" style="text-align: left; max-width: 600px; margin: 0 auto;">
       <p>Name the stage you would trust an agent to run unattended, and state your reason.</p>
     </div>
+    <p class="activity-link"><a href="../week-3.html#live-h">Exit ticket in the Week 3 live session plan<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 15: Before Week 4 Pre-Work -->
-<div class="slide" id="s14">
+<!-- 17: Before Week 4 pre-work -->
+<div class="slide" id="s16">
   <div class="slide-inner">
-    <div class="slide-label">Before Week 4 &middot; Core Readings</div>
-    <h2>Pre-Work for Week 4</h2>
+    <div class="slide-label">50:00 to 60:00 &middot; Before Week 4</div>
+    <h2>Pre-Work: Both Tracks</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Software Engineering Is Becoming Factory Engineering</strong>: Zach Lloyd, video, 20.6 min.</span></div>
-      <div class="item"><span class="item-text"><strong>Why Software Factories Fail</strong>: Dex Horthy, video, 19.3 min.</span></div>
-      <div class="item"><span class="item-text"><strong>Software engineering at the tipping point</strong>: Adam Bender, video, 39.6 min.</span></div>
-      <div class="item"><span class="item-text"><strong>The AI-native SDLC playbook</strong>: Louis Claxton, selected plays, reading, 22.2 min.</span></div>
+      <div class="item"><span class="item-text"><strong>Software Engineering Is Becoming Factory Engineering</strong>: Lloyd, 20.6 min</span></div>
+      <div class="item"><span class="item-text"><strong>Why Software Factories Fail</strong>: Horthy, 19.3 min</span></div>
+      <div class="item"><span class="item-text"><strong>Software engineering at the tipping point</strong>: Bender, 39.6 min</span></div>
+      <div class="item"><span class="item-text"><strong>The AI-native SDLC playbook</strong>: Claxton, selected plays, 22.2 min</span></div>
     </div>
   </div>
 </div>
 
-<!-- 16: Factory Design Document -->
-<div class="slide" id="s15">
+<!-- 18: Factory design document -->
+<div class="slide" id="s17">
   <div class="slide-inner">
-    <div class="slide-label">Before Week 4 &middot; Activity</div>
+    <div class="slide-label">50:00 to 60:00 &middot; Before Week 4</div>
     <h2>Factory Design Document (45 min)</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Stage table</strong>: Trigger, actor, artefact, gate type and risk argument.</span></div>
-      <div class="item"><span class="item-text"><strong>Feature choice</strong>: Select Claude Code or Codex automation tooling.</span></div>
-      <div class="item"><span class="item-text"><strong>Observer loop</strong>: What it reads, the one file it may change, and how CI enforces that.</span></div>
-      <div class="item"><span class="item-text"><strong>Measurement plan</strong>: Human minutes, cost and failed runs, plus one outcome measure.</span></div>
-      <div class="item"><span class="item-text"><strong>Critique</strong>: One paragraph weighing Lloyd against one counter-source.</span></div>
+      <div class="item"><span class="item-text"><strong>Stage table</strong>: trigger, actor, artefact, gate type and risk argument.</span></div>
+      <div class="item"><span class="item-text"><strong>Features</strong>: one per stage, from your track's column of the Week 5 table.</span></div>
+      <div class="item"><span class="item-text"><strong>Observer loop</strong>: what it reads, the one file it may change, how CI enforces that.</span></div>
+      <div class="item"><span class="item-text"><strong>Measurement plan</strong>: human minutes, cost, failed runs, one outcome measure.</span></div>
+      <div class="item"><span class="item-text"><strong>Critique</strong>: Lloyd weighed against one counter-source.</span></div>
     </div>
   </div>
 </div>
 
-<!-- 17: Closing -->
-<div class="slide slide-dark" id="s16">
+<!-- 19: Closing -->
+<div class="slide slide-dark" id="s18">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-label"><a href="../week-3.html" class="title-link">Week 3 &middot; Session 3</a></div>
+    <div class="slide-label">50:00 to 60:00 &middot; Next Steps</div>
     <h1>Close &amp; Next Steps</h1>
     <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Submit your pull request and stage log, then start the Week 4 design document.</p>
     <p style="margin-top: 16px; font-family: var(--mono); font-size: 14px;">

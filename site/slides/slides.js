@@ -7,8 +7,11 @@
      [... .slide elements ...]
      <script src="./slides.js"></script>
 
-   This script discovers the slides, builds the bottom navigation, the
-   TOC drawer, and wires keyboard, click, and touch handlers.
+   This script discovers the slides, builds the bottom navigation (a
+   breadcrumb, "Course › Week N: <title> › Slides", on the left, from
+   <body data-week="N"> and WEEK_TITLES below; Run-sheet, Contents, Prev,
+   the counter and Next on the right), the TOC drawer, and wires keyboard,
+   click, and touch handlers. The Week crumb is #weekPageLink.
 
    The current slide is kept in the URL hash (#5 is the fifth slide) and
    in localStorage per deck, so leaving for the week page and coming
@@ -30,16 +33,32 @@
     slides[0].classList.add('active');
   }
 
-  // ----- Build bottom navigation, including the Contents button -----
+  // ----- Build bottom navigation: breadcrumb left, controls right -----
+  // Week titles match WEEKS in ../site.js.
+  const WEEK_TITLES = {
+    0: 'Getting Started',
+    1: 'One Coding Agent',
+    2: 'Adapting a Coding Agent',
+    3: 'One change through the whole loop',
+    4: 'From harness to factory',
+  };
   const weekAttr = document.body.getAttribute('data-week');
-  const weekPageHref = weekAttr !== null ? '../week-' + weekAttr + '.html' : '../index.html';
-  const weekPageText = weekAttr !== null ? 'Week ' + weekAttr + ' page' : 'Course page';
+  const hasWeek = weekAttr !== null && Object.prototype.hasOwnProperty.call(WEEK_TITLES, weekAttr);
+  const weekPageHref = hasWeek ? '../week-' + weekAttr + '.html' : '../index.html';
   const runsheetHref = weekAttr === '4' ? '../facilitator-week-4.html' : '../facilitator.html';
+  const sep = '<span class="nav-crumbs-sep" aria-hidden="true">›</span>';
+  const crumbs = hasWeek
+    ? '<li class="nav-crumbs-course"><a href="../index.html">Course</a></li>' +
+      '<li class="nav-crumbs-week">' + sep + '<a id="weekPageLink" href="' + weekPageHref + '">Week ' + weekAttr +
+        '<span class="nav-crumbs-title">: ' + WEEK_TITLES[weekAttr] + '</span></a></li>'
+    : '<li class="nav-crumbs-week"><a id="weekPageLink" href="../index.html">Course</a></li>';
 
   const nav = document.createElement('div');
   nav.className = 'nav';
   nav.innerHTML = [
-    '<a class="nav-btn nav-btn-week" id="weekPageLink" href="' + weekPageHref + '">' + weekPageText + '</a>',
+    '<nav class="nav-crumbs" aria-label="Breadcrumb"><ol>' + crumbs +
+      '<li class="nav-crumbs-here">' + sep + '<span aria-current="page">Slides</span></li></ol></nav>',
+    '<div class="nav-group">',
     '<a class="nav-btn nav-btn-runsheet" id="runsheetLink" href="' + runsheetHref + '">Run-sheet</a>',
     '<button class="nav-btn nav-btn-toc" id="tocToggle" type="button" aria-label="Open slide contents">' +
       '<svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true">' +
@@ -50,6 +69,7 @@
     '<button class="nav-btn" id="prevBtn" type="button">&larr; Prev</button>',
     '<span class="nav-count" id="slideCount">1 / ' + total + '</span>',
     '<button class="nav-btn" id="nextBtn" type="button">Next &rarr;</button>',
+    '</div>',
   ].join('');
   document.body.appendChild(nav);
   const toggleBtn = nav.querySelector('#tocToggle');
@@ -145,6 +165,8 @@
     slides[current].classList.remove('active');
     current = Math.max(0, Math.min(n, total - 1));
     slides[current].classList.add('active');
+    // The breadcrumb sits on the slide itself, so it follows dark slides.
+    document.body.classList.toggle('on-dark-slide', slides[current].classList.contains('slide-dark'));
     if (slideCount) slideCount.textContent = (current + 1) + ' / ' + total;
     if (progress) progress.style.width = ((current + 1) / total * 100) + '%';
     syncTOC();

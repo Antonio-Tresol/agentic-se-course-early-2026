@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="bench.css">
 <script>
-/* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t, m) {
+/* Pre-paint: track, theme and sidebar. site.js does the rest. */
+(function (d, q, t, m, s) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
@@ -22,6 +22,10 @@
   m = q && q.get("theme");
   if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
   if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
+  d.classList.add("has-js");
+  try { s = localStorage.getItem("agentic-se-sidebar"); } catch (e) {}
+  if (s !== "collapsed" && s !== "expanded") { try { s = matchMedia("(min-width: 1280px)").matches ? "expanded" : "collapsed"; } catch (e) { s = "expanded"; } }
+  d.setAttribute("data-sidebar", s);
 })(document.documentElement);
 </script>
 </head>

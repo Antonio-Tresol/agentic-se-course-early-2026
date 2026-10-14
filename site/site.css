@@ -17,8 +17,9 @@
    Pages that do not exist yet are never linked (see WEEK NAV below).
 
    SCRIPTS (pages that use site.js)
-     <head>: a 6-line inline snippet sets html.track-codex, data-theme and
-     html.show-ann before first paint. End of <body>: progress.js, then
+     <head>: an inline snippet, the same on every page, sets
+     html.track-codex, data-theme, html.has-js and data-sidebar before
+     first paint. End of <body>: progress.js, then
      site.js, then any page script. week-3, week-4, week-5 and
      facilitator-week-4 still carry their own inline scripts.
 
@@ -44,7 +45,10 @@
        .topbar__right > nav.week-nav + a.topbar__progress ("My progress")
        nav.week-nav[aria-label="Weeks"] > ul > li > a.week-nav__link
          a[aria-current="page"]                   current week (clay bar)
+     nav.sb#course-sidebar                        site.js; 1024px and wider,
+                                                  where it replaces the top bar
      <main id="main" class="page">                .fade-in optional
+       nav.crumbs                                 site.js; replaces the kicker
      <footer class="site-footer">                 Resources, Further Reading,
                                                   Facilitator (footer only)
      <div class="sr-only" aria-live="polite" data-track-live>  track announcer
@@ -721,6 +725,177 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
   background: transparent;
   color: var(--muted);
   cursor: default;
+}
+
+/* ---------- Course sidebar (1024px and wider) ---------- */
+/* site.js renders nav.sb after the skip link. The pre-paint snippet sets
+   html.has-js and data-sidebar, so the column is reserved before site.js
+   runs and main never moves. Below 1024px the top bar stays and .sb is
+   not shown. */
+.sb, .sb-tip { display: none; }
+@media (min-width: 1024px) {
+  html.has-js { --sb-w: 264px; }
+  html.has-js[data-sidebar="collapsed"] { --sb-w: 68px; }
+  html.has-js body { padding-left: var(--sb-w); }
+  html.has-js .topbar { display: none; }
+
+  .sb {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 100;
+    width: var(--sb-w);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px 14px 18px;
+    background: var(--page);
+    border-right: 1px solid var(--border);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  html.has-js body, .sb { transition: padding-left var(--motion-fast) var(--ease-standard), width var(--motion-fast) var(--ease-standard); }
+
+  .sb__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .sb__home {
+    display: inline-flex; align-items: center; min-height: 32px;
+    padding: 0 10px;
+    font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25;
+    color: var(--text); text-decoration: none;
+  }
+  .sb__home:hover { text-decoration: underline; }
+  .sb__toggle {
+    flex: none;
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface); color: var(--text);
+    cursor: pointer;
+    transition: border-color var(--motion-fast) var(--ease-standard);
+  }
+  .sb__toggle:hover { border-color: var(--text); }
+  .sb__toggle .sb__chev--open { display: none; }
+
+  .sb__full { display: flex; flex-direction: column; gap: 18px; flex: 1 0 auto; }
+  .sb__list { display: flex; flex-direction: column; gap: 2px; }
+  .sb__label { padding: 0 10px; margin: 0 0 4px; }
+  .sb__link {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 32px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: var(--font-display); font-size: 14px; line-height: 1.35;
+    color: var(--text); text-decoration: none;
+  }
+  .sb__link:hover, .sb__sub:hover { background: var(--hover-row); }
+  .sb__link[aria-current] { font-weight: 600; box-shadow: inset 2px 0 0 var(--orange); }
+  /* A wrapped title keeps the dot and number on its first line. */
+  .sb__week { align-items: flex-start; }
+  .sb__week .sb__dot { margin-top: 3.5px; }
+  .sb__num { flex: none; width: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 19px; color: var(--muted); }
+  .sb__week .sb__title { line-height: 19px; }
+  .sb__title { min-width: 0; }
+
+  /* Progress dots: outline to do, ink fill done, dashed optional, clay ring for this page's week. */
+  .sb__dot { flex: none; width: 12px; height: 12px; overflow: visible; }
+  .sb__dot circle { fill: none; stroke: var(--text); stroke-width: 1.5; }
+  .sb__week.is-done .sb__dot circle { fill: var(--text); }
+  .sb__week.is-optional .sb__dot circle { stroke-dasharray: 2.5 2; }
+  .sb__week.is-here .sb__dot circle { stroke: var(--orange); stroke-width: 2; stroke-dasharray: none; }
+
+  .sb__card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2px 0 6px; }
+  .sb__card > .sb__week { font-weight: 600; }
+  .sb__card .sb__week:not(.is-done) .sb__dot circle { fill: var(--surface); }
+  .sb__sub {
+    display: flex; align-items: center;
+    min-height: 28px;
+    padding: 2px 10px 2px 38px;
+    border-radius: 6px;
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.4;
+    color: var(--body); text-decoration: none;
+  }
+  .sb__sub[aria-current] { color: var(--text); font-weight: 600; box-shadow: inset 2px 0 0 var(--orange); }
+
+  .sb__theme { margin-top: auto; padding: 0 10px; }
+  .sb__theme .theme-switch { display: block; }
+  .sb__theme legend { margin-bottom: 6px; }
+
+  /* Collapsed: a 68px rail of icons and week numbers. */
+  .sb__rail { display: none; }
+  html[data-sidebar="collapsed"] .sb { padding: 18px 0; align-items: center; gap: 14px; }
+  html[data-sidebar="collapsed"] .sb__home,
+  html[data-sidebar="collapsed"] .sb__full { display: none; }
+  html[data-sidebar="collapsed"] .sb__head { justify-content: center; }
+  html[data-sidebar="collapsed"] .sb__toggle .sb__chev--open { display: inline; }
+  html[data-sidebar="collapsed"] .sb__toggle .sb__chev--close { display: none; }
+  html[data-sidebar="collapsed"] .sb__rail { display: flex; flex-direction: column; align-items: center; gap: 14px; flex: 1 0 auto; }
+  .sb__rlist { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .sb__rlist--weeks { gap: 6px; }
+  .sb__rule { width: 32px; height: 1px; background: var(--border); flex: none; }
+  .sb__rbtn {
+    width: 36px; height: 36px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 0; border-radius: 6px;
+    background: transparent; color: var(--text);
+    font-family: var(--font-mono); font-size: 13px; line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .sb__rbtn:hover { background: var(--hover-row); }
+  .sb__rbtn[aria-current] { box-shadow: inset 0 -2px 0 var(--orange); }
+  .sb__rweek { border: 1.5px solid var(--text); border-radius: 50%; }
+  .sb__rweek[aria-current] { box-shadow: none; }
+  .sb__rweek.is-optional { border-style: dashed; }
+  .sb__rweek.is-done, .sb__rweek.is-done:hover { background: var(--text); color: var(--on-ink); }
+  .sb__rweek.is-here { border: 2px solid var(--orange); font-weight: 600; }
+  .sb__rtheme { margin-top: auto; }
+
+  /* Tooltip for the rail and the toggle: one fixed element, so the
+     scrolling sidebar cannot clip it. aria-hidden; it repeats the name. */
+  .sb-tip {
+    position: fixed; z-index: 150;
+    max-width: 320px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: var(--text); color: var(--on-ink);
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.4;
+    white-space: nowrap;
+  }
+  .sb-tip.is-on { display: block; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  html.has-js body, .sb, .sb__toggle { transition: none; }
+}
+@media (forced-colors: active) {
+  .sb__link[aria-current], .sb__sub[aria-current], .sb__rbtn[aria-current] { forced-color-adjust: none; box-shadow: inset 2px 0 0 Highlight; }
+  .sb__rweek.is-done { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .sb-tip { border: 1px solid CanvasText; }
+}
+
+/* ---------- Breadcrumbs ---------- */
+/* nav.crumbs[aria-label=Breadcrumb] replaces the kicker above the h1.
+   1024px and wider: the full trail. Below: one link back to the parent. */
+.crumbs { margin-bottom: 10px; }
+.crumbs__trail { display: none; }
+.crumbs__back {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 28px;
+  font-family: var(--font-mono); font-size: var(--meta); line-height: 1.4;
+  color: var(--muted);
+}
+.crumbs__back:hover, .crumbs__trail a:hover { color: var(--text); }
+@media (min-width: 1024px) {
+  .crumbs { margin-bottom: 22px; }
+  .crumbs__back { display: none; }
+  .crumbs__trail {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 0 8px;
+    font-family: var(--font-mono); font-size: var(--meta); line-height: 1.5;
+    color: var(--muted);
+  }
+  .crumbs__trail li { display: inline-flex; align-items: center; gap: 8px; }
+  .crumbs__trail a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--muted); }
+  .crumbs__trail [aria-current] { color: var(--text); font-weight: 500; }
 }
 
 /* ---------- Site footer and pager ---------- */

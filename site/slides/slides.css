@@ -12,7 +12,7 @@
   --border-hover: #0A0A0A;
   --text: #0A0A0A;
   --body: #262626;
-  --muted: #737373;
+  --muted: #6B6B6B;
   --step: #525252;
   --orange: #CC785C;
   --display: 'Inter', system-ui, -apple-system, sans-serif;
@@ -803,4 +803,73 @@ body.toc-open {
 @media (max-height: 800px) {
   .slide { padding-top: 36px; padding-bottom: 76px; }
   .item { padding-top: 10px; padding-bottom: 10px; }
+}
+
+/* ----- Session decks: activity links and plan clocks ----- */
+
+/* A slide's link to its activity on the week page. */
+.activity-link { margin-top: 16px; font-family: var(--mono); font-size: 13px; line-height: 1.5; }
+.activity-link a { color: var(--text); border-bottom: 0; text-decoration: underline; text-underline-offset: 3px; }
+.activity-link a:hover { text-decoration-thickness: 2px; }
+.slide-dark .activity-link a { color: #FFFFFF; }
+
+/* Clock times ("16:00 to 25:00") in plan rows: one line, one column width. */
+.item-num.clock { min-width: 8.6em; white-space: nowrap; }
+
+/* ----- Bottom bar: breadcrumb left, controls right (slides.js) ----- */
+/* .nav spans the bar; only its children take clicks. */
+.nav { left: 28px; justify-content: space-between; pointer-events: none; }
+.nav > * { pointer-events: auto; }
+.nav-group { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+.nav-crumbs { min-width: 0; }
+.nav-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  white-space: nowrap;
+}
+/* li repeats the font: the deck's "p, li" rule sets serif 18px. */
+.nav-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--step);
+}
+.nav-crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: var(--step);
+  border-bottom: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.nav-crumbs a:hover { color: var(--text); text-decoration-thickness: 2px; }
+.nav-crumbs [aria-current] { color: var(--text); font-weight: 500; }
+/* On a dark slide the crumbs sit on #0A0A0A. */
+body.on-dark-slide .nav-crumbs li,
+body.on-dark-slide .nav-crumbs a { color: #A3A3A3; }
+body.on-dark-slide .nav-crumbs a:hover,
+body.on-dark-slide .nav-crumbs [aria-current] { color: #FFFFFF; }
+/* The open contents drawer covers the left of the bar. */
+body.toc-open .nav-crumbs { visibility: hidden; }
+/* Narrow screens keep only the link to the week page, then only "Week N". */
+@media (max-width: 960px) {
+  .nav-crumbs .nav-crumbs-course, .nav-crumbs .nav-crumbs-here, .nav-crumbs .nav-crumbs-sep { display: none; }
+}
+@media (max-width: 840px) {
+  .nav-crumbs .nav-crumbs-title { display: none; }
+  /* Only "Week N" is left: give it a full-size target. */
+  .nav-crumbs a { display: inline-flex; align-items: center; min-height: 32px; min-width: 32px; }
+}
+/* Phones: the breadcrumb takes its own line and the buttons wrap below it. */
+@media (max-width: 600px) {
+  .nav { left: 12px; right: 12px; bottom: 12px; flex-wrap: wrap; row-gap: 8px; }
+  .nav-crumbs { flex: 1 0 100%; }
+  .nav-group { margin-left: 0; flex-wrap: wrap; gap: 8px; }
 }

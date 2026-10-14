@@ -11,8 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <script>
-/* Pre-paint: track and theme. site.js does the rest. */
-(function (d, q, t, m) {
+/* Pre-paint: track, theme and sidebar. site.js does the rest. */
+(function (d, q, t, m, s) {
   try { q = new URLSearchParams(location.search); } catch (e) {}
   t = q && q.get("track");
   if (t !== "codex" && t !== "claude") { try { t = localStorage.getItem("agentic-se-track"); } catch (e) {} }
@@ -21,6 +21,10 @@
   m = q && q.get("theme");
   if (m !== "dark" && m !== "light" && m !== "system") { try { m = localStorage.getItem("agentic-se-theme"); } catch (e) {} }
   if (m === "dark" || m === "light") d.setAttribute("data-theme", m);
+  d.classList.add("has-js");
+  try { s = localStorage.getItem("agentic-se-sidebar"); } catch (e) {}
+  if (s !== "collapsed" && s !== "expanded") { try { s = matchMedia("(min-width: 1280px)").matches ? "expanded" : "collapsed"; } catch (e) { s = "expanded"; } }
+  d.setAttribute("data-sidebar", s);
 })(document.documentElement);
 </script>
 </head>
@@ -237,7 +241,7 @@
         <div class="q__answer" id="q5-answer" hidden>
           <p class="q__verdict" data-verdict></p>
           <p>Manual mode asks before actions that might modify your system. The last option describes auto mode, where a separate classifier model reviews most actions and blocks only what looks risky. Permission allowlists and sandboxing cut the number of prompts in either mode.</p>
-          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#configure-permissions" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Configure permissions"<span class="sr-only"> (opens in a new tab)</span></a>. Also Session 1, Part 4, on permission modes.</p>
+          <p class="q__source">Source: <a href="https://code.claude.com/docs/en/best-practices#configure-permissions" target="_blank" rel="noopener noreferrer">Best Practices for Claude Code, "Configure permissions"<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </li>
 

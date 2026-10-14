@@ -5,11 +5,43 @@
    toggles disclosures, and the progress features stay inert.
 
    LOAD ORDER
-     <head>  the pre-paint snippet from week-1.html (sets html.track-codex,
-             data-theme from ?theme= or localStorage "agentic-se-theme").
+     <head>  the pre-paint snippet from week-1.html, identical on every page.
+             It sets html.track-codex, data-theme from ?theme= or
+             localStorage "agentic-se-theme", html.has-js, and
+             data-sidebar="expanded"|"collapsed" from localStorage
+             "agentic-se-sidebar", else expanded at 1280px and wider and
+             collapsed below. site.css reserves the sidebar column from
+             these two before first paint, so main never moves.
      <body>  ...page... <script src="progress.js"></script>
              <script src="site.js"></script>, then any page script, which
              can use window.AgenticSite once this file has run.
+
+   PAGE IDENTITY  The file name, read from location: "week-N" is that
+     week's page and "week-N-check" its self-check (N in WEEKS);
+     "facilitator-week-N" is a run-sheet under Facilitator; "index",
+     "progress", "resources", "further-reading" and "facilitator" are the
+     top-level pages; "" or "/" is index. No body attribute is needed.
+
+   SIDEBAR (1024px and wider)  nav.sb#course-sidebar[aria-label=Course],
+     rendered after the skip link; header.topbar is hidden by CSS. Expanded
+     (264px): course name, Overview, My progress, Weeks (dot, number,
+     title from WEEKS; this page's week opens in a card with Week page,
+     Self-check and Slides, the last two for weeks that are not optional),
+     Reference (Resources, Further reading, Facilitator), the theme
+     control. Collapsed (68px rail): icons, round week numbers and one
+     theme button that cycles System, Light, Dark; each has an aria-label
+     shown in a tooltip (.sb-tip) on hover and keyboard focus. Dots: ink
+     fill when weekStats(n).complete on the current track, clay ring for
+     this page's week, dashed for an optional week, outline otherwise.
+     aria-current="page" marks the link to this page; "true" marks the
+     link a page belongs under (Facilitator on a run-sheet; the rail's
+     week button on a self-check). button.sb__toggle[aria-expanded]
+     ("Collapse sidebar" / "Expand sidebar") flips data-sidebar and writes
+     "agentic-se-sidebar"; with nothing stored the state follows 1280px.
+   BREADCRUMBS  nav.crumbs[aria-label=Breadcrumb] on every page with a
+     trail (all but index): ol.crumbs__trail from 1024px, a.crumbs__back
+     to the parent below. It goes before p.week-head__label (the kicker,
+     then hidden) or else before the h1 in main.
 
    ON EVERY PAGE
      - Track switch: input[type=radio][name=track]. Precedence on load:
@@ -18,12 +50,15 @@
        ?track= with replaceState, toggles html.track-codex, calls
        AgenticProgress.setTrack (on load only if it differs) and writes the
        live region [data-track-live].
-     - Theme control: input[type=radio][name=theme] in header.topbar .topbar__inner.
+     - Theme control: one fieldset.theme-switch of input[type=radio][name=theme],
+       in header.topbar .topbar__right below 1024px and moved into the
+       sidebar's [data-sb-theme-slot] from 1024px (never two copies).
        Three-way toggle (System, Light, Dark). Precedence on load:
        ?theme= > localStorage "agentic-se-theme" > "system". "System" removes
        data-theme on html; "Light" and "Dark" set data-theme="light" or "dark".
        A change saves the choice to localStorage "agentic-se-theme", announces
-       the new theme to a polite live region, and syncs tabs via storage events.
+       the new theme to site.js's live region, updates the rail's cycle
+       button, and syncs tabs via storage events.
      - Registers every week in COURSE (core items, outcome ids) with
        AgenticProgress.registerWeek, so summary() is complete everywhere.
      - Re-renders on AgenticProgress.on("change"), from this tab or another.
@@ -365,26 +400,15 @@
       announceTheme(m);
     }
     setThemeRadios(m);
+    syncThemeButton(m);
     if (started) render();
   }
-  function announceTheme(m) {
-    var label = m === "dark" ? "Dark" : (m === "light" ? "Light" : "System");
-    var msg = "Theme: " + label;
-    var region = document.querySelector('[aria-live="polite"]');
-    if (!region) {
-      region = document.createElement("div");
-      region.className = "sr-only";
-      region.setAttribute("aria-live", "polite");
-      document.body.appendChild(region);
-    }
-    region.textContent = "";
-    setTimeout(function () { region.textContent = msg; }, 30);
-  }
+  function themeLabel(m) { return m === "dark" ? "Dark" : (m === "light" ? "Light" : "System"); }
+  // Goes to site.js's own live region: the first polite region on a page can
+  // be visible page content (the pair-number readout on week-1.html).
+  function announceTheme(m) { announce("Theme: " + themeLabel(m)); }
   function renderThemeSwitch() {
-    var inner = document.querySelector("header.topbar .topbar__inner");
-    if (!inner || inner.querySelector(".theme-switch")) return;
-    var host = inner.querySelector(".topbar__right") || inner;
-
+    if ($("fieldset.theme-switch")) return;
     var fieldset = document.createElement("fieldset");
     fieldset.className = "theme-switch";
 
@@ -396,14 +420,10 @@
     var opts = document.createElement("div");
     opts.className = "theme-switch__opts";
 
-    var iconSystem = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 1 A7 7 0 0 1 8 15 Z" fill="currentColor"/></svg>';
-    var iconLight = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="3" fill="currentColor"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.1" y2="4.1"/><line x1="11.9" y1="11.9" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.1" y2="11.9"/><line x1="11.9" y1="4.1" x2="12.95" y2="3.05"/></svg>';
-    var iconDark = '<svg class="theme-switch__icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M14 9.5a5.5 5.5 0 0 1-7.5-7.5A6 6 0 1 0 14 9.5z"/></svg>';
-
     var items = [
-      { value: "system", label: "System", icon: iconSystem },
-      { value: "light", label: "Light", icon: iconLight },
-      { value: "dark", label: "Dark", icon: iconDark }
+      { value: "system", label: "System", icon: themeIcon("system", 12) },
+      { value: "light", label: "Light", icon: themeIcon("light", 12) },
+      { value: "dark", label: "Dark", icon: themeIcon("dark", 12) }
     ];
 
     items.forEach(function (it) {
@@ -423,7 +443,290 @@
     });
 
     fieldset.appendChild(opts);
-    host.appendChild(fieldset);
+    placeThemeSwitch(fieldset);
+  }
+  function themeIcon(m, size) {
+    var open = '<svg class="theme-switch__icon" width="' + size + '" height="' + size + '" viewBox="0 0 16 16" aria-hidden="true" focusable="false"';
+    if (m === "light") return open + ' fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3" fill="currentColor"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.1" y2="4.1"/><line x1="11.9" y1="11.9" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.1" y2="11.9"/><line x1="11.9" y1="4.1" x2="12.95" y2="3.05"/></svg>';
+    if (m === "dark") return open + ' fill="currentColor"><path d="M14 9.5a5.5 5.5 0 0 1-7.5-7.5A6 6 0 1 0 14 9.5z"/></svg>';
+    return open + ' fill="currentColor"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 1 A7 7 0 0 1 8 15 Z" fill="currentColor"/></svg>';
+  }
+  // One theme control, moved between the top bar (below 1024px) and the
+  // sidebar (1024px and wider), so name="theme" and its ids stay unique.
+  function placeThemeSwitch(fs) {
+    fs = fs || $("fieldset.theme-switch");
+    if (!fs) return;
+    var slot = desktop() ? $("[data-sb-theme-slot]") : null;
+    if (!slot) {
+      var inner = $("header.topbar .topbar__inner");
+      slot = inner ? ($(".topbar__right", inner) || inner) : null;
+    }
+    if (!slot || fs.parentNode === slot) return;
+    var hadFocus = fs.contains(document.activeElement);
+    slot.appendChild(fs);
+    var lg = $("legend", fs);
+    if (lg) lg.className = slot.hasAttribute("data-sb-theme-slot") ? "label" : "sr-only";
+    if (hadFocus) { var r = $("input:checked", fs) || $("input", fs); if (r) r.focus(); }
+  }
+  // The rail's single theme button cycles System, Light, Dark.
+  var THEME_CYCLE = { system: "light", light: "dark", dark: "system" };
+  function syncThemeButton(m) {
+    var b = $("[data-sb-theme-cycle]");
+    if (!b) return;
+    var name = "Theme: " + themeLabel(m);
+    b.setAttribute("aria-label", name);
+    b.setAttribute("data-tip", name);
+    b.innerHTML = themeIcon(m, 16);
+    refreshTip(b);
+  }
+
+  /* ---------- page identity, sidebar and breadcrumbs ---------- */
+  var SIDEBAR_KEY = "agentic-se-sidebar";
+  var mqDesktop = window.matchMedia ? window.matchMedia("(min-width: 1024px)") : null;
+  var mqWide = window.matchMedia ? window.matchMedia("(min-width: 1280px)") : null;
+  function desktop() { return !!(mqDesktop && mqDesktop.matches); }
+  function onMedia(mq, fn) {
+    if (!mq) return;
+    if (mq.addEventListener) mq.addEventListener("change", fn); else if (mq.addListener) mq.addListener(fn);
+  }
+  // The page's identity is its file name: week-1.html is {week: 1, sub:
+  // "page"}, week-1-check.html {week: 1, sub: "check"}, facilitator-week-4.html
+  // {id: "facilitator-week-4", section: "facilitator"}, and "" or "/" is index.
+  function pageInfo() {
+    var file = "";
+    try { file = decodeURIComponent(location.pathname.split("/").pop() || ""); } catch (e) { file = ""; }
+    var id = file.replace(/\.html?$/i, "") || "index";
+    var m = /^week-(\d+)(-check)?$/.exec(id);
+    if (m && week(parseInt(m[1], 10))) return { id: id, week: parseInt(m[1], 10), sub: m[2] ? "check" : "page", section: null };
+    return { id: id, week: null, sub: null, section: /^facilitator-week-\d+$/.test(id) ? "facilitator" : id };
+  }
+  var TOP_LINKS = [
+    { id: "index", href: "index.html", text: "Overview", rail: "Course overview",
+      icon: '<path d="M2 7.5L8 2.5l6 5"/><path d="M3.5 6.5V13.5h9V6.5"/>' },
+    { id: "progress", href: "progress.html", text: "My progress", rail: "My progress",
+      icon: '<path d="M3 13.5V9"/><path d="M8 13.5V4"/><path d="M13 13.5V7"/>' }
+  ];
+  var REF_LINKS = [
+    { id: "resources", href: "resources.html", text: "Resources", rail: "Resources",
+      icon: '<path d="M2.5 3h4a1.5 1.5 0 011.5 1.5V13a1 1 0 00-1-1H2.5z"/><path d="M13.5 3h-4A1.5 1.5 0 008 4.5V13a1 1 0 011-1h4.5z"/>' },
+    { id: "further-reading", href: "further-reading.html", text: "Further reading", rail: "Further reading",
+      icon: '<path d="M3 4h10"/><path d="M3 8h10"/><path d="M3 12h6"/>' },
+    { id: "facilitator", href: "facilitator.html", text: "Facilitator", rail: "Facilitator",
+      icon: '<rect x="3" y="3" width="10" height="11" rx="1.5"/><path d="M6 2v2h4V2"/><path d="M5.5 8h5M5.5 10.5h3"/>' }
+  ];
+  var TOGGLE_ICON = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+    '<rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M6 2.5v11"/>' +
+    '<path class="sb__chev--close" d="M11 6l-2 2 2 2"/><path class="sb__chev--open" d="M9 6l2 2-2 2"/></svg>';
+  // aria-current: "page" on the link to this page; "true" on the link a page
+  // belongs under (Facilitator on a run-sheet, the week button in the rail
+  // on that week's self-check).
+  function currentOf(link, pg) {
+    if (pg.id === link.id) return "page";
+    if (pg.section === link.id) return "true";
+    return null;
+  }
+  function cur(v) { return v ? ' aria-current="' + v + '"' : ""; }
+  function railIcon(paths) {
+    return '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + paths + "</svg>";
+  }
+  function weekName(w) { return "Week " + w.n + ": " + w.title; }
+  function weekSubs(w) {
+    var subs = [{ id: "week-" + w.n, href: w.href, text: "Week page" }];
+    if (!w.optional) {
+      subs.push({ id: "week-" + w.n + "-check", href: "week-" + w.n + "-check.html", text: "Self-check" });
+      subs.push({ id: null, href: "slides/session" + w.n + ".html", text: "Slides" });
+    }
+    return subs;
+  }
+  function sidebarHTML(pg) {
+    var h = '<div class="sb__head"><a class="sb__home" href="index.html">Agentic SE Course</a>' +
+      '<button type="button" class="sb__toggle" aria-controls="course-sidebar">' + TOGGLE_ICON + "</button></div>";
+    // Expanded
+    h += '<div class="sb__full"><ul class="sb__list">' + TOP_LINKS.map(function (l) {
+      return '<li><a class="sb__link" href="' + l.href + '"' + cur(currentOf(l, pg)) + ">" + esc(l.text) + "</a></li>";
+    }).join("") + "</ul>";
+    h += '<div><p class="label sb__label" id="sb-weeks-h">Weeks</p><ul class="sb__list" aria-labelledby="sb-weeks-h">' + WEEKS.filter(function (w) { return w.href; }).map(function (w) {
+      var here = pg.week === w.n;
+      var link = '<a class="sb__link sb__week' + (here ? " is-here" : "") + (w.optional ? " is-optional" : "") + '" href="' + esc(w.href) + '" data-sb-week="' + w.n + '">' +
+        '<svg class="sb__dot" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="5"/></svg>' +
+        '<span class="sb__num"><span class="sr-only">Week </span>' + w.n + '<span class="sr-only">:</span></span>' +
+        '<span class="sb__title">' + esc(w.title) + '<span class="sr-only" data-sb-status></span></span></a>';
+      if (!here) return "<li>" + link + "</li>";
+      return '<li class="sb__card">' + link + '<ul aria-label="' + esc(weekName(w)) + '">' + weekSubs(w).map(function (s) {
+        return '<li><a class="sb__sub" href="' + esc(s.href) + '"' + cur(s.id === pg.id ? "page" : null) + ">" + s.text + "</a></li>";
+      }).join("") + "</ul></li>";
+    }).join("") + "</ul></div>";
+    h += '<div><p class="label sb__label" id="sb-ref-h">Reference</p><ul class="sb__list" aria-labelledby="sb-ref-h">' + REF_LINKS.map(function (l) {
+      return '<li><a class="sb__link" href="' + l.href + '"' + cur(currentOf(l, pg)) + ">" + esc(l.text) + "</a></li>";
+    }).join("") + "</ul></div>";
+    h += '<div class="sb__theme" data-sb-theme-slot></div></div>';
+    // Collapsed rail
+    function rbtn(l) {
+      return '<li><a class="sb__rbtn" href="' + l.href + '"' + cur(currentOf(l, pg)) + ' aria-label="' + esc(l.rail) + '" data-tip="' + esc(l.rail) + '">' + railIcon(l.icon) + "</a></li>";
+    }
+    h += '<div class="sb__rail"><ul class="sb__rlist">' + TOP_LINKS.map(rbtn).join("") + "</ul>" +
+      '<div class="sb__rule"></div><ul class="sb__rlist sb__rlist--weeks" aria-label="Weeks">' + WEEKS.filter(function (w) { return w.href; }).map(function (w) {
+        var here = pg.week === w.n;
+        return '<li><a class="sb__rbtn sb__rweek' + (here ? " is-here" : "") + (w.optional ? " is-optional" : "") + '" href="' + esc(w.href) + '" data-sb-rweek="' + w.n + '"' +
+          cur(here ? (pg.sub === "page" ? "page" : "true") : null) + ' aria-label="' + esc(weekName(w)) + '" data-tip="' + esc(weekName(w)) + '">' + w.n + "</a></li>";
+      }).join("") + "</ul>" +
+      '<div class="sb__rule"></div><ul class="sb__rlist">' + REF_LINKS.map(rbtn).join("") + "</ul>" +
+      '<button type="button" class="sb__rbtn sb__rtheme" data-sb-theme-cycle></button></div>';
+    return h;
+  }
+  function sidebarState() { return root.getAttribute("data-sidebar") === "collapsed" ? "collapsed" : "expanded"; }
+  function storedSidebar() {
+    var s = null;
+    try { s = window.localStorage.getItem(SIDEBAR_KEY); } catch (e) { s = null; }
+    return s === "collapsed" || s === "expanded" ? s : null;
+  }
+  function defaultSidebar() { return mqWide && !mqWide.matches ? "collapsed" : "expanded"; }
+  function syncToggle() {
+    var b = $(".sb__toggle");
+    if (!b) return;
+    var open = sidebarState() === "expanded", name = open ? "Collapse sidebar" : "Expand sidebar";
+    b.setAttribute("aria-expanded", String(open));
+    b.setAttribute("aria-label", name);
+    b.setAttribute("data-tip", name);
+    refreshTip(b);
+  }
+  function setSidebar(state, store) {
+    root.setAttribute("data-sidebar", state);
+    if (store) { try { window.localStorage.setItem(SIDEBAR_KEY, state); } catch (e) { /* blocked */ } }
+    syncToggle();
+  }
+  // Dots follow the week stats on the current track: filled when every core
+  // item is done. The status words go to screen readers and the rail tooltip.
+  function renderSidebar(st) {
+    if (!$(".sb")) return;
+    WEEKS.forEach(function (w) {
+      var done = weekStats(w.n, track, st).complete;
+      var status = done ? ", done" : (w.optional ? ", optional" : "");
+      $$('[data-sb-week="' + w.n + '"]').forEach(function (a) {
+        a.classList.toggle("is-done", done);
+        var s = $("[data-sb-status]", a);
+        if (s && s.textContent !== status) s.textContent = status;
+      });
+      $$('[data-sb-rweek="' + w.n + '"]').forEach(function (a) {
+        a.classList.toggle("is-done", done);
+        var name = weekName(w) + status;
+        if (a.getAttribute("aria-label") !== name) { a.setAttribute("aria-label", name); a.setAttribute("data-tip", name); refreshTip(a); }
+      });
+    });
+  }
+  var tip = null, tipFor = null, tipTimer = null;
+  function showTip(el) {
+    if (!tip || !el || !desktop()) return;
+    clearTimeout(tipTimer);
+    tipFor = el;
+    tip.textContent = el.getAttribute("data-tip");
+    tip.classList.add("is-on");
+    var r = el.getBoundingClientRect(), th = tip.offsetHeight;
+    var top = Math.max(4, Math.min(window.innerHeight - th - 4, r.top + r.height / 2 - th / 2));
+    tip.style.left = Math.round(r.right + 10) + "px";
+    tip.style.top = Math.round(top) + "px";
+  }
+  function hideTip(delay) {
+    clearTimeout(tipTimer);
+    if (!tip) return;
+    var go = function () { tip.classList.remove("is-on"); tipFor = null; };
+    if (delay) tipTimer = setTimeout(go, delay); else go();
+  }
+  function refreshTip(el) { if (tip && tipFor === el && tip.classList.contains("is-on")) showTip(el); }
+  function keyFocus(el) { try { return el.matches(":focus-visible"); } catch (e) { return true; } }
+  function hovered(el) { try { return el.matches(":hover"); } catch (e) { return false; } }
+  function tipTarget(t) {
+    var el = t && t.closest ? t.closest("[data-tip]") : null;
+    return el && el.closest(".sb") && el.offsetParent !== null ? el : null;
+  }
+  function wireSidebar(nav) {
+    tip = document.createElement("div");
+    tip.className = "sb-tip";
+    tip.setAttribute("aria-hidden", "true");
+    document.body.appendChild(tip);
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest(".sb__toggle")) {
+        var b = e.target.closest(".sb__toggle");
+        setSidebar(sidebarState() === "expanded" ? "collapsed" : "expanded", true);
+        hideTip();
+        // The button moves; keep its name visible while it has keyboard focus.
+        if (document.activeElement === b && keyFocus(b)) setTimeout(function () { showTip(b); }, 0);
+      } else if (e.target.closest("[data-sb-theme-cycle]")) {
+        applyTheme(THEME_CYCLE[currentTheme] || "system", true);
+      }
+    });
+    // Hover and keyboard focus show the name; Escape dismisses it; the
+    // pointer can move onto the tooltip without it closing (SC 1.4.13).
+    nav.addEventListener("mouseover", function (e) { var el = tipTarget(e.target); if (el) showTip(el); });
+    nav.addEventListener("mouseout", function (e) {
+      var el = tipTarget(e.target);
+      if (!el || (e.relatedTarget && el.contains(e.relatedTarget))) return;
+      if (el === document.activeElement && keyFocus(el)) return;
+      hideTip(150);
+    });
+    tip.addEventListener("mouseover", function () { clearTimeout(tipTimer); });
+    tip.addEventListener("mouseout", function () { if (!(tipFor && tipFor === document.activeElement)) hideTip(150); });
+    nav.addEventListener("focusin", function (e) { var el = tipTarget(e.target); if (el && keyFocus(el)) showTip(el); });
+    nav.addEventListener("focusout", function (e) {
+      var el = tipTarget(e.target);
+      if (el && tipFor === el && !hovered(el)) hideTip();
+    });
+    nav.addEventListener("scroll", function () { hideTip(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && tip.classList.contains("is-on")) hideTip(); });
+  }
+  function renderSidebarShell(pg) {
+    if ($(".sb")) return;
+    var nav = document.createElement("nav");
+    nav.className = "sb";
+    nav.id = "course-sidebar";
+    nav.setAttribute("aria-label", "Course");
+    nav.innerHTML = sidebarHTML(pg);
+    var skip = $(".skip-link");
+    if (skip && skip.parentNode === document.body) document.body.insertBefore(nav, skip.nextSibling);
+    else document.body.insertBefore(nav, document.body.firstChild);
+    wireSidebar(nav);
+    syncToggle();
+    syncThemeButton(currentTheme);
+  }
+  function initSidebar(pg) {
+    // Pages without the pre-paint snippet still get the sidebar, one frame late.
+    if (!root.classList.contains("has-js")) root.classList.add("has-js");
+    if (!root.hasAttribute("data-sidebar")) root.setAttribute("data-sidebar", storedSidebar() || defaultSidebar());
+    renderSidebarShell(pg);
+    onMedia(mqWide, function () { if (!storedSidebar()) setSidebar(defaultSidebar(), false); });
+    onMedia(mqDesktop, function () { placeThemeSwitch(); hideTip(); });
+  }
+
+  // Trails per page; the last crumb is the page itself.
+  function trailOf(pg) {
+    var course = { text: "Course", href: "index.html" };
+    if (pg.week !== null) {
+      var w = week(pg.week);
+      return pg.sub === "check" ? [course, { text: weekName(w), href: w.href }, { text: "Self-check" }] : [course, { text: weekName(w) + (w.optional ? " (optional)" : "") }];
+    }
+    var fw = /^facilitator-week-(\d+)$/.exec(pg.id);
+    if (fw) return [course, { text: "Facilitator", href: "facilitator.html" }, { text: "Week " + fw[1] + " run-sheet" }];
+    var names = { progress: "My progress", resources: "Resources", "further-reading": "Further reading", facilitator: "Facilitator" };
+    return names[pg.id] ? [course, { text: names[pg.id] }] : null;
+  }
+  // The breadcrumb takes the kicker's place above the h1; the kicker is
+  // hidden only once the breadcrumb is in, so the page reads without JS.
+  function renderCrumbs(pg) {
+    var t = trailOf(pg), main = $("main");
+    if (!t || !main || $("nav.crumbs", main)) return;
+    var kicker = $(".week-head__label", main), anchor = kicker || $("h1", main);
+    if (!anchor) return;
+    var parent = t[t.length - 2];
+    var nav = document.createElement("nav");
+    nav.className = "crumbs";
+    nav.setAttribute("aria-label", "Breadcrumb");
+    nav.innerHTML = '<ol class="crumbs__trail">' + t.map(function (c, i) {
+      var sep = i ? '<span aria-hidden="true">›</span>' : "";
+      return "<li>" + sep + (c.href ? '<a href="' + esc(c.href) + '">' + esc(c.text) + "</a>" : '<span aria-current="page">' + esc(c.text) + "</span>") + "</li>";
+    }).join("") + "</ol>" +
+      '<a class="crumbs__back" href="' + esc(parent.href) + '"><span aria-hidden="true">‹</span>' + esc(parent.href === "index.html" ? "Course overview" : parent.text) + "</a>";
+    anchor.parentNode.insertBefore(nav, anchor);
+    if (kicker) kicker.hidden = true;
   }
 
   /* ---------- stats ---------- */
@@ -1717,6 +2020,7 @@
       renderQuizScores();
     }
     renderCourseMaps(st);
+    renderSidebar(st);
     renderSessions();
     renderNextSession(st);
     renderCalendar();
@@ -1740,6 +2044,17 @@
     live.setAttribute("data-site-live", "");
     document.body.appendChild(live);
 
+    var pg = pageInfo();
+    try {
+      initSidebar(pg);
+      renderCrumbs(pg);
+    } catch (err) {
+      // Never leave a page without navigation: fall back to the top bar.
+      root.classList.remove("has-js");
+      var sbEl = $(".sb");
+      if (sbEl) sbEl.parentNode.removeChild(sbEl);
+      if (window.console) console.error(err);
+    }
     renderThemeSwitch();
     applyTheme(currentTheme, false);
 
@@ -1755,6 +2070,7 @@
     window.addEventListener("storage", function (e) {
       if (e.key === TRACK_KEY && validTrack(e.newValue) && e.newValue !== track) applyTrack(e.newValue, false);
       if (e.key === THEME_KEY && validTheme(e.newValue) && e.newValue !== currentTheme) applyTheme(e.newValue, false);
+      if (e.key === SIDEBAR_KEY) setSidebar(storedSidebar() || defaultSidebar(), false);
     });
     var t = null;
     window.addEventListener("resize", function () {

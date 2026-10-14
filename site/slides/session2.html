@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
 </head>
-<body data-week="2">
+<body data-week="2" class="deck-v2">
 
 <div class="progress" id="progress"></div>
 
@@ -16,7 +16,7 @@
   <div class="slide-inner">
     <div class="slide-label"><a href="../week-2.html" class="title-link">Week 2 &middot; Session 2</a></div>
     <h1><a href="../week-2.html" class="title-link">Adapting a Coding Agent</a></h1>
-    <p class="subtitle" style="color: #D4D4D4;">Skills, subagents, Model Context Protocol, and the skill-building sprint.</p>
+    <p class="subtitle" style="color: #D4D4D4;">Skills, MCP, subagents, sandboxing and context engineering, then the skill-building sprint.</p>
   </div>
 </div>
 
@@ -26,10 +26,10 @@
     <div class="slide-label">Run-Sheet</div>
     <h2>Plan for the Hour</h2>
     <div class="items">
-      <div class="item"><span class="item-num">00-05</span><span class="item-text"><strong>Retrieval opener.</strong> Active recall on paper.</span></div>
-      <div class="item"><span class="item-num">05-20</span><span class="item-text"><strong>Discussion.</strong> Questions from the courses and the context-engineering article.</span></div>
-      <div class="item"><span class="item-num">20-55</span><span class="item-text"><strong>Skill-building sprint.</strong> Write and swap a skill in pairs.</span></div>
-      <div class="item"><span class="item-num">55-60</span><span class="item-text"><strong>Debrief.</strong> What worked, where skill descriptions failed, and Week 3 next.</span></div>
+      <div class="item"><span class="item-num clock">0:00 to 5:00</span><span class="item-text"><strong>Retrieval opener</strong>, on paper.</span></div>
+      <div class="item"><span class="item-num clock">5:00 to 20:00</span><span class="item-text"><strong>Discussion</strong> of the courses and the context-engineering article.</span></div>
+      <div class="item"><span class="item-num clock">20:00 to 55:00</span><span class="item-text"><strong>Skill-building sprint</strong> in pairs.</span></div>
+      <div class="item"><span class="item-num clock">55:00 to 60:00</span><span class="item-text"><strong>Debrief</strong>, and Week 3 next.</span></div>
     </div>
   </div>
 </div>
@@ -40,18 +40,52 @@
     <div class="slide-label">0:00 to 5:00 &middot; Active</div>
     <h2>Retrieval Opener</h2>
     <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">When does a skill beat a rule in CLAUDE.md or AGENTS.md?</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">What are the core components of the Model Context Protocol?</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Why does subagent isolation preserve reasoning quality?</span></div>
-      <div class="item"><span class="item-num">4</span><span class="item-text">What risk do failed attempts introduce into conversation history?</span></div>
+      <div class="item"><span class="item-num">1</span><span class="item-text">How does a skill load differently from a rule in CLAUDE.md or AGENTS.md?</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Which three primitives can an MCP server expose?</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Claude Code:</strong> why put a side task in a subagent? <strong>Codex:</strong> under workspace-write and on-request approvals, when does Codex ask first?</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text">What is context rot?</span></div>
     </div>
   </div>
 </div>
 
-<!-- 4: Three extension layers -->
+<!-- 4: Opener key -->
 <div class="slide" id="s3">
   <div class="slide-inner">
-    <div class="slide-label">Architecture</div>
+    <div class="slide-label">0:00 to 5:00 &middot; Opener Key</div>
+    <h2>Answer Key</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">1</span><span class="item-text">A skill loads only its metadata until invoked; a root file loads in full every session.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text">Tools, resources and prompts.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Claude Code:</strong> verbose output stays in the subagent; only a summary returns. <strong>Codex:</strong> before editing outside the workspace or using the network.</span></div>
+      <div class="item"><span class="item-num">4</span><span class="item-text">Recall from context declines as tokens grow.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5: What each track read -->
+<div class="slide" id="s4">
+  <div class="slide-inner">
+    <div class="slide-label">5:00 to 20:00 &middot; Discussion</div>
+    <h2>What Each Track Read</h2>
+    <table class="table" style="margin-top: 8px;">
+      <thead>
+        <tr><th scope="col">Topic</th><th scope="col">Claude Code</th><th scope="col">Codex</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Skills</strong></td><td>Introduction to Agent Skills</td><td>Build skills</td></tr>
+        <tr><td><strong>MCP</strong></td><td colspan="2">Both tracks: Introduction to Model Context Protocol</td></tr>
+        <tr><td><strong>Subagents</strong></td><td>Introduction to Subagents</td><td>Scale Codex Across Teams and Systems</td></tr>
+        <tr><td><strong>Permissions</strong></td><td>How Claude Code Works</td><td>Sandbox; Agent approvals &amp; security</td></tr>
+        <tr><td><strong>Context</strong></td><td colspan="2">Both tracks: Effective Context Engineering for AI Agents</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 6: Three extension layers -->
+<div class="slide" id="s5">
+  <div class="slide-inner">
+    <div class="slide-label">5:00 to 20:00 &middot; Discussion</div>
     <h2>Three Extension Layers</h2>
     <div class="layer-stack">
       <div class="layer">
@@ -84,125 +118,151 @@
   </div>
 </div>
 
-<!-- 5: Skills -->
-<div class="slide" id="s4">
+<!-- 7: Skills -->
+<div class="slide" id="s6">
   <div class="slide-inner">
-    <div class="slide-label">Layer 1 &middot; Skills</div>
+    <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
     <h2>Skills: On-Demand Knowledge</h2>
     <div class="two-col" style="gap: 18px;">
       <div>
-        <div class="col-label">Where they live</div>
+        <div class="col-label">Location</div>
         <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Personal: <code>~/.claude/skills/</code></span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Project: <code>.claude/skills/</code></span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Codex: <code>.agents/skills/</code></span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Claude Code: <code>.claude/skills/</code> in the project</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Codex: <code>.agents/skills/</code>, from the working directory up</span></div>
         </div>
       </div>
       <div>
-        <div class="col-label">Why use them</div>
+        <div class="col-label">Why</div>
         <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Loads instructions only when invoked.</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Keeps default system prompt lean.</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;">Encodes repeatable project workflows.</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Only metadata loads until invoked.</span></div>
+          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Encodes a repeating workflow.</span></div>
         </div>
       </div>
     </div>
+    <p class="meta" style="margin-top: 16px;">Ask: what makes a description trigger on the right tasks?</p>
   </div>
 </div>
 
-<!-- 6: Subagents -->
-<div class="slide" id="s5">
+<!-- 8: Subagents -->
+<div class="slide" id="s7">
   <div class="slide-inner">
-    <div class="slide-label">Layer 2 &middot; Subagents</div>
+    <div class="slide-label">5:00 to 20:00 &middot; Claude Code Track</div>
     <h2>Subagents: Isolated Context</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Context protection</strong>: Long research runs flood the window with file contents.</span></div>
-      <div class="item"><span class="item-text"><strong>Independent workers</strong>: Subagents explore, test, or review in fresh sessions.</span></div>
-      <div class="item"><span class="item-text"><strong>Distilled output</strong>: Only the final summary returns to the main conversation.</span></div>
+      <div class="item"><span class="item-text"><strong>Own context</strong>: a side task runs in its own window.</span></div>
+      <div class="item"><span class="item-text"><strong>Noise stays out</strong>: search results and build logs stay there.</span></div>
+      <div class="item"><span class="item-text"><strong>Distilled return</strong>: only a summary or finished artefact comes back.</span></div>
     </div>
-    <p class="meta" style="margin-top: 14px;">Use subagents when exploring large codebases or conducting separate code reviews.</p>
+    <div class="card card-accent" style="margin-top: 14px; padding-top: 14px; padding-bottom: 14px;">
+      <p><strong>Codex track</strong>: why prefer parallel subagents for read-heavy work, and take care with write-heavy work?</p>
+    </div>
   </div>
 </div>
 
-<!-- 7: MCP -->
-<div class="slide" id="s6">
+<!-- 9: MCP -->
+<div class="slide" id="s8">
   <div class="slide-inner">
-    <div class="slide-label">Layer 3 &middot; MCP</div>
+    <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
     <h2>Model Context Protocol</h2>
     <div class="two-col" style="gap: 18px;">
       <div class="card card-accent">
-        <h3>Open Standard</h3>
-        <p style="font-size: 13px;">Connects agents to databases, issue trackers, internal APIs, and local developer tooling without proprietary glue code.</p>
+        <h3>Three primitives</h3>
+        <p style="font-size: 14px;"><strong>Tools</strong>: functions the agent invokes.<br/><strong>Resources</strong>: data, such as files.<br/><strong>Prompts</strong>: reusable templates.</p>
       </div>
       <div class="card card-accent">
-        <h3>Transports</h3>
-        <p style="font-size: 13px;"><strong>stdio</strong> for fast local CLI processes.<br/><strong>Streamable HTTP</strong> for remote services.<br/>Credentials stay securely with the server.</p>
+        <h3>When to use it</h3>
+        <p style="font-size: 14px;">Context that lives outside the repository and changes often.</p>
+      </div>
+    </div>
+    <p class="meta" style="margin-top: 16px;">Ask: what does a server add to the agent's context?</p>
+  </div>
+</div>
+
+<!-- 10: Sandbox and approvals -->
+<div class="slide" id="s9">
+  <div class="slide-inner">
+    <div class="slide-label">5:00 to 20:00 &middot; Permissions</div>
+    <h2>Sandbox and Approvals</h2>
+    <div class="two-col" style="gap: 16px;">
+      <div class="card card-accent">
+        <h3>Claude Code &middot; How Claude Code Works</h3>
+        <p style="font-size: 14px;">Permission modes constrain what tools can execute.</p>
+        <p style="font-size: 14px; margin-top: 6px;">Which mode suits the sprint, and what may the agent do in it without asking?</p>
+      </div>
+      <div class="card card-accent">
+        <h3>Codex &middot; Sandbox; Agent approvals &amp; security</h3>
+        <p style="font-size: 14px;">The sandbox sets the boundary; the approval policy decides when Codex asks.</p>
+        <p style="font-size: 14px; margin-top: 6px;">In workspace-write with on-request approvals, it edits and runs routine commands in the workspace unasked, and asks before editing outside it or using the network.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 8: Context Engineering -->
-<div class="slide" id="s7">
-  <div class="slide-inner">
-    <div class="slide-label">Anthropic Engineering</div>
-    <h2>Context Engineering</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Attention is finite</strong>: Tokens in context compete for attention; noise degrades output.</span></div>
-      <div class="item"><span class="item-text"><strong>Trajectory bias</strong>: If a session contains failed edits, the agent tends to repeat them.</span></div>
-      <div class="item"><span class="item-text"><strong>Intentional compaction</strong>: Clear context between unrelated tasks; write specs before coding.</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 9: Sprint setup -->
-<div class="slide" id="s8">
-  <div class="slide-inner">
-    <div class="slide-label">20:00 to 55:00 &middot; Activity</div>
-    <h2>Skill-Building Sprint</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">In pairs. Write a skill, swap it, and test its trigger.</p>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Pick a repository</strong>: One from the Week 1 benchmark tasks, or your own project.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Author a skill</strong>: Write a <code>SKILL.md</code> for a repeating check or workflow.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Swap and test</strong>: Verify that it triggers when needed and stays silent otherwise.</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 10: Sprint authoring -->
-<div class="slide" id="s9">
-  <div class="slide-inner">
-    <div class="slide-label">Sprint Step 1 &middot; Authoring</div>
-    <h2>Writing an Effective SKILL.md</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Frontmatter description</strong>: Explain exactly when the agent should invoke it.</span></div>
-      <div class="item"><span class="item-text"><strong>Prerequisites &amp; context</strong>: List the files or commands the skill relies on.</span></div>
-      <div class="item"><span class="item-text"><strong>Deterministic steps</strong>: Provide ordered instructions and error checks.</span></div>
-      <div class="item"><span class="item-text"><strong>Success criteria</strong>: Give the agent a command to verify its work.</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 11: Sprint testing -->
+<!-- 11: Context engineering -->
 <div class="slide" id="s10">
   <div class="slide-inner">
-    <div class="slide-label">Sprint Step 2 &middot; Testing</div>
+    <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
+    <h2>Context Engineering</h2>
+    <div class="items">
+      <div class="item"><span class="item-text"><strong>Context rot</strong>: recall declines as tokens in context grow; attention is finite.</span></div>
+      <div class="item"><span class="item-text"><strong>Compaction</strong>: near the limit, summarise and continue in a new window.</span></div>
+      <div class="item"><span class="item-text"><strong>The risk</strong>: compact too hard and subtle context that matters later is lost.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 12: Sprint authoring -->
+<div class="slide" id="s11">
+  <div class="slide-inner">
+    <div class="slide-label">20:00 to 55:00 &middot; Sprint &middot; Authoring</div>
+    <h2>Writing an Effective SKILL.md</h2>
+    <div class="items">
+      <div class="item"><span class="item-text"><strong>Description</strong>: say exactly when the agent should invoke it.</span></div>
+      <div class="item"><span class="item-text"><strong>Context</strong>: list the files or commands the skill relies on.</span></div>
+      <div class="item"><span class="item-text"><strong>Steps</strong>: ordered instructions with error checks.</span></div>
+      <div class="item"><span class="item-text"><strong>Success</strong>: give the agent a command to verify its work.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 13: Sprint testing -->
+<div class="slide" id="s12">
+  <div class="slide-inner">
+    <div class="slide-label">20:00 to 55:00 &middot; Sprint &middot; Testing</div>
     <h2>Testing Trigger Precision</h2>
     <div class="two-col" style="gap: 16px;">
       <div class="card card-accent">
         <h3>Positive test</h3>
-        <p style="font-size: 13px;">Prompt your agent with a task the skill was designed for. Does the agent invoke the skill automatically?</p>
+        <p>Prompt a task the skill was written for. Does the agent invoke it?</p>
       </div>
       <div class="card card-accent">
         <h3>Negative test</h3>
-        <p style="font-size: 13px;">Prompt with an adjacent but unrelated task. Does the skill stay quiet, avoiding context pollution?</p>
+        <p>Prompt an adjacent, unrelated task. Does the skill stay quiet?</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 12: Sprint debrief -->
-<div class="slide" id="s11">
+<!-- 14: Sprint brief, on screen until 55:00 -->
+<div class="slide" id="s13">
+  <div class="slide-inner">
+    <div class="slide-label">20:00 to 55:00 &middot; In Pairs</div>
+    <h2>Skill-Building Sprint, Until 55:00</h2>
+    <div class="items">
+      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Choose a repository</strong>: a Week 1 benchmark task's, or your own.</span></div>
+      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Write a SKILL.md</strong> for a repeating pattern or workflow.</span></div>
+      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Swap</strong>: your partner tests that it triggers when it should and stays quiet when it should not.</span></div>
+    </div>
+    <div class="card card-accent" style="margin-top: 14px; padding-top: 12px; padding-bottom: 12px;">
+      <p><strong>By 55:00:</strong> one SKILL.md each, tested both ways.</p>
+    </div>
+    <p class="meta" style="margin-top: 12px;">Codex skills follow the same open standard, so mixed pairs can swap.</p>
+    <p class="activity-link"><a href="../week-2.html#sprint-h">Sprint brief on the Week 2 page<span aria-hidden="true"> &rarr;</span></a></p>
+  </div>
+</div>
+
+<!-- 15: Sprint debrief -->
+<div class="slide" id="s14">
   <div class="slide-inner">
     <div class="slide-label">55:00 to 60:00 &middot; Interactive</div>
     <h2>Sprint Debrief</h2>
@@ -214,13 +274,13 @@
   </div>
 </div>
 
-<!-- 13: Before Week 3 Pre-Work, Claude Code -->
-<div class="slide" id="s12">
+<!-- 16: Before Week 3 pre-work, Claude Code -->
+<div class="slide" id="s15">
   <div class="slide-inner">
-    <div class="slide-label">Before Week 3 &middot; Claude Code Track</div>
-    <h2>Core Pre-Work for Week 3</h2>
+    <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
+    <h2>Pre-Work: Claude Code Track</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>No Vibes Allowed: Solving Hard Problems in Complex Codebases</strong>: video, 20.5 min</span></div>
+      <div class="item"><span class="item-text"><strong>No Vibes Allowed</strong>: video, 20.5 min</span></div>
       <div class="item"><span class="item-text"><strong>Everything We Got Wrong About Research-Plan-Implement</strong>: video, 26.8 min</span></div>
       <div class="item"><span class="item-text"><strong>Set up Claude Code in a monorepo or large codebase</strong>: reading, 19.0 min</span></div>
       <div class="item"><span class="item-text"><strong>Keep Claude working toward a goal</strong>: reading, 9.2 min</span></div>
@@ -229,13 +289,13 @@
   </div>
 </div>
 
-<!-- 13b: Before Week 3 Pre-Work, Codex -->
-<div class="slide" id="s12b">
+<!-- 17: Before Week 3 pre-work, Codex -->
+<div class="slide" id="s16">
   <div class="slide-inner">
-    <div class="slide-label">Before Week 3 &middot; Codex Track</div>
-    <h2>Core Pre-Work for Week 3</h2>
+    <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
+    <h2>Pre-Work: Codex Track</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>No Vibes Allowed: Solving Hard Problems in Complex Codebases</strong>: video, 20.5 min</span></div>
+      <div class="item"><span class="item-text"><strong>No Vibes Allowed</strong>: video, 20.5 min</span></div>
       <div class="item"><span class="item-text"><strong>Everything We Got Wrong About Research-Plan-Implement</strong>: video, 26.8 min</span></div>
       <div class="item"><span class="item-text"><strong>Custom instructions with AGENTS.md</strong>: reading, 4.9 min</span></div>
       <div class="item"><span class="item-text"><strong>Long-running work</strong>: reading, 3.2 min</span></div>
@@ -244,24 +304,24 @@
   </div>
 </div>
 
-<!-- 14: Week 3 Activity Setup -->
-<div class="slide" id="s13">
+<!-- 18: Week 3 activity -->
+<div class="slide" id="s17">
   <div class="slide-inner">
-    <div class="slide-label">Before Week 3 &middot; Activity</div>
+    <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
     <h2>Activity: Ship One Issue by Hand</h2>
     <div class="items">
-      <div class="item"><span class="item-text"><strong>Fork lanorme</strong>: Enable Issues and Actions; note base commit SHA.</span></div>
-      <div class="item"><span class="item-text"><strong>Copy one issue</strong>: Pick an issue from the curated pool into your fork.</span></div>
-      <div class="item"><span class="item-text"><strong>Run the loop</strong>: Triage, spec in <code>specs/&lt;issue&gt;.md</code>, implement with <code>/goal</code>, review, PR.</span></div>
-      <div class="item"><span class="item-text"><strong>Time each stage</strong> (60 min activity): Log human minutes, tokens, interventions, and judgements.</span></div>
+      <div class="item"><span class="item-text"><strong>Fork lanorme</strong>, enable Issues and Actions, note the base SHA.</span></div>
+      <div class="item"><span class="item-text"><strong>Copy one issue</strong> from the curated pool into your fork.</span></div>
+      <div class="item"><span class="item-text"><strong>Run the loop</strong>: triage, spec in <code>specs/&lt;issue&gt;.md</code>, implement with <code>/goal</code>, review, PR.</span></div>
+      <div class="item"><span class="item-text"><strong>Log each stage</strong> (60 min activity): human minutes, tokens, context, interventions, judgements.</span></div>
     </div>
   </div>
 </div>
 
-<!-- 15: Closing -->
-<div class="slide slide-dark" id="s14">
+<!-- 19: Closing -->
+<div class="slide slide-dark" id="s18">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-label"><a href="../week-2.html" class="title-link">Week 2 &middot; Session 2</a></div>
+    <div class="slide-label">55:00 to 60:00 &middot; Next Steps</div>
     <h1>Close &amp; Next Steps</h1>
     <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Tick your sprint outcome and review the Week 3 activity guide.</p>
     <p style="margin-top: 16px; font-family: var(--mono); font-size: 14px;">
