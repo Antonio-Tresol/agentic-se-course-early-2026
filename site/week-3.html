@@ -82,7 +82,6 @@
         <h2 id="oc-h" class="label label--ink">By the end of this week you can</h2>
         <span class="oc__count" data-progress-outcome-count="3">0 of 4 ticked</span>
       </div>
-      <p class="meta oc__hint">Tick one once you can do it, after the self-check, the deliverable or the live session.</p>
       <ol class="oc__list">
         <li class="oc__item">
           <div>
@@ -127,7 +126,7 @@
   <!-- 4. Core pre-work -->
   <section class="section" aria-labelledby="core-h">
     <h2 id="core-h" class="h-section">Core pre-work</h2>
-    <p class="section-intro">In this order. The self-check and the live session assume all five. Read the questions before you start each item, and tick it when you finish.</p>
+    <p class="section-intro">In this order. The self-check and the live session assume all five. Read the questions before you start each item.</p>
 
     <ol class="pw-list">
       <li class="pw-row pw-row--tracked">
@@ -354,7 +353,7 @@
               <p class="meta" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:10px"><span class="label label--ink">Example</span> <span>Illustrative values, not a recorded run. Issue: a new check, copied into the fork as issue 4.</span></p>
               <div data-example-chart class="example-chart"></div>
               <table class="rubric">
-                <caption>Stage log, example data (the text alternative to the timeline above)</caption>
+                <caption>Stage log, example data</caption>
                 <thead>
                   <tr><th scope="col">Stage</th><th scope="col">Human minutes</th><th scope="col">Tokens and cost</th><th scope="col">Context given</th><th scope="col">Intervention</th><th scope="col">Judgement</th></tr>
                 </thead>
@@ -381,7 +380,6 @@
         </div>
       </li>
     </ol>
-    <p class="note">Ticked items fill the bar at the top of the page. "Took" is optional: it helps the course owner check these estimates.</p>
   </section>
 
   <!-- 5. Optional pre-work -->
@@ -525,8 +523,8 @@
         <li><span>Review with a reviewer subagent or <code>/code-review</code>, and answer each finding.</span></li>
         <li><span>Open the pull request on the fork, where CI runs.</span></li>
       </ol>
-      <p data-track="claude">For each stage, log the human minutes as they happen, the tokens and estimated cost from <code>/usage</code> (<a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener noreferrer">Manage costs effectively<span class="sr-only"> (opens in a new tab)</span></a>), the context given, every intervention, and any judgement a person had to make. The worked example log above shows one row per stage in this format. Enter the same values in "Your stage log" below.</p>
-      <p data-track="codex">Codex has its own <code>/goal</code> for step 3; for step 4, use <code>/review</code> or a reviewer subagent. For each stage, log the human minutes as they happen, the token counts from <code>codex exec --json</code> (<a href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">Non-interactive mode<span class="sr-only"> (opens in a new tab)</span></a>), the context given, every intervention, and any judgement a person had to make. The worked example log above shows one row per stage in this format. Enter the same values in "Your stage log" below.</p>
+      <p data-track="claude">For each stage, log the human minutes as they happen, the tokens and estimated cost from <code>/usage</code> (<a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener noreferrer">Manage costs effectively<span class="sr-only"> (opens in a new tab)</span></a>), the context given, every intervention, and any judgement a person had to make.</p>
+      <p data-track="codex">Codex has its own <code>/goal</code> for step 3; for step 4, use <code>/review</code> or a reviewer subagent. For each stage, log the human minutes as they happen, the token counts from <code>codex exec --json</code> (<a href="https://learn.chatgpt.com/docs/non-interactive-mode" target="_blank" rel="noopener noreferrer">Non-interactive mode<span class="sr-only"> (opens in a new tab)</span></a>), the context given, every intervention, and any judgement a person had to make.</p>
       <p><strong>Fork rules.</strong> Work on your fork, against the copied issue. Send at most one pull request upstream, and open it yourself. If you would rather use your own repository, it needs pull-request CI and at least three open labelled issues.</p>
       <p class="deliverable">Deliverable: the pull request on your fork, the stage log and one paragraph. <a href="#rubric-h">See the criteria</a>.</p>
       <div class="pw-row pw-row--tracked act-done">
@@ -550,7 +548,7 @@
 
     <div class="stl-section" style="margin-top:28px" aria-labelledby="slog-h" role="group">
       <h3 id="slog-h" class="h-card">Your stage log</h3>
-      <p class="section-intro">Log each stage as you finish it. Your entries stay in this browser, draw the timeline below, and are exported with the rest of your progress. Week 5 compares against this log.</p>
+      <p class="section-intro">Log each stage as you finish it. Week 5 compares against this log.</p>
       <div id="slog-chart" aria-live="off"></div>
       <div id="slog-mount" style="margin-top:16px" data-stage-log="3" data-stage-chart="slog-chart" data-stage-label="your log"
         data-stage-intro="One stage at a time, as you finish it. Minutes are required. Leave tokens and cost empty if you do not have them, and name the cause of any intervention."
@@ -561,7 +559,7 @@
   <!-- 7. Self-check: score from this browser, then the check page -->
   <section class="section" aria-labelledby="check-h">
     <h2 id="check-h" class="h-section">Self-check</h2>
-    <p class="section-intro">Five questions on this week's pre-work, answered from memory the day before the session. Say how sure you are before each answer is shown. Your answers are saved in this browser only.</p>
+    <p class="section-intro">Five questions on this week's pre-work, answered from memory the day before the session.</p>
     <div class="score-card">
       <p class="label">Your latest try</p>
       <div data-quiz-summary="3" data-questions="5"></div>

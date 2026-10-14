@@ -139,10 +139,10 @@
   // always sums of these, so the bar, the map and the copy agree.
   var WEEKS = [
     { n: 0, title: "Getting Started", href: "week-0.html", outcomes: ["o1", "o2", "o3", "o4"], items: [
-      it("pw-ai-fluency", "both", null, "course", "AI Fluency: Framework & Foundations"),
-      it("pw-ai-capabilities", "both", null, "course", "AI Capabilities and Limitations"),
-      it("pw-install-claude", "claude", null, "practice", "Install Claude Code"),
-      it("pw-install-codex", "codex", null, "practice", "Install Codex"),
+      it("pw-ai-fluency", "both", 240, "course", "AI Fluency: Framework & Foundations"),
+      it("pw-ai-capabilities", "both", 210, "course", "AI Capabilities and Limitations"),
+      it("pw-install-claude", "claude", 20, "practice", "Install Claude Code"),
+      it("pw-install-codex", "codex", 20, "practice", "Install Codex"),
       opt("pw-ai-foundations-openai", "both", 70, "course", "AI Foundations (OpenAI)")
     ] },
     { n: 1, title: "One Coding Agent", href: "week-1.html", outcomes: ["o1", "o2", "o3", "o4"], items: [
@@ -194,7 +194,7 @@
       opt("opt-ureview", "both", 15.1, "video", "Building uReview"),
       opt("opt-harnesses", "both", 9.1, "reading", "Effective harnesses for long-running agents"),
       opt("opt-sase", "both", 20.0, "reading", "Agentic Software Engineering, sections 2 and 5"),
-      opt("opt-harness-engineering", "both", null, "reading", "Harness engineering")
+      opt("opt-harness-engineering", "both", 12.5, "reading", "Harness engineering")
     ] },
     { n: 5, title: "A minimal factory, measured", href: "week-5.html", deliverable: true, optional: true,
       range: [360, 480], outcomes: ["o1", "o2", "o3", "o4"], items: [] }
@@ -782,7 +782,7 @@
         el.innerHTML =
           '<figure class="cmap" aria-labelledby="cmap-title">' +
           '<div class="cmap__head"><p id="cmap-title" class="cmap__title">Pre-work by week, ' + trackName(track) + " track</p>" +
-          '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done (filled as you tick items off)</span>' +
+          '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done</span>' +
           '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range (Week 5: 6 to 8 h build)</span></div></div>' +
           '<div class="cmap__frame">' +
           '<div class="cmap__ytitle axis-title axis-title--y">Planned minutes</div>' +
@@ -1094,8 +1094,7 @@
           fmt(sum.best.value) + " of " + fmt(sum.best.max) + ' <span class="muted">(try ' + sum.best.index + ")</span></span></div>" +
           scoreKey() +
           '<div class="btn-row"><button type="button" class="btn btn--primary btn--small" data-quiz-restart="new">Try again</button>' +
-          '<a class="btn btn--small" href="progress.html">See my progress</a></div>' +
-          '<p class="meta" style="margin-top:10px">Each try is kept. Your answers stay in this browser until you export them.</p>';
+          '<a class="btn btn--small" href="progress.html">See my progress</a></div>';
       });
     });
     $$("[data-quiz-summary]").forEach(function (el) {
@@ -1230,7 +1229,7 @@
   function calFormHTML(el, uid, c) {
     return '<div class="cal__zone" data-cal-zone>' +
       '<p class="cal__zone-title">Drop your cohort\'s <code>calendar.json</code> here</p>' +
-      '<p class="field-hint" id="' + uid + '-hint">Your course owner publishes one file per cohort. It is saved in this browser only and is never sent anywhere.</p>' +
+      '<p class="field-hint" id="' + uid + '-hint">Your course owner publishes one file per cohort.</p>' +
       '<label class="field-label" for="' + uid + '-file">Choose file</label>' +
       '<input class="field" type="file" id="' + uid + '-file" data-cal-file accept=".json,application/json" aria-describedby="' + uid + '-hint"></div>' +
       '<button type="button" class="disclose" data-disclosure aria-expanded="false" aria-controls="' + uid + '-paste" data-label-open="Hide the paste box" data-label-closed="Paste calendar JSON">Paste calendar JSON</button>' +
