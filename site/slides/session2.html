@@ -6,6 +6,238 @@
 <title>Session 2 &middot; Adapting a Coding Agent</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
+<style>
+/* Session 2 deck visuals. Every class is prefixed s2-. */
+.s2-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* ----- Plan for the hour: one bar, 0 to 60 minutes ----- */
+.s2-hour { margin-top: 30px; }
+.s2-hour-bar { position: relative; height: 56px; }
+.s2-seg {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--s) / 60 * 100%);
+  width: calc(var(--m) / 60 * 100%);
+  box-shadow: inset 0 0 0 1.5px #FFFFFF;
+  padding: 0 10px;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+}
+.s2-seg-name { font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+.s2-seg-min { font-family: var(--mono); font-size: 14px; line-height: 1.3; }
+.s2-pas { background: #6B6B6B; color: #FFFFFF; }
+.s2-act { background: #0072B2; color: #FFFFFF; }
+.s2-con { background: #009E73; color: #0A0A0A; }
+.s2-int { background: #853866; color: #FFFFFF; }
+/* The sprint is constructive, then interactive, with no fixed split. */
+.s2-con-int { background: linear-gradient(90deg, #009E73 0%, #009E73 40%, #853866 100%); color: #0A0A0A; }
+.s2-hour-axis { position: relative; height: 26px; }
+.s2-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: #A3A3A3; }
+.s2-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: #A3A3A3; }
+.s2-tick:first-child { transform: none; }
+.s2-tick:first-child::before { left: 0; }
+.s2-tick:last-child { transform: translateX(-100%); }
+.s2-tick:last-child::before { left: auto; right: 0; }
+.s2-callouts { position: relative; height: 22px; margin-top: 10px; }
+.s2-callout { position: absolute; top: 0; left: calc(var(--c) / 60 * 100%); font-family: var(--display); font-size: 14px; font-weight: 600; color: #FFFFFF; white-space: nowrap; line-height: 22px; }
+.s2-callout .s2-callout-min { font-family: var(--mono); font-size: 14px; font-weight: 400; color: #D4D4D4; margin-left: 6px; }
+.s2-callout::before { content: ""; position: absolute; left: 0; bottom: 100%; width: 1px; height: 36px; background: #D4D4D4; }
+.s2-callout { padding-left: 8px; }
+.s2-callout-r { transform: translateX(-100%); padding-left: 0; padding-right: 8px; }
+.s2-callout-r::before { left: auto; right: 0; }
+.s2-axis-title { font-family: var(--mono); font-size: 12px; color: #A3A3A3; text-align: center; margin-top: -20px; }
+.s2-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px; }
+.s2-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: #D4D4D4; }
+.s2-swatch { width: 16px; height: 16px; box-shadow: inset 0 0 0 1.5px #FFFFFF; }
+.s2-swatch-wide { width: 34px; }
+
+/* ----- Shared horizontal flow: boxes with arrows between ----- */
+.s2-flow { display: flex; gap: 44px; list-style: none; margin-top: 24px; align-items: stretch; }
+.s2-flow > li {
+  position: relative; flex: 1 1 0; min-width: 0;
+  background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px;
+  padding: 14px 16px; font-family: var(--serif); font-size: 16px; line-height: 1.45; color: var(--body);
+}
+.s2-flow > li + li::before { content: ""; position: absolute; left: -36px; top: 50%; width: 22px; height: 1.5px; background: var(--text); }
+.s2-flow > li + li::after { content: ""; position: absolute; left: -15px; top: calc(50% - 4.25px); border-left: 8px solid var(--text); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s2-step-n { display: block; font-family: var(--mono); font-size: 12px; color: var(--step); margin-bottom: 6px; }
+.s2-step-verb { display: block; font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--text); line-height: 1.2; letter-spacing: -0.01em; }
+.s2-step-def { display: block; margin-top: 6px; font-size: 15px; }
+
+/* Arrow pieces for diagrams drawn in a grid */
+.s2-harrow { position: relative; height: 1.5px; background: var(--text); }
+.s2-harrow::after { content: ""; position: absolute; right: -1px; top: -4.25px; border-left: 8px solid var(--text); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s2-harrow-l::after { right: auto; left: -1px; border-left: 0; border-right: 8px solid var(--text); }
+
+.s2-read th { font-size: 14px; }
+
+/* ----- Three extension layers around the agent ----- */
+.s2-ext { display: grid; grid-template-columns: 1fr 156px 1fr 156px 1fr; grid-template-rows: auto 86px auto; margin-top: 30px; align-items: center; }
+.s2-ext-box { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 16px 16px; }
+.s2-ext-name { display: block; font-family: var(--display); font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.s2-ext-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.s2-ext-tags span { font-family: var(--mono); font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 3px; padding: 3px 8px; }
+.s2-ext-agent { grid-column: 3; grid-row: 1; background: var(--text); color: #FFFFFF; border-radius: 6px; padding: 26px 18px; text-align: center; font-family: var(--display); font-size: 22px; font-weight: 600; }
+.s2-ext-link { padding: 0 8px; }
+.s2-ext-what { display: block; font-family: var(--display); font-size: 14px; line-height: 1.3; color: var(--text); text-align: center; margin-bottom: 8px; }
+.s2-ext-v { grid-column: 3; grid-row: 2; position: relative; height: 100%; }
+.s2-ext-v::before { content: ""; position: absolute; left: 50%; top: 2px; bottom: 0; width: 1.5px; background: var(--text); }
+.s2-ext-v::after { content: ""; position: absolute; left: calc(50% - 4.25px); top: 0; border-bottom: 8px solid var(--text); border-left: 5px solid transparent; border-right: 5px solid transparent; }
+.s2-ext-v .s2-ext-what { position: absolute; left: calc(50% + 14px); top: 50%; transform: translateY(-50%); text-align: left; width: 220px; margin: 0; }
+.s2-ext-sub { grid-column: 3; grid-row: 3; }
+
+/* ----- How a skill loads: two states of the context window ----- */
+.s2-ctx { margin-top: 26px; }
+.s2-ctx-row { display: grid; grid-template-columns: 132px 1fr; align-items: center; gap: 14px; margin-bottom: 12px; }
+.s2-ctx-state { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--text); }
+.s2-ctx-win { display: flex; height: 56px; border: 1.5px solid var(--text); border-radius: 6px; background: var(--surface); overflow: hidden; }
+.s2-ctx-win > span { display: flex; flex-direction: column; justify-content: center; padding: 0 12px; border-right: 1.5px solid var(--text); line-height: 1.25; }
+.s2-ctx-root { flex: 0 0 36%; background: #262626; color: #FFFFFF; font-family: var(--mono); font-size: 14px; }
+.s2-ctx-root small { font-family: var(--display); font-size: 14px; color: #E5E5E5; }
+.s2-ctx-meta { flex: 0 0 17%; background: var(--bg); color: var(--text); font-family: var(--display); font-size: 14px; }
+.s2-ctx-body { flex: 0 0 22%; background: var(--orange); color: #0A0A0A; font-family: var(--display); font-size: 14px; font-weight: 600; }
+.s2-ctx-note { display: flex; justify-content: space-between; margin: 2px 0 0 146px; font-family: var(--mono); font-size: 14px; color: var(--step); }
+.s2-where { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin-top: 22px; align-items: baseline; }
+.s2-where dt { font-family: var(--mono); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--step); }
+.s2-where dd { font-family: var(--serif); font-size: 17px; color: var(--body); }
+.s2-where code { font-family: var(--mono); font-size: 15px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; }
+
+/* ----- Subagents: a side context ----- */
+.s2-sub { display: grid; grid-template-columns: 250px 1fr 320px; gap: 0 18px; margin-top: 28px; align-items: center; }
+.s2-sub-box { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 16px 18px; }
+.s2-sub-h { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); }
+.s2-sub-p { display: block; font-family: var(--serif); font-size: 15px; color: var(--body); margin-top: 4px; }
+.s2-sub-noise { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.s2-sub-noise span { font-family: var(--mono); font-size: 14px; color: var(--text); background: var(--bg); border: 1.5px dashed #8A8A8A; border-radius: 4px; padding: 4px 8px; }
+.s2-sub-arrows { display: flex; flex-direction: column; gap: 30px; }
+.s2-sub-lab { display: block; font-family: var(--display); font-size: 15px; color: var(--text); text-align: center; margin-bottom: 8px; }
+.s2-sub-lab strong { font-weight: 600; }
+.s2-codex-q { margin-top: 26px; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 14px 18px; font-family: var(--serif); font-size: 16px; color: var(--body); }
+.s2-track { font-family: var(--mono); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); font-weight: 500; margin-right: 8px; }
+
+/* ----- MCP: client and server ----- */
+.s2-mcp { display: grid; grid-template-columns: 1fr 86px 1.9fr 64px 1fr; margin-top: 30px; align-items: center; }
+.s2-mcp-agent { background: var(--text); color: #FFFFFF; border-radius: 6px; padding: 20px 16px; text-align: center; font-family: var(--display); font-size: 20px; font-weight: 600; }
+.s2-mcp-agent small { display: block; font-family: var(--mono); font-size: 14px; font-weight: 400; color: #D4D4D4; margin-top: 4px; }
+.s2-mcp-wire { position: relative; height: 1.5px; background: var(--text); }
+.s2-mcp-wire::before, .s2-mcp-wire::after { content: ""; position: absolute; top: -4.25px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s2-mcp-wire::before { left: -1px; border-right: 8px solid var(--text); }
+.s2-mcp-wire::after { right: -1px; border-left: 8px solid var(--text); }
+.s2-mcp-server { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; overflow: hidden; }
+.s2-mcp-server-h { font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--text); padding: 10px 16px; border-bottom: 1.5px solid var(--text); }
+.s2-mcp-prims { list-style: none; }
+.s2-mcp-prims li { display: grid; grid-template-columns: 104px 1fr; gap: 10px; align-items: baseline; padding: 10px 16px; font-family: var(--serif); font-size: 15px; color: var(--body); }
+.s2-mcp-prims li + li { border-top: 1px solid var(--border); }
+.s2-mcp-prims strong { font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--text); }
+.s2-mcp-line { height: 1.5px; background: var(--text); }
+.s2-mcp-out { border: 1.5px dashed var(--text); border-radius: 6px; padding: 14px 14px; font-family: var(--serif); font-size: 15px; line-height: 1.45; color: var(--body); background: var(--bg); }
+
+/* ----- Sandbox and approvals ----- */
+.s2-perm { display: grid; grid-template-columns: 3fr 2fr; gap: 30px; margin-top: 22px; align-items: start; }
+.s2-perm-h { font-family: var(--display); font-size: 16px; color: var(--text); margin-bottom: 10px; }
+.s2-mx { width: 100%; border-collapse: separate; border-spacing: 6px; margin: 0 -6px; }
+.s2-mx th { font-family: var(--display); font-size: 14px; font-weight: 600; color: var(--text); text-align: left; padding: 4px 6px; vertical-align: bottom; }
+.s2-mx th[scope="row"] { vertical-align: middle; width: 30%; }
+.s2-mx td { border: 1.5px solid var(--text); border-radius: 6px; padding: 12px 14px; font-family: var(--display); font-size: 17px; font-weight: 600; vertical-align: middle; height: 72px; }
+.s2-mx td small { display: block; font-family: var(--mono); font-size: 14px; font-weight: 400; margin-top: 4px; }
+.s2-mx thead td { border: 0; height: auto; padding: 0; }
+.s2-free { background: var(--surface); color: var(--text); }
+.s2-free small { color: var(--step); }
+.s2-ask { background: var(--text); color: #FFFFFF; }
+.s2-ask small { color: #D4D4D4; }
+.s2-perm-cap { font-family: var(--serif); font-size: 15px; color: var(--body); margin-top: 12px; }
+.s2-perm-card { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 16px 18px; }
+.s2-perm-card p { font-size: 16px; line-height: 1.5; }
+.s2-perm-card p + p { margin-top: 10px; }
+
+/* ----- Context engineering: compaction ----- */
+.s2-cmp { display: grid; grid-template-columns: 132px 1fr; gap: 0 14px; margin-top: 26px; align-items: center; }
+.s2-cmp-state { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--text); }
+.s2-cmp-win { position: relative; display: flex; gap: 4px; height: 48px; padding: 6px; border: 1.5px solid var(--text); border-radius: 6px; background: var(--surface); }
+.s2-cmp-win i { flex: 0 0 calc((100% - 13 * 4px) / 14 * 0.94); background: #6B6B6B; border-radius: 2px; }
+.s2-cmp-limit { position: absolute; right: -2px; top: -10px; bottom: -10px; width: 3px; background: var(--text); }
+.s2-cmp-cap { grid-column: 2; font-family: var(--serif); font-size: 16px; color: var(--body); margin: 8px 0 0; }
+.s2-cmp-cap strong { font-family: var(--display); font-weight: 600; color: var(--text); }
+.s2-cmp-step { grid-column: 2; display: flex; align-items: center; gap: 14px; height: 76px; padding-left: 40px; }
+.s2-cmp-down { position: relative; width: 1.5px; height: 52px; background: var(--text); flex: none; }
+.s2-cmp-down::after { content: ""; position: absolute; left: -4.25px; bottom: -1px; border-top: 8px solid var(--text); border-left: 5px solid transparent; border-right: 5px solid transparent; }
+.s2-cmp-step p { font-family: var(--serif); font-size: 16px; color: var(--body); }
+.s2-cmp-step strong { font-family: var(--display); font-weight: 600; color: var(--text); }
+.s2-cmp-sum { flex: 0 0 22%; background: var(--text); color: #FFFFFF; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 14px; font-weight: 600; }
+.s2-cmp-lost { flex: 0 0 auto; display: flex; gap: 6px; margin-left: auto; margin-right: 10px; align-items: center; height: 36px; }
+.s2-cmp-lost i { width: 24px; height: 34px; border: 1.5px dashed #8A8A8A; border-radius: 2px; }
+.s2-cmp-lost i:nth-child(2) { transform: translateY(8px) rotate(-8deg); }
+.s2-cmp-lost i:nth-child(3) { transform: translateY(-4px) rotate(6deg); }
+
+/* ----- SKILL.md anatomy ----- */
+.s2-file { display: grid; grid-template-columns: 230px 44px 1fr; margin-top: 30px; align-items: stretch; }
+.s2-file-tab { grid-column: 1; justify-self: start; font-family: var(--mono); font-size: 14px; color: #FFFFFF; background: var(--text); border-radius: 6px 6px 0 0; padding: 5px 12px; }
+.s2-file-part { grid-column: 1; background: var(--surface); border-left: 1.5px solid var(--text); border-right: 1.5px solid var(--text); border-top: 1px solid var(--border); padding: 16px 18px; font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--text); display: flex; align-items: center; }
+.s2-file-first { border-top: 1.5px solid var(--text); border-top-right-radius: 6px; }
+.s2-file-last { border-bottom: 1.5px solid var(--text); border-radius: 0 0 6px 6px; }
+.s2-file-lead { grid-column: 2; display: flex; align-items: center; }
+.s2-file-lead span { display: block; width: 100%; height: 1.5px; background: var(--text); }
+.s2-file-def { grid-column: 3; display: flex; align-items: center; padding-left: 12px; font-family: var(--serif); font-size: 18px; color: var(--body); }
+
+/* ----- Trigger precision: 2 x 2 ----- */
+.s2-tp { width: 100%; border-collapse: separate; border-spacing: 8px; margin: 22px -8px 0; }
+.s2-tp th { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--text); text-align: left; padding: 4px 8px; }
+.s2-tp thead th { text-align: center; }
+.s2-tp th[scope="row"] { width: 34%; vertical-align: middle; }
+.s2-tp th[scope="row"] small { display: block; font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--body); margin-top: 2px; }
+.s2-tp td { height: 92px; border-radius: 6px; text-align: center; vertical-align: middle; font-family: var(--display); font-size: 20px; font-weight: 600; }
+.s2-tp thead td { height: auto; }
+.s2-pass { background: var(--text); color: #FFFFFF; border: 1.5px solid var(--text); }
+.s2-fail { background: var(--surface); color: var(--text); border: 1.5px dashed var(--text); }
+
+/* ----- Sprint flow ----- */
+.s2-sprint > li { padding-top: 12px; border-top-width: 6px; }
+.s2-m-con { border-top-color: #009E73 !important; }
+.s2-m-int { border-top-color: #853866 !important; }
+.s2-sprint .s2-step-n { display: flex; justify-content: space-between; }
+.s2-sprint .s2-end { flex: 0 0 180px; background: var(--text); color: #FFFFFF; border-top-width: 1.5px; }
+.s2-end .s2-step-n { color: #D4D4D4; }
+.s2-end .s2-step-verb { color: #FFFFFF; font-family: var(--mono); font-size: 24px; font-weight: 500; }
+.s2-end .s2-step-def { color: #E5E5E5; }
+.s2-key { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px; }
+.s2-key span { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: var(--body); }
+.s2-key i { width: 22px; height: 6px; }
+
+/* ----- Pre-work: bars sized by minutes, one scale ----- */
+.s2-pw { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 16px; align-items: start; }
+.s2-pw-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5px solid var(--text); padding-bottom: 5px; margin-bottom: 8px; }
+.s2-pw-head + .s2-pw-plot { margin-bottom: 14px; }
+.s2-pw-track { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); }
+.s2-pw-total { font-family: var(--mono); font-size: 14px; color: var(--step); }
+.s2-pw-plot { position: relative; margin-right: 46px; }
+.s2-pw-row { padding: 3px 0 7px; }
+.s2-pw-label { font-family: var(--display); font-size: 15px; color: var(--text); line-height: 1.3; }
+.s2-pw-kind { font-family: var(--mono); font-size: 14px; color: var(--step); margin-left: 6px; }
+.s2-pw-barline { position: relative; height: 16px; margin-top: 4px; background-image: linear-gradient(to right, var(--border) 0 1px, transparent 1px); background-size: 25% 100%; background-repeat: repeat-x; box-shadow: inset -1px 0 0 var(--border); }
+.s2-pw-bar { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--v) / 60 * 100%); border-radius: 0 3px 3px 0; }
+.s2-pw-val { position: absolute; top: 50%; transform: translateY(-50%); left: calc(var(--v) / 60 * 100% + 7px); font-family: var(--mono); font-size: 14px; color: var(--text); white-space: nowrap; }
+.s2-k-video { background: #853866; }
+.s2-k-reading { background: #009E73; }
+.s2-k-practice { background: #262626; }
+.s2-pw-axis { position: relative; height: 22px; margin-right: 46px; border-top: 1.5px solid var(--text); }
+.s2-pw-axis span { position: absolute; top: 4px; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); font-family: var(--mono); font-size: 12px; color: var(--step); }
+.s2-pw-axis span:first-child { transform: none; }
+.s2-pw-axis-title { font-family: var(--mono); font-size: 12px; color: var(--step); }
+
+/* ----- Week 3 activity: setup, loop, log ----- */
+.s2-ship { display: grid; grid-template-columns: 118px 1fr; gap: 16px 14px; margin-top: 24px; align-items: center; }
+.s2-ship-k { font-family: var(--mono); font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--step); }
+.s2-ship .s2-flow { margin-top: 0; gap: 30px; }
+.s2-ship .s2-flow > li { flex: 1 1 auto; }
+.s2-ship .s2-flow > li { padding: 10px 12px; font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.s2-ship .s2-flow > li + li::before { left: -26px; width: 14px; }
+.s2-ship .s2-flow > li + li::after { left: -13px; }
+.s2-ship .s2-flow small { display: block; font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--body); margin-top: 3px; }
+.s2-ship code { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--text); background: var(--bg); border-radius: 3px; padding: 0 4px; }
+.s2-log { display: grid; grid-template-columns: repeat(5, 1fr); border: 1.5px solid var(--text); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.s2-log span { padding: 10px 12px; font-family: var(--display); font-size: 15px; color: var(--text); }
+.s2-log span + span { border-left: 1px solid var(--border); }
+.s2-ship-foot { grid-column: 2; font-family: var(--mono); font-size: 14px; color: var(--step); margin-top: -8px; }
+</style>
 </head>
 <body data-week="2" class="deck-v2">
 
@@ -25,11 +257,28 @@
   <div class="slide-inner">
     <div class="slide-label">Run-Sheet</div>
     <h2>Plan for the Hour</h2>
-    <div class="items">
-      <div class="item"><span class="item-num clock">0:00 to 5:00</span><span class="item-text"><strong>Retrieval opener</strong>, on paper.</span></div>
-      <div class="item"><span class="item-num clock">5:00 to 20:00</span><span class="item-text"><strong>Discussion</strong> of the courses and the context-engineering article.</span></div>
-      <div class="item"><span class="item-num clock">20:00 to 55:00</span><span class="item-text"><strong>Skill-building sprint</strong> in pairs.</span></div>
-      <div class="item"><span class="item-num clock">55:00 to 60:00</span><span class="item-text"><strong>Debrief</strong>, and Week 3 next.</span></div>
+    <div class="s2-hour" role="img" aria-label="Plan for the hour, 60 minutes: retrieval opener, 0:00 to 5:00, active; discussion of the courses and the context-engineering article, 5:00 to 20:00, interactive; skill-building sprint in pairs, 20:00 to 55:00, constructive, then interactive; debrief, 55:00 to 60:00, interactive.">
+      <div class="s2-hour-bar">
+        <div class="s2-seg s2-act" style="--s:0;--m:5"></div>
+        <div class="s2-seg s2-int" style="--s:5;--m:15"><span class="s2-seg-name">Discussion</span><span class="s2-seg-min">15 min</span></div>
+        <div class="s2-seg s2-con-int" style="--s:20;--m:35"><span class="s2-seg-name">Skill-building sprint</span><span class="s2-seg-min">35 min</span></div>
+        <div class="s2-seg s2-int" style="--s:55;--m:5"></div>
+      </div>
+      <div class="s2-hour-axis">
+        <span class="s2-tick" style="--t:0">0</span><span class="s2-tick" style="--t:15">15</span><span class="s2-tick" style="--t:30">30</span><span class="s2-tick" style="--t:45">45</span><span class="s2-tick" style="--t:60">60</span>
+      </div>
+      <div class="s2-callouts">
+        <span class="s2-callout" style="--c:2.5">Retrieval opener<span class="s2-callout-min">5 min</span></span>
+        <span class="s2-callout s2-callout-r" style="--c:57.5">Debrief<span class="s2-callout-min">5 min</span></span>
+      </div>
+      <div class="s2-axis-title">Minutes into the session</div>
+      <div class="s2-legend">
+        <span class="s2-legend-item"><span class="s2-swatch s2-pas"></span>Passive</span>
+        <span class="s2-legend-item"><span class="s2-swatch s2-act"></span>Active</span>
+        <span class="s2-legend-item"><span class="s2-swatch s2-con"></span>Constructive</span>
+        <span class="s2-legend-item"><span class="s2-swatch s2-int"></span>Interactive</span>
+        <span class="s2-legend-item"><span class="s2-swatch s2-swatch-wide s2-con-int"></span>Sprint: constructive, then interactive</span>
+      </div>
     </div>
   </div>
 </div>
@@ -67,7 +316,7 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Discussion</div>
     <h2>What Each Track Read</h2>
-    <table class="table" style="margin-top: 8px;">
+    <table class="table s2-read" style="margin-top: 8px;">
       <thead>
         <tr><th scope="col">Topic</th><th scope="col">Claude Code</th><th scope="col">Codex</th></tr>
       </thead>
@@ -87,32 +336,28 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Discussion</div>
     <h2>Three Extension Layers</h2>
-    <div class="layer-stack">
-      <div class="layer">
-        <div class="layer-num">1</div>
-        <div class="layer-body">
-          <div class="layer-title">Skills</div>
-          <div class="layer-when">Extend what the agent knows on demand.</div>
-          <div class="layer-tags"><span class="layer-tag">SKILL.md</span><span class="layer-tag">workflows</span></div>
-        </div>
+    <div class="s2-ext">
+      <div class="s2-ext-box" style="grid-column: 1; grid-row: 1;">
+        <span class="s2-ext-name">Skills</span>
+        <span class="s2-ext-tags"><span>SKILL.md</span><span>workflows</span></span>
       </div>
-      <div class="layer-arrow">&rarr;</div>
-      <div class="layer">
-        <div class="layer-num">2</div>
-        <div class="layer-body">
-          <div class="layer-title">Subagents</div>
-          <div class="layer-when">Extend what the agent can do in isolation.</div>
-          <div class="layer-tags"><span class="layer-tag">clean context</span><span class="layer-tag">tools</span></div>
-        </div>
+      <div class="s2-ext-link" style="grid-column: 2; grid-row: 1;">
+        <span class="s2-ext-what">Extends what it knows, on demand</span>
+        <div class="s2-harrow" aria-hidden="true"></div>
       </div>
-      <div class="layer-arrow">&rarr;</div>
-      <div class="layer">
-        <div class="layer-num">3</div>
-        <div class="layer-body">
-          <div class="layer-title">MCP</div>
-          <div class="layer-when">Extend what the agent can reach outside.</div>
-          <div class="layer-tags"><span class="layer-tag">servers</span><span class="layer-tag">APIs</span></div>
-        </div>
+      <div class="s2-ext-agent">Coding agent</div>
+      <div class="s2-ext-link" style="grid-column: 4; grid-row: 1;">
+        <span class="s2-ext-what">Extends what it can reach outside</span>
+        <div class="s2-harrow s2-harrow-l" aria-hidden="true"></div>
+      </div>
+      <div class="s2-ext-box" style="grid-column: 5; grid-row: 1;">
+        <span class="s2-ext-name">MCP</span>
+        <span class="s2-ext-tags"><span>servers</span><span>APIs</span></span>
+      </div>
+      <div class="s2-ext-v"><span class="s2-ext-what">Extends what it can do in isolation</span></div>
+      <div class="s2-ext-box s2-ext-sub">
+        <span class="s2-ext-name">Subagents</span>
+        <span class="s2-ext-tags"><span>clean context</span><span>tools</span></span>
       </div>
     </div>
   </div>
@@ -123,23 +368,29 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
     <h2>Skills: On-Demand Knowledge</h2>
-    <div class="two-col" style="gap: 18px;">
-      <div>
-        <div class="col-label">Location</div>
-        <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Claude Code: <code>.claude/skills/</code> in the project</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Codex: <code>.agents/skills/</code>, from the working directory up</span></div>
+    <div class="s2-ctx" role="img" aria-label="The context window in two states. Every session holds the root CLAUDE.md or AGENTS.md in full and the metadata of each skill. When a skill is used, its body loads as well.">
+      <div class="s2-ctx-row">
+        <span class="s2-ctx-state">Every session</span>
+        <div class="s2-ctx-win">
+          <span class="s2-ctx-root">CLAUDE.md or AGENTS.md<small>in full</small></span>
+          <span class="s2-ctx-meta">Skill metadata</span>
         </div>
       </div>
-      <div>
-        <div class="col-label">Why</div>
-        <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Only metadata loads until invoked.</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 14px;">Encodes a repeating workflow.</span></div>
+      <div class="s2-ctx-row">
+        <span class="s2-ctx-state">Skill used</span>
+        <div class="s2-ctx-win">
+          <span class="s2-ctx-root"></span>
+          <span class="s2-ctx-meta"></span>
+          <span class="s2-ctx-body">Skill body</span>
         </div>
       </div>
+      <div class="s2-ctx-note"><span>Context window, schematic</span></div>
     </div>
-    <p class="meta" style="margin-top: 16px;">Ask: what makes a description trigger on the right tasks?</p>
+    <dl class="s2-where">
+      <dt>Claude Code</dt><dd><code>.claude/skills/</code> in the project</dd>
+      <dt>Codex</dt><dd><code>.agents/skills/</code>, from the working directory up</dd>
+    </dl>
+    <p class="meta" style="margin-top: 18px;">A skill encodes a repeating workflow. Ask: what makes a description trigger on the right tasks?</p>
   </div>
 </div>
 
@@ -148,14 +399,22 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Claude Code Track</div>
     <h2>Subagents: Isolated Context</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Own context</strong>: a side task runs in its own window.</span></div>
-      <div class="item"><span class="item-text"><strong>Noise stays out</strong>: search results and build logs stay there.</span></div>
-      <div class="item"><span class="item-text"><strong>Distilled return</strong>: only a summary or finished artefact comes back.</span></div>
+    <div class="s2-sub">
+      <div class="s2-sub-box">
+        <span class="s2-sub-h">Main agent</span>
+        <span class="s2-sub-p">Context stays clean.</span>
+      </div>
+      <div class="s2-sub-arrows">
+        <div><span class="s2-sub-lab">Side task</span><div class="s2-harrow" aria-hidden="true"></div></div>
+        <div><span class="s2-sub-lab"><strong>Only</strong> a summary or finished artefact</span><div class="s2-harrow s2-harrow-l" aria-hidden="true"></div></div>
+      </div>
+      <div class="s2-sub-box">
+        <span class="s2-sub-h">Subagent</span>
+        <span class="s2-sub-p">Own context window.</span>
+        <span class="s2-sub-noise"><span>search results</span><span>build logs</span></span>
+      </div>
     </div>
-    <div class="card card-accent" style="margin-top: 14px; padding-top: 14px; padding-bottom: 14px;">
-      <p><strong>Codex track</strong>: why prefer parallel subagents for read-heavy work, and take care with write-heavy work?</p>
-    </div>
+    <p class="s2-codex-q"><span class="s2-track">Codex track</span>Why prefer parallel subagents for read-heavy work, and take care with write-heavy work?</p>
   </div>
 </div>
 
@@ -164,17 +423,21 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
     <h2>Model Context Protocol</h2>
-    <div class="two-col" style="gap: 18px;">
-      <div class="card card-accent">
-        <h3>Three primitives</h3>
-        <p style="font-size: 14px;"><strong>Tools</strong>: functions the agent invokes.<br/><strong>Resources</strong>: data, such as files.<br/><strong>Prompts</strong>: reusable templates.</p>
+    <div class="s2-mcp">
+      <div class="s2-mcp-agent">Coding agent<small>client</small></div>
+      <div class="s2-mcp-wire" aria-hidden="true"></div>
+      <div class="s2-mcp-server">
+        <div class="s2-mcp-server-h">MCP server</div>
+        <ul class="s2-mcp-prims">
+          <li><strong>Tools</strong><span>Functions the agent invokes.</span></li>
+          <li><strong>Resources</strong><span>Data, such as files.</span></li>
+          <li><strong>Prompts</strong><span>Reusable templates.</span></li>
+        </ul>
       </div>
-      <div class="card card-accent">
-        <h3>When to use it</h3>
-        <p style="font-size: 14px;">Context that lives outside the repository and changes often.</p>
-      </div>
+      <div class="s2-mcp-line" aria-hidden="true"></div>
+      <div class="s2-mcp-out">For context outside the repository that changes often.</div>
     </div>
-    <p class="meta" style="margin-top: 16px;">Ask: what does a server add to the agent's context?</p>
+    <p class="meta" style="margin-top: 22px;">Ask: what does a server add to context?</p>
   </div>
 </div>
 
@@ -183,16 +446,24 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Permissions</div>
     <h2>Sandbox and Approvals</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Claude Code &middot; How Claude Code Works</h3>
-        <p style="font-size: 14px;">Permission modes constrain what tools can execute.</p>
-        <p style="font-size: 14px; margin-top: 6px;">Which mode suits the sprint, and what may the agent do in it without asking?</p>
+    <div class="s2-perm">
+      <div>
+        <p class="s2-perm-h"><span class="s2-track">Codex</span>workspace-write sandbox, on-request approvals</p>
+        <table class="s2-mx">
+          <thead>
+            <tr><td></td><th scope="col">Inside the workspace</th><th scope="col">Outside it, or the network</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Edit files</th><td class="s2-free">Unasked</td><td class="s2-ask">Asks first</td></tr>
+            <tr><th scope="row">Run commands</th><td class="s2-free">Unasked<small>git, package manager, tests</small></td><td class="s2-ask">Asks first<small>network is off by default</small></td></tr>
+          </tbody>
+        </table>
+        <p class="s2-perm-cap">The sandbox sets the boundary; the approval policy decides when Codex asks.</p>
       </div>
-      <div class="card card-accent">
-        <h3>Codex &middot; Sandbox; Agent approvals &amp; security</h3>
-        <p style="font-size: 14px;">The sandbox sets the boundary; the approval policy decides when Codex asks.</p>
-        <p style="font-size: 14px; margin-top: 6px;">In workspace-write with on-request approvals, it edits and runs routine commands in the workspace unasked, and asks before editing outside it or using the network.</p>
+      <div class="s2-perm-card">
+        <p><span class="s2-track">Claude Code</span></p>
+        <p>Permission modes constrain what tools can execute.</p>
+        <p>Which mode suits the sprint, and what may the agent do in it without asking?</p>
       </div>
     </div>
   </div>
@@ -203,10 +474,23 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 20:00 &middot; Both Tracks</div>
     <h2>Context Engineering</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Context rot</strong>: recall declines as tokens in context grow; attention is finite.</span></div>
-      <div class="item"><span class="item-text"><strong>Compaction</strong>: near the limit, summarise and continue in a new window.</span></div>
-      <div class="item"><span class="item-text"><strong>The risk</strong>: compact too hard and subtle context that matters later is lost.</span></div>
+    <div class="s2-cmp">
+      <span class="s2-cmp-state">Near the limit</span>
+      <div class="s2-cmp-win" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <span class="s2-cmp-limit"></span>
+      </div>
+      <p class="s2-cmp-cap"><strong>Context rot</strong>: recall declines as tokens grow; attention is finite.</p>
+      <div class="s2-cmp-step">
+        <span class="s2-cmp-down" aria-hidden="true"></span>
+        <p><strong>Compaction</strong>: summarise and continue in a new window.</p>
+        <span class="s2-cmp-lost"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i></span>
+      </div>
+      <span class="s2-cmp-state">New window</span>
+      <div class="s2-cmp-win">
+        <span class="s2-cmp-sum">Summary</span>
+      </div>
+      <p class="s2-cmp-cap"><strong>The risk</strong>: compact too hard and subtle context that matters later is lost.</p>
     </div>
   </div>
 </div>
@@ -216,11 +500,21 @@
   <div class="slide-inner">
     <div class="slide-label">20:00 to 55:00 &middot; Sprint &middot; Authoring</div>
     <h2>Writing an Effective SKILL.md</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Description</strong>: say exactly when the agent should invoke it.</span></div>
-      <div class="item"><span class="item-text"><strong>Context</strong>: list the files or commands the skill relies on.</span></div>
-      <div class="item"><span class="item-text"><strong>Steps</strong>: ordered instructions with error checks.</span></div>
-      <div class="item"><span class="item-text"><strong>Success</strong>: give the agent a command to verify its work.</span></div>
+    <div class="s2-file">
+      <span class="s2-file-tab">SKILL.md</span>
+      <span></span><span></span>
+      <div class="s2-file-part s2-file-first">Description</div>
+      <div class="s2-file-lead" aria-hidden="true"><span></span></div>
+      <p class="s2-file-def">Say exactly when to invoke it.</p>
+      <div class="s2-file-part">Context</div>
+      <div class="s2-file-lead" aria-hidden="true"><span></span></div>
+      <p class="s2-file-def">List the files or commands the skill relies on.</p>
+      <div class="s2-file-part">Steps</div>
+      <div class="s2-file-lead" aria-hidden="true"><span></span></div>
+      <p class="s2-file-def">Ordered instructions with error checks.</p>
+      <div class="s2-file-part s2-file-last">Success</div>
+      <div class="s2-file-lead" aria-hidden="true"><span></span></div>
+      <p class="s2-file-def">Give the agent a command to verify its work.</p>
     </div>
   </div>
 </div>
@@ -230,16 +524,15 @@
   <div class="slide-inner">
     <div class="slide-label">20:00 to 55:00 &middot; Sprint &middot; Testing</div>
     <h2>Testing Trigger Precision</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Positive test</h3>
-        <p>Prompt a task the skill was written for. Does the agent invoke it?</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Negative test</h3>
-        <p>Prompt an adjacent, unrelated task. Does the skill stay quiet?</p>
-      </div>
-    </div>
+    <table class="s2-tp">
+      <thead>
+        <tr><td></td><th scope="col">Skill invoked</th><th scope="col">Skill stays quiet</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Positive test<small>A task the skill was written for</small></th><td class="s2-pass">Pass</td><td class="s2-fail">Too narrow</td></tr>
+        <tr><th scope="row">Negative test<small>An adjacent, unrelated task</small></th><td class="s2-fail">Over-triggering</td><td class="s2-pass">Pass</td></tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -248,13 +541,15 @@
   <div class="slide-inner">
     <div class="slide-label">20:00 to 55:00 &middot; In Pairs</div>
     <h2>Skill-Building Sprint, Until 55:00</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Choose a repository</strong>: a Week 1 benchmark task's, or your own.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Write a SKILL.md</strong> for a repeating pattern or workflow.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Swap</strong>: your partner tests that it triggers when it should and stays quiet when it should not.</span></div>
-    </div>
-    <div class="card card-accent" style="margin-top: 14px; padding-top: 12px; padding-bottom: 12px;">
-      <p><strong>By 55:00:</strong> one SKILL.md each, tested both ways.</p>
+    <ol class="s2-flow s2-sprint">
+      <li class="s2-m-con"><span class="s2-step-n"><span>1</span><span>20:00</span></span><span class="s2-step-verb">Choose a repository</span><span class="s2-step-def">A Week 1 benchmark task's, or your own.</span></li>
+      <li class="s2-m-con"><span class="s2-step-n">2</span><span class="s2-step-verb">Write a SKILL.md</span><span class="s2-step-def">For a repeating pattern or workflow.</span></li>
+      <li class="s2-m-int"><span class="s2-step-n">3</span><span class="s2-step-verb">Swap</span><span class="s2-step-def">Your partner tests that it triggers when it should and stays quiet when it should not.</span></li>
+      <li class="s2-end"><span class="s2-step-n">By</span><span class="s2-step-verb">55:00</span><span class="s2-step-def">One SKILL.md each, tested both ways.</span></li>
+    </ol>
+    <div class="s2-key">
+      <span><i class="s2-con" aria-hidden="true"></i>Constructive</span>
+      <span><i class="s2-int" aria-hidden="true"></i>Interactive</span>
     </div>
     <p class="meta" style="margin-top: 12px;">Codex skills follow the same open standard, so mixed pairs can swap.</p>
     <p class="activity-link"><a href="../week-2.html#sprint-h">Sprint brief on the Week 2 page<span aria-hidden="true"> &rarr;</span></a></p>
@@ -274,52 +569,73 @@
   </div>
 </div>
 
-<!-- 16: Before Week 3 pre-work, Claude Code -->
+<!-- 16: Before Week 3 pre-work, both tracks on one scale -->
 <div class="slide" id="s15">
   <div class="slide-inner">
     <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
-    <h2>Pre-Work: Claude Code Track</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>No Vibes Allowed</strong>: video, 20.5 min</span></div>
-      <div class="item"><span class="item-text"><strong>Everything We Got Wrong About Research-Plan-Implement</strong>: video, 26.8 min</span></div>
-      <div class="item"><span class="item-text"><strong>Set up Claude Code in a monorepo or large codebase</strong>: reading, 19.0 min</span></div>
-      <div class="item"><span class="item-text"><strong>Keep Claude working toward a goal</strong>: reading, 9.2 min</span></div>
-      <div class="item"><span class="item-text"><strong>Annotated example log</strong>: reading, 5 min</span></div>
+    <h2>Core Pre-Work</h2>
+    <div class="s2-pw">
+      <div role="img" aria-label="Both tracks: No Vibes Allowed, video, 20.5 minutes; Everything We Got Wrong About Research-Plan-Implement, video, 26.8 minutes; annotated example log, reading, 5 minutes; then the activity, ship one lanorme issue by hand, 60 minutes.">
+        <div class="s2-pw-head"><span class="s2-pw-track">Both tracks</span></div>
+        <div class="s2-pw-plot">
+          <div class="s2-pw-row"><div class="s2-pw-label">No Vibes Allowed<span class="s2-pw-kind">video</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-video" style="--v:20.5"></span><span class="s2-pw-val" style="--v:20.5">20.5</span></div></div>
+          <div class="s2-pw-row"><div class="s2-pw-label">Everything We Got Wrong About Research-Plan-Implement<span class="s2-pw-kind">video</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-video" style="--v:26.8"></span><span class="s2-pw-val" style="--v:26.8">26.8</span></div></div>
+          <div class="s2-pw-row"><div class="s2-pw-label">Annotated example log<span class="s2-pw-kind">reading</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-reading" style="--v:5"></span><span class="s2-pw-val" style="--v:5">5</span></div></div>
+          <div class="s2-pw-row"><div class="s2-pw-label">Ship one issue by hand<span class="s2-pw-kind">practice</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-practice" style="--v:60"></span><span class="s2-pw-val" style="--v:60">60</span></div></div>
+        </div>
+        <div class="s2-pw-axis"><span style="--t:0">0</span><span style="--t:15">15</span><span style="--t:30">30</span><span style="--t:45">45</span><span style="--t:60">60</span></div>
+        <div class="s2-pw-axis-title">Minutes</div>
+      </div>
+      <div>
+        <div role="img" aria-label="Claude Code track adds two readings: Set up Claude Code in a monorepo or large codebase, 19.0 minutes; Keep Claude working toward a goal, 9.2 minutes; 140.5 minutes in all, activity included.">
+          <div class="s2-pw-head"><span class="s2-pw-track">Claude Code track</span><span class="s2-pw-total">140.5 min total</span></div>
+          <div class="s2-pw-plot">
+            <div class="s2-pw-row"><div class="s2-pw-label">Set up Claude Code in a monorepo or large codebase<span class="s2-pw-kind">reading</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-reading" style="--v:19"></span><span class="s2-pw-val" style="--v:19">19.0</span></div></div>
+            <div class="s2-pw-row"><div class="s2-pw-label">Keep Claude working toward a goal<span class="s2-pw-kind">reading</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-reading" style="--v:9.2"></span><span class="s2-pw-val" style="--v:9.2">9.2</span></div></div>
+          </div>
+        </div>
+        <div role="img" aria-label="Codex track adds two readings: Custom instructions with AGENTS.md, 4.9 minutes; Long-running work, 3.2 minutes; 120.4 minutes in all, activity included.">
+          <div class="s2-pw-head"><span class="s2-pw-track">Codex track</span><span class="s2-pw-total">120.4 min total</span></div>
+          <div class="s2-pw-plot">
+            <div class="s2-pw-row"><div class="s2-pw-label">Custom instructions with AGENTS.md<span class="s2-pw-kind">reading</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-reading" style="--v:4.9"></span><span class="s2-pw-val" style="--v:4.9">4.9</span></div></div>
+            <div class="s2-pw-row"><div class="s2-pw-label">Long-running work<span class="s2-pw-kind">reading</span></div><div class="s2-pw-barline"><span class="s2-pw-bar s2-k-reading" style="--v:3.2"></span><span class="s2-pw-val" style="--v:3.2">3.2</span></div></div>
+          </div>
+          <div class="s2-pw-axis"><span style="--t:0">0</span><span style="--t:15">15</span><span style="--t:30">30</span><span style="--t:45">45</span><span style="--t:60">60</span></div>
+          <div class="s2-pw-axis-title">Minutes</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 17: Before Week 3 pre-work, Codex -->
+<!-- 17: Week 3 activity -->
 <div class="slide" id="s16">
   <div class="slide-inner">
     <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
-    <h2>Pre-Work: Codex Track</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>No Vibes Allowed</strong>: video, 20.5 min</span></div>
-      <div class="item"><span class="item-text"><strong>Everything We Got Wrong About Research-Plan-Implement</strong>: video, 26.8 min</span></div>
-      <div class="item"><span class="item-text"><strong>Custom instructions with AGENTS.md</strong>: reading, 4.9 min</span></div>
-      <div class="item"><span class="item-text"><strong>Long-running work</strong>: reading, 3.2 min</span></div>
-      <div class="item"><span class="item-text"><strong>Annotated example log</strong>: reading, 5 min</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 18: Week 3 activity -->
-<div class="slide" id="s17">
-  <div class="slide-inner">
-    <div class="slide-label">55:00 to 60:00 &middot; Before Week 3</div>
     <h2>Activity: Ship One Issue by Hand</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Fork lanorme</strong>, enable Issues and Actions, note the base SHA.</span></div>
-      <div class="item"><span class="item-text"><strong>Copy one issue</strong> from the curated pool into your fork.</span></div>
-      <div class="item"><span class="item-text"><strong>Run the loop</strong>: triage, spec in <code>specs/&lt;issue&gt;.md</code>, implement with <code>/goal</code>, review, PR.</span></div>
-      <div class="item"><span class="item-text"><strong>Log each stage</strong> (60 min activity): human minutes, tokens, context, interventions, judgements.</span></div>
+    <div class="s2-ship">
+      <span class="s2-ship-k">Set up</span>
+      <ol class="s2-flow">
+        <li>Fork lanorme<small>Enable Issues and Actions, note the base SHA.</small></li>
+        <li>Copy one issue<small>From the curated pool.</small></li>
+      </ol>
+      <span class="s2-ship-k">Run the loop</span>
+      <ol class="s2-flow">
+        <li>Triage</li>
+        <li>Spec<small><code>specs/&lt;issue&gt;.md</code></small></li>
+        <li>Implement<small>with <code>/goal</code></small></li>
+        <li>Review</li>
+        <li>PR</li>
+      </ol>
+      <span class="s2-ship-k">Log each stage</span>
+      <div class="s2-log"><span>Human minutes</span><span>Tokens</span><span>Context</span><span>Interventions</span><span>Judgements</span></div>
+      <p class="s2-ship-foot">60 min activity</p>
     </div>
   </div>
 </div>
 
-<!-- 19: Closing -->
-<div class="slide slide-dark" id="s18">
+<!-- 18: Closing -->
+<div class="slide slide-dark" id="s17">
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">55:00 to 60:00 &middot; Next Steps</div>
     <h1>Close &amp; Next Steps</h1>

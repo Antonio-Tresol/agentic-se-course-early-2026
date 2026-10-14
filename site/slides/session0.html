@@ -6,6 +6,185 @@
 <title>Session 0 &middot; Getting Started</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
+<style>
+/* Session 0 deck visuals. Every class is prefixed s0-. */
+.s0-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.s0-mono { font-family: var(--mono); }
+
+/* ----- Plan for the hour: one bar, 0 to 60 minutes ----- */
+.s0-hour { margin-top: 30px; }
+.s0-hour-bar { position: relative; height: 56px; }
+.s0-seg {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--s) / 60 * 100%);
+  width: calc(var(--m) / 60 * 100%);
+  box-shadow: inset 0 0 0 1.5px #FFFFFF;
+  padding: 0 10px;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: hidden;
+}
+.s0-seg-name { font-family: var(--display); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+.s0-seg-min { font-family: var(--mono); font-size: 14px; line-height: 1.3; }
+.s0-pas { background: #6B6B6B; color: #FFFFFF; }
+.s0-act { background: #0072B2; color: #FFFFFF; }
+.s0-con { background: #009E73; color: #0A0A0A; }
+.s0-int { background: #853866; color: #FFFFFF; }
+.s0-hour-axis { position: relative; height: 26px; margin-top: 0; }
+.s0-tick { position: absolute; top: 0; left: calc(var(--t) / 60 * 100%); transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; color: #A3A3A3; }
+.s0-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.5px; height: 6px; background: #A3A3A3; }
+.s0-tick:first-child { transform: none; }
+.s0-tick:first-child::before { left: 0; }
+.s0-tick:last-child { transform: translateX(-100%); }
+.s0-tick:last-child::before { left: auto; right: 0; }
+.s0-axis-title { font-family: var(--mono); font-size: 12px; color: #A3A3A3; text-align: center; margin-top: 2px; }
+.s0-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; }
+.s0-legend-item { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 14px; color: #D4D4D4; }
+.s0-swatch { width: 16px; height: 16px; box-shadow: inset 0 0 0 1.5px #FFFFFF; }
+
+/* ----- Shared horizontal flow: boxes with arrows between ----- */
+.s0-flow { display: flex; gap: 44px; list-style: none; margin-top: 26px; align-items: stretch; }
+.s0-flow > li {
+  position: relative; flex: 1 1 0; min-width: 0;
+  background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px;
+  padding: 16px 18px; font-family: var(--serif); font-size: 16px; line-height: 1.45; color: var(--body);
+}
+.s0-flow > li + li::before { content: ""; position: absolute; left: -36px; top: 50%; width: 22px; height: 1.5px; background: var(--text); }
+.s0-flow > li + li::after { content: ""; position: absolute; left: -15px; top: calc(50% - 4.25px); border-left: 8px solid var(--text); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s0-step-n { display: block; font-family: var(--mono); font-size: 12px; color: var(--step); margin-bottom: 6px; }
+.s0-step-verb { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); line-height: 1.2; letter-spacing: -0.01em; }
+.s0-step-def { display: block; margin-top: 6px; font-size: 15px; }
+
+/* ----- Four qualities: 2 x 2 ----- */
+.s0-quad { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; border: 1.5px solid var(--text); border-radius: 6px; background: var(--surface); overflow: hidden; }
+.s0-quad-cell { padding: 26px 30px 28px; }
+.s0-quad-cell:nth-child(odd) { border-right: 1.5px solid var(--text); }
+.s0-quad-cell:nth-child(-n+2) { border-bottom: 1.5px solid var(--text); }
+.s0-quad-num { display: block; font-family: var(--mono); font-size: 12px; color: var(--step); }
+.s0-quad-word { display: block; font-family: var(--display); font-size: 34px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); line-height: 1.1; margin-top: 6px; }
+.s0-quad-def { display: block; font-family: var(--serif); font-size: 17px; color: var(--body); margin-top: 8px; }
+
+/* ----- Three modes: a spectrum ----- */
+.s0-spec { position: relative; margin-top: 34px; }
+.s0-spec-line { position: absolute; top: 10px; left: 16.67%; right: calc(16.67% + 14px); height: 1.5px; background: var(--text); }
+.s0-spec-line::after { content: ""; position: absolute; right: -2px; top: -4.25px; border-left: 9px solid var(--text); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s0-spec-stops { display: grid; grid-template-columns: repeat(3, 1fr); list-style: none; position: relative; }
+.s0-spec-stop { text-align: center; padding: 0 4px; font-family: var(--serif); font-size: 16px; color: var(--body); }
+.s0-spec-dot { display: block; width: 22px; height: 22px; margin: 0 auto 16px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--text); }
+.s0-spec-here .s0-spec-dot { background: var(--orange); }
+.s0-spec-name { display: block; font-family: var(--display); font-size: 24px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.s0-spec-def { display: block; margin-top: 6px; line-height: 1.45; font-size: 15px; }
+.s0-spec-tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.s0-spec-tags span { font-family: var(--mono); font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 3px 8px; }
+.s0-spec-focus { display: inline-block; margin-top: 16px; font-family: var(--display); font-size: 14px; color: var(--text); background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 8px 12px; line-height: 1.4; text-wrap: balance; }
+
+/* ----- Strengths and failure modes: a T-chart ----- */
+.s0-t { display: grid; grid-template-columns: 1fr 1fr; margin-top: 26px; }
+.s0-t-col { padding: 4px 30px 6px; }
+.s0-t-col + .s0-t-col { border-left: 1.5px solid var(--text); }
+.s0-t-head { font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.s0-t-sign { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: 1.5px solid var(--text); border-radius: 50%; font-family: var(--mono); font-size: 16px; line-height: 1; }
+.s0-t-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.s0-kpi .kpi, .s0-kpi .kpi-sep { font-size: 14px; }
+.s0-t-list li { font-family: var(--serif); font-size: 17px; color: var(--body); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; }
+
+/* ----- The 4D cycle ----- */
+.s0-cycle { position: relative; width: 820px; max-width: 100%; height: 450px; margin: 4px auto 0; }
+.s0-cycle-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.s0-cycle-node {
+  position: absolute; transform: translate(-50%, -50%);
+  background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px;
+  padding: 12px 16px; text-align: left;
+}
+.s0-cycle-node h3 { font-size: 19px; margin-bottom: 4px; }
+.s0-cycle-node p { font-size: 15px; line-height: 1.45; color: var(--body); }
+.s0-cycle-ns { width: 290px; }
+.s0-cycle-ew { width: 220px; }
+
+/* ----- Why this matters: four Ds, two picked out ----- */
+.s0-why { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 30px; row-gap: 0; margin-top: 30px; }
+.s0-why-d { position: relative; font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--muted); text-align: center; padding: 12px 8px; border: 1.5px dashed #8A8A8A; border-radius: 6px; background: var(--bg); }
+.s0-why-d + .s0-why-d::before { content: ""; position: absolute; left: -26px; top: 50%; width: 16px; height: 1.5px; background: var(--text); }
+.s0-why-d + .s0-why-d::after { content: ""; position: absolute; left: -12px; top: calc(50% - 4.25px); border-left: 8px solid var(--text); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.s0-why-on { color: #FFFFFF; background: var(--text); border: 1.5px solid var(--text); }
+.s0-why-lead { grid-column: 1 / span 2; align-self: center; font-family: var(--serif); font-size: 24px; line-height: 1.35; color: var(--text); padding-top: 30px; }
+.s0-why-card { position: relative; margin-top: 28px; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 14px 16px; font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--body); }
+.s0-why-card::before { content: ""; position: absolute; left: 50%; top: -29px; width: 1.5px; height: 28px; background: var(--text); }
+
+/* ----- Install: terminal beside desktop app ----- */
+.s0-install { display: grid; grid-template-columns: 3fr 2fr; gap: 30px; margin-top: 22px; align-items: start; }
+.s0-way-h { font-family: var(--mono); font-size: 14px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--step); margin-bottom: 10px; }
+.s0-install .code-block { font-size: 14px; margin-top: 0; padding: 18px 20px; overflow-wrap: anywhere; }
+.s0-install .code-block .comment { color: #A3A3A3; }
+.s0-vflow { list-style: none; display: flex; flex-direction: column; gap: 26px; }
+.s0-vflow > li { position: relative; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 11px 14px; font-family: var(--display); font-size: 16px; line-height: 1.35; color: var(--text); }
+.s0-vflow > li + li::before { content: ""; position: absolute; left: 24px; top: -21px; width: 1.5px; height: 14px; background: var(--text); }
+.s0-vflow > li + li::after { content: ""; position: absolute; left: 20.25px; top: -9px; border-top: 8px solid var(--text); border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; }
+.s0-vflow small { display: block; font-family: var(--mono); font-size: 14px; color: var(--step); margin-top: 3px; }
+.s0-link { display: inline-flex; align-items: center; min-height: 28px; margin-top: 14px; font-family: var(--mono); font-size: 14px; color: var(--text); border-bottom: 0; text-decoration: underline; text-underline-offset: 3px; }
+.s0-link:hover { text-decoration-thickness: 2px; border-bottom: 0; }
+.s0-note { font-family: var(--mono); font-size: 14px; color: var(--step); margin-top: 12px; line-height: 1.5; }
+.s0-note a { text-decoration: underline; text-underline-offset: 3px; border-bottom: 0; display: inline-block; min-height: 24px; }
+
+/* ----- Live demo flow (centred cover) ----- */
+.s0-demo { margin-top: 30px; text-align: left; }
+.s0-demo > li { text-align: center; font-family: var(--display); font-size: 18px; font-weight: 500; color: var(--text); padding: 18px 16px; display: flex; align-items: center; justify-content: center; }
+
+/* ----- The road ahead: six-week timeline ----- */
+.s0-road { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0 16px; list-style: none; margin-top: 34px; }
+.s0-road::before { content: ""; position: absolute; top: 10px; left: 8px; right: calc((100% - 80px) / 6 - 12px); height: 1.5px; background: var(--text); }
+.s0-road-wk { position: relative; font-family: var(--display); }
+.s0-road-node { display: block; position: relative; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); border: 1.5px solid var(--text); margin-bottom: 14px; }
+.s0-road-here .s0-road-node { background: var(--orange); }
+.s0-road-n { display: block; font-family: var(--mono); font-size: 14px; color: var(--step); letter-spacing: 0.04em; }
+.s0-road-here .s0-road-n { color: var(--text); font-weight: 500; }
+.s0-road-title { display: block; font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.25; margin-top: 4px; letter-spacing: -0.005em; min-height: 64px; }
+.s0-road-act { display: block; font-family: var(--serif); font-size: 15px; line-height: 1.4; color: var(--body); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.s0-road-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.s0-badge { font-family: var(--mono); font-size: 14px; letter-spacing: 0.04em; color: var(--text); border: 1.5px solid var(--text); border-radius: 4px; padding: 3px 7px; line-height: 1.2; }
+.s0-badge-opt { border-style: dashed; }
+
+/* ----- Pre-work: bars sized by minutes ----- */
+.s0-pw { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 22px; }
+.s0-pw-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5px solid var(--text); padding-bottom: 6px; margin-bottom: 12px; }
+.s0-pw-track { font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--text); }
+.s0-pw-total { font-family: var(--mono); font-size: 14px; color: var(--text); }
+.s0-pw-plot { position: relative; margin-right: 46px; }
+.s0-pw-row { position: relative; padding: 4px 0 8px; }
+.s0-pw-label { position: relative; font-family: var(--display); font-size: 15px; color: var(--text); line-height: 1.3; white-space: nowrap; }
+.s0-pw-kind { font-family: var(--mono); font-size: 14px; color: var(--step); margin-left: 6px; }
+.s0-pw-barline { position: relative; height: 18px; margin-top: 5px; background-image: linear-gradient(to right, var(--border) 0 1px, transparent 1px); background-size: calc(100% / 3) 100%; background-repeat: repeat-x; box-shadow: inset -1px 0 0 var(--border); }
+.s0-pw-bar { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--v) / 90 * 100%); border-radius: 0 3px 3px 0; }
+.s0-pw-val { position: absolute; top: 50%; transform: translateY(-50%); left: calc(var(--v) / 90 * 100% + 7px); font-family: var(--mono); font-size: 14px; color: var(--text); white-space: nowrap; }
+.s0-k-course { background: #0072B2; }
+.s0-k-reading { background: #009E73; }
+.s0-pw-axis { position: relative; height: 24px; margin-right: 46px; border-top: 1.5px solid var(--text); }
+.s0-pw-axis span { position: absolute; top: 5px; left: calc(var(--t) / 90 * 100%); transform: translateX(-50%); font-family: var(--mono); font-size: 12px; color: var(--step); }
+.s0-pw-axis span:first-child { transform: none; }
+.s0-pw-axis-title { font-family: var(--mono); font-size: 12px; color: var(--step); margin-top: 2px; }
+.s0-pw-foot { margin-top: 18px; }
+
+/* ----- Next session: three steps to the reveal ----- */
+.s0-next { margin-top: 18px; }
+.s0-next > li { padding: 14px 16px; }
+.s0-next .s0-step-verb { font-size: 18px; }
+.s0-boards { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.s0-boards a {
+  display: flex; align-items: center; min-height: 30px;
+  font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--text);
+  background: var(--bg); border: 1.5px solid var(--text); border-radius: 6px; padding: 3px 8px;
+  text-decoration: none; line-height: 1.2;
+}
+.s0-boards a:hover { background: var(--surface-hover); text-decoration: underline; text-underline-offset: 3px; border-bottom: 1.5px solid var(--text); }
+.s0-boards a:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+.s0-next .s0-reveal { flex: 0 0 124px; background: var(--text); border-color: var(--text); display: flex; align-items: center; }
+.s0-next .s0-reveal .s0-step-verb { color: #FFFFFF; }
+.s0-step-gap { margin-top: 14px; }
+
+/* Short or narrow screens */
+@media (max-height: 800px) {
+  .s0-quad-cell { padding: 20px 28px 22px; }
+}
+</style>
 </head>
 <body data-week="0" class="deck-v2">
 
@@ -20,17 +199,29 @@
   </div>
 </div>
 
-<!-- 2: Agenda -->
+<!-- 2: Agenda, the hour bar -->
 <div class="slide slide-dark">
   <div class="slide-inner">
     <div class="slide-label">Agenda</div>
-    <h2>Today</h2>
-    <div class="items">
-      <div class="item"><span class="item-num clock">0:00 to 10:00</span><span class="item-text"><strong>Introductions.</strong> Who you are, what you build, and your agent account.</span></div>
-      <div class="item"><span class="item-num clock">10:00 to 20:00</span><span class="item-text"><strong>AI Fluency review.</strong> Foundations, three modes, and the 4D framework.</span></div>
-      <div class="item"><span class="item-num clock">20:00 to 40:00</span><span class="item-text"><strong>Install your agent.</strong> Setup for Claude Code and Codex tracks.</span></div>
-      <div class="item"><span class="item-num clock">40:00 to 50:00</span><span class="item-text"><strong>Live demo.</strong> Open a repository and run a first task.</span></div>
-      <div class="item"><span class="item-num clock">50:00 to 60:00</span><span class="item-text"><strong>The road ahead.</strong> Weeks 1 to 5, progress tracking, and pre-work.</span></div>
+    <h2>Plan for the Hour</h2>
+    <div class="s0-hour" role="img" aria-label="Plan for the hour, 60 minutes: introductions, 0:00 to 10:00, interactive; AI Fluency recap, 10:00 to 20:00, active; install your agent, 20:00 to 40:00, active; live demo, 40:00 to 50:00, passive; the road ahead, 50:00 to 60:00, passive.">
+      <div class="s0-hour-bar">
+        <div class="s0-seg s0-int" style="--s:0;--m:10"><span class="s0-seg-name">Introductions</span><span class="s0-seg-min">10 min</span></div>
+        <div class="s0-seg s0-act" style="--s:10;--m:10"><span class="s0-seg-name">AI Fluency</span><span class="s0-seg-min">10 min</span></div>
+        <div class="s0-seg s0-act" style="--s:20;--m:20"><span class="s0-seg-name">Install your agent</span><span class="s0-seg-min">20 min</span></div>
+        <div class="s0-seg s0-pas" style="--s:40;--m:10"><span class="s0-seg-name">Live demo</span><span class="s0-seg-min">10 min</span></div>
+        <div class="s0-seg s0-pas" style="--s:50;--m:10"><span class="s0-seg-name">The road ahead</span><span class="s0-seg-min">10 min</span></div>
+      </div>
+      <div class="s0-hour-axis">
+        <span class="s0-tick" style="--t:0">0</span><span class="s0-tick" style="--t:15">15</span><span class="s0-tick" style="--t:30">30</span><span class="s0-tick" style="--t:45">45</span><span class="s0-tick" style="--t:60">60</span>
+      </div>
+      <div class="s0-axis-title">Minutes into the session</div>
+      <div class="s0-legend">
+        <span class="s0-legend-item"><span class="s0-swatch s0-pas"></span>Passive</span>
+        <span class="s0-legend-item"><span class="s0-swatch s0-act"></span>Active</span>
+        <span class="s0-legend-item"><span class="s0-swatch s0-con"></span>Constructive</span>
+        <span class="s0-legend-item"><span class="s0-swatch s0-int"></span>Interactive</span>
+      </div>
     </div>
   </div>
 </div>
@@ -58,70 +249,49 @@
   </div>
 </div>
 
-<!-- 5: Fluent AI = 4 E's -->
+<!-- 5: Fluent AI use, a 2 x 2 -->
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">10:00 to 20:00 &middot; AI Fluency</div>
     <h2>Fluent AI Use Is...</h2>
-    <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">01</div>
-        <h3 style="margin-top: 10px;">Effective</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Achieves the desired outcome.</p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">02</div>
-        <h3 style="margin-top: 10px;">Efficient</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Uses time and tokens wisely.</p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">03</div>
-        <h3 style="margin-top: 10px;">Ethical</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Considers impact and fairness.</p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">04</div>
-        <h3 style="margin-top: 10px;">Safe</h3>
-        <p style="font-size: 13px; color: var(--muted); margin-top: 2px;">Protects privacy and security.</p>
-      </div>
+    <div class="s0-quad">
+      <div class="s0-quad-cell"><span class="s0-quad-num">01</span><span class="s0-quad-word">Effective</span><span class="s0-quad-def">Achieves the desired outcome.</span></div>
+      <div class="s0-quad-cell"><span class="s0-quad-num">02</span><span class="s0-quad-word">Efficient</span><span class="s0-quad-def">Uses time and tokens wisely.</span></div>
+      <div class="s0-quad-cell"><span class="s0-quad-num">03</span><span class="s0-quad-word">Ethical</span><span class="s0-quad-def">Considers impact and fairness.</span></div>
+      <div class="s0-quad-cell"><span class="s0-quad-num">04</span><span class="s0-quad-word">Safe</span><span class="s0-quad-def">Protects privacy and security.</span></div>
     </div>
   </div>
 </div>
 
-<!-- 6: Three Modes -->
+<!-- 6: Three modes, a spectrum -->
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">10:00 to 20:00 &middot; AI Fluency</div>
     <h2>Three Modes of Working with AI</h2>
-    <div class="layer-stack">
-      <div class="layer">
-        <div class="layer-num">1</div>
-        <div class="layer-body">
-          <div class="layer-title">Automation</div>
-          <div class="layer-when">AI follows explicit instructions.</div>
-          <div class="layer-tags"><span class="layer-tag">scripted</span><span class="layer-tag">deterministic</span></div>
-        </div>
-      </div>
-      <div class="layer-arrow">&rarr;</div>
-      <div class="layer">
-        <div class="layer-num">2</div>
-        <div class="layer-body">
-          <div class="layer-title">Augmentation</div>
-          <div class="layer-when">Human and AI pair turn by turn.</div>
-          <div class="layer-tags"><span class="layer-tag">pair</span><span class="layer-tag">conversational</span></div>
-        </div>
-      </div>
-      <div class="layer-arrow">&rarr;</div>
-      <div class="layer">
-        <div class="layer-num">3</div>
-        <div class="layer-body">
-          <div class="layer-title">Agency</div>
-          <div class="layer-when">AI works independently towards goals.</div>
-          <div class="layer-tags"><span class="layer-tag">long-horizon</span><span class="layer-tag">tools</span></div>
-        </div>
-      </div>
+    <div class="s0-spec">
+      <div class="s0-spec-line" aria-hidden="true"></div>
+      <ol class="s0-spec-stops">
+        <li class="s0-spec-stop">
+          <span class="s0-spec-dot" aria-hidden="true"></span>
+          <span class="s0-spec-name">Automation</span>
+          <span class="s0-spec-def">AI follows explicit instructions.</span>
+          <span class="s0-spec-tags"><span>scripted</span><span>deterministic</span></span>
+        </li>
+        <li class="s0-spec-stop">
+          <span class="s0-spec-dot" aria-hidden="true"></span>
+          <span class="s0-spec-name">Augmentation</span>
+          <span class="s0-spec-def">Human and AI pair turn by turn.</span>
+          <span class="s0-spec-tags"><span>pair</span><span>conversational</span></span>
+        </li>
+        <li class="s0-spec-stop s0-spec-here">
+          <span class="s0-spec-dot" aria-hidden="true"></span>
+          <span class="s0-spec-name">Agency</span>
+          <span class="s0-spec-def">AI works independently towards goals.</span>
+          <span class="s0-spec-tags"><span>long-horizon</span><span>tools</span></span>
+          <span class="s0-spec-focus">This course: coding agents acting across tools</span>
+        </li>
+      </ol>
     </div>
-    <div class="layer-rule">This course focuses on agency: coding agents acting across tools.</div>
   </div>
 </div>
 
@@ -130,25 +300,25 @@
   <div class="slide-inner">
     <div class="slide-label">10:00 to 20:00 &middot; AI Fluency</div>
     <h2>What Models Bring, Where They Fail</h2>
-    <div class="two-col">
-      <div>
-        <div class="col-label">Strengths</div>
-        <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Vast training, in-context learning</span></div>
-          <div class="item"><span class="item-text">Reasoning, analysis, code generation</span></div>
-          <div class="item"><span class="item-text">Speed, scale, pattern recognition</span></div>
-        </div>
+    <div class="s0-t">
+      <div class="s0-t-col">
+        <h3 class="s0-t-head"><span class="s0-t-sign" aria-hidden="true">+</span>Strengths</h3>
+        <ul class="s0-t-list">
+          <li>Vast training, in-context learning</li>
+          <li>Reasoning, analysis, code generation</li>
+          <li>Speed, scale, pattern recognition</li>
+        </ul>
       </div>
-      <div>
-        <div class="col-label">Failure modes</div>
-        <div class="items" style="margin-top: 8px;">
-          <div class="item"><span class="item-text">Knowledge cutoff, stale facts</span></div>
-          <div class="item"><span class="item-text">Hallucination, confident errors</span></div>
-          <div class="item"><span class="item-text">Non-deterministic output</span></div>
-        </div>
+      <div class="s0-t-col">
+        <h3 class="s0-t-head"><span class="s0-t-sign" aria-hidden="true">&minus;</span>Failure modes</h3>
+        <ul class="s0-t-list">
+          <li>Knowledge cutoff, stale facts</li>
+          <li>Hallucination, confident errors</li>
+          <li>Non-deterministic output</li>
+        </ul>
       </div>
     </div>
-    <div class="kpi-ribbon">
+    <div class="kpi-ribbon s0-kpi">
       <span class="kpi"><b>Context window</b>: visible tokens</span>
       <span class="kpi-sep">/</span>
       <span class="kpi"><b>Extended thinking</b>: reasoning before acting</span>
@@ -156,49 +326,59 @@
   </div>
 </div>
 
-<!-- 8: The 4D Cycle -->
+<!-- 8: The 4D cycle -->
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">10:00 to 20:00 &middot; Dakan &amp; Feller</div>
     <h2>The 4D Cycle</h2>
-    <div class="grid-2">
-      <div class="card card-accent">
+    <div class="s0-cycle">
+      <svg class="s0-cycle-svg" viewBox="0 0 820 450" aria-hidden="true" focusable="false">
+        <defs>
+          <marker id="s0-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="#0A0A0A"/>
+          </marker>
+        </defs>
+        <g fill="none" stroke="#0A0A0A" stroke-width="1.5" marker-end="url(#s0-head)">
+          <path d="M 602.8 94.8 A 300 170 0 0 1 681.9 153.2"/>
+          <path d="M 681.9 296.8 A 300 170 0 0 1 602.8 355.2"/>
+          <path d="M 217.2 355.2 A 300 170 0 0 1 138.1 296.8"/>
+          <path d="M 138.1 153.2 A 300 170 0 0 1 217.2 94.8"/>
+        </g>
+      </svg>
+      <div class="s0-cycle-node s0-cycle-ns" style="left: 410px; top: 58px;">
         <h3>Delegation</h3>
         <p>What is worth delegating, and how do we divide the work?</p>
       </div>
-      <div class="card card-accent">
+      <div class="s0-cycle-node s0-cycle-ew" style="left: 708px; top: 225px;">
         <h3>Description</h3>
         <p>State requirements, context, and clear acceptance criteria.</p>
       </div>
-      <div class="card card-accent">
+      <div class="s0-cycle-node s0-cycle-ns" style="left: 410px; top: 392px;">
         <h3>Discernment</h3>
         <p>Evaluate outputs critically for correctness and design quality.</p>
       </div>
-      <div class="card card-accent">
+      <div class="s0-cycle-node s0-cycle-ew" style="left: 112px; top: 225px;">
         <h3>Diligence</h3>
         <p>Take full ownership of the final code and its behaviour.</p>
       </div>
     </div>
-    <p class="meta" style="margin-top: 18px; text-align: center;">Delegation &rarr; Description &rarr; Discernment &rarr; Diligence &rarr; repeat</p>
   </div>
 </div>
 
-<!-- 9: Why This Matters -->
+<!-- 9: Why this matters -->
 <div class="slide">
   <div class="slide-inner">
     <div class="slide-label">10:00 to 20:00 &middot; AI Fluency</div>
     <h2>Why This Matters</h2>
-    <div class="two-col">
-      <div class="card card-accent">
-        <h3>Discernment</h3>
-        <p>Read what the agent wrote before you rely on it. Horthy's remedy is to turn human review back on.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Diligence</h3>
-        <p>You own what ships, including code you did not type.</p>
-      </div>
+    <div class="s0-why">
+      <div class="s0-why-d">Delegation</div>
+      <div class="s0-why-d">Description</div>
+      <div class="s0-why-d s0-why-on">Discernment</div>
+      <div class="s0-why-d s0-why-on">Diligence</div>
+      <p class="s0-why-lead">Agency raises the stakes.</p>
+      <p class="s0-why-card">Read what the agent wrote before you rely on it. Horthy's remedy is to turn human review back on.</p>
+      <p class="s0-why-card">You own what ships, including code you did not type.</p>
     </div>
-    <p class="meta" style="margin-top: 22px;">Agency raises the stakes. You vouch for code you did not type. Discernment and diligence are essential.</p>
   </div>
 </div>
 
@@ -217,17 +397,30 @@
   <div class="slide-inner">
     <div class="slide-label">20:00 to 40:00 &middot; Claude Code Track</div>
     <h2>Install Claude Code</h2>
-    <div class="code-block" style="font-size: 13px;">
-      <span class="comment" style="color: #A3A3A3;"># macOS, Linux, WSL</span><br/>
-      <span class="cmd">curl -fsSL https://claude.ai/install.sh | bash</span><br/><br/>
-      <span class="comment" style="color: #A3A3A3;"># Windows PowerShell</span><br/>
-      <span class="cmd">irm https://claude.ai/install.ps1 | iex</span><br/><br/>
-      <span class="comment" style="color: #A3A3A3;"># Homebrew</span><br/>
-      <span class="cmd">brew install --cask claude-code</span><br/><br/>
-      <span class="comment" style="color: #A3A3A3;"># Run in any repository</span><br/>
-      <span class="cmd">cd your-project &amp;&amp; claude</span>
+    <div class="s0-install">
+      <section aria-labelledby="s0-cc-term">
+        <h3 class="s0-way-h" id="s0-cc-term">Terminal</h3>
+        <div class="code-block">
+          <span class="comment"># macOS, Linux, WSL</span><br/>
+          <span class="cmd">curl -fsSL https://claude.ai/install.sh | bash</span><br/><br/>
+          <span class="comment"># Windows PowerShell</span><br/>
+          <span class="cmd">irm https://claude.ai/install.ps1 | iex</span><br/><br/>
+          <span class="comment"># Homebrew</span><br/>
+          <span class="cmd">brew install --cask claude-code</span><br/><br/>
+          <span class="comment"># Run in any repository</span><br/>
+          <span class="cmd">cd your-project &amp;&amp; claude</span>
+        </div>
+      </section>
+      <section aria-labelledby="s0-cc-app">
+        <h3 class="s0-way-h" id="s0-cc-app">Desktop app</h3>
+        <ol class="s0-vflow">
+          <li>Download Claude<small>macOS, Windows or Linux (beta)</small></li>
+          <li>Sign in</li>
+          <li>Open the Code tab</li>
+        </ol>
+        <a class="s0-link" href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener noreferrer">Desktop quickstart<span class="s0-sr"> (opens in a new tab)</span></a>
+      </section>
     </div>
-    <p class="meta" style="margin-top: 14px;">Desktop app: sign in and open the Code tab. <a href="https://code.claude.com/docs/en/desktop-quickstart" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">Desktop quickstart</a></p>
   </div>
 </div>
 
@@ -236,13 +429,27 @@
   <div class="slide-inner">
     <div class="slide-label">20:00 to 40:00 &middot; Codex Track</div>
     <h2>Install Codex</h2>
-    <div class="code-block" style="font-size: 13px;">
-      <span class="comment" style="color: #A3A3A3;"># macOS, Linux</span><br/>
-      <span class="cmd">curl -fsSL https://chatgpt.com/codex/install.sh | sh</span><br/><br/>
-      <span class="comment" style="color: #A3A3A3;"># Run in any repository</span><br/>
-      <span class="cmd">cd your-project &amp;&amp; codex</span>
+    <div class="s0-install">
+      <section aria-labelledby="s0-cx-term">
+        <h3 class="s0-way-h" id="s0-cx-term">Terminal</h3>
+        <div class="code-block">
+          <span class="comment"># macOS, Linux</span><br/>
+          <span class="cmd">curl -fsSL https://chatgpt.com/codex/install.sh | sh</span><br/><br/>
+          <span class="comment"># Run in any repository</span><br/>
+          <span class="cmd">cd your-project &amp;&amp; codex</span>
+        </div>
+        <p class="s0-note">Windows, npm, Homebrew: <a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener noreferrer">learn.chatgpt.com/docs/codex/cli<span class="s0-sr"> (opens in a new tab)</span></a></p>
+      </section>
+      <section aria-labelledby="s0-cx-app">
+        <h3 class="s0-way-h" id="s0-cx-app">Desktop app</h3>
+        <ol class="s0-vflow">
+          <li>Install the ChatGPT desktop app<small>Codex runs inside it</small></li>
+          <li>Sign in</li>
+          <li>Choose Codex</li>
+        </ol>
+        <a class="s0-link" href="https://learn.chatgpt.com/docs/app" target="_blank" rel="noopener noreferrer">learn.chatgpt.com/docs/app<span class="s0-sr"> (opens in a new tab)</span></a>
+      </section>
     </div>
-    <p class="meta" style="margin-top: 14px;">Windows, npm, Homebrew: <a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener noreferrer">learn.chatgpt.com/docs/codex/cli</a>. Or the ChatGPT desktop app, which now includes Codex: sign in, choose Codex. <a href="https://learn.chatgpt.com/docs/app" target="_blank" rel="noopener noreferrer">learn.chatgpt.com/docs/app</a></p>
   </div>
 </div>
 
@@ -251,7 +458,11 @@
   <div class="slide-inner" style="text-align: center;">
     <div class="slide-label">40:00 to 50:00 &middot; Passive</div>
     <h1>Live Demo</h1>
-    <p class="subtitle" style="max-width: 560px; margin: 0 auto;">Open a terminal, pick a project, and ask your agent to explore the codebase or fix a small issue.</p>
+    <ol class="s0-flow s0-demo">
+      <li>Open a terminal</li>
+      <li>Pick a project</li>
+      <li>Ask your agent to explore the codebase or fix a small issue</li>
+    </ol>
   </div>
 </div>
 
@@ -260,14 +471,47 @@
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Passive</div>
     <h2>The Road Ahead</h2>
-    <div class="items">
-      <div class="item" style="border-left: 3px solid var(--orange); padding-left: 17px;"><span class="item-num" style="min-width: 64px; color: var(--text); font-weight: 600;">Week 0</span><span class="item-text"><strong>Getting Started.</strong> Environment setup and fluency baseline.</span></div>
-      <div class="item"><span class="item-num" style="min-width: 64px;">Week 1</span><span class="item-text"><strong>One Coding Agent.</strong> Judge how much work an agent can do on its own.</span></div>
-      <div class="item"><span class="item-num" style="min-width: 64px;">Week 2</span><span class="item-text"><strong>Adapting a Coding Agent.</strong> Skills, subagents, and MCP.</span></div>
-      <div class="item"><span class="item-num" style="min-width: 64px;">Week 3</span><span class="item-text"><strong>One change through the whole loop.</strong> Triage, spec, implement, review.</span></div>
-      <div class="item"><span class="item-num" style="min-width: 64px;">Week 4</span><span class="item-text"><strong>From harness to factory.</strong> Factory loop design and debate.</span></div>
-      <div class="item"><span class="item-num" style="min-width: 64px;">Week 5</span><span class="item-text"><strong>A minimal factory, measured.</strong> Optional capstone build.</span></div>
-    </div>
+    <ol class="s0-road">
+      <li class="s0-road-wk s0-road-here">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 0 &middot; today</span>
+        <span class="s0-road-title">Getting Started</span>
+        <span class="s0-road-act">Install your agent</span>
+      </li>
+      <li class="s0-road-wk">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 1</span>
+        <span class="s0-road-title">One Coding Agent</span>
+        <span class="s0-road-act">Judge benchmark tasks in pairs</span>
+      </li>
+      <li class="s0-road-wk">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 2</span>
+        <span class="s0-road-title">Adapting a Coding Agent</span>
+        <span class="s0-road-act">Skill-building sprint</span>
+      </li>
+      <li class="s0-road-wk">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 3</span>
+        <span class="s0-road-title">One change through the whole loop</span>
+        <span class="s0-road-act">Ship one lanorme issue by hand</span>
+        <span class="s0-road-badges"><span class="s0-badge">Deliverable</span></span>
+      </li>
+      <li class="s0-road-wk">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 4</span>
+        <span class="s0-road-title">From harness to factory</span>
+        <span class="s0-road-act">Factory design document</span>
+        <span class="s0-road-badges"><span class="s0-badge">Deliverable</span></span>
+      </li>
+      <li class="s0-road-wk">
+        <span class="s0-road-node" aria-hidden="true"></span>
+        <span class="s0-road-n">Week 5</span>
+        <span class="s0-road-title">A minimal factory, measured</span>
+        <span class="s0-road-act">Capstone build</span>
+        <span class="s0-road-badges"><span class="s0-badge">Deliverable</span><span class="s0-badge s0-badge-opt">Optional</span></span>
+      </li>
+    </ol>
   </div>
 </div>
 
@@ -276,11 +520,11 @@
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Your Progress</div>
     <h2>Tracking Your Progress</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text"><strong>Tick as you go</strong>: outcomes, readings and activities on the week pages.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text"><strong>Export now and then</strong>: clearing browser data deletes the record.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text"><strong>Export</strong> from My progress, and send the file to the course owner at the end.</span></div>
-    </div>
+    <ol class="s0-flow">
+      <li><span class="s0-step-n">1</span><span class="s0-step-verb">Tick as you go</span><span class="s0-step-def">Outcomes, readings and activities on the week pages.</span></li>
+      <li><span class="s0-step-n">2</span><span class="s0-step-verb">Export now and then</span><span class="s0-step-def">Clearing browser data deletes the record.</span></li>
+      <li><span class="s0-step-n">3</span><span class="s0-step-verb">Send it at the end</span><span class="s0-step-def">Export from My progress, and send the file to the course owner.</span></li>
+    </ol>
   </div>
 </div>
 
@@ -289,26 +533,30 @@
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Before Week 1</div>
     <h2>Core Pre-Work</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div>
-        <div class="col-label">Claude Code Track</div>
-        <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Claude Code 101</strong>: course, ~90 min</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Claude Code in Action</strong>: course, ~60 min</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Best Practices for Claude Code</strong>: reading, ~22 min</span></div>
+    <div class="s0-pw">
+      <div role="img" aria-label="Claude Code track, 172 minutes in all: Claude Code 101, course, about 90 minutes; Claude Code in Action, course, about 60 minutes; Best Practices for Claude Code, reading, about 22 minutes.">
+        <div class="s0-pw-head"><span class="s0-pw-track">Claude Code track</span><span class="s0-pw-total">172 min</span></div>
+        <div class="s0-pw-plot">
+          <div class="s0-pw-row"><div class="s0-pw-label">Claude Code 101<span class="s0-pw-kind">course</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-course" style="--v:90"></span><span class="s0-pw-val" style="--v:90">~90</span></div></div>
+          <div class="s0-pw-row"><div class="s0-pw-label">Claude Code in Action<span class="s0-pw-kind">course</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-course" style="--v:60"></span><span class="s0-pw-val" style="--v:60">~60</span></div></div>
+          <div class="s0-pw-row"><div class="s0-pw-label">Best Practices for Claude Code<span class="s0-pw-kind">reading</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-reading" style="--v:22"></span><span class="s0-pw-val" style="--v:22">~22</span></div></div>
         </div>
+        <div class="s0-pw-axis"><span style="--t:0">0</span><span style="--t:30">30</span><span style="--t:60">60</span><span style="--t:90">90</span></div>
+        <div class="s0-pw-axis-title">Minutes (approximate)</div>
       </div>
-      <div>
-        <div class="col-label">Codex Track</div>
-        <div class="items" style="margin-top: 6px; gap: 6px;">
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Get Started with Codex</strong>: course, ~80 min</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Extend Codex Workflows</strong>: course, ~90 min</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Best practices</strong>: reading, ~10 min</span></div>
-          <div class="item" style="padding: 8px 12px;"><span class="item-text" style="font-size: 13px;"><strong>Custom instructions with AGENTS.md</strong>: reading, ~5 min</span></div>
+      <div role="img" aria-label="Codex track, 185 minutes in all: Get Started with Codex, course, about 80 minutes; Extend Codex Workflows, course, about 90 minutes; Best practices, reading, about 10 minutes; Custom instructions with AGENTS.md, reading, about 5 minutes.">
+        <div class="s0-pw-head"><span class="s0-pw-track">Codex track</span><span class="s0-pw-total">185 min</span></div>
+        <div class="s0-pw-plot">
+          <div class="s0-pw-row"><div class="s0-pw-label">Get Started with Codex<span class="s0-pw-kind">course</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-course" style="--v:80"></span><span class="s0-pw-val" style="--v:80">~80</span></div></div>
+          <div class="s0-pw-row"><div class="s0-pw-label">Extend Codex Workflows<span class="s0-pw-kind">course</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-course" style="--v:90"></span><span class="s0-pw-val" style="--v:90">~90</span></div></div>
+          <div class="s0-pw-row"><div class="s0-pw-label">Best practices<span class="s0-pw-kind">reading</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-reading" style="--v:10"></span><span class="s0-pw-val" style="--v:10">~10</span></div></div>
+          <div class="s0-pw-row"><div class="s0-pw-label">Custom instructions with AGENTS.md<span class="s0-pw-kind">reading</span></div><div class="s0-pw-barline"><span class="s0-pw-bar s0-k-reading" style="--v:5"></span><span class="s0-pw-val" style="--v:5">~5</span></div></div>
         </div>
+        <div class="s0-pw-axis"><span style="--t:0">0</span><span style="--t:30">30</span><span style="--t:60">60</span><span style="--t:90">90</span></div>
+        <div class="s0-pw-axis-title">Minutes (approximate)</div>
       </div>
     </div>
-    <p class="meta" style="margin-top: 16px;">Both tracks: proof of completion for your two courses unlocks the Week 1 self-check, taken the day before.</p>
+    <p class="meta s0-pw-foot">Both tracks: proof of completion for your two courses unlocks the Week 1 self-check, taken the day before.</p>
   </div>
 </div>
 
@@ -317,12 +565,35 @@
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Next Session</div>
     <h2>How Much Can an Agent Do on Its Own?</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">Bring your installed agent to Session 1.</p>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Inspect frontier leaderboards and their caveats.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Use your agent to scope real tasks from SWE-bench, Terminal-Bench, and SWE-Bench Pro.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Estimate human time, complexity and specification quality, and predict how many agent runs passed, before revealing the published results.</span></div>
-    </div>
+    <p class="subtitle" style="font-size: 18px;">Bring your installed agent to Session 1.</p>
+    <ol class="s0-flow s0-next">
+      <li>
+        <span class="s0-step-n">1</span>
+        <span class="s0-step-verb">Read five boards and their caveats</span>
+        <ul class="s0-boards">
+          <li><a href="https://www.swebench.com/" target="_blank" rel="noopener noreferrer">SWE-bench Verified<span class="s0-sr"> (opens in a new tab)</span></a></li>
+          <li><a href="https://labs.scale.com/leaderboard/swe_bench_pro" target="_blank" rel="noopener noreferrer">SWE-Bench Pro<span class="s0-sr"> (opens in a new tab)</span></a></li>
+          <li><a href="https://www.tbench.ai/" target="_blank" rel="noopener noreferrer">Terminal-Bench 4.0<span class="s0-sr"> (opens in a new tab)</span></a></li>
+          <li><a href="https://cognition.com/frontiercode" target="_blank" rel="noopener noreferrer">FrontierCode<span class="s0-sr"> (opens in a new tab)</span></a></li>
+          <li><a href="https://metr.org/time-horizons/" target="_blank" rel="noopener noreferrer">METR&rsquo;s time horizon<span class="s0-sr"> (opens in a new tab)</span></a></li>
+        </ul>
+      </li>
+      <li>
+        <span class="s0-step-n">2</span>
+        <span class="s0-step-verb">Scope real tasks with your agent</span>
+        <span class="s0-step-def">SWE-bench, Terminal-Bench, SWE-Bench Pro</span>
+      </li>
+      <li>
+        <span class="s0-step-n">3</span>
+        <span class="s0-step-verb">Estimate</span>
+        <span class="s0-step-def">Human time, complexity, specification quality</span>
+        <span class="s0-step-verb s0-step-gap">Predict</span>
+        <span class="s0-step-def">How many agent runs passed</span>
+      </li>
+      <li class="s0-reveal">
+        <span class="s0-step-verb">Reveal the published results</span>
+      </li>
+    </ol>
   </div>
 </div>
 

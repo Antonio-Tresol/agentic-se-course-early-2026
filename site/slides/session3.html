@@ -6,6 +6,184 @@
 <title>Session 3 &middot; One change through the whole loop</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./slides.css" />
+<style>
+/* Session 3 deck visuals. Every class is prefixed s3-. */
+
+/* Small caps label, mono */
+.s3-cap { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--step); font-weight: 500; }
+.s3-mono { font-family: var(--mono); font-size: 14px; color: var(--step); }
+.s3-note { font-family: var(--mono); font-size: 13px; line-height: 1.5; color: var(--step); margin-top: 14px; }
+.s3-note code, .s3-mono code { font-size: 13px; }
+.s3-note code, .s3-mono code, .s3-cap code, .s3-dl code, .s3-goal code, .s3-node-title code, .s3-chip code, .s3-code { font-family: var(--mono); }
+.s3-arr { display: block; width: 44px; height: 14px; flex: none; }
+.s3-arr path { fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ----- Plan for the hour: one bar, 0 to 60 minutes ----- */
+.s3-plan { position: relative; margin-top: 30px; height: 128px; }
+.s3-bar { display: flex; height: 56px; border-radius: 6px; overflow: hidden; }
+.s3-seg { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 0 12px; min-width: 0; color: #FFFFFF; box-shadow: inset -2px 0 0 var(--bg); }
+.s3-seg:last-child { box-shadow: none; }
+.s3-seg b { font-family: var(--display); font-size: 14px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
+.s3-seg span { font-family: var(--mono); font-size: 14px; line-height: 1.3; white-space: nowrap; }
+.s3-icap-p { background: #6B6B6B; }
+.s3-icap-a { background: #0072B2; }
+.s3-icap-c { background: #009E73; color: #0A0A0A; }
+.s3-icap-i { background: #853866; }
+.s3-icap-pa { background: linear-gradient(90deg, #6B6B6B 0%, #0072B2 100%); }
+.s3-axis { position: absolute; left: 0; right: 0; top: 56px; height: 30px; }
+.s3-tick { position: absolute; top: 0; transform: translateX(-50%); padding-top: 9px; font-family: var(--mono); font-size: 12px; line-height: 1; color: var(--step); }
+.s3-tick::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 6px; background: var(--step); }
+.s3-tick:first-child { transform: none; }
+.s3-tick:first-child::before { left: 0; }
+.s3-tick:last-child { transform: translateX(-100%); }
+.s3-tick:last-child::before { left: auto; right: 0; }
+.s3-axis-title { position: absolute; top: 100px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--step); }
+.s3-lead { position: absolute; top: 56px; width: 1px; height: 40px; background: var(--step); }
+.s3-lead-label { position: absolute; top: 98px; font-family: var(--display); font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.s3-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-top: 18px; font-family: var(--display); font-size: 14px; color: var(--body); }
+.s3-legend > span { display: inline-flex; align-items: center; gap: 8px; }
+.s3-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+
+/* ----- Boxes and flows ----- */
+.s3-box { background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 14px 16px; }
+.s3-flow { display: flex; align-items: stretch; gap: 10px; margin-top: 28px; }
+.s3-flow > .s3-link { align-self: center; }
+.s3-flow > .s3-box { flex: 1 1 0; min-width: 0; }
+.s3-link { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: none; }
+.s3-link span { font-family: var(--display); font-size: 14px; color: var(--step); white-space: nowrap; }
+.s3-node-title { font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); margin-top: 6px; }
+.s3-node-title code { font-family: var(--mono); font-size: 18px; }
+.s3-node-note { font-family: var(--display); font-size: 14px; color: var(--body); margin-top: 8px; line-height: 1.4; }
+.s3-accent-top { box-shadow: inset 0 4px 0 var(--orange); padding-top: 18px; }
+.s3-meter { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.s3-meter span { font-family: var(--display); font-size: 14px; color: var(--step); }
+.s3-meter b { flex: 1; height: 10px; border: 1px solid var(--step); border-radius: 3px; position: relative; overflow: hidden; }
+.s3-meter b i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--body); }
+
+/* Leverage: research, plan, code */
+.s3-lev { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; column-gap: 10px; row-gap: 0; margin-top: 26px; align-items: center; }
+.s3-lev .s3-box { text-align: center; align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+.s3-lev .s3-box b { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); }
+.s3-lev .s3-box span { display: block; font-family: var(--display); font-size: 14px; color: var(--body); margin-top: 4px; }
+.s3-lev-down { display: flex; justify-content: center; padding: 8px 0; }
+.s3-lev-down svg { width: 14px; height: 30px; }
+.s3-lev-down path { fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.s3-lev-out { text-align: center; font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.1; }
+.s3-lev-cap { grid-column: 1 / -1; text-align: center; margin-top: 10px; }
+.s3-lev-foot { margin-top: 24px; font-family: var(--serif); font-size: 18px; color: var(--body); text-align: center; }
+
+/* ----- Example log chart and stage strip ----- */
+.s3-chartcard { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px 10px; margin-top: 16px; }
+.s3-chartcard svg { display: block; width: 100%; height: auto; }
+.s3-c-stage { font-family: var(--display); font-size: 15px; font-weight: 600; fill: var(--text); }
+.s3-c-head { font-family: var(--display); font-size: 14px; font-weight: 600; fill: var(--text); }
+.s3-c-val { font-family: var(--mono); font-size: 14px; fill: var(--text); }
+.s3-c-tick { font-family: var(--mono); font-size: 12px; fill: var(--step); }
+.s3-c-cause { font-family: var(--display); font-size: 14px; fill: var(--body); }
+.s3-c-none { font-family: var(--display); font-size: 14px; fill: var(--step); }
+.s3-c-tot { font-family: var(--mono); font-size: 14px; fill: var(--text); font-weight: 500; }
+.s3-c-grid { stroke: var(--border); stroke-width: 1; }
+.s3-c-base { stroke: var(--step); stroke-width: 1; }
+.s3-c-bar { fill: var(--body); }
+.s3-c-tri { fill: var(--orange); }
+.s3-sub { font-family: var(--serif); font-size: 17px; color: var(--body); }
+
+.s3-strip { display: flex; height: 44px; margin-top: 4px; }
+.s3-strip > span { display: flex; align-items: center; justify-content: center; min-width: 0; font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--step); background: var(--surface); border: 1px solid var(--border); border-radius: 4px; box-shadow: inset 0 0 0 0 transparent; margin-right: 2px; white-space: nowrap; }
+.s3-strip > span:last-child { margin-right: 0; }
+.s3-strip > span.s3-here { background: var(--text); border-color: var(--text); color: #FFFFFF; font-weight: 600; }
+.s3-strip-cap { display: flex; justify-content: space-between; margin-top: 6px; }
+
+.s3-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+.s3-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }
+.s3-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px; }
+.s3-card-head h3 { margin: 0; font-size: 18px; }
+.s3-dl { display: grid; grid-template-columns: 7.6em 1fr; gap: 8px 12px; }
+.s3-dl dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--step); padding-top: 3px; }
+.s3-dl dd { font-family: var(--display); font-size: 15px; line-height: 1.4; color: var(--body); }
+.s3-dl dd code { font-size: 13px; }
+.s3-tri { display: inline-block; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid var(--orange); margin-right: 7px; vertical-align: 0; }
+
+/* /goal gate */
+.s3-goal { display: flex; align-items: stretch; gap: 10px; margin-top: 18px; }
+.s3-goal > .s3-link { align-self: center; }
+.s3-goal .s3-box { display: flex; flex-direction: column; justify-content: center; }
+.s3-goal-in { flex: 0 0 auto; }
+.s3-goal-gate { flex: 1 1 auto; }
+.s3-goal-gate ul { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.s3-goal-gate li { font-family: var(--display); font-size: 15px; line-height: 1.35; color: var(--body); display: flex; gap: 8px; align-items: baseline; }
+.s3-goal-gate li code { font-size: 13px; }
+.s3-check { flex: none; width: 14px; height: 14px; }
+.s3-check path { fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.s3-goal-out { flex: 0 0 auto; text-align: center; }
+.s3-unchecked { margin-top: 10px; font-family: var(--display); font-size: 15px; color: var(--body); }
+.s3-unchecked b { font-weight: 600; color: var(--text); }
+
+/* ----- Pairs: two log strips ----- */
+.s3-logs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: end; margin-top: 18px; }
+.s3-log .s3-cap { display: block; margin-bottom: 6px; }
+.s3-log-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.s3-log-strip span { display: flex; align-items: center; justify-content: center; height: 44px; font-family: var(--display); font-size: 14px; color: var(--body); background: var(--surface); border: 1.5px dashed var(--step); border-radius: 4px; white-space: nowrap; }
+.s3-swap { padding-bottom: 14px; }
+.s3-swap svg { width: 40px; height: 18px; display: block; }
+.s3-swap path { fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.s3-asks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.s3-ask { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
+.s3-ask b { display: block; font-family: var(--display); font-size: 16px; font-weight: 600; line-height: 1.35; color: var(--text); margin-top: 6px; }
+.s3-by { margin-top: 16px; font-family: var(--display); font-size: 15px; color: var(--body); }
+.s3-by strong { color: var(--text); }
+
+/* ----- Shared stage table: empty frames ----- */
+.s3-frames { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 16px; }
+.s3-frame p { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.35; min-height: 44px; }
+.s3-frame svg { display: block; width: 100%; height: auto; margin-top: 6px; }
+.s3-f-cat { font-family: var(--display); font-size: 14px; fill: var(--body); }
+.s3-f-axis { font-family: var(--mono); font-size: 12px; fill: var(--step); }
+.s3-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.s3-chip { display: inline-flex; align-items: center; font-family: var(--display); font-size: 14px; color: var(--text); background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 5px 11px; white-space: nowrap; }
+.s3-chip--soft { border: 1px solid var(--border); color: var(--body); }
+.s3-chip code { font-size: 13px; }
+.s3-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 18px; font-family: var(--display); font-size: 15px; color: var(--body); }
+
+/* ----- Automate first: a spectrum ----- */
+.s3-spec { margin-top: 30px; }
+.s3-spec-ends { display: flex; justify-content: space-between; gap: 40px; }
+.s3-spec-ends > div { max-width: 360px; }
+.s3-spec-ends > div:last-child { text-align: right; }
+.s3-spec-ends b { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; color: var(--text); }
+.s3-spec-ends span { display: block; font-family: var(--display); font-size: 15px; line-height: 1.4; color: var(--body); margin-top: 6px; }
+.s3-spec-line { display: block; width: 100%; height: 18px; margin-top: 14px; }
+.s3-spec-line path { fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.s3-tray { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+/* ----- Pre-work chart ----- */
+.s3-k-title { font-family: var(--display); font-size: 14px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 6px; stroke-linejoin: round; }
+.s3-k-title tspan.s3-k-who { font-weight: 600; }
+.s3-k-val { font-family: var(--mono); font-size: 14px; fill: var(--text); }
+.s3-k-vid { fill: #853866; }
+.s3-k-read { fill: #009E73; }
+.s3-k-prac { fill: #262626; }
+.s3-legend--top { margin-top: 0; }
+.s3-sw-vid { background: #853866; }
+.s3-sw-read { background: #009E73; }
+.s3-sw-prac { background: #262626; }
+
+/* ----- Design document page ----- */
+.s3-doc { display: grid; grid-template-columns: auto 1fr; gap: 0; margin-top: 18px; background: var(--surface); border: 1.5px solid var(--text); border-radius: 6px; padding: 8px 22px; }
+.s3-doc-n { font-family: var(--mono); font-size: 14px; color: var(--step); padding: 13px 14px 0 0; }
+.s3-doc-s { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.s3-doc-n:nth-last-child(2), .s3-doc-s:last-child { border-bottom: 0; }
+.s3-doc-s > b { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); min-width: 9.2em; }
+.s3-doc-cols { display: grid; grid-template-columns: repeat(5, auto); border: 1px solid var(--step); border-radius: 4px; overflow: hidden; }
+.s3-doc-cols span { font-family: var(--display); font-size: 14px; color: var(--body); padding: 4px 10px; border-right: 1px solid var(--border); white-space: nowrap; }
+.s3-doc-cols span:last-child { border-right: 0; }
+.s3-doc-s .s3-arr { width: 26px; }
+.s3-doc-txt { font-family: var(--display); font-size: 14px; color: var(--body); }
+
+@media (max-height: 800px) {
+  .s3-flow { margin-top: 22px; }
+}
+</style>
 </head>
 <body data-week="3" class="deck-v2">
 
@@ -20,17 +198,37 @@
   </div>
 </div>
 
-<!-- 2: Plan for the hour -->
-<div class="slide slide-dark" id="s1">
+<!-- 2: Plan for the hour. Widths are minutes / 60. -->
+<div class="slide" id="s1">
   <div class="slide-inner">
     <div class="slide-label">Run-Sheet</div>
     <h2>Plan for the Hour</h2>
-    <div class="items">
-      <div class="item"><span class="item-num clock">0:00 to 5:00</span><span class="item-text"><strong>Retrieval opener</strong>, on paper.</span></div>
-      <div class="item"><span class="item-num clock">5:00 to 15:00</span><span class="item-text"><strong>Example log</strong> walkthrough.</span></div>
-      <div class="item"><span class="item-num clock">15:00 to 35:00</span><span class="item-text"><strong>Pairs compare logs</strong>: why and what if.</span></div>
-      <div class="item"><span class="item-num clock">35:00 to 50:00</span><span class="item-text"><strong>Shared table</strong>; the stage to automate first.</span></div>
-      <div class="item"><span class="item-num clock">50:00 to 60:00</span><span class="item-text"><strong>Exit ticket</strong>, and pre-work.</span></div>
+    <div class="s3-plan">
+      <div class="s3-bar">
+        <div class="s3-seg s3-icap-a" style="width: 8.3333%;" data-min="5"><span>5 min</span></div>
+        <div class="s3-seg s3-icap-pa" style="width: 16.6667%;" data-min="10"><b>Example log</b><span>10 min</span></div>
+        <div class="s3-seg s3-icap-i" style="width: 33.3333%;" data-min="20"><b>Pairs compare logs</b><span>20 min</span></div>
+        <div class="s3-seg s3-icap-i" style="width: 25%;" data-min="15"><b>Shared stage table</b><span>15 min</span></div>
+        <div class="s3-seg s3-icap-c" style="width: 16.6667%;" data-min="10"><b>Exit ticket</b><span>10 min</span></div>
+      </div>
+      <div class="s3-axis">
+        <span class="s3-tick" style="left: 0%;">0</span>
+        <span class="s3-tick" style="left: 25%;">15</span>
+        <span class="s3-tick" style="left: 50%;">30</span>
+        <span class="s3-tick" style="left: 75%;">45</span>
+        <span class="s3-tick" style="left: 100%;">60</span>
+      </div>
+      <span class="s3-lead" style="left: 4.1667%;"></span>
+      <span class="s3-lead-label" style="left: 0;">Retrieval opener</span>
+      <span class="s3-axis-title">Minutes into the session</span>
+    </div>
+    <div class="s3-legend">
+      <span class="s3-cap">ICAP mode</span>
+      <span><i class="s3-icap-p"></i>Passive</span>
+      <span><i class="s3-icap-a"></i>Active</span>
+      <span><i class="s3-icap-pa"></i>Passive to active</span>
+      <span><i class="s3-icap-c"></i>Constructive</span>
+      <span><i class="s3-icap-i"></i>Interactive</span>
     </div>
   </div>
 </div>
@@ -85,66 +283,135 @@
   </div>
 </div>
 
-<!-- 7: Compaction -->
+<!-- 7: Compaction as a flow -->
 <div class="slide" id="s6">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Key Idea</div>
     <h2>Intentional Compaction</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Attention degrades</strong>: crowded context introduces noise and confusion.</span></div>
-      <div class="item"><span class="item-text"><strong>Crystallise state</strong>: distil research into a file such as <code>specs/&lt;issue&gt;.md</code>.</span></div>
-      <div class="item"><span class="item-text"><strong>Fresh sessions</strong>: implement from the spec alone, leaving history behind.</span></div>
+    <div class="s3-flow">
+      <div class="s3-box">
+        <div class="s3-cap">Long session</div>
+        <div class="s3-node-title">Research</div>
+        <div class="s3-meter"><span>context</span><b><i style="width: 90%;"></i></b></div>
+        <div class="s3-node-note">Crowded context: noise and confusion</div>
+      </div>
+      <div class="s3-link"><svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg><span>distil</span></div>
+      <div class="s3-box s3-accent-top">
+        <div class="s3-cap">A file</div>
+        <div class="s3-node-title"><code>specs/4.md</code></div>
+        <div class="s3-node-note">The crystallised state</div>
+      </div>
+      <div class="s3-link"><svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg><span>reads only</span></div>
+      <div class="s3-box">
+        <div class="s3-cap">Fresh session</div>
+        <div class="s3-node-title">Implement</div>
+        <div class="s3-meter"><span>context</span><b><i style="width: 15%;"></i></b></div>
+        <div class="s3-node-note">History left behind</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 8: Research before planning -->
+<!-- 8: Leverage: research, plan, code (ACE-FCA, as summarised in week-3-check.html) -->
 <div class="slide" id="s7">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Key Idea</div>
     <h2>Research Before Planning</h2>
-    <div class="two-col" style="gap: 18px;">
-      <div class="card card-accent">
-        <h3>Bad plans multiply waste</h3>
-        <p style="font-size: 14px;">A bad line of code is one bad line; in a plan, hundreds; in research, thousands.</p>
-      </div>
-      <div class="card card-accent">
-        <h3>Ground in real code</h3>
-        <p style="font-size: 14px;">Inspect existing files and interfaces before designing.</p>
-      </div>
+    <div class="s3-lev">
+      <div class="s3-box s3-accent-top"><b>Research</b><span>existing files and interfaces</span></div>
+      <svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg>
+      <div class="s3-box"><b>Plan</b></div>
+      <svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg>
+      <div class="s3-box"><b>Code</b></div>
+
+      <div class="s3-lev-down"><svg viewBox="0 0 14 30" aria-hidden="true"><path d="M7 1V28M2 22L7 28L12 22"/></svg></div>
+      <span></span>
+      <div class="s3-lev-down"><svg viewBox="0 0 14 30" aria-hidden="true"><path d="M7 1V28M2 22L7 28L12 22"/></svg></div>
+      <span></span>
+      <div class="s3-lev-down"><svg viewBox="0 0 14 30" aria-hidden="true"><path d="M7 1V28M2 22L7 28L12 22"/></svg></div>
+
+      <div class="s3-lev-out">thousands</div>
+      <span></span>
+      <div class="s3-lev-out">hundreds</div>
+      <span></span>
+      <div class="s3-lev-out">one</div>
+
+      <div class="s3-lev-cap s3-cap">bad lines of code that one bad line can lead to</div>
     </div>
+    <p class="s3-lev-foot">Errors made upstream are amplified downstream, so reviewing research and plans gives more leverage.</p>
   </div>
 </div>
 
-<!-- 9: Annotated example log overview -->
+<!-- 9: Annotated example log: minutes and cost per stage (values from the example log in week-3.html) -->
 <div class="slide" id="s8">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Walkthrough</div>
     <h2>Annotated Example Log</h2>
-    <p class="subtitle" style="margin-bottom: 12px;">Issue 4, a new check. Illustrative values, not a recorded run.</p>
-    <div class="stat-row" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">47</div>
-        <h3 style="margin-top: 8px;">Human min</h3>
-        <p style="font-size: 13px; color: var(--muted);">Setup: 8 more</p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">465k</div>
-        <h3 style="margin-top: 8px;">Tokens</h3>
-        <p style="font-size: 13px; color: var(--muted);">Across 5 stages</p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">$2.90</div>
-        <h3 style="margin-top: 8px;">Cost</h3>
-        <p style="font-size: 13px; color: var(--muted);">Estimated, <code>/usage</code></p>
-      </div>
-      <div class="stat-tile stat-tile-accent">
-        <div class="stat-num">4</div>
-        <h3 style="margin-top: 8px;">Interventions</h3>
-        <p style="font-size: 13px; color: var(--muted);">4 stages needed a person</p>
-      </div>
+    <p class="s3-sub">Issue 4, a new check. Illustrative values, not a recorded run.</p>
+    <div class="s3-chartcard">
+      <svg viewBox="0 0 880 300" role="img" aria-label="Example log, illustrative values: spec took the most human minutes, 16 of 47, while implement cost the most, 1.60 of 2.90 US dollars, and four of the five stages needed an intervention. Triage: 4 minutes, 0.04 dollars, no intervention. Spec: 16 minutes, 0.75 dollars, intervention for wrong design. Implement: 12 minutes, 1.60 dollars, intervention for missing context. Review: 10 minutes, 0.45 dollars, intervention for taste. PR: 5 minutes, 0.06 dollars, intervention for taste. Total 47 human minutes plus 8 minutes of setup, 465k tokens, 2.90 dollars, 4 interventions.">
+        <!-- column heads, which are also the axis titles -->
+        <text class="s3-c-head" x="104" y="16">Human minutes</text>
+        <text class="s3-c-head" x="420" y="16">Estimated cost (US$)</text>
+        <text class="s3-c-head" x="712" y="16">Intervention, cause</text>
+        <!-- gridlines: minutes 10, 20 at 13 px per minute; cost $1, $2 at 130 px per dollar -->
+        <line class="s3-c-grid" x1="234" y1="28" x2="234" y2="230"/>
+        <line class="s3-c-grid" x1="364" y1="28" x2="364" y2="230"/>
+        <line class="s3-c-grid" x1="550" y1="28" x2="550" y2="230"/>
+        <line class="s3-c-grid" x1="680" y1="28" x2="680" y2="230"/>
+        <line class="s3-c-base" x1="104" y1="28" x2="104" y2="230"/>
+        <line class="s3-c-base" x1="420" y1="28" x2="420" y2="230"/>
+        <!-- Triage: 4 min, $0.04, no intervention -->
+        <text class="s3-c-stage" x="0" y="54">Triage</text>
+        <path class="s3-c-bar" d="M104 39H152a4 4 0 0 1 4 4V55a4 4 0 0 1 -4 4H104Z"/>
+        <text class="s3-c-val" x="164" y="54">4</text>
+        <path class="s3-c-bar" d="M420 39H421.2a4 4 0 0 1 4 4V55a4 4 0 0 1 -4 4H420Z"/>
+        <text class="s3-c-val" x="433.2" y="54">$0.04</text>
+        <text class="s3-c-none" x="732" y="54">none</text>
+        <!-- Spec: 16 min, $0.75, wrong design -->
+        <text class="s3-c-stage" x="0" y="94">Spec</text>
+        <path class="s3-c-bar" d="M104 79H308a4 4 0 0 1 4 4V95a4 4 0 0 1 -4 4H104Z"/>
+        <text class="s3-c-val" x="320" y="94">16</text>
+        <path class="s3-c-bar" d="M420 79H513.5a4 4 0 0 1 4 4V95a4 4 0 0 1 -4 4H420Z"/>
+        <text class="s3-c-val" x="525.5" y="94">$0.75</text>
+        <path class="s3-c-tri" d="M712 95L718 84L724 95Z"/><text class="s3-c-cause" x="732" y="94">wrong design</text>
+        <!-- Implement: 12 min, $1.60, missing context -->
+        <text class="s3-c-stage" x="0" y="134">Implement</text>
+        <path class="s3-c-bar" d="M104 119H256a4 4 0 0 1 4 4V135a4 4 0 0 1 -4 4H104Z"/>
+        <text class="s3-c-val" x="268" y="134">12</text>
+        <path class="s3-c-bar" d="M420 119H624a4 4 0 0 1 4 4V135a4 4 0 0 1 -4 4H420Z"/>
+        <text class="s3-c-val" x="636" y="134">$1.60</text>
+        <path class="s3-c-tri" d="M712 135L718 124L724 135Z"/><text class="s3-c-cause" x="732" y="134">missing context</text>
+        <!-- Review: 10 min, $0.45, taste -->
+        <text class="s3-c-stage" x="0" y="174">Review</text>
+        <path class="s3-c-bar" d="M104 159H230a4 4 0 0 1 4 4V175a4 4 0 0 1 -4 4H104Z"/>
+        <text class="s3-c-val" x="242" y="174">10</text>
+        <path class="s3-c-bar" d="M420 159H474.5a4 4 0 0 1 4 4V175a4 4 0 0 1 -4 4H420Z"/>
+        <text class="s3-c-val" x="486.5" y="174">$0.45</text>
+        <path class="s3-c-tri" d="M712 175L718 164L724 175Z"/><text class="s3-c-cause" x="732" y="174">taste</text>
+        <!-- PR: 5 min, $0.06, taste -->
+        <text class="s3-c-stage" x="0" y="214">PR</text>
+        <path class="s3-c-bar" d="M104 199H165a4 4 0 0 1 4 4V215a4 4 0 0 1 -4 4H104Z"/>
+        <text class="s3-c-val" x="177" y="214">5</text>
+        <path class="s3-c-bar" d="M420 199H423.8a4 4 0 0 1 4 4V215a4 4 0 0 1 -4 4H420Z"/>
+        <text class="s3-c-val" x="435.8" y="214">$0.06</text>
+        <path class="s3-c-tri" d="M712 215L718 204L724 215Z"/><text class="s3-c-cause" x="732" y="214">taste</text>
+        <!-- ticks -->
+        <text class="s3-c-tick" x="104" y="246" text-anchor="middle">0</text>
+        <text class="s3-c-tick" x="234" y="246" text-anchor="middle">10</text>
+        <text class="s3-c-tick" x="364" y="246" text-anchor="middle">20</text>
+        <text class="s3-c-tick" x="420" y="246" text-anchor="middle">$0</text>
+        <text class="s3-c-tick" x="550" y="246" text-anchor="middle">$1</text>
+        <text class="s3-c-tick" x="680" y="246" text-anchor="middle">$2</text>
+        <!-- totals -->
+        <line class="s3-c-grid" x1="0" y1="260" x2="880" y2="260"/>
+        <text class="s3-c-stage" x="0" y="286">Total</text>
+        <text class="s3-c-tot" x="104" y="286">47, setup 8 more</text>
+        <text class="s3-c-tot" x="420" y="286">$2.90 &#183; 465k tokens</text>
+        <text class="s3-c-tot" x="712" y="286">4</text>
+      </svg>
     </div>
-    <p class="meta" style="margin-top: 16px;">On Codex: token counts from <code>codex exec --json</code>.</p>
+    <p class="s3-note">Claude Code: <code>/usage</code> after each stage. On Codex: token counts from <code>codex exec --json</code>.</p>
   </div>
 </div>
 
@@ -153,17 +420,29 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Stages 1 and 2</div>
     <h2>Triage &amp; Spec</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Triage: 4 min &middot; 6k tokens &middot; $0.04</h3>
-        <p style="font-size: 14px;"><strong>Context</strong>: issue text and root CLAUDE.md.<br/><strong>Intervention</strong>: none.<br/><strong>Judgement</strong>: design: needs-spec, as a new check needs fixtures.</p>
+    <div class="s3-strip">
+      <span class="s3-here" style="width: 8.511%;">Triage</span><span class="s3-here" style="width: 34.043%;">Spec</span><span style="width: 25.532%;">Implement</span><span style="width: 21.277%;">Review</span><span style="width: 10.638%;">PR</span>
+    </div>
+    <div class="s3-strip-cap"><span class="s3-cap">Width: minutes</span></div>
+    <div class="s3-cards">
+      <div class="s3-card">
+        <div class="s3-card-head"><h3>Triage</h3><span class="s3-mono">4 min &middot; 6k tokens &middot; $0.04</span></div>
+        <dl class="s3-dl">
+          <dt>Context</dt><dd>Issue text and root CLAUDE.md</dd>
+          <dt>Intervention</dt><dd>None</dd>
+          <dt>Judgement</dt><dd>Design: needs-spec, as a new check needs fixtures</dd>
+        </dl>
       </div>
-      <div class="card card-accent">
-        <h3>Spec: 16 min &middot; 120k tokens &middot; $0.75</h3>
-        <p style="font-size: 14px;"><strong>Context</strong>: <code>checks/</code> and <code>tests/</code>; <code>benchmarks/</code> denied. Compacted into <code>specs/4.md</code>.<br/><strong>Intervention</strong>: cut an unrequested config option.<br/><strong>Judgement</strong>: product.</p>
+      <div class="s3-card">
+        <div class="s3-card-head"><h3>Spec</h3><span class="s3-mono">16 min &middot; 120k tokens &middot; $0.75</span></div>
+        <dl class="s3-dl">
+          <dt>Context</dt><dd><code>checks/</code> and <code>tests/</code>; <code>benchmarks/</code> denied; compacted into <code>specs/4.md</code></dd>
+          <dt>Intervention</dt><dd><span class="s3-tri" aria-hidden="true"></span>Cut an unrequested config option (wrong design)</dd>
+          <dt>Judgement</dt><dd>Product</dd>
+        </dl>
       </div>
     </div>
-    <p class="meta" style="margin-top: 16px;">On Codex: the root AGENTS.md takes the place of the root CLAUDE.md.</p>
+    <p class="s3-note">On Codex: the root AGENTS.md takes the place of the root CLAUDE.md.</p>
   </div>
 </div>
 
@@ -171,15 +450,27 @@
 <div class="slide" id="s10">
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Stage 3</div>
-    <h2>Implement with <code>/goal</code></h2>
-    <div class="card card-accent">
-      <h3>12 human min &middot; 260k tokens &middot; $1.60</h3>
-      <p style="font-size: 15px; margin-top: 8px;"><strong>Context</strong>: <code>specs/4.md</code> only, in a fresh session.</p>
-      <p style="font-size: 15px; margin-top: 6px;"><strong>Goal</strong>: <code>uv run pytest tests/unit</code> passes and <code>uv run lanorme check .</code> is clean.</p>
-      <p style="font-size: 15px; margin-top: 6px;"><strong>Intervention</strong>: stopped an edit to an unrelated failing test (missing context).</p>
-      <p style="font-size: 15px; margin-top: 6px;"><strong>Judgement</strong>: none; the goal held once tests and lint passed.</p>
+    <h2>Implement with <code class="s3-code">/goal</code></h2>
+    <div class="s3-strip">
+      <span style="width: 8.511%;">Triage</span><span style="width: 34.043%;">Spec</span><span class="s3-here" style="width: 25.532%;">Implement</span><span style="width: 21.277%;">Review</span><span style="width: 10.638%;">PR</span>
     </div>
-    <p class="meta" style="margin-top: 16px;">On Codex: Codex's own <code>/goal</code>, with the same condition.</p>
+    <div class="s3-strip-cap"><span class="s3-cap">Width: minutes</span><span class="s3-mono">12 human min &middot; 260k tokens &middot; $1.60</span></div>
+    <div class="s3-goal">
+      <div class="s3-box s3-goal-in"><div class="s3-cap">Fresh session</div><div class="s3-node-title"><code>specs/4.md</code> only</div></div>
+      <div class="s3-link"><svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg></div>
+      <div class="s3-box s3-goal-gate">
+        <div class="s3-cap"><code>/goal</code> gate</div>
+        <ul>
+          <li><svg class="s3-check" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5L5.5 11L12 3"/></svg><span><code>uv run pytest tests/unit</code> passes</span></li>
+          <li><svg class="s3-check" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5L5.5 11L12 3"/></svg><span><code>uv run lanorme check .</code> is clean</span></li>
+        </ul>
+      </div>
+      <div class="s3-link"><svg class="s3-arr" viewBox="0 0 44 14" aria-hidden="true"><path d="M1 7H42M36 2L42 7L36 12"/></svg></div>
+      <div class="s3-box s3-goal-out"><div class="s3-cap">Judgement</div><div class="s3-node-title">None</div></div>
+    </div>
+    <p class="s3-unchecked"><b>Unchecked until review:</b> naming, scope, design.</p>
+    <p class="s3-unchecked"><span class="s3-tri" aria-hidden="true"></span><b>Intervention:</b> stopped an edit to an unrelated failing test (missing context).</p>
+    <p class="s3-note">On Codex: Codex's own <code>/goal</code>, with the same condition.</p>
   </div>
 </div>
 
@@ -188,17 +479,29 @@
   <div class="slide-inner">
     <div class="slide-label">5:00 to 15:00 &middot; Stages 4 and 5</div>
     <h2>Review &amp; Pull Request</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>Review: 10 min &middot; 70k tokens &middot; $0.45</h3>
-        <p style="font-size: 14px;"><strong>Context</strong>: the diff and <code>specs/4.md</code>, in a reviewer subagent.<br/><strong>Intervention</strong>: rejected one naming finding.<br/><strong>Judgement</strong>: taste.</p>
+    <div class="s3-strip">
+      <span style="width: 8.511%;">Triage</span><span style="width: 34.043%;">Spec</span><span style="width: 25.532%;">Implement</span><span class="s3-here" style="width: 21.277%;">Review</span><span class="s3-here" style="width: 10.638%;">PR</span>
+    </div>
+    <div class="s3-strip-cap"><span class="s3-cap">Width: minutes</span></div>
+    <div class="s3-cards">
+      <div class="s3-card">
+        <div class="s3-card-head"><h3>Review</h3><span class="s3-mono">10 min &middot; 70k tokens &middot; $0.45</span></div>
+        <dl class="s3-dl">
+          <dt>Context</dt><dd>The diff and <code>specs/4.md</code>, in a reviewer subagent</dd>
+          <dt>Intervention</dt><dd><span class="s3-tri" aria-hidden="true"></span>Rejected one naming finding (taste)</dd>
+          <dt>Judgement</dt><dd>Taste</dd>
+        </dl>
       </div>
-      <div class="card card-accent">
-        <h3>PR: 5 min &middot; 9k tokens &middot; $0.06</h3>
-        <p style="font-size: 14px;"><strong>Context</strong>: the diff, spec link and CI result.<br/><strong>Intervention</strong>: rewrote the summary line.<br/><strong>Judgement</strong>: risk: ready for a reviewer?</p>
+      <div class="s3-card">
+        <div class="s3-card-head"><h3>PR</h3><span class="s3-mono">5 min &middot; 9k tokens &middot; $0.06</span></div>
+        <dl class="s3-dl">
+          <dt>Context</dt><dd>The diff, spec link and CI result</dd>
+          <dt>Intervention</dt><dd><span class="s3-tri" aria-hidden="true"></span>Rewrote the summary line (taste)</dd>
+          <dt>Judgement</dt><dd>Risk: ready for a reviewer?</dd>
+        </dl>
       </div>
     </div>
-    <p class="meta" style="margin-top: 16px;">On Codex: <code>/review</code> or a reviewer subagent for step 4.</p>
+    <p class="s3-note">On Codex: <code>/review</code> or a reviewer subagent for step 4.</p>
   </div>
 </div>
 
@@ -207,29 +510,69 @@
   <div class="slide-inner">
     <div class="slide-label">15:00 to 35:00 &middot; In Pairs</div>
     <h2>Pairs Compare Logs, Until 35:00</h2>
-    <div class="items">
-      <div class="item"><span class="item-num">1</span><span class="item-text">Open your stage logs side by side.</span></div>
-      <div class="item"><span class="item-num">2</span><span class="item-text">Each names their most expensive stage and the judgement it required.</span></div>
-      <div class="item"><span class="item-num">3</span><span class="item-text">Partner asks one <strong>why</strong>: why did that stage need a person?</span></div>
-      <div class="item"><span class="item-num">4</span><span class="item-text">Partner asks one <strong>what if</strong>: what if an agent ran it unattended?</span></div>
+    <div class="s3-logs">
+      <div class="s3-log">
+        <span class="s3-cap">Your log</span>
+        <div class="s3-log-strip"><span>Triage</span><span>Spec</span><span>Implement</span><span>Review</span><span>PR</span></div>
+      </div>
+      <div class="s3-swap"><svg viewBox="0 0 40 18" aria-hidden="true"><path d="M2 5H38M33 1L38 5L33 9M38 13H2M7 9L2 13L7 17"/></svg></div>
+      <div class="s3-log">
+        <span class="s3-cap">Partner's log</span>
+        <div class="s3-log-strip"><span>Triage</span><span>Spec</span><span>Implement</span><span>Review</span><span>PR</span></div>
+      </div>
     </div>
-    <div class="card card-accent" style="margin-top: 14px; padding-top: 12px; padding-bottom: 12px;">
-      <p><strong>By 35:00:</strong> your minutes and cost per stage, ready for the shared table. On Codex, token counts.</p>
+    <div class="s3-asks">
+      <div class="s3-ask"><span class="s3-cap">Each names</span><b>Your most expensive stage, and the judgement it required</b></div>
+      <div class="s3-ask"><span class="s3-cap">Partner asks</span><b>Why did that stage need a person?</b></div>
+      <div class="s3-ask"><span class="s3-cap">Partner asks</span><b>What if an agent ran it unattended?</b></div>
     </div>
+    <p class="s3-by"><strong>By 35:00:</strong> your minutes and cost per stage, for the shared table. On Codex, token counts.</p>
     <p class="activity-link"><a href="../week-3.html#slog-h">Stage log on the Week 3 page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </div>
 
-<!-- 14: Shared stage table -->
+<!-- 14: Shared stage table: empty frames, filled in live -->
 <div class="slide" id="s13">
   <div class="slide-inner">
     <div class="slide-label">35:00 to 50:00 &middot; Interactive</div>
     <h2>Shared Stage Table</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Time spread</strong>: where did human minutes cluster across the cohort?</span></div>
-      <div class="item"><span class="item-text"><strong>Cost spread</strong>: where did token spending peak? Did cost match speed?</span></div>
-      <div class="item"><span class="item-text"><strong>Interventions</strong>: missing context, wrong design, or taste?</span></div>
+    <div class="s3-frames">
+      <div class="s3-frame">
+        <p>Where did human minutes cluster?</p>
+        <svg viewBox="0 0 440 196" role="img" aria-label="Empty chart frame for the cohort's human minutes per stage, triage to PR, filled in live.">
+          <text class="s3-f-axis" x="40" y="12">Human minutes</text>
+          <line class="s3-c-grid" x1="40" y1="40" x2="436" y2="40"/>
+          <line class="s3-c-grid" x1="40" y1="80" x2="436" y2="80"/>
+          <line class="s3-c-grid" x1="40" y1="120" x2="436" y2="120"/>
+          <line class="s3-c-base" x1="40" y1="160" x2="436" y2="160"/>
+          <line class="s3-c-base" x1="40" y1="24" x2="40" y2="160"/>
+          <text class="s3-f-axis" x="32" y="164" text-anchor="end">0</text>
+          <text class="s3-f-cat" x="80" y="186" text-anchor="middle">Triage</text>
+          <text class="s3-f-cat" x="159" y="186" text-anchor="middle">Spec</text>
+          <text class="s3-f-cat" x="238" y="186" text-anchor="middle">Implement</text>
+          <text class="s3-f-cat" x="317" y="186" text-anchor="middle">Review</text>
+          <text class="s3-f-cat" x="396" y="186" text-anchor="middle">PR</text>
+        </svg>
+      </div>
+      <div class="s3-frame">
+        <p>Where did spending peak? Did cost match speed?</p>
+        <svg viewBox="0 0 440 196" role="img" aria-label="Empty chart frame for the cohort's cost per stage, or token counts on Codex, triage to PR, filled in live.">
+          <text class="s3-f-axis" x="40" y="12">Cost, US$ (Codex: tokens)</text>
+          <line class="s3-c-grid" x1="40" y1="40" x2="436" y2="40"/>
+          <line class="s3-c-grid" x1="40" y1="80" x2="436" y2="80"/>
+          <line class="s3-c-grid" x1="40" y1="120" x2="436" y2="120"/>
+          <line class="s3-c-base" x1="40" y1="160" x2="436" y2="160"/>
+          <line class="s3-c-base" x1="40" y1="24" x2="40" y2="160"/>
+          <text class="s3-f-axis" x="32" y="164" text-anchor="end">0</text>
+          <text class="s3-f-cat" x="80" y="186" text-anchor="middle">Triage</text>
+          <text class="s3-f-cat" x="159" y="186" text-anchor="middle">Spec</text>
+          <text class="s3-f-cat" x="238" y="186" text-anchor="middle">Implement</text>
+          <text class="s3-f-cat" x="317" y="186" text-anchor="middle">Review</text>
+          <text class="s3-f-cat" x="396" y="186" text-anchor="middle">PR</text>
+        </svg>
+      </div>
     </div>
+    <div class="s3-row"><b class="s3-cap">Interventions</b><span class="s3-chip">missing context</span><span class="s3-chip">wrong design</span><span class="s3-chip">taste</span></div>
   </div>
 </div>
 
@@ -238,14 +581,15 @@
   <div class="slide-inner">
     <div class="slide-label">35:00 to 50:00 &middot; Interactive</div>
     <h2>What Would You Automate First?</h2>
-    <div class="two-col" style="gap: 16px;">
-      <div class="card card-accent">
-        <h3>First to automate</h3>
-        <p style="font-size: 14px;">Which stage has deterministic gates and low risk, so it could run unattended in CI?</p>
+    <div class="s3-spec">
+      <div class="s3-spec-ends">
+        <div><b>First to automate</b><span>Deterministic gates and low risk, so it could run unattended in CI</span></div>
+        <div><b>Last to automate</b><span>Design, product or taste decisions that need human sign-off</span></div>
       </div>
-      <div class="card card-accent">
-        <h3>Last to automate</h3>
-        <p style="font-size: 14px;">Which stage holds design, product or taste decisions that need human sign-off?</p>
+      <svg class="s3-spec-line" viewBox="0 0 920 18" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9H918M10 2L2 9L10 16M910 2L918 9L910 16"/></svg>
+      <div class="s3-tray">
+        <span class="s3-cap">Place each stage</span>
+        <div class="s3-chips"><span class="s3-chip">Triage</span><span class="s3-chip">Spec</span><span class="s3-chip">Implement</span><span class="s3-chip">Review</span><span class="s3-chip">PR</span></div>
       </div>
     </div>
   </div>
@@ -263,16 +607,48 @@
   </div>
 </div>
 
-<!-- 17: Before Week 4 pre-work -->
+<!-- 17: Before Week 4 pre-work (minutes from WEEKS in site.js, week 4) -->
 <div class="slide" id="s16">
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Before Week 4</div>
     <h2>Pre-Work: Both Tracks</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Software Engineering Is Becoming Factory Engineering</strong>: Lloyd, 20.6 min</span></div>
-      <div class="item"><span class="item-text"><strong>Why Software Factories Fail</strong>: Horthy, 19.3 min</span></div>
-      <div class="item"><span class="item-text"><strong>Software engineering at the tipping point</strong>: Bender, 39.6 min</span></div>
-      <div class="item"><span class="item-text"><strong>The AI-native SDLC playbook</strong>: Claxton, selected plays, 22.2 min</span></div>
+    <div class="s3-legend s3-legend--top">
+      <span><i class="s3-sw-vid"></i>Video</span>
+      <span><i class="s3-sw-read"></i>Reading</span>
+      <span><i class="s3-sw-prac"></i>Practice</span>
+    </div>
+    <div class="s3-chartcard">
+      <svg viewBox="0 0 880 290" role="img" aria-label="Week 4 pre-work in minutes, both tracks: 101.7 minutes of talks and reading, led by Bender's 39.6-minute talk, then the 45-minute factory design document. Lloyd, Software Engineering Is Becoming Factory Engineering, video, 20.6. Horthy, Why Software Factories Fail, video, 19.3. Bender, Software engineering at the tipping point, video, 39.6. Claxton, The AI-native SDLC playbook, selected plays, reading, 22.2. Factory design document, practice, 45.">
+        <!-- 0 to 50 minutes over 800 px: 16 px per minute -->
+        <line class="s3-c-grid" x1="160" y1="8" x2="160" y2="250"/>
+        <line class="s3-c-grid" x1="320" y1="8" x2="320" y2="250"/>
+        <line class="s3-c-grid" x1="480" y1="8" x2="480" y2="250"/>
+        <line class="s3-c-grid" x1="640" y1="8" x2="640" y2="250"/>
+        <line class="s3-c-grid" x1="800" y1="8" x2="800" y2="250"/>
+        <line class="s3-c-base" x1="0" y1="8" x2="0" y2="250"/>
+        <text class="s3-k-title" x="6" y="22"><tspan class="s3-k-who">Lloyd</tspan> &#183; Software Engineering Is Becoming Factory Engineering</text>
+        <path class="s3-k-vid" d="M0 30H325.6a4 4 0 0 1 4 4V42a4 4 0 0 1 -4 4H0Z"/>
+        <text class="s3-k-val" x="338" y="43">20.6</text>
+        <text class="s3-k-title" x="6" y="70"><tspan class="s3-k-who">Horthy</tspan> &#183; Why Software Factories Fail</text>
+        <path class="s3-k-vid" d="M0 78H304.8a4 4 0 0 1 4 4V90a4 4 0 0 1 -4 4H0Z"/>
+        <text class="s3-k-val" x="317" y="91">19.3</text>
+        <text class="s3-k-title" x="6" y="118"><tspan class="s3-k-who">Bender</tspan> &#183; Software engineering at the tipping point</text>
+        <path class="s3-k-vid" d="M0 126H629.6a4 4 0 0 1 4 4V138a4 4 0 0 1 -4 4H0Z"/>
+        <text class="s3-k-val" x="642" y="139">39.6</text>
+        <text class="s3-k-title" x="6" y="166"><tspan class="s3-k-who">Claxton</tspan> &#183; The AI-native SDLC playbook, selected plays</text>
+        <path class="s3-k-read" d="M0 174H351.2a4 4 0 0 1 4 4V186a4 4 0 0 1 -4 4H0Z"/>
+        <text class="s3-k-val" x="364" y="187">22.2</text>
+        <text class="s3-k-title" x="6" y="214"><tspan class="s3-k-who">Activity</tspan> &#183; Factory design document</text>
+        <path class="s3-k-prac" d="M0 222H716a4 4 0 0 1 4 4V234a4 4 0 0 1 -4 4H0Z"/>
+        <text class="s3-k-val" x="728" y="235">45</text>
+        <text class="s3-c-tick" x="0" y="266" text-anchor="start">0</text>
+        <text class="s3-c-tick" x="160" y="266" text-anchor="middle">10</text>
+        <text class="s3-c-tick" x="320" y="266" text-anchor="middle">20</text>
+        <text class="s3-c-tick" x="480" y="266" text-anchor="middle">30</text>
+        <text class="s3-c-tick" x="640" y="266" text-anchor="middle">40</text>
+        <text class="s3-c-tick" x="800" y="266" text-anchor="middle">50</text>
+        <text class="s3-c-tick" x="400" y="286" text-anchor="middle">Minutes</text>
+      </svg>
     </div>
   </div>
 </div>
@@ -282,12 +658,17 @@
   <div class="slide-inner">
     <div class="slide-label">50:00 to 60:00 &middot; Before Week 4</div>
     <h2>Factory Design Document (45 min)</h2>
-    <div class="items">
-      <div class="item"><span class="item-text"><strong>Stage table</strong>: trigger, actor, artefact, gate type and risk argument.</span></div>
-      <div class="item"><span class="item-text"><strong>Features</strong>: one per stage, from your track's column of the Week 5 table.</span></div>
-      <div class="item"><span class="item-text"><strong>Observer loop</strong>: what it reads, the one file it may change, how CI enforces that.</span></div>
-      <div class="item"><span class="item-text"><strong>Measurement plan</strong>: human minutes, cost, failed runs, one outcome measure.</span></div>
-      <div class="item"><span class="item-text"><strong>Critique</strong>: Lloyd weighed against one counter-source.</span></div>
+    <div class="s3-doc">
+      <span class="s3-doc-n">1</span>
+      <div class="s3-doc-s"><b>Stage table</b><div class="s3-doc-cols"><span>Trigger</span><span>Actor</span><span>Artefact</span><span>Gate type</span><span>Risk argument</span></div></div>
+      <span class="s3-doc-n">2</span>
+      <div class="s3-doc-s"><b>Features</b><span class="s3-doc-txt">One per stage, from the Week 5 table:</span><span class="s3-chip">Claude Code column</span><span class="s3-chip">Codex column</span></div>
+      <span class="s3-doc-n">3</span>
+      <div class="s3-doc-s"><b>Observer loop</b><span class="s3-chip s3-chip--soft">What it reads</span><span class="s3-chip s3-chip--soft">The one file it may change</span><span class="s3-chip s3-chip--soft">How CI enforces that</span></div>
+      <span class="s3-doc-n">4</span>
+      <div class="s3-doc-s"><b>Measurement plan</b><span class="s3-chip s3-chip--soft">Human minutes</span><span class="s3-chip s3-chip--soft">Cost</span><span class="s3-chip s3-chip--soft">Failed runs</span><span class="s3-chip s3-chip--soft">One outcome measure</span></div>
+      <span class="s3-doc-n">5</span>
+      <div class="s3-doc-s"><b>Critique</b><span class="s3-doc-txt">Lloyd weighed against one counter-source</span></div>
     </div>
   </div>
 </div>
