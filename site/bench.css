@@ -424,3 +424,5 @@ text.axis-title {
   .est-agent__sw--pub { background: CanvasText; }
   .est-truth, .bench-ref-line, .bench-line { stroke: CanvasText; }
 }
+.bench-links { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 0 24px; border-top: 1px solid var(--border, #E5E5E5); }
+.bench-links li { border-bottom: 1px solid var(--border, #E5E5E5); min-width: 0; }
