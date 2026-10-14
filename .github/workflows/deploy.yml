@@ -42,6 +42,7 @@ jobs:
           cp -R site/. _site/
           mkdir -p _site/v1
           cp -R _v1/. _site/v1/
+          python3 .github/scripts/v1_notice.py _site/v1
           touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5
