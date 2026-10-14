@@ -345,6 +345,7 @@
     track = t;
     root.classList.toggle("track-codex", t === "codex");
     setRadios(t);
+    syncTrackButton(t);
     render();
     if (announceIt) announceTrack(t);
   }
@@ -468,6 +469,54 @@
     if (lg) lg.className = slot.hasAttribute("data-sb-theme-slot") ? "label" : "sr-only";
     if (hadFocus) { var r = $("input:checked", fs) || $("input", fs); if (r) r.focus(); }
   }
+  // One track control: the page's own fieldset.track-switch moves into the
+  // sidebar at 1024px and wider and back to its place below that. Pages
+  // without one get a sidebar-only control, so the track is set from any page.
+  var trackHome = null;
+  function makeTrackSwitch() {
+    var fs = document.createElement("fieldset");
+    fs.className = "track-switch";
+    fs.setAttribute("data-announce-claude", "Showing the Claude Code track.");
+    fs.setAttribute("data-announce-codex", "Showing the Codex track.");
+    fs.innerHTML = '<legend class="track-switch__legend">Track</legend><div class="track-switch__opts">' +
+      '<input type="radio" name="track" id="track-claude" value="claude"><label for="track-claude">Claude Code</label>' +
+      '<input type="radio" name="track" id="track-codex" value="codex"><label for="track-codex">Codex</label></div>';
+    return fs;
+  }
+  function placeTrackSwitch() {
+    var slot = $("[data-sb-track-slot]");
+    if (!slot) return;
+    var fs = $("fieldset.track-switch");
+    if (!fs) { fs = makeTrackSwitch(); slot.appendChild(fs); setRadios(track); }
+    if (!trackHome && fs.parentNode !== slot) {
+      trackHome = document.createComment("track-switch");
+      fs.parentNode.insertBefore(trackHome, fs);
+    }
+    var target = desktop() || !trackHome ? slot : trackHome.parentNode;
+    var hadFocus = fs.contains(document.activeElement);
+    if (target === slot && fs.parentNode !== slot) slot.appendChild(fs);
+    else if (target !== slot && fs.parentNode === slot) trackHome.parentNode.insertBefore(fs, trackHome);
+    var lg = $("legend", fs);
+    if (lg) lg.className = fs.parentNode === slot ? "label" : "track-switch__legend";
+    if (hadFocus) { var r = $("input:checked", fs) || $("input", fs); if (r) r.focus(); }
+  }
+  function syncTrackButton(t) {
+    var b = $("[data-sb-track-cycle]");
+    if (!b) return;
+    var name = "Track: " + trackName(t);
+    b.setAttribute("aria-label", name + ". Switch to " + trackName(t === "codex" ? "claude" : "codex"));
+    b.setAttribute("data-tip", name);
+    b.textContent = t === "codex" ? "CX" : "CC";
+    refreshTip(b);
+  }
+  function changeTrack(t) {
+    t = validTrack(t);
+    if (!t) return;
+    try { window.localStorage.setItem(TRACK_KEY, t); } catch (err) { /* blocked */ }
+    syncUrl(t);
+    applyTrack(t, true);
+    if (P && P.get().learner.track !== t) P.setTrack(t);
+  }
   // The rail's single theme button cycles System, Light, Dark.
   var THEME_CYCLE = { system: "light", light: "dark", dark: "system" };
   function syncThemeButton(m) {
@@ -542,7 +591,7 @@
     var h = '<div class="sb__head"><a class="sb__home" href="index.html">Agentic SE Course</a>' +
       '<button type="button" class="sb__toggle" aria-controls="course-sidebar">' + TOGGLE_ICON + "</button></div>";
     // Expanded
-    h += '<div class="sb__full"><ul class="sb__list">' + TOP_LINKS.map(function (l) {
+    h += '<div class="sb__full"><div class="sb__track" data-sb-track-slot></div><ul class="sb__list">' + TOP_LINKS.map(function (l) {
       return '<li><a class="sb__link" href="' + l.href + '"' + cur(currentOf(l, pg)) + ">" + esc(l.text) + "</a></li>";
     }).join("") + "</ul>";
     h += '<div><p class="label sb__label" id="sb-weeks-h">Weeks</p><ul class="sb__list" aria-labelledby="sb-weeks-h">' + WEEKS.filter(function (w) { return w.href; }).map(function (w) {
@@ -564,7 +613,7 @@
     function rbtn(l) {
       return '<li><a class="sb__rbtn" href="' + l.href + '"' + cur(currentOf(l, pg)) + ' aria-label="' + esc(l.rail) + '" data-tip="' + esc(l.rail) + '">' + railIcon(l.icon) + "</a></li>";
     }
-    h += '<div class="sb__rail"><ul class="sb__rlist">' + TOP_LINKS.map(rbtn).join("") + "</ul>" +
+    h += '<div class="sb__rail"><button type="button" class="sb__rbtn sb__rtrack" data-sb-track-cycle></button><ul class="sb__rlist">' + TOP_LINKS.map(rbtn).join("") + "</ul>" +
       '<div class="sb__rule"></div><ul class="sb__rlist sb__rlist--weeks" aria-label="Weeks">' + WEEKS.filter(function (w) { return w.href; }).map(function (w) {
         var here = pg.week === w.n;
         return '<li><a class="sb__rbtn sb__rweek' + (here ? " is-here" : "") + (w.optional ? " is-optional" : "") + '" href="' + esc(w.href) + '" data-sb-rweek="' + w.n + '"' +
@@ -651,6 +700,8 @@
         hideTip();
         // The button moves; keep its name visible while it has keyboard focus.
         if (document.activeElement === b && keyFocus(b)) setTimeout(function () { showTip(b); }, 0);
+      } else if (e.target.closest("[data-sb-track-cycle]")) {
+        changeTrack(track === "codex" ? "claude" : "codex");
       } else if (e.target.closest("[data-sb-theme-cycle]")) {
         applyTheme(THEME_CYCLE[currentTheme] || "system", true);
       }
@@ -687,6 +738,8 @@
     wireSidebar(nav);
     syncToggle();
     syncThemeButton(currentTheme);
+    placeTrackSwitch();
+    syncTrackButton(track);
   }
   function initSidebar(pg) {
     // Pages without the pre-paint snippet still get the sidebar, one frame late.
@@ -694,7 +747,7 @@
     if (!root.hasAttribute("data-sidebar")) root.setAttribute("data-sidebar", storedSidebar() || defaultSidebar());
     renderSidebarShell(pg);
     onMedia(mqWide, function () { if (!storedSidebar()) setSidebar(defaultSidebar(), false); });
-    onMedia(mqDesktop, function () { placeThemeSwitch(); hideTip(); });
+    onMedia(mqDesktop, function () { placeThemeSwitch(); placeTrackSwitch(); hideTip(); });
   }
 
   // Trails per page; the last crumb is the page itself.
@@ -844,15 +897,7 @@
   function onChange(e) {
     var el = e.target;
     if (!el || !el.getAttribute) return;
-    if (el.name === "track" && el.type === "radio") {
-      var t = validTrack(el.value);
-      if (!t) return;
-      try { window.localStorage.setItem(TRACK_KEY, t); } catch (err) { /* blocked */ }
-      syncUrl(t);
-      applyTrack(t, true);
-      if (P && P.get().learner.track !== t) P.setTrack(t);
-      return;
-    }
+    if (el.name === "track" && el.type === "radio") { changeTrack(el.value); return; }
     if (el.name === "theme" && el.type === "radio") {
       var m = validTheme(el.value);
       if (!m) return;
@@ -996,7 +1041,7 @@
       '<div class="tb__labels" aria-hidden="true">' + segs.map(function (o) {
         return '<span class="tb__label" style="--m:' + o.item.minutes + '">' + glyph(o.item.kind) + "<span>" + fmt(o.item.minutes) + "</span></span>";
       }).join("") + '</div><div class="tb__axis-title axis-title axis-title--x">Planned minutes</div></figure>' :
-      '<p class="meta">Minutes for this week\'s items are not measured yet, so there is no time bar. The table lists every item.</p>');
+      '<p class="meta">Minutes for this week\'s items are not measured yet.</p>');
     var opts = s.optional.filter(function (o) { return o.item.minutes !== null; });
     if (opts.length && s.planned) {
       var width = Math.min(100, s.optPlanned / s.planned * 100);
@@ -1167,7 +1212,7 @@
       var ns = nextSession();
       if (!c) {
         var pid = el.getAttribute("data-calendar-panel"), panel = pid && document.getElementById(pid);
-        setHTML(el, '<p class="meta">No cohort calendar yet, so no session dates are shown.</p>' + (panel ?
+        setHTML(el, '<p class="meta">No cohort calendar yet.</p>' + (panel ?
           '<button type="button" class="disclose" data-disclosure aria-expanded="' + !panel.hidden + '" aria-controls="' + esc(pid) +
             '" data-label-open="Hide the calendar panel" data-label-closed="Add your cohort calendar">' + (panel.hidden ? "Add your cohort calendar" : "Hide the calendar panel") + "</button>" :
           '<a class="btn-text" href="progress.html#calendar-h">Add your cohort calendar</a>'));
@@ -1610,7 +1655,7 @@
   function calLoadFile(el, file) {
     if (!file) return;
     if (!/\.json$/i.test(file.name || "") && !/json/i.test(file.type || "")) { calErrors(el, ["Choose a .json file. This one is called " + (file.name || "unnamed") + "."]); return; }
-    if (file.size > CAL_MAX_BYTES) { calErrors(el, ["That file is larger than 200 KB, so it is not a calendar."]); return; }
+    if (file.size > CAL_MAX_BYTES) { calErrors(el, ["That file is too large to be a calendar."]); return; }
     try {
       var r = new FileReader();
       r.onload = function () { calLoadText(el, String(r.result || "")); };
@@ -1839,7 +1884,7 @@
       function label(e) { return nameOf(STAGES, e.stage) + ", " + (e.change || "no change name"); }
 
       function listHTML(list) {
-        if (!list.length) return '<p class="stl__empty">Nothing logged yet. Log the first stage above.</p>';
+        if (!list.length) return '<p class="stl__empty">Nothing logged yet.</p>';
         return '<ol class="slf__list">' + list.map(function (e) {
           var facts = [isNum(e.humanMinutes) ? mins(e.humanMinutes) : "minutes not logged"];
           if (isNum(e.tokens) && e.tokens > 0) facts.push(tok(e.tokens) + " tokens");
@@ -1983,7 +2028,7 @@
       if (sig === el._sig) return;
       el._sig = sig;
       if (!f.length) {
-        el.innerHTML = '<div class="stl-wrap"><p class="stl__empty">Your report is empty. It fills as you log factory runs below. ' + (b3.length ? "Your Week " + baseWeek + " log is already here (" + plural(b3.length, "entry", "entries") + "), so a change you replay will be compared with it." : 'Log your Week ' + baseWeek + ' stages first, in <a href="week-' + baseWeek + '.html#slog-h">Your stage log</a> on the Week ' + baseWeek + ' page, then log the matching factory runs below.') + "</p></div>";
+        el.innerHTML = '<div class="stl-wrap"><p class="stl__empty">No factory runs logged yet. ' + (b3.length ? "Week " + baseWeek + " baseline: " + plural(b3.length, "entry", "entries") + "." : 'Your <a href="week-' + baseWeek + '.html#slog-h">Week ' + baseWeek + ' stage log</a> is empty.') + "</p></div>";
         return;
       }
       var gf = groups(f), gb = groups(b3);

@@ -111,7 +111,7 @@
   <section class="section" id="calendar" aria-labelledby="calendar-h">
     <h2 id="calendar-h" class="h-section">Cohort calendar</h2>
     <div class="panel">
-      <p>Your course owner shares a calendar.json for your cohort; an example lives at <a href="calendar.example.json">calendar.example.json</a>. Load it once and the session dates appear on the overview and on each week. Without it the pages show no dates, and "You are here" follows your own progress. The calendar is saved in this browser only and is not part of your progress file, except that the progress file names the cohort.</p>
+      <p>Your course owner shares a calendar.json for your cohort (example: <a href="calendar.example.json">calendar.example.json</a>). It puts the session dates on the overview and on each week.</p>
       <div data-calendar-drop></div>
     </div>
   </section>
@@ -145,7 +145,7 @@
   <section class="section" aria-labelledby="import-h">
     <h2 id="import-h" class="h-section">Import</h2>
     <div class="panel">
-      <p>Move your progress from another browser or device, or restore a copy you exported. Choose the file or paste its text; this page says what it holds before anything changes.</p>
+      <p>Move your progress from another browser or device, or restore a copy you exported. Choose the file or paste its text.</p>
       <div class="panel__grid">
         <div>
           <label class="field-label" for="import-file">Choose a file</label>
@@ -400,7 +400,7 @@
       var cap = '<div class="chart__head"><p id="tv-cap" class="chart__title">Minutes you logged against the page estimate</p></div>';
       if (!rows.length) {
         return cap +
-          '<p class="chart__empty">Nothing logged yet. When you tick an item on a week page, a "Took" field appears; the minutes you enter show up here.</p>';
+          '<p class="chart__empty">Nothing logged yet.</p>';
       }
       var diff = est ? Math.round((took - est) / est * 100) : null;
       return cap +

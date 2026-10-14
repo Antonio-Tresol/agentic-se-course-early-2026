@@ -816,6 +816,10 @@ input[type="file"].field { padding: 6px; font-size: 12px; max-width: 100%; }
   }
   .sb__sub[aria-current] { color: var(--text); font-weight: 600; box-shadow: inset 2px 0 0 var(--orange); }
 
+  .sb__track { padding: 0 10px; }
+  .sb__track .track-switch { display: block; margin: 0; }
+  .sb__track legend { margin-bottom: 6px; }
+  .sb__rtrack { font-family: var(--font-mono); font-size: 12px; font-weight: 600; border: 1px solid var(--text); border-radius: 6px; background: var(--surface); color: var(--text); cursor: pointer; }
   .sb__theme { margin-top: auto; padding: 0 10px; }
   .sb__theme .theme-switch { display: block; }
   .sb__theme legend { margin-bottom: 6px; }
