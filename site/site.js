@@ -783,7 +783,7 @@
           '<figure class="cmap" aria-labelledby="cmap-title">' +
           '<div class="cmap__head"><p id="cmap-title" class="cmap__title">Pre-work by week, ' + trackName(track) + " track</p>" +
           '<div class="cmap__legend" aria-hidden="true"><span><i class="cmap__key cmap__key--done"></i>Done</span>' +
-          '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range (Week 5: 6 to 8 h build)</span></div></div>' +
+          '<span><i class="cmap__key cmap__key--plan"></i>Planned</span><span><i class="cmap__key cmap__key--range"></i>Range</span></div></div>' +
           '<div class="cmap__frame">' +
           '<div class="cmap__ytitle axis-title axis-title--y">Planned minutes</div>' +
           '<div class="cmap__yaxis" aria-hidden="true">' + SCALE_TICKS.map(function (t) {
