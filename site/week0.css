@@ -37,3 +37,5 @@
 @media (max-width: 639.98px) {
   .w0-code pre { padding-right: 14px; padding-top: 40px; }
 }
+.w0-install__way { margin-top: 18px; }
+.h-card + .w0-install__way { margin-top: 4px; }
